@@ -16,7 +16,7 @@
 #' @examples
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #' target_date <- shoreline_date(site = target_pt, elevation = 65)
-#' plot(target_date$years, target_date$probability, type = "l")
+#' plot(target_date$bce, target_date$probability, type = "l")
 shoreline_date <- function(site,
                            elev = NA,
                            reso = 0.1,
@@ -25,7 +25,7 @@ shoreline_date <- function(site,
                            elevation = NA,
                            interpolated_curve = NA){
 
-  years <- seq(-1950, 10550,  1) * -1
+  bce <- seq(-10000, 2000, 1)
 
   if(is.na(interpolated_curve)){
     sitecurve <- interpolate_curve(target = site)
@@ -54,7 +54,7 @@ shoreline_date <- function(site,
   expdat <- expdat[expdat$px < 0.99999,]
 
   dategrid <- data.frame(
-    years = seq(-10000, 2000, 1),
+    bce = bce,
     probability = 0)
 
   for(i in 1:nrow(expdat)){
@@ -63,11 +63,11 @@ shoreline_date <- function(site,
 
     # Find lower date
     lowerd <- round(approx(sitecurve[,"lowerelev"],
-                           years, xout = adjusted_elev)[['y']])
+                           bce, xout = adjusted_elev)[['y']])
 
     # Find upper date
     upperd <- round(approx(sitecurve[,"upperelev"],
-                           years, xout = adjusted_elev)[['y']])
+                           bce, xout = adjusted_elev)[['y']])
 
     # Find youngest and oldest date
     earliest <- min(c(lowerd, upperd))
@@ -79,8 +79,8 @@ shoreline_date <- function(site,
       year_range <- seq(earliest, latest, 1)
       prob <- 1/length(year_range) * expdat$probs[i]
 
-      dategrid[dategrid$years %in% year_range, "probability"] <-
-        dategrid[dategrid$years %in% year_range, "probability"] + prob
+      dategrid[dategrid$bce %in% year_range, "probability"] <-
+        dategrid[dategrid$bce %in% year_range, "probability"] + prob
     }
   }
 
