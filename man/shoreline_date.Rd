@@ -29,11 +29,14 @@ shoreline_date(
 
 \item{interpolated_curve}{Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided-}
 }
+\value{
+A list containing the shoreline date and associated parameters
+}
 \description{
-A function for shoreline dating a Stone Age site based on its present-day elevation and past shoreline displacement along the Norwegian Skagerrak coast.
+A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 }
 \examples{
 target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 target_date <- shoreline_date(site = target_pt, elevation = 65)
-plot(target_date$years, target_date$probability, type = "l")
+plot(target_date[[1]]$bce, target_date[[1]]$probability, type = "l")
 }

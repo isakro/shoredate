@@ -7,6 +7,8 @@
 #' @return A data frame holding the interpolated displacement curve
 #' @export
 #'
+#' @import sf
+#'
 #' @examples
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #' target_curve <- interpolate_curve(target_pt)
@@ -16,7 +18,8 @@ interpolate_curve <- function(target,
                               dispdat =
                                 load(
                                   system.file("extdata/displacement_curves.rda",
-                                                    package = "shoredate")),
+                                                    package = "shoredate",
+                                              mustWork = TRUE)),
                               isobases =
                                 sf::st_read(
                                   system.file("extdata/isobases.gpkg",

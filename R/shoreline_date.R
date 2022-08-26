@@ -1,6 +1,6 @@
 #' Shoreline date
 #'
-#' A function for shoreline dating a Stone Age site based on its present-day elevation and past shoreline displacement along the Norwegian Skagerrak coast.
+#' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
 #' @param site A spatial target representing the site to be dated
 #' @param elev Elevation raster to be input if the elevation values are not provided manually
@@ -10,13 +10,16 @@
 #' @param elevation Numeric elevation value to inform shoreline date unless
 #' @param interpolated_curve Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided-
 #'
-#' @return
+#' @return A list containing the shoreline date and associated parameters
 #' @export
+#'
+#' @import sf
+#' @import terra
 #'
 #' @examples
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #' target_date <- shoreline_date(site = target_pt, elevation = 65)
-#' plot(target_date$bce, target_date$probability, type = "l")
+#' plot(target_date[[1]]$bce, target_date[[1]]$probability, type = "l")
 shoreline_date <- function(site,
                            elev = NA,
                            reso = 0.1,
@@ -25,7 +28,8 @@ shoreline_date <- function(site,
                            elevation = NA,
                            interpolated_curve = NA){
 
-  bce <- seq(-10000, 2000, 1)
+  bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
+                                    # data
 
   if(is.na(interpolated_curve)){
     sitecurve <- interpolate_curve(target = site)
@@ -49,7 +53,7 @@ shoreline_date <- function(site,
   # Set up data frame and assign
   expdat <- data.frame(
     offset = inc,
-    px = pexp(inc, rate = expratio))
+    px = stats::pexp(inc, rate = expratio))
   expdat$probs <- c(diff(expdat$px), 0)
   expdat <- expdat[expdat$px < 0.99999,]
 
@@ -62,11 +66,11 @@ shoreline_date <- function(site,
     adjusted_elev <- as.numeric(siteelev - expdat$offset[i])
 
     # Find lower date
-    lowerd <- round(approx(sitecurve[,"lowerelev"],
+    lowerd <- round(stats::approx(sitecurve[,"lowerelev"],
                            bce, xout = adjusted_elev)[['y']])
 
     # Find upper date
-    upperd <- round(approx(sitecurve[,"upperelev"],
+    upperd <- round(stats::approx(sitecurve[,"upperelev"],
                            bce, xout = adjusted_elev)[['y']])
 
     # Find youngest and oldest date
@@ -93,5 +97,9 @@ shoreline_date <- function(site,
   # Normalise to sum to unity
   dategrid$probability <- dategrid$probability / sum(dategrid$probability)
 
-  return(dategrid)
+  return(list(date = dategrid,
+              dispcurve = sitecurve,
+              elev = siteelev,
+              expratio = expratio,
+              expdat = expdat))
 }

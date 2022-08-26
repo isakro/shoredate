@@ -6,7 +6,8 @@
 \usage{
 interpolate_curve(
   target,
-  dispdat = load(system.file("extdata/displacement_curves.rda", package = "shoredate")),
+  dispdat = load(system.file("extdata/displacement_curves.rda", package = "shoredate",
+    mustWork = TRUE)),
   isobases = sf::st_read(system.file("extdata/isobases.gpkg", package = "shoredate"))
 )
 }
@@ -26,6 +27,6 @@ Interpolate displacement curve using IDW
 \examples{
 target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 target_curve <- interpolate_curve(target_pt)
-plot(target_curve$years, target_curve$upperelev, type = "l")
-lines(target_curve$years, target_curve$lowerelev)
+plot(target_curve$bce, target_curve$upperelev, type = "l")
+lines(target_curve$bce, target_curve$lowerelev)
 }
