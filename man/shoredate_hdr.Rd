@@ -10,13 +10,16 @@ shoredate_hdr(shorelinedate)
 \item{shorelinedate}{A list of objects returned from shoreline_date().}
 }
 \value{
-A data frame holding start and end points for segments of the 95\% highest density region
+A data frame holding median, start and end points for segments of the 95\% highest density region
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline date.
 }
 \examples{
+# Create point to shoreline date
 target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+# Perform shoreline dating
 target_date <- shoreline_date(site = target_pt, elevation = 65)
+# Call to plot
 shoredate_hdr(target_date)
 }

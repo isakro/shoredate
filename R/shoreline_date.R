@@ -2,13 +2,14 @@
 #'
 #' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
-#' @param site A spatial target representing the site to be dated
-#' @param elev Elevation raster to be input if the elevation values are not provided manually
-#' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.1m
+#' @param site A spatial target representing the site to be dated.
+#' @param elev Elevation raster to be input if the elevation values are not provided manually.
+#' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.1m.
+#' @param isobase_direction A single numeric value defining the direction of the isobases, or a vector of direction values to iterate over. Defaults to.
 #' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168
-#' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster
-#' @param elevation Numeric elevation value to inform shoreline date unless
-#' @param interpolated_curve Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided-
+#' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
+#' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
+#' @param interpolated_curve Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided.
 #'
 #' @return A list containing the shoreline date and associated parameters
 #' @export
@@ -19,10 +20,11 @@
 #' @examples
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #' target_date <- shoreline_date(site = target_pt, elevation = 65)
-#' plot(target_date[[1]]$bce, target_date[[1]]$probability, type = "l")
+#' shoredate_plot(target_date)
 shoreline_date <- function(site,
                            elev = NA,
                            reso = 0.1,
+                           isobase_direction = 327,
                            expratio = 0.168,
                            elevavg = "mean",
                            elevation = NA,
@@ -30,6 +32,10 @@ shoreline_date <- function(site,
 
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
+
+  if(is.na(interpolated_curve) & isobase_direction != 327){
+      isobases <- create_isobases(isobase_direction)
+  }
 
   if(is.na(interpolated_curve)){
     sitecurve <- interpolate_curve(target = site)

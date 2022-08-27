@@ -1,7 +1,7 @@
 #' Interpolate displacement curve using IDW
 #'
 #' @param target A spatial target location to where the new displacement curve is interpolated
-#' @param dispdat Load existing displacement curves
+#' @param dispdat Load existing displacement curves.
 #' @param isobases Load spatial lines representing the isobases of the existing displacement curves
 #'
 #' @return A data frame holding the interpolated displacement curve
@@ -23,7 +23,8 @@ interpolate_curve <- function(target,
                               isobases =
                                 sf::st_read(
                                   system.file("extdata/isobases.gpkg",
-                                                   package = "shoredate"))){
+                                                   package = "shoredate",
+                                              mustWork = TRUE))){
 
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
