@@ -12,8 +12,10 @@
 #' isobases <- create_isobases(327)
 #' plot(sf::st_geometry(isobases))
 #'
-#' # Create isobases using a range of directions. Useful for testing the sensitivity of dates to the isobase direction.
+#' # Create isobases using a range of directions. Useful for testing the sensitivity of dates to the direction of the isobases.
 #' isobases <- create_isobases(seq(327, 338, 1))
+#'
+#' # Plot for visualisation.
 #' plot(sf::st_geometry(isobases), col  = "red")
 create_isobases <- function(isobase_direction){
   centrepoints <- sf::st_read(

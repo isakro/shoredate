@@ -2,27 +2,32 @@
 #'
 #' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
-#' @param site A spatial target representing the site to be dated.
-#' @param elev Elevation raster to be input if the elevation values are not provided manually.
+#' @param site A simple feature representing the site to be dated.
+#' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
 #' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.1m.
-#' @param isobase_direction A single numeric value defining the direction of the isobases, or a vector of direction values to iterate over. Defaults to.
-#' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168
+#' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
+#' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168.
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
 #'
-#' @return A list containing the shoreline date and associated parameters
+#' @return A list containing the shoreline date and associated parameters.
 #' @export
 #'
 #' @import sf
 #' @import terra
 #'
 #' @examples
+#' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-#' target_date <- shoreline_date(site = target_pt, elevation = 65)
+#'
+#' # Date target point, manually specifying the elevation instead of providing an elevation raster.
+#' target_date <- shoreline_date(site = target_pt, elevation = 65, isobase_direction = c(327, 338))
+#'
+#' # Call to plot
 #' shoredate_plot(target_date)
 shoreline_date <- function(site,
-                           elev = NA,
+                           elev_raster = NA,
                            reso = 0.1,
                            isobase_direction = 327,
                            expratio = 0.168,
@@ -33,79 +38,89 @@ shoreline_date <- function(site,
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
 
-  if(is.na(interpolated_curve) & isobase_direction != 327){
+  if(is.na(interpolated_curve) & any(isobase_direction != 327)){
       isobases <- create_isobases(isobase_direction)
   }
 
-  if(is.na(interpolated_curve)){
-    sitecurve <- interpolate_curve(target = site)[[1]]
+  if(is.na(interpolated_curve) & length(unique(isobases$direction)) > 1){
+    sitecurve <- interpolate_curve(target = site, isobases = isobases)
+  } else if(is.na(interpolated_curve)){
+    sitecurve <- interpolate_curve(target = site)
   } else{
     sitecurve <- interpolated_curve
   }
 
-  if(is.na(elev)){
+  if(is.na(elev_raster)){
     if(is.na(elevation)){
       return(NA)
     } else{
       siteelev <- elevation
     }
   } else{
-    siteelev <- terra::extract(elev, terra::vect(site), fun = elevavg)[,-1]
+    siteelev <- terra::extract(elev_raster,
+                               terra::vect(site), fun = elevavg)[,-1]
   }
 
   # Elevation offsets to step through by increments of reso
   inc <- seq(0, siteelev, reso)
 
-  # Set up data frame and assign
-  expdat <- data.frame(
-    offset = inc,
-    px = stats::pexp(inc, rate = expratio))
-  expdat$probs <- c(diff(expdat$px), 0)
-  expdat <- expdat[expdat$px < 0.99999,]
+  shorelinedate <- list()
+  for(k in 1:length(sitecurve)){
 
-  dategrid <- data.frame(
-    bce = bce,
-    probability = 0)
+    temp_curve <- sitecurve[[k]]
+    # Set up data frame and assign probability to the offset increments
+    expdat <- data.frame(
+      offset = inc,
+      px = stats::pexp(inc, rate = expratio))
+    expdat$probs <- c(diff(expdat$px), 0)
+    expdat <- expdat[expdat$px < 0.99999,]
 
-  for(i in 1:nrow(expdat)){
-    # Subtract offset
-    adjusted_elev <- as.numeric(siteelev - expdat$offset[i])
+    dategrid <- data.frame(
+      bce = bce,
+      probability = 0)
 
-    # Find lower date
-    lowerd <- round(stats::approx(sitecurve[,"lowerelev"],
-                           bce, xout = adjusted_elev)[['y']])
+    for(i in 1:nrow(expdat)){
+      # Subtract offset
+      adjusted_elev <- as.numeric(siteelev - expdat$offset[i])
 
-    # Find upper date
-    upperd <- round(stats::approx(sitecurve[,"upperelev"],
-                           bce, xout = adjusted_elev)[['y']])
+      # Find lower date
+      lowerd <- round(stats::approx(temp_curve[,"lowerelev"],
+                             bce, xout = adjusted_elev)[['y']])
 
-    # Find youngest and oldest date
-    earliest <- min(c(lowerd, upperd))
-    latest <- max(c(lowerd, upperd))
+      # Find upper date
+      upperd <- round(stats::approx(temp_curve[,"upperelev"],
+                             bce, xout = adjusted_elev)[['y']])
 
-    # Add probability to each year in range
-    if(!is.na(latest) && !is.na(earliest)){
+      # Find youngest and oldest date
+      earliest <- min(c(lowerd, upperd))
+      latest <- max(c(lowerd, upperd))
 
-      year_range <- seq(earliest, latest, 1)
-      prob <- 1/length(year_range) * expdat$probs[i]
+      # Add probability to each year in range
+      if(!is.na(latest) && !is.na(earliest)){
 
-      dategrid[dategrid$bce %in% year_range, "probability"] <-
-        dategrid[dategrid$bce %in% year_range, "probability"] + prob
+        year_range <- seq(earliest, latest, 1)
+        prob <- 1/length(year_range) * expdat$probs[i]
+
+        dategrid[dategrid$bce %in% year_range, "probability"] <-
+          dategrid[dategrid$bce %in% year_range, "probability"] + prob
+      }
     }
+
+    if(class(site)[1] == "sf") {
+      dategrid$site_name <- as.character(sf::st_drop_geometry(site[1]))
+    } else{
+      dategrid$site_name <- site
+    }
+
+    # Normalise to sum to unity
+    dategrid$probability <- dategrid$probability / sum(dategrid$probability)
+
+    # Update list holding results
+    shorelinedate[[k]] <- list(date = dategrid,
+                dispcurve = temp_curve,
+                elev = siteelev,
+                expratio = expratio,
+                expdat = expdat)
   }
-
-  if(class(site)[1] == "sf") {
-    dategrid$site_name <- as.character(sf::st_drop_geometry(site[1]))
-  } else{
-    dategrid$site_name <- site
-  }
-
-  # Normalise to sum to unity
-  dategrid$probability <- dategrid$probability / sum(dategrid$probability)
-
-  return(list(date = dategrid,
-              dispcurve = sitecurve,
-              elev = siteelev,
-              expratio = expratio,
-              expdat = expdat))
+  return(shorelinedate)
 }
