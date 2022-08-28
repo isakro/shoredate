@@ -9,7 +9,7 @@
 #' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
-#' @param interpolated_curve Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided.
+#' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
 #'
 #' @return A list containing the shoreline date and associated parameters
 #' @export
@@ -38,7 +38,7 @@ shoreline_date <- function(site,
   }
 
   if(is.na(interpolated_curve)){
-    sitecurve <- interpolate_curve(target = site)
+    sitecurve <- interpolate_curve(target = site)[[1]]
   } else{
     sitecurve <- interpolated_curve
   }

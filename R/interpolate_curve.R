@@ -20,60 +20,75 @@ interpolate_curve <- function(target,
                                   system.file("extdata/displacement_curves.rda",
                                                     package = "shoredate",
                                               mustWork = TRUE)),
-                              isobases =
-                                sf::st_read(
-                                  system.file("extdata/isobases.gpkg",
-                                                   package = "shoredate",
-                                              mustWork = TRUE))){
+                              isobases = NA){
 
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
 
+  # Use default isobases unless others are provided
+  if(is.na(isobases)){
+    isobases <- sf::st_read(
+      system.file("extdata/isobases.gpkg",
+                  package = "shoredate",
+                  mustWork = TRUE))
+  }
+
+
   displacement_curves <- get(dispdat)
-  dists <- as.data.frame(sf::st_distance(target, isobases))
-  names(dists) <- isobases$name
 
-  values <- data.frame(matrix(ncol = 3, nrow = length(bce)))
-  names(values) <- c("bce", "lowerelev", "upperelev")
+  interpolated_curves <- list()
 
-  # In the case that a site is on the isobase of a
-  # displacement curve, simply return that displacement curve
-  if(any(as.numeric(dists) == 0)){
-    values <- displacement_curves[displacement_curves$name ==
+  for(i in 1:length(unique(isobases$direction))){
+    isobases_dir <- isobases[isobases$direction ==
+                               unique(isobases$direction)[i],]
+    dists <- as.data.frame(sf::st_distance(target, isobases_dir))
+    names(dists) <- isobases_dir$name
+
+    values <- data.frame(matrix(ncol = 3, nrow = length(bce)))
+    names(values) <- c("bce", "lowerelev", "upperelev")
+
+    # In the case that a site is on the isobase of a
+    # displacement curve, simply return that displacement curve
+    if(any(as.numeric(dists) == 0)){
+      values <- displacement_curves[displacement_curves$name ==
                                   names(dists)[which(as.numeric(dists) == 0)],]
 
-  } else { for(i in 1:length(bce)){
-    for(j in 1:ncol(dists)){
-      le <- displacement_curves[which(displacement_curves$name ==
-                                names(dists)[j] & displacement_curves$bce ==
-                                bce[i]), "lowerelev"]
+    } else { for(j in 1:length(bce)){
+      for(k in 1:ncol(dists)){
+        le <- displacement_curves[which(displacement_curves$name ==
+                                  names(dists)[k] & displacement_curves$bce ==
+                                  bce[j]), "lowerelev"]
 
-      ue <- displacement_curves[which(displacement_curves$name ==
-                                names(dists)[j] & displacement_curves$bce ==
-                                  bce[i]), "upperelev"]
+        ue <- displacement_curves[which(displacement_curves$name ==
+                                  names(dists)[k] & displacement_curves$bce ==
+                                    bce[j]), "upperelev"]
 
-      dists[2, j] <- le
-      dists[3, j] <- ue
+        dists[2, k] <- le
+        dists[3, k] <- ue
+      }
+      distdat <- as.data.frame(t(dists))
+      names(distdat) <- c("distance", "lower", "upper")
+
+      # No sites are older than the lowest limit of any displacement curve
+      # so in case of NA values, simply assign NA
+      if(any(is.na(distdat))){
+        lowerval <- upperval <- NA
+      } else {
+        # Inverse distance weighting
+        lowerval <- sum(apply(distdat, 1,
+                              function(x) x["lower"] * x["distance"]^-2)) /
+          sum(apply(distdat, 1, function(x) x["distance"] ^-2))
+        upperval <- sum(apply(distdat, 1,
+                              function(x) x["upper"] * x["distance"]^-2)) /
+          sum(apply(distdat, 1, function(x) x["distance"] ^-2))
+
+      }
+      values[j, 1:3] <- c(bce[j], lowerval, upperval)
+
     }
-    distdat <- as.data.frame(t(dists))
-    names(distdat) <- c("distance", "lower", "upper")
-
-    # No sites are older than the lowest limit of any displacement curve
-    # so in case of NA values, simply assign NA
-    if(any(is.na(distdat))){
-      lowerval <- upperval <- NA
-    } else {
-      # Inverse distance weighting
-      lowerval <- sum(apply(distdat, 1,
-                            function(x) x["lower"] * x["distance"]^-2)) /
-        sum(apply(distdat, 1, function(x) x["distance"] ^-2))
-      upperval <- sum(apply(distdat, 1,
-                            function(x) x["upper"] * x["distance"]^-2)) /
-        sum(apply(distdat, 1, function(x) x["distance"] ^-2))
-
     }
-    values[i,] <- c(bce[i], lowerval, upperval)
+    values$direction <- unique(isobases$direction)[i]
+    interpolated_curves[[i]] <- values
   }
-  }
-  return(values)
+  return(interpolated_curves)
 }
