@@ -8,25 +8,29 @@ interpolate_curve(
   target,
   dispdat = load(system.file("extdata/displacement_curves.rda", package = "shoredate",
     mustWork = TRUE)),
-  isobases = sf::st_read(system.file("extdata/isobases.gpkg", package = "shoredate"))
+  isobases = NA
 )
 }
 \arguments{
 \item{target}{A spatial target location to where the new displacement curve is interpolated}
 
-\item{dispdat}{Load existing displacement curves}
+\item{dispdat}{Load existing displacement curves.}
 
-\item{isobases}{Load spatial lines representing the isobases of the existing displacement curves}
+\item{isobases}{Spatial lines representing the isobases of the existing displacement curves}
 }
 \value{
 A data frame holding the interpolated displacement curve
 }
 \description{
-Interpolate displacement curve using IDW
+Interpolate the trajectory of past shoreline displacement to a single location based on the. This is done using inverse distance weighting.
 }
 \examples{
+# Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
 target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+
+# Interpolate shoreline displacement curve to the target point location.
 target_curve <- interpolate_curve(target_pt)
-plot(target_curve$bce, target_curve$upperelev, type = "l")
-lines(target_curve$bce, target_curve$lowerelev)
+
+# Call to plot
+displacement_plot(target_curve)
 }

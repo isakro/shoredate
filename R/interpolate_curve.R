@@ -4,7 +4,7 @@
 #'
 #' @param target A spatial target location to where the new displacement curve is interpolated
 #' @param dispdat Load existing displacement curves.
-#' @param isobases Load spatial lines representing the isobases of the existing displacement curves
+#' @param isobases Spatial lines representing the isobases of the existing displacement curves
 #'
 #' @return A data frame holding the interpolated displacement curve
 #' @export
@@ -15,7 +15,7 @@
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
-#' # Interpolate shoreline displacement curve at the target point location.
+#' # Interpolate shoreline displacement curve to the target point location.
 #' target_curve <- interpolate_curve(target_pt)
 #'
 #' # Call to plot
@@ -36,9 +36,8 @@ interpolate_curve <- function(target,
     isobases <- sf::st_read(
       system.file("extdata/isobases.gpkg",
                   package = "shoredate",
-                  mustWork = TRUE))
+                  mustWork = TRUE), quiet = TRUE)
   }
-
 
   displacement_curves <- get(dispdat)
 

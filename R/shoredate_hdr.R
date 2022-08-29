@@ -4,7 +4,7 @@
 #'
 #' @param shorelinedate A list of objects returned from shoreline_date().
 #'
-#' @return A data frame holding  start and end points for segments of the 95% highest density region
+#' @return A data frame holding start and end points for segments of the 95% highest density region
 #' @export
 #'
 #' @import hdrcde
@@ -20,7 +20,11 @@
 #' (shoredate_hdr(target_date))
 shoredate_hdr <- function(shorelinedate){
 
-  dategrid <- shorelinedate$date
+  dategrid <- try(shorelinedate$date, silent = FALSE)
+  if(is.null(dategrid)){
+    dategrid <- shorelinedate[[1]]$date
+
+  }
 
   dathdr <- hdrcde::hdr(den = list("x" = dategrid$bce,
                                    "y" = dategrid$probability), prob = 95)
@@ -31,7 +35,6 @@ shoredate_hdr <- function(shorelinedate){
   names(datedat) <- c("start", "end", "group", "year_median")
   datedat$start <- segdat[seq(1, nrow(segdat), 2), "X95."]
   datedat$end <- segdat[seq(2, nrow(segdat), 2), "X95."]
-  datedat$hdr_segment <- seq(1:length(segdat$hdr[c(TRUE, FALSE)]))
 
   return(datedat)
 

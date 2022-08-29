@@ -14,5 +14,10 @@ Imports:
     ggridges,
     grid,
     hdrcde,
+    patchwork,
     sf,
     terra
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

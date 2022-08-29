@@ -6,8 +6,9 @@
 \usage{
 shoreline_date(
   site,
-  elev = NA,
-  reso = 0.1,
+  elev_raster = NA,
+  reso = 0.01,
+  isobase_direction = 327,
   expratio = 0.168,
   elevavg = "mean",
   elevation = NA,
@@ -15,28 +16,35 @@ shoreline_date(
 )
 }
 \arguments{
-\item{site}{A spatial target representing the site to be dated}
+\item{site}{Object of class sf representing the site to be dated.}
 
-\item{elev}{Elevation raster to be input if the elevation values are not provided manually}
+\item{elev_raster}{Elevation raster to be input if the elevation values are not provided manually.}
 
-\item{reso}{Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.1m}
+\item{reso}{Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.}
 
-\item{expratio}{Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168}
+\item{isobase_direction}{A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.}
 
-\item{elevavg}{Specified statistic to define elevation if this is to be derived from elevation raster}
+\item{expratio}{Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168.}
 
-\item{elevation}{Numeric elevation value to inform shoreline date unless}
+\item{elevavg}{Specified statistic to define elevation if this is to be derived from elevation raster.}
 
-\item{interpolated_curve}{Data frame holding shoreline displacement curve derived from interpolate_curve(). The interpolation function will be run if this is not provided-}
+\item{elevation}{Numeric elevation value to inform shoreline date unless an elevation raster is provided.}
+
+\item{interpolated_curve}{List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.}
 }
 \value{
-A list containing the shoreline date and associated parameters
+A list containing the shoreline date and associated parameters.
 }
 \description{
 A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 }
 \examples{
+# Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
 target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+
+# Date target point, manually specifying the elevation instead of providing an elevation raster.
 target_date <- shoreline_date(site = target_pt, elevation = 65)
-plot(target_date[[1]]$bce, target_date[[1]]$probability, type = "l")
+
+# Call to plot
+shoredate_plot(target_date, isobase_direction = TRUE)
 }

@@ -2,9 +2,9 @@
 #'
 #' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
-#' @param site A simple feature representing the site to be dated.
+#' @param site Object of class sf representing the site to be dated.
 #' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
-#' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.1m.
+#' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
 #' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168.
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
@@ -22,13 +22,13 @@
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 65, isobase_direction = c(327, 338))
+#' target_date <- shoreline_date(site = target_pt, elevation = 65)
 #'
 #' # Call to plot
-#' shoredate_plot(target_date)
+#' shoredate_plot(target_date, isobase_direction = TRUE)
 shoreline_date <- function(site,
                            elev_raster = NA,
-                           reso = 0.1,
+                           reso = 0.01,
                            isobase_direction = 327,
                            expratio = 0.168,
                            elevavg = "mean",
@@ -40,12 +40,17 @@ shoreline_date <- function(site,
 
   if(is.na(interpolated_curve) & any(isobase_direction != 327)){
       isobases <- create_isobases(isobase_direction)
+  } else{
+    isobases <- sf::st_read(
+      system.file("extdata/isobases.gpkg",
+                  package = "shoredate",
+                  mustWork = TRUE), quiet = TRUE)
   }
 
   if(is.na(interpolated_curve) & length(unique(isobases$direction)) > 1){
     sitecurve <- interpolate_curve(target = site, isobases = isobases)
   } else if(is.na(interpolated_curve)){
-    sitecurve <- interpolate_curve(target = site)
+    sitecurve <- interpolate_curve(target = site, isobases = isobases)
   } else{
     sitecurve <- interpolated_curve
   }

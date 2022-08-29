@@ -6,6 +6,7 @@
 #' @param site_elevation Logical value indicating whether the site elevation and exponential decay function should be displayed. Default is TRUE.
 #' @param displacement_curve Logical value indicating whether the displacement curve should be displayed. Default is TRUE.
 #' @param lambda Logical value indicating whether the lambda value for the exponential decay function should be displayed. Default is TRUE.
+#' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
 #' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
 #'
 #' @return A plot displaying the provided shoreline date.
@@ -19,13 +20,16 @@
 #'
 #' @examples
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-#' target_date <- shoreline_date(site = target_pt, elevation = 65)
-#' shoredate_plot(target_date)
+#'
+#' target_date <- shoreline_date(site = target_pt, elevation = 65,
+#'                               isobase_direction = c(327,338))
+#'
+#' shoredate_plot(target_date, isobase_direction = TRUE)
 shoredate_plot <- function(shorelinedate,
                            site_elevation = TRUE,
                            displacement_curve = TRUE,
                            lambda = TRUE,
-                           isobase_direction = TRUE,
+                           isobase_direction = FALSE,
                            hdr_label = TRUE){
 
   plts <- list()
@@ -48,14 +52,20 @@ shoredate_plot <- function(shorelinedate,
                   x = "Shoreline date (BCE)") +
       ggplot2::theme_bw()
 
-    if(lambda == TRUE & isobase_direction = TRUE){
+    # "\U03BB = ",
+    lambdaval <- as.numeric(nshoredate$expratio)
+    dirval <- unique(nshoredate$dispcurve$direction)
+    if(lambda == TRUE & isobase_direction == TRUE){
       plt <- plt +
-        ggplot2::ggtitle(paste0("\U03BB = ", as.numeric(nshoredate$expratio),
-              ", Isobase direction = ", unique(nshoredate$dispcurve$direction),
-                                              "°"))
+        ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval) ~~
+                                  "\nIsobase direction =" ~ .(dirval)))
+          # paste0(expression(lambda), " = ",
+          #                                  lambdaval,
+          #     "\nIsobase direction = ", unique(nshoredate$dispcurve$direction),
+          #                                     "°"))
     } else if(lambda == TRUE){
       plt <- plt +
-        ggplot2::ggtitle(paste("\U03BB =", as.numeric(nshoredate$expratio)))
+        ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval)))
     }
 
     if(displacement_curve == TRUE){
@@ -108,8 +118,8 @@ shoredate_plot <- function(shorelinedate,
                             round(hdrdates$end[i]), "BCE\n")
       }
 
-      grob <- grid::grobTree(grid::textGrob(label_text, x = 0.7,
-                                            y = 0.7, hjust = 0,
+      grob <- grid::grobTree(grid::textGrob(label_text, x = 0.8,
+                                            y = 0.6, hjust = 0,
                               gp = grid::gpar(fontsize = 8,
                                               fontface = "italic")))
       plt <- plt + ggplot2::annotation_custom(grob)
