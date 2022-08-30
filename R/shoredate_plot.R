@@ -120,5 +120,6 @@ shoredate_plot <- function(shorelinedate,
 
     plts[[k]] <- plt
   }
+
   patchwork::wrap_plots(plts, ncol = 1)
 }

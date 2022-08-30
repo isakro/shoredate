@@ -8,7 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-"
+  fig.path = "man/figures/README-",
+  fig.align = "center"
 )
 ```
 
@@ -23,7 +24,7 @@ The goal of *shoredate* is to offer methods to shoreline date Stone Age sites lo
 
 You can install the development version of *shoredate* from [GitHub](https://github.com/isakro/shoredate) with:
 
-```{r setup, warning = FALSE, message = FALSE}
+```{r setup, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("isakro/shoredate")
 ```
@@ -32,7 +33,7 @@ devtools::install_github("isakro/shoredate")
 
 This is a basic example outlining how to date a single site by manually specifying the site elevation, and using the default setting for the dating procedure and for plotting the date.
 
-```{r date, warning = FALSE, message = FALSE, fig.width = 3, fig.height = 3}
+```{r date, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 4}
 library(shoredate)
 
 # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).

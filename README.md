@@ -18,18 +18,6 @@ You can install the development version of *shoredate* from
 ``` r
 # install.packages("devtools")
 devtools::install_github("isakro/shoredate")
-#> 
-#> * checking for file ‘/tmp/Rtmp9B161S/remotes43cb7b71bacd/isakro-shoredate-5f92b33/DESCRIPTION’ ... OK
-#> * preparing ‘shoredate’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#>   NB: this package now depends on R (>= 3.5.0)
-#>   WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-#>   serialize/load version 3 cannot be read in older versions of R.
-#>   File(s) containing such objects:
-#>     ‘shoredate/inst/extdata/displacement_curves.rda’
-#> * building ‘shoredate_0.0.0.9000.tar.gz’
 ```
 
 ## Example
@@ -49,4 +37,4 @@ target_date <- shoreline_date(site = target_point, elevation = 65)
 shoredate_plot(target_date)
 ```
 
-![](man/figures/README-date-1.png)<!-- -->
+<img src="man/figures/README-date-1.png" style="display: block; margin: auto;" />
