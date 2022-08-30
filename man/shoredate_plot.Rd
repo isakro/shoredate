@@ -33,13 +33,13 @@ A plot displaying the provided shoreline date.
 Function for plotting shoreline date along with associated metadata.
 }
 \examples{
-target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
-target_date <- shoreline_date(site = target_pt, elevation = 65,
+target_date <- shoreline_date(site = target_point, elevation = 65,
                               isobase_direction = c(327,338))
 
 shoredate_plot(target_date, isobase_direction = TRUE)
 }
 \seealso{
-\code{\link{shoreline_date}}
+\code{\link{shoreline_date}}, \code{\link{annotate_custom}}
 }

@@ -10,18 +10,17 @@
 #' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
 #'
 #' @return A plot displaying the provided shoreline date.
-#' @seealso \code{\link{shoreline_date}}
+#' @seealso \code{\link{shoreline_date}}, \code{\link{annotate_custom}}
 #' @export
 #'
 #' @import ggplot2
 #' @import ggridges
-#' @import grid
 #' @import patchwork
 #'
 #' @examples
-#' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
-#' target_date <- shoreline_date(site = target_pt, elevation = 65,
+#' target_date <- shoreline_date(site = target_point, elevation = 65,
 #'                               isobase_direction = c(327,338))
 #'
 #' shoredate_plot(target_date, isobase_direction = TRUE)
@@ -52,17 +51,13 @@ shoredate_plot <- function(shorelinedate,
                   x = "Shoreline date (BCE)") +
       ggplot2::theme_bw()
 
-    # "\U03BB = ",
+
     lambdaval <- as.numeric(nshoredate$expratio)
     dirval <- unique(nshoredate$dispcurve$direction)
     if(lambda == TRUE & isobase_direction == TRUE){
       plt <- plt +
         ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval) ~~
                                   "\nIsobase direction =" ~ .(dirval)))
-          # paste0(expression(lambda), " = ",
-          #                                  lambdaval,
-          #     "\nIsobase direction = ", unique(nshoredate$dispcurve$direction),
-          #                                     "°"))
     } else if(lambda == TRUE){
       plt <- plt +
         ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval)))
@@ -112,17 +107,15 @@ shoredate_plot <- function(shorelinedate,
 
     if(hdr_label == TRUE){
 
-      label_text <- "95% HDR:\n"
-      for(i in 1:nrow(hdrdates)){
-        label_text <- paste(label_text, round(hdrdates$start[i]),"to",
-                            round(hdrdates$end[i]), "BCE\n")
-      }
 
-      grob <- grid::grobTree(grid::textGrob(label_text, x = 0.8,
-                                            y = 0.6, hjust = 0,
-                              gp = grid::gpar(fontsize = 8,
-                                              fontface = "italic")))
-      plt <- plt + ggplot2::annotation_custom(grob)
+      label_hdrs <- ""
+      for(i in 1:nrow(hdrdates)){
+        label_hdrs <- paste0(label_hdrs, round(hdrdates$start[i])," to ",
+                            round(hdrdates$end[i]), " BCE\n")
+      }
+      label_text <- paste0("95% HDR:\n", label_hdrs)
+
+     plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.9, hjust = 0)
     }
 
     plts[[k]] <- plt

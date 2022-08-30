@@ -19,7 +19,7 @@ knitr::opts_chunk$set(fig.align = "center")
 ```
 
 # Introduction
-This vignette describes the *R* package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast. This is based on their likely elevation above the sea-level when they were in use and the trajectory of past relative sea-level change. Due to the geographical contingency of the method and the dependency on geologic reconstruction of shoreline displacement, the package is at present limited to sites located beneath the marine limit in the region stretching from Horten county in the north east, to Arendal county in the south west. Spatial data to be used with the package should be set to the coordinate system WGS84 / UTM zone 32N (ESPG:32632).
+This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast. This is based on their likely elevation above the sea-level when they were in use and the trajectory of past relative sea-level change. Due to the geographical contingency of the method and the dependency on geologic reconstruction of shoreline displacement, the package is at present limited to sites located beneath the marine limit in the region stretching from Horten county in the north east, to Arendal county in the south west. Spatial data to be used with the package should be set to the coordinate system WGS84 / UTM zone 32N (ESPG:32632).
 
 ## Installing and loading *shoredate*
 
@@ -38,7 +38,10 @@ library(shoredate)
 ```
 
 # Shoreline dating a site
-To shoreline date a site the site has to be provided as a spatial object in the *simple feature* format from the `sf` package. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster in the *SpatRaster* object from the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used.
+The following section outlines how to perform a shoreline date using the default settings. After this the various variables and assumptions underlying the dating procedure are presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible. 
+
+To shoreline date a site the site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster as a *SpatRaster* object from the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used.
+
 ```{r example_site, message = FALSE}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG:32632).
 target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
@@ -54,7 +57,7 @@ shoredate_plot(target_date)
 ## Interpolating shoreline displacement curve
 When calling `shoreline_date()` the shoreline displacement at the site location is interpolated based on four different geologic reconstructions of shoreline displacement in the region. These are from Horten (Romundset 2021), Porsgrunn (Sørensen et al. 2014a; 2014b; Sørensen et al. *in prep*), Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal (Romundset et al. 2018).
 
-```{r plot_discurves, fig.width = 6, fig.height = 4, warning = FALSE}
+```{r plot_discurves, fig.width = 6, fig.height = 3.5, warning = FALSE}
 displacement_plot()
 ```
 
@@ -66,7 +69,7 @@ target_curve <- interpolate_curve(target_point)
 
 This visualise the interpolated curve alongside the geologic reconstructions, the curve can be passed to `displacement_plot()`:
 
-```{r plot_intcurve, fig.width = 4.5, fig.height = 3.5, warning = FALSE, message = FALSE}
+```{r plot_intcurve, fig.width = 6, fig.height = 3.5, warning = FALSE, message = FALSE}
 displacement_plot(target_curve)
 ```
 
@@ -74,8 +77,8 @@ displacement_plot(target_curve)
 The precise direction of the uplift gradient is specified by isobases that run perpendicular to the gradient. When interpolating the displacement curve used for dating a site, the direction of these isobases default to 327. However, it is possible to specify other and multiple directions for these, and perform the shoreline date using each individual direction. 
 
 ```{r example_site_isobases, message = FALSE}
-# Using the same target point and elevation as above, 
-# but specifying two different directions for the isobases
+# Using the same target point and elevation as above, but specifying two different directions
+# for the isobases.
 iso_date <- shoreline_date(site = target_point, elevation = 65, isobase_direction = c(325, 338))
 ```
 

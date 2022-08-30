@@ -11,10 +11,10 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Date target point, specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 65)
+#' target_date <- shoreline_date(site = target_point, elevation = 65)
 #'
 #' # Retrieve and print HDR for the shoreline date
 #' (shoredate_hdr(target_date))

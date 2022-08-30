@@ -15,6 +15,7 @@ Imports:
     grid,
     hdrcde,
     patchwork,
+    scales,
     sf,
     terra
 Suggests: 
