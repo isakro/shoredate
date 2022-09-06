@@ -31,7 +31,7 @@ devtools::install_github("isakro/shoredate")
 
 ## Example
 
-This is a basic example outlining how to date a single site by manually specifying the site elevation, and using the default setting for the dating procedure and for plotting the date.
+This is a basic example outlining how to date a single site by manually specifying the site elevation, and using the default setting for the dating procedure as well as for plotting the date.
 
 ```{r date, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 4}
 library(shoredate)
@@ -42,4 +42,10 @@ target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 target_date <- shoreline_date(site = target_point, elevation = 65)
 
 shoredate_plot(target_date)
+```
+
+It is also possible to plot a more sparse version of the plot by specifying what elements are to be excluded:
+
+```{r sparse}
+shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE, lambda = FALSE, hdr_label = FALSE)
 ```

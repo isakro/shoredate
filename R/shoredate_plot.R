@@ -7,7 +7,7 @@
 #' @param displacement_curve Logical value indicating whether the displacement curve should be displayed. Default is TRUE.
 #' @param lambda Logical value indicating whether the lambda value for the exponential decay function should be displayed. Default is TRUE.
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
-#' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
+#' @param hdr_label Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.
 #'
 #' @return A plot displaying the provided shoreline date.
 #' @seealso \code{\link{shoreline_date}}, \code{\link{annotate_custom}}
@@ -19,10 +19,8 @@
 #'
 #' @examples
 #' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-#'
 #' target_date <- shoreline_date(site = target_point, elevation = 65,
 #'                               isobase_direction = c(327,338))
-#'
 #' shoredate_plot(target_date, isobase_direction = TRUE)
 shoredate_plot <- function(shorelinedate,
                            site_elevation = TRUE,

@@ -24,7 +24,7 @@ devtools::install_github("isakro/shoredate")
 
 This is a basic example outlining how to date a single site by manually
 specifying the site elevation, and using the default setting for the
-dating procedure and for plotting the date.
+dating procedure as well as for plotting the date.
 
 ``` r
 library(shoredate)
@@ -38,3 +38,12 @@ shoredate_plot(target_date)
 ```
 
 <img src="man/figures/README-date-1.png" style="display: block; margin: auto;" />
+
+It is also possible to plot a more sparse version of the plot by
+specifying what elements are to be excluded:
+
+``` r
+shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE, lambda = FALSE, hdr_label = FALSE)
+```
+
+<img src="man/figures/README-sparse-1.png" style="display: block; margin: auto;" />
