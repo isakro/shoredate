@@ -43,7 +43,8 @@ It is also possible to plot a more sparse version of the plot by
 specifying what elements are to be excluded:
 
 ``` r
-shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE, lambda = FALSE, hdr_label = FALSE)
+shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE,
+               lambda = FALSE, hdr_label = FALSE)
 ```
 
 <img src="man/figures/README-sparse-1.png" style="display: block; margin: auto;" />

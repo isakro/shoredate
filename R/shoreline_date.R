@@ -2,7 +2,7 @@
 #'
 #' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
-#' @param site Object of class sf representing the site to be dated.
+#' @param site Vector giving site name, or, if displacement curve is to be interpolated, an object of class `sf` representing the site to be dated.
 #' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
 #' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
@@ -25,7 +25,7 @@
 #' target_date <- shoreline_date(site = target_pt, elevation = 65)
 #'
 #' # Call to plot
-#' shoredate_plot(target_date, isobase_direction = TRUE)
+#' shoredate_plot(target_date)
 shoreline_date <- function(site,
                            elev_raster = NA,
                            reso = 0.01,
@@ -38,7 +38,7 @@ shoreline_date <- function(site,
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
 
-  if(is.na(interpolated_curve) & any(isobase_direction != 327)){
+  if(all(is.na(interpolated_curve)) & any(isobase_direction != 327)){
       isobases <- create_isobases(isobase_direction)
   } else{
     isobases <- sf::st_read(
@@ -47,12 +47,16 @@ shoreline_date <- function(site,
                   mustWork = TRUE), quiet = TRUE)
   }
 
-  if(is.na(interpolated_curve) & length(unique(isobases$direction)) > 1){
+  if(all(is.na(interpolated_curve)) & length(unique(isobases$direction)) > 1){
     sitecurve <- interpolate_curve(target = site, isobases = isobases)
-  } else if(is.na(interpolated_curve)){
+  } else if(all(is.na(interpolated_curve))){
     sitecurve <- interpolate_curve(target = site, isobases = isobases)
   } else{
     sitecurve <- interpolated_curve
+  }
+
+  if(class(sitecurve) == "list"){
+    sitecurve <- do.call(rbind.data.frame, sitecurve)
   }
 
   if(is.na(elev_raster)){
@@ -70,9 +74,10 @@ shoreline_date <- function(site,
   inc <- seq(0, siteelev, reso)
 
   shorelinedate <- list()
-  for(k in 1:length(sitecurve)){
+  for(k in 1:length(unique(sitecurve$direction))){
 
-    temp_curve <- sitecurve[[k]]
+    temp_curve <- sitecurve[sitecurve$direction ==
+                              unique(sitecurve$direction)[k],]
     # Set up data frame and assign probability to the offset increments
     expdat <- data.frame(
       offset = inc,
