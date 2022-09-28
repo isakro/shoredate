@@ -12,11 +12,12 @@ shoreline_date(
   expratio = 0.168,
   elevavg = "mean",
   elevation = NA,
-  interpolated_curve = NA
+  interpolated_curve = NA,
+  sparse = FALSE
 )
 }
 \arguments{
-\item{site}{Object of class sf representing the site to be dated.}
+\item{site}{Vector giving site name, or, if displacement curve is to be interpolated, an object of class \code{sf} representing the site to be dated.}
 
 \item{elev_raster}{Elevation raster to be input if the elevation values are not provided manually.}
 
@@ -31,6 +32,8 @@ shoreline_date(
 \item{elevation}{Numeric elevation value to inform shoreline date unless an elevation raster is provided.}
 
 \item{interpolated_curve}{List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.}
+
+\item{sparse}{Logical value specifying if information beyond site name and shoreline date should not be returned. Defaults to FALSE.}
 }
 \value{
 A list containing the shoreline date and associated parameters.
@@ -46,5 +49,5 @@ target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 target_date <- shoreline_date(site = target_pt, elevation = 65)
 
 # Call to plot
-shoredate_plot(target_date, isobase_direction = TRUE)
+shoredate_plot(target_date)
 }

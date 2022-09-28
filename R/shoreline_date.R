@@ -23,7 +23,7 @@
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 65, sparse = TRUE)
+#' target_date <- shoreline_date(site = target_pt, elevation = 65)
 #'
 #' # Call to plot
 #' shoredate_plot(target_date)
@@ -57,7 +57,7 @@ shoreline_date <- function(site,
     sitecurve <- interpolated_curve
   }
 
-  if(class(sitecurve) == "list"){
+  if(inherits(sitecurve, "list")){
     sitecurve <- do.call(rbind.data.frame, sitecurve)
   }
 
@@ -118,7 +118,7 @@ shoreline_date <- function(site,
       }
     }
 
-    if(class(site)[1] == "sf") {
+    if(inherits(site, c("sf", "sfc"))) {
       dategrid$site_name <- as.character(sf::st_drop_geometry(site[1]))
     } else{
       dategrid$site_name <- site

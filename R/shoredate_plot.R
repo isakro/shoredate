@@ -52,16 +52,16 @@ shoredate_plot <- function(shorelinedate,
 
     lambdaval <- as.numeric(nshoredate$expratio)
     dirval <- unique(nshoredate$dispcurve$direction)
-    if(lambda == TRUE & isobase_direction == TRUE){
+    if(lambda & isobase_direction){
       plt <- plt +
         ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval) ~~
                                   "\nIsobase direction =" ~ .(dirval)))
-    } else if(lambda == TRUE){
+    } else if(lambda){
       plt <- plt +
         ggplot2::ggtitle(bquote(lambda ~ "=" ~ .(lambdaval)))
     }
 
-    if(displacement_curve == TRUE){
+    if(displacement_curve){
       plt <- plt +
         ggplot2::theme(legend.position = "None") +
         ggplot2::geom_ribbon(data = nshoredate$dispcurve,
@@ -82,7 +82,7 @@ shoredate_plot <- function(shorelinedate,
                                            as.numeric(nshoredate$elev) + 30))
     }
 
-    if(site_elevation == TRUE){
+    if(site_elevation){
 
       # For plotting purposes to close the geom_polygon on the y-axis
       expdatg <- rbind(c(0, 0, 0), nshoredate$expdat)
@@ -103,7 +103,7 @@ shoredate_plot <- function(shorelinedate,
                  col = "#046c9a", alpha = 0.6)
     }
 
-    if(hdr_label == TRUE){
+    if(hdr_label){
 
 
       label_hdrs <- ""

@@ -10,10 +10,10 @@ shoredate_hdr(shorelinedate)
 \item{shorelinedate}{A list of objects returned from shoreline_date().}
 }
 \value{
-A data frame holding start and end points for segments of the 95\% highest density region
+A data frame holding start and end points for segments of the 95\% highest density region.
 }
 \description{
-Function to find 95\% highest density region (HDR) for a provided shoreline date.
+Function to find 95\% highest density region (HDR) for a provided shoreline date rounded to the nearest 10 years to reduce spurious precision.
 }
 \examples{
 # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
