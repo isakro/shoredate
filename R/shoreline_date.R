@@ -10,6 +10,7 @@
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
+#' @param sparse Logical value specifying if information beyond site name and shoreline date should not be returned. Defaults to FALSE.
 #'
 #' @return A list containing the shoreline date and associated parameters.
 #' @export
@@ -22,7 +23,7 @@
 #' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 65)
+#' target_date <- shoreline_date(site = target_pt, elevation = 65, sparse = TRUE)
 #'
 #' # Call to plot
 #' shoredate_plot(target_date)
@@ -33,7 +34,8 @@ shoreline_date <- function(site,
                            expratio = 0.168,
                            elevavg = "mean",
                            elevation = NA,
-                           interpolated_curve = NA){
+                           interpolated_curve = NA,
+                           sparse = FALSE){
 
   bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
                                     # data
@@ -126,11 +128,15 @@ shoreline_date <- function(site,
     dategrid$probability <- dategrid$probability / sum(dategrid$probability)
 
     # Update list holding results
+    if(!sparse){
     shorelinedate[[k]] <- list(date = dategrid,
                 dispcurve = temp_curve,
                 elev = siteelev,
                 expratio = expratio,
                 expdat = expdat)
+    } else {
+      shorelinedate[[k]] <- dategrid
+    }
   }
   return(shorelinedate)
 }
