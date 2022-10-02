@@ -35,7 +35,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                          "Tvedestrand" = "black",
                          "Horten" = "black")
 
-      line_scheme <- c("Arendal" = "solid",
+      line_scheme <- c("Arendal" = "longdash",
                        "Larvik" = "dashed",
                        "Tvedestrand" = "dotted",
                        "Horten" = "twodash")
@@ -46,7 +46,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                          "Horten" = "black",
                          "Interpolated curve" = "black")
 
-      line_scheme <- c("Arendal" = "1342",
+      line_scheme <- c("Arendal" = "longdash",
                        "Larvik" = "dashed",
                        "Tvedestrand" = "dotted",
                        "Horten" = "twodash",
@@ -81,8 +81,8 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
 
 
   plt <- ggplot2::ggplot() +
-    ggplot2::scale_colour_manual(values = colour_scheme) +
-    ggplot2::scale_linetype_manual(values = line_scheme) +
+    # ggplot2::scale_colour_manual(values = colour_scheme) +
+    # ggplot2::scale_linetype_manual(values = line_scheme) +
     ggplot2::ylab("Meters above present sea-level") +
     ggplot2::xlab("BCE/CE") +
     ggplot2::theme_bw() +
