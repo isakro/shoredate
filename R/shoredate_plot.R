@@ -8,6 +8,7 @@
 #' @param lambda Logical value indicating whether the lambda value for the exponential decay function should be displayed. Default is TRUE.
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
 #' @param hdr_label Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.
+#' @param greyscale Logical value indicating whether the plot should include colours or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the provided shoreline date.
 #' @seealso \code{\link{shoreline_date}}, \code{\link{annotate_custom}}
@@ -27,7 +28,17 @@ shoredate_plot <- function(shorelinedate,
                            displacement_curve = TRUE,
                            lambda = TRUE,
                            isobase_direction = FALSE,
-                           hdr_label = TRUE){
+                           hdr_label = TRUE,
+                           greyscale = FALSE){
+
+
+  if(greyscale){
+    dispcol <- sitedistcol <- "black"
+  } else{
+    dispcol <- "red"
+    sitedistcol <- "#046c9a"
+  }
+
 
   plts <- list()
   for(k in 1:length(shorelinedate)){
@@ -68,15 +79,17 @@ shoredate_plot <- function(shorelinedate,
                              ggplot2::aes(x = .data$bce,
                                           ymin = .data$lowerelev,
                                           ymax = .data$upperelev),
-                             fill = "red", alpha = 0.2) +
+                             fill = dispcol, alpha = 0.2) +
         ggplot2::geom_line(data = nshoredate$dispcurve,
                            ggplot2::aes(x = .data$bce,
-                                        y = .data$upperelev, col = "red")) +
+                                        y = .data$upperelev),
+                           colour = dispcol) +
         ggplot2::geom_line(data = nshoredate$dispcurve,
                            ggplot2::aes(x = .data$bce,
-                                        y = .data$lowerelev, col = "red"))+
+                                        y = .data$lowerelev),
+                           colour = dispcol) +
         ggplot2::scale_x_continuous(expand = c(0,0),
-                                    limits = c(min(dategrid$bce) - 1000,
+                                    limits = c(min(dategrid$bce) - 1250,
                                                max(dategrid$bce) + 1000)) +
         ggplot2:: coord_cartesian(ylim = c(0,
                                            as.numeric(nshoredate$elev) + 30))
@@ -93,14 +106,16 @@ shoredate_plot <- function(shorelinedate,
       expdatg$probs_scaled <- expdatg$probs / max(expdatg$probs) *
         diff(x_extent)/6 + x_extent[1]
 
+      xoff <- expdatg$probs_scaled
+      yoff <- as.numeric(nshoredate$elev) - expdatg$offset
+
       plt <- plt + ggplot2::geom_polygon(data = expdatg,
-                                          ggplot2::aes(x =.data$probs_scaled,
-                                      y = as.numeric(nshoredate$elev) -
-                                        .data$offset),
-                               fill = "#046c9a", alpha = 0.6) +
+                                          ggplot2::aes(x = xoff,
+                                      y = yoff),
+                               fill = sitedistcol, alpha = 0.6) +
       ggplot2::geom_hline(yintercept = as.numeric(nshoredate$elev),
                           linetype = "dashed",
-                 col = "#046c9a", alpha = 0.6)
+                 col = sitedistcol, alpha = 0.6)
     }
 
     if(hdr_label){

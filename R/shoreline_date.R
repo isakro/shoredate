@@ -20,16 +20,16 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_pt <- sf::st_sfc(sf::st_point(c(167250, 6535472)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 65)
+#' target_date <- shoreline_date(site = target_pt, elevation = 43)
 #'
 #' # Call to plot
 #' shoredate_plot(target_date)
 shoreline_date <- function(site,
                            elev_raster = NA,
-                           reso = 0.01,
+                           reso = 0.1,
                            isobase_direction = 327,
                            expratio = 0.168,
                            elevavg = "mean",
