@@ -19,12 +19,12 @@
 shoredate_hdr <- function(shorelinedate){
 
   dategrid <- shorelinedate$date
-  dategrid <- dategrid[dategrid$probability > 0,]
-
 
   dathdr <- hdrcde::hdr(den = list("x" = dategrid$bce,
                                    "y" = dategrid$probability), prob = 95)
   segdat <- data.frame(t(dathdr$hdr))
+  rsegdat <- round(segdat / 10) * 10
+
   datedat <- data.frame(matrix(nrow = length(segdat[seq(1, nrow(segdat), 2),]),
                                 ncol = 4))
 

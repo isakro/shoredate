@@ -34,8 +34,9 @@ shoredate_plot <- function(shorelinedate,
 
   if(greyscale){
     dispcol <- sitedistcol <- "black"
+    dispfill <- NA
   } else{
-    dispcol <- "red"
+    dispcol <- dispfill <- "red"
     sitedistcol <- "#046c9a"
   }
 
@@ -79,7 +80,7 @@ shoredate_plot <- function(shorelinedate,
                              ggplot2::aes(x = .data$bce,
                                           ymin = .data$lowerelev,
                                           ymax = .data$upperelev),
-                             fill = dispcol, alpha = 0.2) +
+                             fill = dispfill, alpha = 0.2) +
         ggplot2::geom_line(data = nshoredate$dispcurve,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$upperelev),

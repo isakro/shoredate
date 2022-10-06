@@ -30,51 +30,52 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
 
   if(greyscale){
     if(is.na(interpolated_curve)){
-      colour_scheme <- c("Arendal" = "black",
+      colour_scheme <- c("Horten" = "black",
                          "Larvik" = "black",
                          "Tvedestrand" = "black",
-                         "Horten" = "black")
+                         "Arendal" = "black",)
 
-      line_scheme <- c("Arendal" = "longdash",
+      line_scheme <- c("Horten" = "twodash",
                        "Larvik" = "dashed",
                        "Tvedestrand" = "dotted",
-                       "Horten" = "twodash")
+                       "Arendal" = "longdash")
     } else{
-      colour_scheme <- c("Arendal" = "black",
+      colour_scheme <- c("Horten" = "black",
                          "Larvik" = "black",
                          "Tvedestrand" = "black",
-                         "Horten" = "black",
+                         "Arendal" = "black",
                          "Interpolated curve" = "black")
 
-      line_scheme <- c("Arendal" = "longdash",
+      line_scheme <- c("Horten" = "twodash",
                        "Larvik" = "dashed",
                        "Tvedestrand" = "dotted",
-                       "Horten" = "twodash",
+                       "Arendal" = "longdash",
                        "Interpolated curve" = "solid")
     }
   } else{
       if(is.na(interpolated_curve)){
-      colour_scheme <- c("Arendal" = "black",
+      colour_scheme <- c("Horten" = "darkorange",
                 "Larvik" = "darkgreen",
                 "Tvedestrand" = "blue",
-                "Horten" = "darkorange")
+                "Arendal" = "black")
 
-      line_scheme <- c("Arendal" = "solid",
+      line_scheme <- c("Horten" = "solid",
                        "Larvik" = "solid",
                        "Tvedestrand" = "solid",
-                       "Horten" = "solid")
+                       "Arendal" = "solid",
+                       )
 
       } else{
-        colour_scheme <- c("Arendal" = "black",
+        colour_scheme <- c("Horten" = "darkorange",
                   "Larvik" = "darkgreen",
                   "Tvedestrand" = "blue",
-                  "Horten" = "darkorange",
+                  "Arendal" = "black",
                   "Interpolated curve" = "red")
 
-        line_scheme <- c("Arendal" = "solid",
+        line_scheme <- c("Horten" = "solid",
                          "Larvik" = "solid",
                          "Tvedestrand" = "solid",
-                         "Horten" = "solid",
+                         "Arendal" = "solid",
                          "Interpolated curve" = "solid")
     }
   }

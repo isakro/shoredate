@@ -4,12 +4,14 @@
 #'
 #' @param site Vector giving site name, or, if displacement curve is to be interpolated, an object of class `sf` representing the site to be dated.
 #' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
-#' @param reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
+#' @param elev_reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
+#' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
 #' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168.
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
+#' @param normalise Logical value specifying whether the shoreline date should be normalised to sum to unity. Defaults to TRUE.
 #' @param sparse Logical value specifying if information beyond site name and shoreline date should not be returned. Defaults to FALSE.
 #'
 #' @return A list containing the shoreline date and associated parameters.
@@ -20,25 +22,27 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(167250, 6535472)), crs = 32632)
+#' target_pt <- sf::st_sfc(sf::st_point(c(510285, 6510594)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 43)
+#' target_date <- shoreline_date(site = target_pt, elevation = 46)
 #'
 #' # Call to plot
 #' shoredate_plot(target_date)
 shoreline_date <- function(site,
                            elev_raster = NA,
-                           reso = 0.1,
+                           elev_reso = 0.1,
+                           cal_reso = 1,
                            isobase_direction = 327,
                            expratio = 0.168,
                            elevavg = "mean",
                            elevation = NA,
                            interpolated_curve = NA,
+                           normalise = TRUE,
                            sparse = FALSE){
 
-  bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
-                                    # data
+  bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to match
+                                          # displacement data
 
   if(all(is.na(interpolated_curve)) & any(isobase_direction != 327)){
       isobases <- create_isobases(isobase_direction)
@@ -72,8 +76,8 @@ shoreline_date <- function(site,
                                terra::vect(site), fun = elevavg)[,-1]
   }
 
-  # Elevation offsets to step through by increments of reso
-  inc <- seq(0, siteelev, reso)
+  # Elevation offsets to step through by increments of elev_reso
+  inc <- seq(0, siteelev, elev_reso)
 
   shorelinedate <- list()
   for(k in 1:length(unique(sitecurve$direction))){
@@ -125,15 +129,17 @@ shoreline_date <- function(site,
     }
 
     # Normalise to sum to unity
-    dategrid$probability <- dategrid$probability / sum(dategrid$probability)
+    if(normalise){
+      dategrid$probability <- dategrid$probability / sum(dategrid$probability)
+    }
 
     # Update list holding results
     if(!sparse){
-    shorelinedate[[k]] <- list(date = dategrid,
-                dispcurve = temp_curve,
-                elev = siteelev,
-                expratio = expratio,
-                expdat = expdat)
+      shorelinedate[[k]] <- list(date = dategrid,
+                  dispcurve = temp_curve,
+                  elev = siteelev,
+                  expratio = expratio,
+                  expdat = expdat)
     } else {
       shorelinedate[[k]] <- dategrid
     }
