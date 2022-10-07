@@ -5,6 +5,7 @@
 #' @param target A spatial target location to where the new displacement curve is interpolated
 #' @param dispdat Load existing displacement curves.
 #' @param isobases Spatial lines representing the isobases of the existing displacement curves
+#' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
 #'
 #' @return A data frame holding the interpolated displacement curve
 #' @export
@@ -26,10 +27,11 @@ interpolate_curve <- function(target,
                                   system.file("extdata/displacement_curves.rda",
                                                     package = "shoredate",
                                               mustWork = TRUE)),
-                              isobases = NA){
+                              isobases = NA,
+                              cal_reso = 1){
 
-  bce <- seq(-1950, 10550,  1) * -1 # Sequence of years to match displacement
-                                    # data
+  bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to
+                                          # match displacement data
 
   # Use default isobases unless others are provided
   if(any(is.na(isobases))){

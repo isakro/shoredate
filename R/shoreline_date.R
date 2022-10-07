@@ -12,7 +12,7 @@
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
 #' @param normalise Logical value specifying whether the shoreline date should be normalised to sum to unity. Defaults to TRUE.
-#' @param sparse Logical value specifying if information beyond site name and shoreline date should not be returned. Defaults to FALSE.
+#' @param sparse Logical value specifying if information beyond site name and shoreline date should be returned. Defaults to FALSE.
 #'
 #' @return A list containing the shoreline date and associated parameters.
 #' @export
@@ -31,7 +31,7 @@
 #' shoredate_plot(target_date)
 shoreline_date <- function(site,
                            elev_raster = NA,
-                           elev_reso = 0.1,
+                           elev_reso = 0.01,
                            cal_reso = 1,
                            isobase_direction = 327,
                            expratio = 0.168,
@@ -54,9 +54,11 @@ shoreline_date <- function(site,
   }
 
   if(all(is.na(interpolated_curve)) & length(unique(isobases$direction)) > 1){
-    sitecurve <- interpolate_curve(target = site, isobases = isobases)
+    sitecurve <- interpolate_curve(target = site,
+                                   isobases = isobases, cal_reso = cal_reso)
   } else if(all(is.na(interpolated_curve))){
-    sitecurve <- interpolate_curve(target = site, isobases = isobases)
+    sitecurve <- interpolate_curve(target = site,
+                                   isobases = isobases, cal_reso = cal_reso)
   } else{
     sitecurve <- interpolated_curve
   }

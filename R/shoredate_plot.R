@@ -28,6 +28,7 @@ shoredate_plot <- function(shorelinedate,
                            displacement_curve = TRUE,
                            lambda = TRUE,
                            isobase_direction = FALSE,
+                           highest_denisty_region = TRUE,
                            hdr_label = TRUE,
                            greyscale = FALSE){
 
@@ -46,7 +47,6 @@ shoredate_plot <- function(shorelinedate,
 
     nshoredate <- shorelinedate[[k]]
 
-    hdrdates <- shoredate_hdr(nshoredate)
     # Visualisation cut-off
     dategrid <- nshoredate$date[nshoredate$date$probability > 0.000009,]
 
@@ -54,12 +54,30 @@ shoredate_plot <- function(shorelinedate,
     ggridges::geom_ridgeline(ggplot2::aes(x = .data$bce, y = 1,
                                           height = .data$probability * 15000),
                              colour = NA, fill = "darkgrey", alpha = 0.7) +
-    ggplot2::geom_segment(data = hdrdates, ggplot2::aes(x = .data$start,
-                                                        xend = .data$end,
-                                      y = 0, yend = 0), col = "black") +
     ggplot2::labs(y = "Meters above present sea-level",
                   x = "Shoreline date (BCE)") +
       ggplot2::theme_bw()
+
+    if(highest_denisty_region){
+      hdrs <- shoredate_hdr(nshoredate)
+
+      hdr_list <- vector("list", length(my_hdr))
+      for (i in 1:length(hdrs)) {
+        hdr_list[[i]] <- data.frame(
+          min = min(hdrs[[i]]),
+          max = max(hdrs[[i]]),
+          hdr = i
+        )
+      }
+      hdr_df <- do.call(rbind, hdr_list)
+
+      plt <- plt +
+        ggplot2::geom_segment(data = hdr_df, ggplot2::aes(x = .data$min,
+                                                            xend = .data$max,
+                                                            y = 0, yend = 0),
+                              col = "black")
+
+    }
 
 
     lambdaval <- as.numeric(nshoredate$expratio)
@@ -119,13 +137,13 @@ shoredate_plot <- function(shorelinedate,
                  col = sitedistcol, alpha = 0.6)
     }
 
-    if(hdr_label){
+    if(hdr_label & highest_denisty_region){
 
 
       label_hdrs <- ""
-      for(i in 1:nrow(hdrdates)){
-        label_hdrs <- paste0(label_hdrs, round(hdrdates$start[i])," to ",
-                            round(hdrdates$end[i]), " BCE\n")
+      for(i in 1:nrow(hdr_df)){
+        label_hdrs <- paste0(label_hdrs, round(hdr_df$min[i])," to ",
+                            round(hdr_df$max[i]), " BCE\n")
       }
       label_text <- paste0("95% HDR:\n", label_hdrs)
 

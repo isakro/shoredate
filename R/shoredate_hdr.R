@@ -1,6 +1,6 @@
 #' Highest density region of shoreline date
 #'
-#' Function to find 95% highest density region (HDR) for a provided shoreline date.
+#' Function to find 95% highest density region (HDR) for a provided shoreline date. If the resolution of the shoreline date is too low, this can break down.
 #'
 #' @param shorelinedate A list of objects returned from shoreline_date().
 #'
@@ -16,23 +16,41 @@
 #' target_date <- shoreline_date(site = target_pt, elevation = 65)
 #' # Retrieve and print HDR for the shoreline date
 #' (shoredate_hdr(target_date))
-shoredate_hdr <- function(shorelinedate){
+shoredate_hdr <- function(shorelinedate, prob = 0.95){
 
-  dategrid <- shorelinedate$date
+  date <- shorelinedate$date
 
-  dathdr <- hdrcde::hdr(den = list("x" = dategrid$bce,
-                                   "y" = dategrid$probability), prob = 95)
-  segdat <- data.frame(t(dathdr$hdr))
-  rsegdat <- round(segdat / 10) * 10
+  # Code (and comments to code to follow) is taken from Parnell's Bchron package:
+  #https://github.com/andrewcparnell/Bchron/blob/master/R/hdr.R
 
-  datedat <- data.frame(matrix(nrow = length(segdat[seq(1, nrow(segdat), 2),]),
-                                ncol = 4))
+  ag <- date$bce
+  de <- date$probability
 
-  names(datedat) <- c("start", "end", "group", "year_median")
-  datedat$start <- segdat[seq(1, nrow(segdat), 2), "X95."]
-  datedat$end <- segdat[seq(2, nrow(segdat), 2), "X95."]
-  datedat$hdr_segment <- 1:(nrow(segdat)/2)
+  # Put the probabilities in order of density
+  o <- order(de)
+  cu <- cumsum(de[o])
 
-  return(datedat)
+  good_cu <- which(cu > 1 - prob)
+  good_ag <- sort(ag[o][good_cu])
+
+  # Pick out the extremes of each range
+  breaks <- diff(good_ag) > 1
+  where_breaks <- which(diff(good_ag) > 1)
+  n_breaks <- sum(breaks) + 1
+  # Store output
+  out <- vector("list", length = n_breaks)
+  low_seq <- 1
+  high_seq <- ifelse(length(where_breaks) == 0, length(breaks), where_breaks[1])
+  for (i in 1:n_breaks) {
+    out[[i]] <- c(good_ag[low_seq], good_ag[high_seq])
+    curr_dens <- round(100 * sum(de[o][seq(good_cu[low_seq], good_cu[high_seq])]), 1)
+    names(out)[[i]] <- paste0(as.character(curr_dens), "%")
+    low_seq <- high_seq + 1
+    high_seq <- ifelse(i < (n_breaks - 1), where_breaks[i + 1], length(good_ag))
+  }
+  return(out)
 
 }
+
+
+
