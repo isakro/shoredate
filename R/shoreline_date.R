@@ -67,7 +67,7 @@ shoreline_date <- function(site,
     sitecurve <- do.call(rbind.data.frame, sitecurve)
   }
 
-  if(is.na(elev_raster)){
+  if(!(inherits(elev_raster, c("raster","SpatRaster")))){
     if(is.na(elevation)){
       return(NA)
     } else{
