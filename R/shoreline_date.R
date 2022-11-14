@@ -8,11 +8,11 @@
 #' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
 #' @param model_parameters Vector of numeric values specifying the shape \eqn{\alpha} and rate \eqn{\sigma} of the gamma distribution. Defaults to \eqn{\alpha} = 0.286 and \eqn{\sigma} = 0.048.
-#' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
+#' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster. Defaults to mean.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
 #' @param normalise Logical value specifying whether the shoreline date should be normalised to sum to unity. Defaults to TRUE.
-#' @param sparse Logical value specifying if information beyond site name and shoreline date should be returned. Defaults to FALSE.
+#' @param sparse Logical value specifying if only site name and shoreline date should be returned. Defaults to FALSE.
 #'
 #' @return A list containing the shoreline date and associated parameters.
 #' @export
