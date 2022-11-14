@@ -8,7 +8,8 @@ interpolate_curve(
   target,
   dispdat = load(system.file("extdata/displacement_curves.rda", package = "shoredate",
     mustWork = TRUE)),
-  isobases = NA
+  isobases = NA,
+  cal_reso = 1
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ interpolate_curve(
 \item{dispdat}{Load existing displacement curves.}
 
 \item{isobases}{Spatial lines representing the isobases of the existing displacement curves}
+
+\item{cal_reso}{Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.}
 }
 \value{
 A data frame holding the interpolated displacement curve

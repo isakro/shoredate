@@ -59,7 +59,7 @@ It is also possible to plot a more sparse version of the plot by specifying what
 
 ```{r sparse}
 shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE,
-               lambda = FALSE, hdr_label = FALSE)
+               parameters = FALSE, hdr_label = FALSE)
 ```
 
 ## Interpolating shoreline displacement curve

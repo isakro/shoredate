@@ -1,13 +1,13 @@
 #' Shoreline date
 #'
-#' A function for shoreline dating a Stone Age site based on its present-day elevation and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
+#' A function for shoreline dating a Stone Age site based on its present-day elevation, it's likely elevation above sea-level when in use and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 #'
 #' @param site Vector giving site name, or, if displacement curve is to be interpolated, an object of class `sf` representing the site to be dated.
 #' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
 #' @param elev_reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
 #' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
-#' @param expratio Numeric value specifying the ratio with which the exponential function decays. Defaults to 0.168.
+#' @param model_parameters Vector of numeric values specifying the shape \eqn{\alpha} and rate \eqn{\sigma} of the gamma distribution. Defaults to \eqn{\alpha} = 0.286 and \eqn{\sigma} = 0.048.
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
@@ -22,10 +22,10 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(510285, 6510594)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing an elevation raster.
-#' target_date <- shoreline_date(site = target_pt, elevation = 46)
+#' target_date <- shoreline_date(site = target_point, elevation = 46)
 #'
 #' # Call to plot
 #' shoredate_plot(target_date)
@@ -34,7 +34,7 @@ shoreline_date <- function(site,
                            elev_reso = 0.01,
                            cal_reso = 1,
                            isobase_direction = 327,
-                           expratio = 0.168,
+                           model_parameters = c(0.286, 0.048),
                            elevavg = "mean",
                            elevation = NA,
                            interpolated_curve = NA,
@@ -87,19 +87,21 @@ shoreline_date <- function(site,
     temp_curve <- sitecurve[sitecurve$direction ==
                               unique(sitecurve$direction)[k],]
     # Set up data frame and assign probability to the offset increments
-    expdat <- data.frame(
+
+    gammadat <- data.frame(
       offset = inc,
-      px = stats::pexp(inc, rate = expratio))
-    expdat$probs <- c(diff(expdat$px), 0)
-    expdat <- expdat[expdat$px < 0.99999,]
+      px = stats::pgamma(inc, shape = model_parameters[1],
+                  rate =  model_parameters[2]))
+    gammadat$probs <- c(diff(gammadat$px), 0)
+    gammdat <- gammadat[gammadat$px < 0.99999,]
 
     dategrid <- data.frame(
       bce = bce,
       probability = 0)
 
-    for(i in 1:nrow(expdat)){
+    for(i in 1:nrow(gammadat)){
       # Subtract offset
-      adjusted_elev <- as.numeric(siteelev - expdat$offset[i])
+      adjusted_elev <- as.numeric(siteelev - gammadat$offset[i])
 
       # Find lower date
       lowerd <- round(stats::approx(temp_curve[,"lowerelev"],
@@ -117,7 +119,7 @@ shoreline_date <- function(site,
       if(!is.na(latest) && !is.na(earliest)){
 
         year_range <- seq(earliest, latest, 1)
-        prob <- 1/length(year_range) * expdat$probs[i]
+        prob <- 1/length(year_range) * gammadat$probs[i]
 
         dategrid[dategrid$bce %in% year_range, "probability"] <-
           dategrid[dategrid$bce %in% year_range, "probability"] + prob
@@ -140,8 +142,8 @@ shoreline_date <- function(site,
       shorelinedate[[k]] <- list(date = dategrid,
                   dispcurve = temp_curve,
                   elev = siteelev,
-                  expratio = expratio,
-                  expdat = expdat)
+                  model_parameters = model_parameters,
+                  gammadat = gammadat)
     } else {
       shorelinedate[[k]] <- dategrid
     }

@@ -12,10 +12,10 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location.
-#' target_curve <- interpolate_curve(target_pt)
+#' target_curve <- interpolate_curve(target_point)
 #'
 #' # Call to plot
 #' displacement_plot(target_curve)
@@ -33,7 +33,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       colour_scheme <- c("Horten" = "black",
                          "Larvik" = "black",
                          "Tvedestrand" = "black",
-                         "Arendal" = "black",)
+                         "Arendal" = "black")
 
       line_scheme <- c("Horten" = "twodash",
                        "Larvik" = "dashed",
@@ -62,8 +62,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       line_scheme <- c("Horten" = "solid",
                        "Larvik" = "solid",
                        "Tvedestrand" = "solid",
-                       "Arendal" = "solid",
-                       )
+                       "Arendal" = "solid")
 
       } else{
         colour_scheme <- c("Horten" = "darkorange",

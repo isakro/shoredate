@@ -2,24 +2,26 @@
 % Please edit documentation in R/shoredate_hdr.R
 \name{shoredate_hdr}
 \alias{shoredate_hdr}
-\title{Find 95\% highest density region of shoreline date}
+\title{Highest density region of shoreline date}
 \usage{
-shoredate_hdr(shorelinedate)
+shoredate_hdr(shorelinedate, prob = 0.95)
 }
 \arguments{
 \item{shorelinedate}{A list of objects returned from shoreline_date().}
+
+\item{prob}{A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.}
 }
 \value{
-A data frame holding start and end points for segments of the 95\% highest density region.
+A data frame holding  start and end points for segments of the 95\% highest density region
 }
 \description{
-Function to find 95\% highest density region (HDR) for a provided shoreline date rounded to the nearest 10 years to reduce spurious precision.
+Function to find 95\% highest density region (HDR) for a provided shoreline date. If the resolution of the shoreline date is too low, this can break down. Code is taken from Parnell
 }
 \examples{
-# Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+# Create point to shoreline date
+target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 
-# Date target point, specifying the elevation instead of providing an elevation raster.
+# Perform shoreline dating
 target_date <- shoreline_date(site = target_point, elevation = 65)
 
 # Retrieve and print HDR for the shoreline date

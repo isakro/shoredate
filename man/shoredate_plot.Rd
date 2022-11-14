@@ -8,23 +8,27 @@ shoredate_plot(
   shorelinedate,
   site_elevation = TRUE,
   displacement_curve = TRUE,
-  lambda = TRUE,
+  parameters = TRUE,
   isobase_direction = FALSE,
-  hdr_label = TRUE
+  highest_density_region = TRUE,
+  hdr_label = TRUE,
+  greyscale = FALSE
 )
 }
 \arguments{
 \item{shorelinedate}{A list of objects returned from shoreline_date().}
 
-\item{site_elevation}{Logical value indicating whether the site elevation and exponential decay function should be displayed. Default is TRUE.}
+\item{site_elevation}{Logical value indicating whether the site elevation and gamma distribution should be displayed. Default is TRUE.}
 
 \item{displacement_curve}{Logical value indicating whether the displacement curve should be displayed. Default is TRUE.}
 
-\item{lambda}{Logical value indicating whether the lambda value for the exponential decay function should be displayed. Default is TRUE.}
+\item{parameters}{Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is TRUE.}
 
 \item{isobase_direction}{Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.}
 
-\item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.}
+\item{highest_density_region}{Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.}
+
+\item{greyscale}{Logical value indicating whether the plot should include colours or not. Defaults to FALSE.}
 }
 \value{
 A plot displaying the provided shoreline date.
@@ -33,9 +37,11 @@ A plot displaying the provided shoreline date.
 Function for plotting shoreline date along with associated metadata.
 }
 \examples{
-target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+
 target_date <- shoreline_date(site = target_point, elevation = 65,
                               isobase_direction = c(327,338))
+
 shoredate_plot(target_date, isobase_direction = TRUE)
 }
 \seealso{
