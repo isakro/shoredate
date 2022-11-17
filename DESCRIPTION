@@ -13,7 +13,6 @@ Imports:
     ggplot2,
     ggridges,
     grid,
-    hdrcde,
     patchwork,
     scales,
     sf,

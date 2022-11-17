@@ -101,7 +101,10 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                            ggplot2::aes(x = .data$bce,
                                         y = .data$lowerelev,
                                         col = .data$name,
-                                        linetype = .data$name))
+                                        linetype = .data$name)) +
+        ggplot2::scale_colour_manual(values = colour_scheme) +
+        ggplot2::scale_linetype_manual(values = line_scheme)
+
     } else{
       intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
       intcurves$name <- "Interpolated curve"

@@ -5,7 +5,7 @@
 #' @param site Vector giving site name, or, if displacement curve is to be interpolated, an object of class `sf` representing the site to be dated.
 #' @param elev_raster Elevation raster to be input if the elevation values are not provided manually.
 #' @param elev_reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.
-#' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
+#' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 10.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
 #' @param model_parameters Vector of numeric values specifying the shape \eqn{\alpha} and rate \eqn{\sigma} of the gamma distribution. Defaults to \eqn{\alpha} = 0.286 and \eqn{\sigma} = 0.048.
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster. Defaults to mean.
@@ -32,7 +32,7 @@
 shoreline_date <- function(site,
                            elev_raster = NA,
                            elev_reso = 0.01,
-                           cal_reso = 1,
+                           cal_reso = 10,
                            isobase_direction = 327,
                            model_parameters = c(0.286, 0.048),
                            elevavg = "mean",

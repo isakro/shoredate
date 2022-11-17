@@ -8,7 +8,7 @@ shoreline_date(
   site,
   elev_raster = NA,
   elev_reso = 0.01,
-  cal_reso = 1,
+  cal_reso = 10,
   isobase_direction = 327,
   model_parameters = c(0.286, 0.048),
   elevavg = "mean",
@@ -25,13 +25,13 @@ shoreline_date(
 
 \item{elev_reso}{Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.01m.}
 
-\item{cal_reso}{Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.}
+\item{cal_reso}{Numeric value specifying the resolution to use on the calendar scale. Defaults to 10.}
 
 \item{isobase_direction}{A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.}
 
-\item{model_parameters}{Vector of numeric values specifying the shape $\alpha$ and rate $\sigma$ of the gamma distribution. Defaults to $\alpha$ = 0.286 and $\sigma$ = 0.048.}
+\item{model_parameters}{Vector of numeric values specifying the shape \eqn{\alpha} and rate \eqn{\sigma} of the gamma distribution. Defaults to \eqn{\alpha} = 0.286 and \eqn{\sigma} = 0.048.}
 
-\item{elevavg}{Specified statistic to define elevation if this is to be derived from elevation raster.}
+\item{elevavg}{Specified statistic to define elevation if this is to be derived from elevation raster. Defaults to mean.}
 
 \item{elevation}{Numeric elevation value to inform shoreline date unless an elevation raster is provided.}
 
@@ -39,7 +39,7 @@ shoreline_date(
 
 \item{normalise}{Logical value specifying whether the shoreline date should be normalised to sum to unity. Defaults to TRUE.}
 
-\item{sparse}{Logical value specifying if information beyond site name and shoreline date should be returned. Defaults to FALSE.}
+\item{sparse}{Logical value specifying if only site name and shoreline date should be returned. Defaults to FALSE.}
 }
 \value{
 A list containing the shoreline date and associated parameters.

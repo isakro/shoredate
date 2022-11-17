@@ -91,7 +91,7 @@ iso_date <- shoreline_date(site = target_point, elevation = 65, isobase_directio
 ```
 
 In the call to plot it can then be specified that the direction of the isobases is displayed with each date.
-```{r plot_example_isobases, fig.width = 4, fig.height = 7, warning = FALSE, message = FALSE}
+```{r plot_example_isobases, fig.width = 8, fig.height = 12, warning = FALSE, message = FALSE}
 shoredate_plot(iso_date, isobase_direction = TRUE)
 ```
 

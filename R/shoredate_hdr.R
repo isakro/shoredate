@@ -8,8 +8,6 @@
 #' @return A data frame holding  start and end points for segments of the 95% highest density region
 #' @export
 #'
-#' @import hdrcde
-#'
 #' @examples
 #' # Create point to shoreline date
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)

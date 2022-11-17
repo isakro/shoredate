@@ -7,7 +7,8 @@
 #' @param displacement_curve Logical value indicating whether the displacement curve should be displayed. Default is TRUE.
 #' @param parameters Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is TRUE.
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
-#' @param highest_density_region Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.
+#' @param highest_density_region Logical value indicating whether the 95\% highest density region should be displayed. Defaults to TRUE.
+#' @param hdr_label Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.
 #' @param greyscale Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the provided shoreline date.
@@ -16,7 +17,7 @@
 #'
 #' @import ggplot2
 #' @import ggridges
-#' @import patchwork
+#' @importFrom patchwork wrap_plots
 #'
 #' @examples
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)

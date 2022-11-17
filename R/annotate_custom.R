@@ -12,8 +12,8 @@
 #' @param thm Get thematic parameters from the ggplot object to which the annotation is added.
 #'
 #' @import ggplot2
-#' @import grid
-#' @import scales
+#' @importFrom grid textGrob gpar unit.c viewport grobWidth grobHeight editGrob grobTree
+#' @importFrom scales squish_infinite
 #'
 #' @return A ggplot layer holding text label
 #' @export

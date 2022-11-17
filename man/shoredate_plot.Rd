@@ -26,9 +26,11 @@ shoredate_plot(
 
 \item{isobase_direction}{Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.}
 
-\item{highest_density_region}{Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.}
+\item{highest_density_region}{Logical value indicating whether the 95\\% highest density region should be displayed. Defaults to TRUE.}
 
-\item{greyscale}{Logical value indicating whether the plot should include colours or not. Defaults to FALSE.}
+\item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.}
+
+\item{greyscale}{Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.}
 }
 \value{
 A plot displaying the provided shoreline date.
