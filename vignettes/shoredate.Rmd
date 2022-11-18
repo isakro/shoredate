@@ -38,9 +38,15 @@ library(shoredate)
 ```
 
 # Shoreline dating a site
+Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline while they were in use. By reconstructing the past trajectory of shoreline displacement and combining this with the present-day elevation of a site, this thus allows us to ascribe an approximate date to when the sites were in use. The method is thus dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
+
+In the paper Roalkvam (2022) it was found that the vertical distance between sites and the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implemented method. Furthermore, the method is here based on interpolating the shoreline displacement to any one location within the study area, using the four available geologically derived shoreline displacement curves from the region. This is done in the function `interpolate_curve`, by means of inverse distance weighting, using the squared inverse of the distance between the sites and the shoreline isobases of the displacement curves. The isobases are contours on which relative sea-level change has followed the same trajectory.
+
+
+
 The following section outlines how to perform a shoreline date using the default settings. After this the various variables and helper-functions underlying the dating procedure are presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible in a given setting.
 
-To perform a basic shoreline date a site the site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster as a *SpatRaster* object from the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used.
+To perform a basic shoreline date a site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster as a *SpatRaster* object using the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used.
 
 ```{r example_site, message = FALSE}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG:32632).
@@ -55,11 +61,10 @@ The results can then be plotted using the `shoredate_plot()` command:
 shoredate_plot(target_date)
 ```
 
-It is also possible to plot a more sparse version of the plot by specifying what elements are to be excluded:
+It is also possible to plot a more sparse version by specifying what elements are to be excluded:
 
-```{r sparse}
-shoredate_plot(target_date,  site_elevation = FALSE, displacement_curve = FALSE,
-               parameters = FALSE, hdr_label = FALSE)
+```{r sparse, fig.width = 4, fig.height = 3.5, warning = FALSE}
+shoredate_plot(target_date,  elevation_distribution = FALSE, displacement_curve = FALSE)
 ```
 
 ## Interpolating shoreline displacement curve
@@ -77,7 +82,7 @@ target_curve <- interpolate_curve(target_point)
 
 To visualise the interpolated curve alongside the geologic reconstructions, the curve can be passed to `displacement_plot()`:
 
-```{r plot_intcurve, fig.width = 6, fig.height = 3.5, warning = FALSE, message = FALSE}
+```{r plot_intcurve, fig.width = 6, fig.height = 5, warning = FALSE, message = FALSE}
 displacement_plot(target_curve)
 ```
 
@@ -91,7 +96,7 @@ iso_date <- shoreline_date(site = target_point, elevation = 65, isobase_directio
 ```
 
 In the call to plot it can then be specified that the direction of the isobases is displayed with each date.
-```{r plot_example_isobases, fig.width = 8, fig.height = 12, warning = FALSE, message = FALSE}
+```{r plot_example_isobases, fig.width = 6, fig.height = 10, warning = FALSE, message = FALSE}
 shoredate_plot(iso_date, isobase_direction = TRUE)
 ```
 

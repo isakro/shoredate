@@ -19,14 +19,24 @@
 #' (shoredate_hdr(target_date))
 shoredate_hdr <- function(shorelinedate, prob = 0.95){
 
-  # When the result is passed in shoredate_plot it done so unlisted.
+  # Check if results are passed listed or not.
   if(is.null(names(shorelinedate))){
     date <- shorelinedate[[1]]$date
+    cal_reso <- shorelinedate[[1]]$cal_reso
   } else{
     date <- shorelinedate$date
+    cal_reso <- shorelinedate$cal_reso
   }
 
-  # Code (and comments to code to follow) is taken from Parnell's Bchron
+  # Extend the calendar scale to individual years for the HDR to work
+  # irrespective of calendar resolution
+  date <- data.frame(bce = head(seq(max(date$bce), min(date$bce)), -1),
+                      probability = rep(head(date$probability, -1),
+                                        each = cal_reso))
+  # Re-normalise probability to sum to unity
+  date$probability <- date$probability/sum(date$probability)
+
+  # Code (and comments to code) to follow is taken from Parnell's Bchron
   # package: https://github.com/andrewcparnell/Bchron/blob/master/R/hdr.R
 
   ag <- date$bce
@@ -36,6 +46,7 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   o <- order(de)
   cu <- cumsum(de[o])
 
+  # Find which ones are above the threshold
   good_cu <- which(cu > 1 - prob)
   good_ag <- sort(ag[o][good_cu])
 
@@ -44,20 +55,44 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   where_breaks <- which(diff(good_ag) > 1)
   n_breaks <- sum(breaks) + 1
   # Store output
-  out <- vector("list", length = n_breaks)
+  # [Slightly modified this to use a data frame instead of list]
+  out <- data.frame()
   low_seq <- 1
   high_seq <- ifelse(length(where_breaks) == 0, length(breaks), where_breaks[1])
   for (i in 1:n_breaks) {
-    out[[i]] <- c(good_ag[low_seq], good_ag[high_seq])
-    curr_dens <- round(100 * sum(de[o][seq(good_cu[low_seq],
-                                           good_cu[high_seq])]), 1)
-    names(out)[[i]] <- paste0(as.character(curr_dens), "%")
+    out <- rbind(out, c(good_ag[low_seq], good_ag[high_seq]))
+    # curr_dens <- round(100 * sum(de[o][seq(good_cu[low_seq],
+    #                                        good_cu[high_seq])]), 1)
+    # names(out)[[i]] <- paste0(as.character(curr_dens), "%")
     low_seq <- high_seq + 1
     high_seq <- ifelse(i < (n_breaks - 1), where_breaks[i + 1], length(good_ag))
   }
-  return(out)
+  names(out) <- c("start", "end")
 
+  # Round up to nearest cal_reso
+  out <- out + (cal_reso - out %% cal_reso)
+
+  return(out)
 }
+
+# hdrdat <- hdrcde::hdr(den = list("x" = date$bce,
+#                                  "y" = date$probability), prob = 95)
+# segdat <- data.frame(t(hdrdat$hdr))
+# hdrsegs <- data.frame(matrix(nrow = length(segdat[seq(1, nrow(segdat), 2),]),
+#                              ncol = 5))
+# names(hdrsegs) <- c("site_name", "start", "end", "group", "year_median")
+#
+# hdrsegs$site_name <-  unique(date$site_name)
+# hdrsegs$start <- segdat[seq(1, nrow(segdat), 2), "X95."]
+# hdrsegs$end <- segdat[seq(2, nrow(segdat), 2), "X95."]
+# hdrsegs$group <- seq(1:length(hdrdat$hdr[c(TRUE, FALSE)]))
+# hdrsegs$year_median <- median(as.numeric(hdrdat$mode))
+#
+# return(hdrsegs)
+
+
+
+
 
 
 

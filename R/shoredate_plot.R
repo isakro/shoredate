@@ -3,12 +3,12 @@
 #' Function for plotting shoreline date along with associated metadata.
 #'
 #' @param shorelinedate A list of objects returned from shoreline_date().
-#' @param site_elevation Logical value indicating whether the site elevation and gamma distribution should be displayed. Default is TRUE.
+#' @param elevation_distribution Logical value indicating whether the gamma distribution should be displayed. Default is TRUE.
 #' @param displacement_curve Logical value indicating whether the displacement curve should be displayed. Default is TRUE.
-#' @param parameters Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is TRUE.
+#' @param parameters Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is FALSE.
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
 #' @param highest_density_region Logical value indicating whether the 95\% highest density region should be displayed. Defaults to TRUE.
-#' @param hdr_label Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.
+#' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
 #' @param greyscale Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the provided shoreline date.
@@ -22,14 +22,14 @@
 #' @examples
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
-#' target_date <- shoreline_date(site = target_point, elevation = 65,
+#' target_date <- shoreline_date(site = target_point, elevation = 46,
 #'                               isobase_direction = c(327,338))
 #'
 #' shoredate_plot(target_date, isobase_direction = TRUE)
 shoredate_plot <- function(shorelinedate,
-                           site_elevation = TRUE,
+                           elevation_distribution = TRUE,
                            displacement_curve = TRUE,
-                           parameters = TRUE,
+                           parameters = FALSE,
                            isobase_direction = FALSE,
                            highest_density_region = TRUE,
                            hdr_label = TRUE,
@@ -55,7 +55,7 @@ shoredate_plot <- function(shorelinedate,
 
     plt <- ggplot2::ggplot(data = dategrid) +
     ggridges::geom_ridgeline(ggplot2::aes(x = .data$bce, y = 1,
-                                          height = .data$probability * 15000),
+                     height = .data$probability * 10000/nshoredate$cal_reso),
                              colour = NA, fill = "darkgrey", alpha = 0.7) +
     ggplot2::labs(y = "Meters above present sea-level",
                   x = "Shoreline date (BCE)") +
@@ -64,19 +64,19 @@ shoredate_plot <- function(shorelinedate,
     if(highest_density_region){
       hdrs <- shoredate_hdr(nshoredate)
 
-      hdr_list <- vector("list", length(hdrs))
-      for (i in 1:length(hdrs)) {
-        hdr_list[[i]] <- data.frame(
-          min = min(hdrs[[i]]),
-          max = max(hdrs[[i]]),
-          hdr = i
-        )
-      }
-      hdr_df <- do.call(rbind, hdr_list)
+      # hdr_list <- vector("list", length(hdrs))
+      # for (i in 1:length(hdrs)) {
+      #   hdr_list[[i]] <- data.frame(
+      #     min = min(hdrs[[i]]),
+      #     max = max(hdrs[[i]]),
+      #     hdr = i
+      #   )
+      # }
+      # hdr_df <- do.call(rbind, hdr_list)
 
       plt <- plt +
-        ggplot2::geom_segment(data = hdr_df, ggplot2::aes(x = .data$min,
-                                                            xend = .data$max,
+        ggplot2::geom_segment(data = hdrs, ggplot2::aes(x = .data$start,
+                                                            xend = .data$end,
                                                             y = 0, yend = 0),
                               col = "black")
 
@@ -94,6 +94,9 @@ shoredate_plot <- function(shorelinedate,
       plt <- plt +
         ggplot2::ggtitle(bquote(alpha ~ "=" ~ .(paramval[1]) ~
                                   sigma ~ "=" ~ .(paramval[2])))
+    } else if(isobase_direction){
+      plt <- plt +
+        ggplot2::ggtitle(bquote("Isobase direction =" ~ .(dirval)))
     }
 
     if(displacement_curve){
@@ -114,12 +117,12 @@ shoredate_plot <- function(shorelinedate,
                            colour = dispcol) +
         ggplot2::scale_x_continuous(expand = c(0,0),
                                     limits = c(min(dategrid$bce) - 1250,
-                                               max(dategrid$bce) + 1000)) +
+                                               max(dategrid$bce) + 250)) +
         ggplot2:: coord_cartesian(ylim = c(0,
-                                           as.numeric(nshoredate$elev) + 30))
+                                           as.numeric(nshoredate$elev) + 10))
     }
 
-    if(site_elevation){
+    if(elevation_distribution){
 
       # For plotting purposes to close the geom_polygon on the y-axis
       gammadatg <- rbind(c(0, 0, 0), nshoredate$gammadat)
@@ -147,10 +150,14 @@ shoredate_plot <- function(shorelinedate,
 
 
       label_hdrs <- ""
-      for(i in 1:nrow(hdr_df)){
-        label_hdrs <- paste0(label_hdrs, round(hdr_df$min[i])," to ",
-                            round(hdr_df$max[i]), " BCE\n")
+      for(i in 1:nrow(hdrs)){
+        label_hdrs <- paste0(label_hdrs, hdrs$start[i]," to ",
+                            hdrs$end[i], " BCE\n")
       }
+      # for(i in 1:nrow(hdrs)){
+      #   label_hdrs <- paste0(label_hdrs, round(hdrs$start[i])," to ",
+      #                        round(hdrs$end[i]), " BCE\n")
+      # }
       label_text <- paste0("95% HDR:\n", label_hdrs)
 
      plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.9, hjust = 0)
@@ -159,5 +166,5 @@ shoredate_plot <- function(shorelinedate,
     plts[[k]] <- plt
   }
 
-  patchwork::wrap_plots(plts, ncol = 1)
+  suppressWarnings(print(patchwork::wrap_plots(plts, ncol = 1)))
 }
