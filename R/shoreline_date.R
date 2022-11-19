@@ -7,7 +7,7 @@
 #' @param elev_reso Numeric value specifying the resolution with which to step through the elevation distance between site and shoreline. Defaults to 0.001m.
 #' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 10.
 #' @param isobase_direction A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.
-#' @param model_parameters Vector of numeric values specifying the shape \eqn{\alpha} and rate \eqn{\sigma} of the gamma distribution. Defaults to \eqn{\alpha} = 0.286 and \eqn{\sigma} = 0.048.
+#' @param model_parameters Vector of numeric values specifying the shape
 #' @param elevavg Specified statistic to define elevation if this is to be derived from elevation raster. Defaults to mean.
 #' @param elevation Numeric elevation value to inform shoreline date unless an elevation raster is provided.
 #' @param interpolated_curve List holding shoreline displacement curve. interpolate_curve() will be run if this is not provided.
