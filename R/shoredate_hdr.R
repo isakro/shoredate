@@ -1,8 +1,8 @@
 #' Highest density region of shoreline date
 #'
-#' Function to find 95% highest density region (HDR) for a provided shoreline date. If the resolution of the shoreline date is too low, this can break down. Code is taken from Parnell
+#' Function to find 95% highest density region (HDR) for a provided shoreline date. Code is taken from Parnell.
 #'
-#' @param shorelinedate A list of objects returned from shoreline_date().
+#' @param shorelinedates A list of objects returned from shoreline_date().
 #' @param prob A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.
 #'
 #' @return A data frame holding  start and end points for segments of the 95% highest density region
@@ -17,15 +17,15 @@
 #'
 #' # Retrieve and print HDR for the shoreline date
 #' (shoredate_hdr(target_date))
-shoredate_hdr <- function(shorelinedate, prob = 0.95){
+shoredate_hdr <- function(shorelinedates, prob = 0.95){
 
-  # Check if results are passed listed or not.
-  if(is.null(names(shorelinedate))){
-    date <- shorelinedate[[1]]$date
-    cal_reso <- shorelinedate[[1]]$cal_reso
+  # Check if results are passed as nested listed or not.
+  if(is.null(names(shorelinedates))){
+    date <- shorelinedates[[1]]$date
+    cal_reso <- shorelinedates[[1]]$cal_reso
   } else{
-    date <- shorelinedate$date
-    cal_reso <- shorelinedate$cal_reso
+    date <- shorelinedates$date
+    cal_reso <- shorelinedates$cal_reso
   }
 
   # Extend the calendar scale to individual years for the HDR to work
@@ -69,10 +69,33 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   }
   names(out) <- c("start", "end")
 
-  # Round up to nearest cal_reso
-  out <- out + (cal_reso - out %% cal_reso)
+  # [Code below does not follow Parnell]
 
-  return(out)
+  # Round to nearest cal_reso
+  out <- round(out, digits = (floor(log10(cal_reso / 10)) + 1)* -1)
+
+  # Collapse HDRs that adjoin on the resolution of cal_reso
+
+  # Check if end value is cal_reso from next start value, except last row.
+  # This returns indices of end values more than cal_reso from next start.
+  end_indices <- which(out$end -  c(tail(out$start, -1), 0) < -cal_reso)
+  end_breaks <- out$end[end_indices]
+
+  # First select start breaks of HDRs. First row is always included, last row
+  # could be, but is here made NA.
+  start_breaks <- out$start[c(1, end_indices + 1)]
+  # Remove the NA resulting from the last row
+  start_breaks <- start_breaks[!is.na(start_breaks)]
+
+  # We know that the start value of the last row is included if the
+  # second to last end break is at the index nrow()-1
+  if(head(tail(end_indices, 2), 1) == nrow(out) - 1){
+    start_breaks <- c(start_breaks, out$start[nrow(out)])
+  }
+
+  hdrs <- data.frame(start = start_breaks,
+                     end = end_breaks)
+  return(hdrs)
 }
 
 # hdrdat <- hdrcde::hdr(den = list("x" = date$bce,
