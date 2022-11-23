@@ -24,8 +24,8 @@
 #' # Create example points
 #' target_points <- sf::st_sfc(sf::st_point(c(538310, 65442551)), sf::st_point(c(538300, 65442500)))
 #'
-#' Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_points <- st_set_crs(target_points, 32632)
+#' # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
+#' target_points <- sf::st_set_crs(target_points, 32632)
 #'
 #' # Date target points, manually specifying the elevations instead of providing an elevation raster.
 #' target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
@@ -157,8 +157,6 @@ shoreline_date <- function(sites,
       } else{
         dategrid$site_name <- sites[i, 1]
       }
-
-      print(sum(dategrid$probability))
 
       # Normalise to sum to unity
       if(normalise){

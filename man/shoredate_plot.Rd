@@ -5,10 +5,10 @@
 \title{Plot shoreline date}
 \usage{
 shoredate_plot(
-  shorelinedate,
-  site_elevation = TRUE,
+  shorelinedates,
+  elevation_distribution = TRUE,
   displacement_curve = TRUE,
-  parameters = TRUE,
+  parameters = FALSE,
   isobase_direction = FALSE,
   highest_density_region = TRUE,
   hdr_label = TRUE,
@@ -16,24 +16,24 @@ shoredate_plot(
 )
 }
 \arguments{
-\item{shorelinedate}{A list of objects returned from shoreline_date().}
+\item{shorelinedates}{A list of objects returned from shoreline_date().}
 
-\item{site_elevation}{Logical value indicating whether the site elevation and gamma distribution should be displayed. Default is TRUE.}
+\item{elevation_distribution}{Logical value indicating whether the gamma distribution should be displayed. Default is TRUE.}
 
 \item{displacement_curve}{Logical value indicating whether the displacement curve should be displayed. Default is TRUE.}
 
-\item{parameters}{Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is TRUE.}
+\item{parameters}{Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is FALSE.}
 
 \item{isobase_direction}{Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.}
 
-\item{highest_density_region}{Logical value indicating whether the 95\\% highest density region should be displayed. Defaults to TRUE.}
+\item{highest_density_region}{Logical value indicating whether the 95\% highest density region should be displayed. Defaults to TRUE.}
 
-\item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions rounded to the nearest 10 years should be displayed. Default is TRUE.}
+\item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.}
 
 \item{greyscale}{Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.}
 }
 \value{
-A plot displaying the provided shoreline date.
+Returns a plot displaying the provided shoreline date.
 }
 \description{
 Function for plotting shoreline date along with associated metadata.
@@ -41,11 +41,8 @@ Function for plotting shoreline date along with associated metadata.
 \examples{
 target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 
-target_date <- shoreline_date(site = target_point, elevation = 65,
+target_date <- shoreline_date(sites = target_point, elevation = 46,
                               isobase_direction = c(327,338))
 
 shoredate_plot(target_date, isobase_direction = TRUE)
-}
-\seealso{
-\code{\link{shoreline_date}}, \code{\link{annotate_custom}}
 }

@@ -1,4 +1,4 @@
-#' Flatten list
+#' Internal helper function for unpacking nested lists of plots
 #'
 #' Utility function to extract a nested list of ggplots. Code taken from answers on Stackoverflow.
 #' From user \@divibsan here:  https://stackoverflow.com/a/55733001 who in turn based their answer on user
@@ -7,10 +7,8 @@
 #' @param x Nested list of ggplot .
 #'
 #' @return List of ggplot objects
-#' @export
-#'
-#' @examples
-flattenlist <- function(x){
+#' @keywords internal
+flatten_list <- function(x){
   morelists <- sapply(x, function(xprime) {
     'list' %in% class(xprime) & !('gg' %in% class(xprime))
   })

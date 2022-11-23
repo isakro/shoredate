@@ -1,4 +1,4 @@
-#' Custom text annotation
+#' Internal helper function for custom text annotation
 #'
 #' The code for this function is taken from an answer on SO given by user Rosen Matev: https://stackoverflow.com/a/22500252/11376454
 #' This allows for the placement of a multi-line text-label using `Inf`, which can be problematic with `ggplot2::annotate`.
@@ -16,14 +16,7 @@
 #' @importFrom scales squish_infinite
 #'
 #' @return A ggplot layer holding text label
-#' @export
-#'
-#' @examples
-#' df <- data.frame(x = seq(1:10), y = seq(1:10))
-#'
-#' ggplot2::ggplot(df) +
-#' ggplot2::aes(x, y) +
-#' annotate_custom("Text label\nSecond line", x = 1, y = 1)
+#' @keywords internal
 annotate_custom <- function(label, x, y, hjust = 0,
                             vjust = 0, thm = ggplot2::theme_get()) {
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotate_custom.R
 \name{annotate_custom}
 \alias{annotate_custom}
-\title{Custom text annotation}
+\title{Internal helper function for custom text annotation}
 \usage{
 annotate_custom(label, x, y, hjust = 0, vjust = 0, thm = ggplot2::theme_get())
 }
@@ -26,10 +26,4 @@ A ggplot layer holding text label
 The code for this function is taken from an answer on SO given by user Rosen Matev: https://stackoverflow.com/a/22500252/11376454
 This allows for the placement of a multi-line text-label using \code{Inf}, which can be problematic with \code{ggplot2::annotate}.
 }
-\examples{
-df <- data.frame(x = seq(1:10), y = seq(1:10))
-
-ggplot2::ggplot(df) +
-ggplot2::aes(x, y) +
-annotate_custom("Text label\nSecond line", x = 1, y = 1)
-}
+\keyword{internal}

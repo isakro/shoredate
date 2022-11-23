@@ -32,7 +32,8 @@ library(shoredate)
 # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
-target_date <- shoreline_date(site = target_point, elevation = 65)
+target_date <- shoreline_date(site = target_point, elevation = 70)
+#> [1] "Dating site 1 of 1"
 
 shoredate_plot(target_date)
 ```

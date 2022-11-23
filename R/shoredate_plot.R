@@ -7,22 +7,22 @@
 #' @param displacement_curve Logical value indicating whether the displacement curve should be displayed. Default is TRUE.
 #' @param parameters Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is FALSE.
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
-#' @param highest_density_region Logical value indicating whether the 95\% highest density region should be displayed. Defaults to TRUE.
+#' @param highest_density_region Logical value indicating whether the 95% highest density region should be displayed. Defaults to TRUE.
 #' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
 #' @param greyscale Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.
 #'
-#' @return A plot displaying the provided shoreline date.
-#' @seealso \code{\link{shoreline_date}}, \code{\link{annotate_custom}}
+#' @return Returns a plot displaying the provided shoreline date.
 #' @export
 #'
 #' @import ggplot2
 #' @import ggridges
 #' @importFrom patchwork wrap_plots
 #'
+#'
 #' @examples
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
-#' target_date <- shoreline_date(site = target_point, elevation = 46,
+#' target_date <- shoreline_date(sites = target_point, elevation = 46,
 #'                               isobase_direction = c(327,338))
 #'
 #' shoredate_plot(target_date, isobase_direction = TRUE)
@@ -55,7 +55,7 @@ shoredate_plot <- function(shorelinedates,
     for(j in 1:length(iso_shoredate)){
 
       # Check if results are passed listed or not.
-      if(inherits(iso_shoredate[[j]], "list")){
+      if(is.null(names(iso_shoredate))){
         nshoredate <- iso_shoredate[[j]]
       } else{
         nshoredate <- iso_shoredate[j]
@@ -179,5 +179,5 @@ shoredate_plot <- function(shorelinedates,
     plts[[k]] <- iso_plts
   }
 
-  suppressWarnings(print(patchwork::wrap_plots(flattenlist(plts), ncol = 1)))
+  suppressWarnings(print(patchwork::wrap_plots(flatten_list(plts), ncol = 1)))
 }
