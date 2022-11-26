@@ -18,6 +18,7 @@ Imports:
     sf,
     terra
 Suggests: 
+    covr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
