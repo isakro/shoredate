@@ -46,7 +46,7 @@ In the paper Roalkvam (2022) it was found that the vertical distance between sit
 
 The following section outlines how to perform a shoreline date using the default settings. After this the various variables and helper-functions underlying the dating procedure are presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible in a given setting.
 
-To perform a basic shoreline date a site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster as a *SpatRaster* object using the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used.
+To perform a basic shoreline date, a site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster as a *SpatRaster* object using the `terra` package. The elevation of the site will then be derived from the raster. If the site has a spatial extent (i.e. is not a point feature) the mean elevation of the feature is used by default.
 
 ```{r example_site, message = FALSE}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG:32632).

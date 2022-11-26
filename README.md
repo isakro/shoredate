@@ -4,6 +4,8 @@
 # shoredate
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of *shoredate* is to offer methods to shoreline date Stone Age
