@@ -21,7 +21,7 @@ shoreline_date(
 \arguments{
 \item{sites}{Vector giving one or more site names, or, if displacement curves are to be interpolated, objects of class \code{sf} representing the sites to be dated. In the case of a spatial geometry, the first column is taken as site name.}
 
-\item{elevation}{Numeric elevation values to inform shoreline dates unless an elevation raster is provided.}
+\item{elevation}{Vector of numeric elevation values to inform shoreline dates unless an elevation raster is provided.}
 
 \item{elev_raster}{Elevation raster to be input if the elevation values are not provided manually.}
 
@@ -29,9 +29,9 @@ shoreline_date(
 
 \item{cal_reso}{Numeric value specifying the resolution to use on the calendar scale. Must be a power of 10. Defaults to 10.}
 
-\item{isobase_direction}{A single numeric value or a vector of values defining the direction(s) of the isobases. Defaults to 327.}
+\item{isobase_direction}{A vector of numeric values defining the direction(s) of the isobases. Defaults to 327.}
 
-\item{model_parameters}{Vector of numeric values specifying the shape}
+\item{model_parameters}{Vector of numeric values specifying the shape and scale of the gamma distribution. Defaults to shape = 0.286 and scale = 0.048.}
 
 \item{elevavg}{Specified statistic to define elevation if this is to be derived from elevation raster. Defaults to mean.}
 
@@ -42,13 +42,13 @@ shoreline_date(
 \item{sparse}{Logical value specifying if only site name and shoreline date should be returned. Defaults to FALSE.}
 }
 \value{
-A list containing the shoreline date and associated parameters.
+A list of class shoredates holding the shoreline date results and associated parameters.
 }
 \description{
-A function for shoreline dating Stone Age sites based on their present-day elevation, likely elevation above sea-level when in use and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
+A function for shoreline dating Stone Age sites based on their present-day elevation, their likely elevation above sea-level when in use and the trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 }
 \examples{
-# Create example points
+# Create example points.
 target_points <- sf::st_sfc(sf::st_point(c(538310, 65442551)), sf::st_point(c(538300, 65442500)))
 
 # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
@@ -57,6 +57,6 @@ target_points <- sf::st_set_crs(target_points, 32632)
 # Date target points, manually specifying the elevations instead of providing an elevation raster.
 target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
 
-# Call to plot
+# Call to plot.
 shoredate_plot(target_dates)
 }

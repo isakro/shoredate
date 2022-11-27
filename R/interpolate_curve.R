@@ -14,10 +14,10 @@
 #'
 #' @examples
 #' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-#' target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location.
-#' target_curve <- interpolate_curve(target_pt)
+#' target_curve <- interpolate_curve(target_point)
 #'
 #' # Call to plot
 #' displacement_plot(target_curve)
@@ -30,10 +30,21 @@ interpolate_curve <- function(target,
                               isobases = NA,
                               cal_reso = 1){
 
-  bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to
-                                          # match displacement data
+  if(is.na(sf::st_crs(target))){
+    stop("Undefined coordinate reference system. This needs to be set to WGS84 UTM32N (EPSG: 32632).")
+  }
 
-  # Use default isobases unless others are provided
+  if(sf::st_crs(target)$epsg != 32632){
+    stop(paste0("Target has coordinate reference system with EPSG ",
+                sf::st_crs(target)$epsg,
+                ". This needs to be set to WGS84 UTM32N (EPSG: 32632)."))
+  }
+
+
+  bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to
+                                          # match displacement data.
+
+  # Use default isobases unless others are provided.
   if(any(is.na(isobases))){
     isobases <- sf::st_read(
       system.file("extdata/isobases.gpkg",

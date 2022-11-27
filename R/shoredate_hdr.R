@@ -5,17 +5,17 @@
 #' @param shorelinedate A single date consisting of a list of objects returned from shoreline_date().
 #' @param prob A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.
 #'
-#' @return A data frame holding start and end points for segments of the 95% highest density region
+#' @return A data frame holding start and end points for segments of the 95% highest density region.
 #' @export
 #'
 #' @examples
-#' # Create point to shoreline date
+#' # Create point to shoreline date.
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
-#' # Perform shoreline dating
+#' # Perform shoreline dating.
 #' target_date <- shoreline_date(sites = target_point, elevation = 65)
 #'
-#' # Retrieve and print HDR for the shoreline date
+#' # Retrieve and print HDR for the shoreline date.
 #' (shoredate_hdr(target_date))
 shoredate_hdr <- function(shorelinedate, prob = 0.95){
 

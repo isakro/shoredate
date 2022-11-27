@@ -46,6 +46,7 @@ shoredate_plot <- function(shorelinedates,
 
 
   plts <- list()
+  no_plots <- 0
   for(k in 1:length(shorelinedates)){
 
     iso_shoredate <- shorelinedates[[k]]
@@ -59,6 +60,11 @@ shoredate_plot <- function(shorelinedates,
         nshoredate <- iso_shoredate[[j]]
       } else{
         nshoredate <- iso_shoredate[j]
+      }
+
+      if(all(is.na(nshoredate$date$probability))){
+        no_plots <- no_plots + 1
+        next
       }
 
       # Remove zeroes for visualisation
@@ -121,14 +127,14 @@ shoredate_plot <- function(shorelinedates,
           ggplot2::geom_line(data = nshoredate$dispcurve,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$upperelev),
-                             colour = dispcol) +
+                             colour = dispcol, na.rm = TRUE) +
           ggplot2::geom_line(data = nshoredate$dispcurve,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$lowerelev),
-                             colour = dispcol) +
+                             colour = dispcol, na.rm = TRUE) +
           ggplot2::scale_x_continuous(expand = c(0,0),
                                       limits = c(min(dategrid$bce) - 1250,
-                                                 max(dategrid$bce) + 250)) +
+                                                 max(dategrid$bce))) +
           ggplot2:: coord_cartesian(ylim = c(0,
                                              as.numeric(nshoredate$elev) + 10))
       }
@@ -177,6 +183,9 @@ shoredate_plot <- function(shorelinedates,
       iso_plts[[j]] <- plt
     }
     plts[[k]] <- iso_plts
+  }
+  if(no_plots > 0){
+    warning(paste("Skipped", no_plots, "dates that were NA."))
   }
 
   suppressWarnings(print(patchwork::wrap_plots(flatten_list(plts), ncol = 1)))

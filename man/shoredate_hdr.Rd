@@ -12,18 +12,18 @@ shoredate_hdr(shorelinedate, prob = 0.95)
 \item{prob}{A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.}
 }
 \value{
-A data frame holding start and end points for segments of the 95\% highest density region
+A data frame holding start and end points for segments of the 95\% highest density region.
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline date.
 }
 \examples{
-# Create point to shoreline date
+# Create point to shoreline date.
 target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 
-# Perform shoreline dating
+# Perform shoreline dating.
 target_date <- shoreline_date(sites = target_point, elevation = 65)
 
-# Retrieve and print HDR for the shoreline date
+# Retrieve and print HDR for the shoreline date.
 (shoredate_hdr(target_date))
 }
