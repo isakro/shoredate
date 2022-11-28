@@ -19,7 +19,7 @@ Function to find 95\% highest density region (HDR) for a provided shoreline date
 }
 \examples{
 # Create point to shoreline date.
-target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Perform shoreline dating.
 target_date <- shoreline_date(sites = target_point, elevation = 65)

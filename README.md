@@ -24,6 +24,20 @@ You can install the development version of *shoredate* from
 devtools::install_github("isakro/shoredate")
 ```
 
+## Geographical constraint
+
+As the method for shoreline dating is contingent on relative sea-level
+change it is dependent on local geological conditions and
+reconstructions of this development. At present, the method as outlined
+here is limited to being applicable in the region between Horten in the
+north east to Arendal in the south west, which also formed the study
+area for Roalkvam (2022).
+
+    #> ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
+    #> ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+
 ## Example
 
 This is a basic example outlining how to date a single site by manually

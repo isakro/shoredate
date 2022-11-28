@@ -13,6 +13,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r load, include = FALSE}
+spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
+                                              package = "shoredate",
+                                              mustWork = TRUE), quiet = TRUE)
+```
+
 # shoredate
 
 <!-- badges: start -->
@@ -29,6 +35,38 @@ You can install the development version of *shoredate* from [GitHub](https://git
 ```{r setup, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("isakro/shoredate")
+```
+
+## Geographical constraint
+
+As the method for shoreline dating is contingent on relative sea-level change it is dependent on local geological conditions and reconstructions of this development. At present, the method as outlined here is limited to being applicable in the region between Horten in the north east to Arendal in the south west, which also formed the study area for Roalkvam (2022). 
+
+```{r, echo = FALSE}
+
+limit_reproj <- sf::st_transform(spatial_limit, crs = 4326)
+limit_bbox <- as.numeric(sf::st_bbox(limit_reproj))
+
+plt1 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = c(left = 2, bottom = 54,
+                               right = 32, top = 72), zoom = 5,
+                maptype = 'terrain-background', source = 'stamen')) +
+  ggplot2::geom_rect(
+    xmin = limit_bbox[1],
+    ymin = limit_bbox[2],
+    xmax = limit_bbox[3],
+    ymax = limit_bbox[4],
+    fill = NA, 
+    colour = "black",
+    linewidth = 0.6
+  )
+
+plt2 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = 
+                                            c(left = limit_bbox[1],
+                                              bottom = limit_bbox[2],
+                                              right = limit_bbox[3],
+                                              top = limit_bbox[4]), zoom = 8,
+                      maptype = 'terrain', source = 'stamen'))
+
+patchwork::wrap_elements(plt1 + plt2)
 ```
 
 ## Example

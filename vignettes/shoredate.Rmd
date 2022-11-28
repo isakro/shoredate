@@ -18,6 +18,12 @@ vignette: >
 knitr::opts_chunk$set(fig.align = "center")
 ```
 
+```{r load, include = FALSE}
+spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
+                                              package = "shoredate",
+                                              mustWork = TRUE), quiet = TRUE)
+```
+
 # Introduction
 This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast. This is based on their likely elevation above the sea-level when they were in use and the trajectory of past relative sea-level change. Due to the geographical contingency of the method and the dependency on geologic reconstruction of shoreline displacement, the package is at present limited to sites located beneath the marine limit in the region stretching from Horten county in the north east, to Arendal county in the south west. Spatial data to be used with the package should be set to the coordinate system WGS84 / UTM zone 32N (ESPG:32632).
 
@@ -38,11 +44,37 @@ library(shoredate)
 ```
 
 # Shoreline dating a site
-Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline while they were in use. By reconstructing the past trajectory of shoreline displacement and combining this with the present-day elevation of a site, this thus allows us to ascribe an approximate date to when the sites were in use. The method is thus dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
+Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline while they were in use. By reconstructing the past trajectory of shoreline displacement and combining this with the present-day elevation of a site, this thus allows us to ascribe an approximate date to when the sites were in use. The method is therefore dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
 
 In the paper Roalkvam (2022) it was found that the vertical distance between sites and the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implemented method. Furthermore, the method is here based on interpolating the shoreline displacement to any one location within the study area, using the four available geologically derived shoreline displacement curves from the region. This is done in the function `interpolate_curve`, by means of inverse distance weighting, using the squared inverse of the distance between the sites and the shoreline isobases of the displacement curves. The isobases are contours on which relative sea-level change has followed the same trajectory.
 
+```{r, echo = FALSE}
 
+limit_reproj <- sf::st_transform(spatial_limit, crs = 4326)
+limit_bbox <- as.numeric(sf::st_bbox(limit_reproj))
+
+plt1 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = c(left = 2, bottom = 54,
+                               right = 32, top = 72), zoom = 5,
+                maptype = 'terrain-background', source = 'stamen')) +
+  ggplot2::geom_rect(
+    xmin = limit_bbox[1],
+    ymin = limit_bbox[2],
+    xmax = limit_bbox[3],
+    ymax = limit_bbox[4],
+    fill = NA, 
+    colour = "black",
+    linewidth = 0.6
+  )
+
+plt2 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = 
+                                            c(left = limit_bbox[1],
+                                              bottom = limit_bbox[2],
+                                              right = limit_bbox[3],
+                                              top = limit_bbox[4]), zoom = 8,
+                      maptype = 'terrain', source = 'stamen'))
+
+patchwork::wrap_elements(plt1 + plt2)
+```
 
 The following section outlines how to perform a shoreline date using the default settings. After this the various variables and helper-functions underlying the dating procedure are presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible in a given setting.
 
@@ -50,7 +82,7 @@ To perform a basic shoreline date, a site has to be provided as a spatial `sf` o
 
 ```{r example_site, message = FALSE}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG:32632).
-target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 target_date <- shoreline_date(target_point, elevation = 65)
 ```

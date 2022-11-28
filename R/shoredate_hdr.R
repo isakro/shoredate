@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' # Create point to shoreline date.
-#' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' # Perform shoreline dating.
 #' target_date <- shoreline_date(sites = target_point, elevation = 65)
@@ -87,12 +87,12 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   # Remove the NA resulting from the last row
   start_breaks <- start_breaks[!is.na(start_breaks)]
 
-  # We know that the start value of the last row is included if the
-  # second to last end break is at the index nrow()-1
-  if(head(tail(end_indices, 2), 1) == nrow(out) - 1 &&
-     out$start[nrow(out)] != out$end[nrow(out)]){
-    start_breaks <- c(start_breaks, out$start[nrow(out)])
-  }
+  # # We know that the start value of the last row is included if the
+  # # second to last end break is at the index nrow()-1
+  # if(head(tail(end_indices, 2), 1) == nrow(out) - 1 &&
+  #    out$start[nrow(out)] != out$end[nrow(out)]){
+  #   start_breaks <- c(start_breaks, out$start[nrow(out)])
+  # }
 
   hdrs <- data.frame(start = start_breaks,
                      end = end_breaks)

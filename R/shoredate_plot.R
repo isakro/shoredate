@@ -20,7 +20,7 @@
 #'
 #'
 #' @examples
-#' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' target_date <- shoreline_date(sites = target_point, elevation = 46,
 #'                               isobase_direction = c(327,338))
@@ -188,5 +188,5 @@ shoredate_plot <- function(shorelinedates,
     warning(paste("Skipped", no_plots, "dates that were NA."))
   }
 
-  suppressWarnings(print(patchwork::wrap_plots(flatten_list(plts), ncol = 1)))
+  print(patchwork::wrap_plots(flatten_list(plts), ncol = 1))
 }

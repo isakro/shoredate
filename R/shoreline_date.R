@@ -22,12 +22,14 @@
 #'
 #' @examples
 #' # Create example points.
-#' target_points <- sf::st_sfc(sf::st_point(c(538310, 65442551)), sf::st_point(c(538300, 65442500)))
+#' target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
+#'  sf::st_point(c(538300, 6544250)))
 #'
 #' # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
 #' target_points <- sf::st_set_crs(target_points, 32632)
 #'
-#' # Date target points, manually specifying the elevations instead of providing an elevation raster.
+#' # Date target points, manually specifying the elevations instead of providing
+#' # an elevation raster.
 #' target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
 #'
 #' # Call to plot.
@@ -51,8 +53,10 @@ shoreline_date <- function(sites,
   bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to match
                                            # displacement data.
 
+  # If isobase directions other than the default is provided, create these
   if(all(is.na(interpolated_curve)) & any(isobase_direction != 327)){
       isobases <- create_isobases(isobase_direction)
+  # If the default is used, load the precompiled isobases
   } else{
     isobases <- sf::st_read(
       system.file("extdata/isobases.gpkg",
@@ -66,17 +70,23 @@ shoreline_date <- function(sites,
     sites <- st_as_sf(sites, crs = st_crs(sites))
   }
 
+  # List to hold dates
   shorelinedates <- list()
   for(i in 1:nrow(sites)){
     print(paste("Dating site", i, "of", nrow(sites)))
 
+    # If interpolated curve is not provided and multiple isobase directions have
+    # been specified, interpolate these
     if(all(is.na(interpolated_curve)) & length(unique(isobases$direction)) > 1){
       sitecurve <- interpolate_curve(target = sites[i,],
                                      isobases = isobases, cal_reso = cal_reso)
+      # If default isobase direction is to be used, but no interpolated curve
+      # is provided,
     } else if(all(is.na(interpolated_curve))){
       sitecurve <- interpolate_curve(target = sites[i,],
                                      isobases = isobases, cal_reso = cal_reso)
     } else{
+      # If interpolated curve(s) are provided
       sitecurve <- interpolated_curve
     }
 
@@ -110,7 +120,7 @@ shoreline_date <- function(sites,
         bce = bce,
         probability = 0)
 
-      # Assign site name (to be returned/used in error below)
+      # Assign site name (to be returned/used in errors below)
       if(inherits(sites, c("sf", "sfc"))) {
         if(ncol(sites) == 1){
           dategrid$site_name <- paste("Site", i)

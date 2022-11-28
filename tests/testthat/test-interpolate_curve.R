@@ -1,13 +1,19 @@
-test_that("Undefined CRS throws error", {
+test_that("undefined CRS throws error", {
   target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)))
   err <- expect_error(interpolate_curve(target_pt))
   expect_equal(err$message, "Undefined coordinate reference system. This needs to be set to WGS84 UTM32N (EPSG: 32632).")
 })
 
-test_that("Check that wrong CRS throws error and that this is printed", {
+test_that("wrong CRS throws error and that this is printed", {
   target_pt <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 4326)
   err <- expect_error(interpolate_curve(target_pt))
   expect_equal(err$message, paste0("Target has coordinate reference system with EPSG ",
                                    sf::st_crs(target_pt)$epsg,
                                    ". This needs to be set to WGS84 UTM32N (EPSG: 32632)."))
+})
+
+test_that("if a site is located outside the limit of the study area, a warning is given", {
+  target_point <- sf::st_sfc(sf::st_point(c(458310, 6544255)), crs = 32632)
+  err <- expect_warning(interpolate_curve(target_point))
+  expect_equal(err$message, "Target location is not located within the study area for which the method was derived.")
 })

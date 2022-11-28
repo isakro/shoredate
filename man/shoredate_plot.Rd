@@ -39,7 +39,7 @@ Returns a plot displaying the provided shoreline date.
 Function for plotting shoreline date along with associated metadata.
 }
 \examples{
-target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 target_date <- shoreline_date(sites = target_point, elevation = 46,
                               isobase_direction = c(327,338))

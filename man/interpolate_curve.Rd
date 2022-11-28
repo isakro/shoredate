@@ -28,7 +28,8 @@ A data frame holding the interpolated displacement curve
 Interpolate the trajectory of past shoreline displacement to a single location based on the. This is done using inverse distance weighting.
 }
 \examples{
-# Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
+# Create example point using the required coordinate system
+# WGS84 UTM32N (EPSG: 32632).
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
 # Interpolate shoreline displacement curve to the target point location.

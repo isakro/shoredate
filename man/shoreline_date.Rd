@@ -49,12 +49,14 @@ A function for shoreline dating Stone Age sites based on their present-day eleva
 }
 \examples{
 # Create example points.
-target_points <- sf::st_sfc(sf::st_point(c(538310, 65442551)), sf::st_point(c(538300, 65442500)))
+target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
+ sf::st_point(c(538300, 6544250)))
 
 # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
 target_points <- sf::st_set_crs(target_points, 32632)
 
-# Date target points, manually specifying the elevations instead of providing an elevation raster.
+# Date target points, manually specifying the elevations instead of providing
+# an elevation raster.
 target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
 
 # Call to plot.
