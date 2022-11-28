@@ -58,12 +58,12 @@ shoredate_plot(target_date)
 
 <img src="man/figures/README-date-1.png" style="display: block; margin: auto;" />
 
-It is also possible to plot a more sparse version of the plot by
-specifying what elements are to be excluded:
+It is also possible to plot a more sparse version by specifying what
+elements are to be excluded:
 
 ``` r
-shoredate_plot(target_date, elevation_distribution = FALSE, displacement_curve = FALSE,
-               parameters = FALSE, hdr_label = FALSE)
+shoredate_plot(target_date, elevation_distribution = FALSE, 
+               displacement_curve = FALSE, hdr_label = FALSE)
 ```
 
 <img src="man/figures/README-sparse-1.png" style="display: block; margin: auto;" />

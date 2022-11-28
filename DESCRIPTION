@@ -3,7 +3,7 @@ Title: Shoreline date sites on the Norwegian Skagerrak coast
 Version: 0.0.0.9000
 Authors@R: 
     person("Isak", "Roalkvam", , "isak.roalkvam@iakh.uio.no", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "0000-0001-6974-1374"))
 Description: The package offers tools to date Stone Age sites located on the Norwegian Skagerrak coast based on their present day elevation and reconstruction of past sea-level change.
 License: MIT + file LICENSE
 Encoding: UTF-8
