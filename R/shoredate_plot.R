@@ -236,7 +236,7 @@ shoredate_plot <- function(shorelinedates,
       plt <- plt +
              ggplot2::geom_linerange(data = hdrs,
                           ggplot2::aes(xmin = .data$start, xmax = .data$end,
-                          y = .data$site_name), size = 0.5,
+                          y = .data$site_name), linewidth = 0.5,
                           col = "black",
                           # Parameter preserve = "single" causes warning
                           # that I can not make sense of or find any info on.

@@ -22,6 +22,7 @@ spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
 # shoredate
 
 <!-- badges: start -->
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
 <!-- badges: end -->
@@ -130,8 +131,7 @@ target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
 
 # Performing shoreline dating, specifying site elevations. 
 target_dates <- shoreline_date(sites = target_points, 
-                               elevation = c(70, 46, 62, 72),
-                               verbose = TRUE)
+                               elevation = c(70, 46, 62, 72))
 
 # Plot the dates with 95% HDRs (these can be removed by setting 
 # highest_density_region = FALSE).

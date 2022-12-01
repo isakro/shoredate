@@ -4,7 +4,7 @@ test_that("skips the plotting of dates that are out of bounds and warns how many
                               sf::st_point(c(538250, 6544250)))
   target_points <- sf::st_set_crs(target_points, 32632)
 
-  # shoreline_date gives an expected warning here, which is already tested in
+  # shoreline_date() gives an expected warning here, which is already tested in
   # test-shoreline_date.R. This is therefore suppressed.
   target_dates <- suppressWarnings(shoreline_date(sites = target_points,
                                  elevation = c(46, 100, 200)))
@@ -29,6 +29,8 @@ test_that("dates omitted as out of bounds throws warning", {
                               sf::st_point(c(538300, 6544250)),
                               sf::st_point(c(538250, 6544250)))
   target_points <- sf::st_set_crs(target_points, 32632)
+  # shoreline_date() gives an expected warning here, which is already tested in
+  # test-shoreline_date.R.
   target_dates <- suppressWarnings(shoreline_date(sites = target_points,
                                  elevation = c(70, 46, 86, 200)))
   warn <- expect_warning(shoredate_plot(target_dates, multiplot = TRUE))
