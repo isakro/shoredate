@@ -12,13 +12,13 @@ displacement_plot(interpolated_curve = NA, greyscale = FALSE)
 \item{greyscale}{Logical value indicating whether the plot should include colours or not. Defaults to FALSE.}
 }
 \value{
-A plot displaying the underlying shoreline displacement curves and, if provided, interpolated curves.
+A plot displaying the underlying shoreline displacement curves and, if provided, interpolated curve.
 }
 \description{
 Function for plotting shoreline displacement curves. Calling to plot without providing interpolated curves will display the four underlying curves.
 }
 \examples{
-# Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
+# Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632).
 target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 
 # Interpolate shoreline displacement curve to the target point location.

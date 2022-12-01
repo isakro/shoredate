@@ -5,7 +5,7 @@
 #' @param shorelinedate A single date consisting of a list of objects returned from shoreline_date().
 #' @param prob A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.
 #'
-#' @return A data frame holding start and end points for segments of the 95% highest density region.
+#' @return A data frame holding start and end points for segments of the highest density region.
 #' @export
 #'
 #' @examples
@@ -28,11 +28,15 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
     cal_reso <- shorelinedate$cal_reso
   }
 
+  # Retrieve the name of the site
+  site_name = unique(date$site_name)
+
   # Extend the calendar scale to individual years for the HDR to work
   # irrespective of calendar resolution
   date <- data.frame(bce = head(seq(max(date$bce), min(date$bce)), -1),
                       probability = rep(head(date$probability, -1),
                                         each = cal_reso))
+
   # Re-normalise probability to sum to unity
   date$probability <- date$probability/sum(date$probability)
 
@@ -95,7 +99,8 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   # }
 
   hdrs <- data.frame(start = start_breaks,
-                     end = end_breaks)
+                     end = end_breaks,
+                     site_name = site_name)
   return(hdrs)
 }
 

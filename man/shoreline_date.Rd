@@ -15,7 +15,8 @@ shoreline_date(
   elevavg = "mean",
   interpolated_curve = NA,
   normalise = TRUE,
-  sparse = FALSE
+  sparse = FALSE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ shoreline_date(
 \item{normalise}{Logical value specifying whether the shoreline date should be normalised to sum to unity. Defaults to TRUE.}
 
 \item{sparse}{Logical value specifying if only site name and shoreline date should be returned. Defaults to FALSE.}
+
+\item{verbose}{Logical value indicating whether progress should be printed to console. Defaults to FALSE.}
 }
 \value{
 A list of class shoredates holding the shoreline date results and associated parameters.
@@ -50,7 +53,7 @@ A function for shoreline dating Stone Age sites based on their present-day eleva
 \examples{
 # Create example points.
 target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
- sf::st_point(c(538300, 6544250)))
+ sf::st_point(c(572985, 6563115)))
 
 # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632).
 target_points <- sf::st_set_crs(target_points, 32632)

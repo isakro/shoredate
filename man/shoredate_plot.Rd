@@ -12,6 +12,7 @@ shoredate_plot(
   isobase_direction = FALSE,
   highest_density_region = TRUE,
   hdr_label = TRUE,
+  multiplot = FALSE,
   greyscale = FALSE
 )
 }
@@ -30,13 +31,17 @@ shoredate_plot(
 
 \item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.}
 
+\item{multiplot}{Logical value indicating whether multiple dates should be plotted individually, or be collapsed into a single plot. Default is FALSE.}
+
 \item{greyscale}{Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.}
 }
-\value{
-Returns a plot displaying the provided shoreline date.
-}
 \description{
-Function for plotting shoreline date along with associated metadata.
+Function for plotting shoreline dates along with associated metadata.
+}
+\details{
+shoredate_plot() returns a plot displaying the provided shoreline dates. A single plot is created for each date, where a range of settings can
+be adjusted to display or hide various parameters and results. Setting the parameter multiplot to TRUE returns a sparser version for multiple dates,
+where the only option is whether or not to display the highest density region in addition to each date. The does not allow for several isobase directions.
 }
 \examples{
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)

@@ -5,13 +5,13 @@
 #' @param interpolated_curve List holding one or more interpolated shoreline displacement curves.
 #' @param greyscale Logical value indicating whether the plot should include colours or not. Defaults to FALSE.
 #'
-#' @return A plot displaying the underlying shoreline displacement curves and, if provided, interpolated curves.
+#' @return A plot displaying the underlying shoreline displacement curves and, if provided, interpolated curve.
 #' @export
 #'
 #' @import ggplot2
 #'
 #' @examples
-#' # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
+#' # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632).
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location.
@@ -21,7 +21,7 @@
 #' displacement_plot(target_curve)
 displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
 
-  # Load pre-compiled displacement curves
+  # Load pre-compiled geological displacement curves
   dispdat <-
     get(load(
       system.file("extdata/displacement_curves.rda",
@@ -81,8 +81,6 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
 
 
   plt <- ggplot2::ggplot() +
-    # ggplot2::scale_colour_manual(values = colour_scheme) +
-    # ggplot2::scale_linetype_manual(values = line_scheme) +
     ggplot2::ylab("Meters above present sea-level") +
     ggplot2::xlab("BCE/CE") +
     ggplot2::theme_bw() +
@@ -96,12 +94,14 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                            ggplot2::aes(x = .data$bce,
                                         y = .data$upperelev,
                                         col = .data$name,
-                                        linetype = .data$name)) +
+                                        linetype = .data$name),
+                                        na.rm = TRUE) +
         ggplot2::geom_line(data = dispdat,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$lowerelev,
                                         col = .data$name,
-                                        linetype = .data$name)) +
+                                        linetype = .data$name),
+                                        na.rm = TRUE) +
         ggplot2::scale_colour_manual(values = colour_scheme) +
         ggplot2::scale_linetype_manual(values = line_scheme)
 
@@ -114,14 +114,14 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                            ggplot2::aes(x = .data$bce,
                                         y = .data$upperelev,
                                         col = .data$name,
-                                        linetype = .data$name),
-                           alpha = 0.4) +
+                                        linetype = .data$name,),
+                           alpha = 0.4, na.rm = TRUE) +
         ggplot2::geom_line(data = dispdat,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$lowerelev,
                                         col = .data$name,
                                         linetype = .data$name),
-                           alpha = 0.4) +
+                           alpha = 0.4, na.rm = TRUE) +
         ggplot2::geom_line(data = intcurves,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$upperelev,
@@ -131,7 +131,8 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                            ggplot2::aes(x = .data$bce,
                                         y = .data$lowerelev,
                                         col = .data$name,
-                                        linetype = .data$name)) +
+                                        linetype = .data$name),
+                                        na.rm = TRUE) +
         ggplot2::scale_colour_manual(values = colour_scheme) +
         ggplot2::scale_linetype_manual(values = line_scheme)
     }

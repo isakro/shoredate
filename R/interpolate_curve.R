@@ -1,11 +1,11 @@
 #' Interpolate displacement curve using IDW
 #'
-#' Interpolate the trajectory of past shoreline displacement to a single location based on the. This is done using inverse distance weighting.
+#' Interpolate the trajectory of past shoreline displacement to a single location based on the distance of the location to the shoreline isobases of the geologically derived displacement curves. This is done using inverse distance weighting.
 #'
-#' @param target A spatial target location to where the new displacement curve is interpolated
-#' @param dispdat Load existing displacement curves.
-#' @param isobases Spatial lines representing the isobases of the existing displacement curves
+#' @param target A spatial target location to where the new displacement curve is interpolated.
+#' @param isobases Spatial lines representing the shoreline isobases of the existing displacement curves.
 #' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
+#' @param verbose Logical value indicating whether progress should be printed to console. Defaults to FALSE.
 #'
 #' @return A data frame holding the interpolated displacement curve
 #' @export
@@ -13,8 +13,7 @@
 #' @import sf
 #'
 #' @examples
-#' # Create example point using the required coordinate system
-#' # WGS84 UTM32N (EPSG: 32632).
+#' # Create example point using the required coordinate system WGS84 / zone UTM32N (EPSG: 32632).
 #' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location.
@@ -23,19 +22,18 @@
 #' # Call to plot
 #' displacement_plot(target_curve)
 interpolate_curve <- function(target,
-                              dispdat =
-                                load(
-                                  system.file("extdata/displacement_curves.rda",
-                                                    package = "shoredate",
-                                              mustWork = TRUE)),
                               isobases = NA,
-                              cal_reso = 1){
-
+                              cal_reso = 1,
+                              verbose = FALSE){
 
   # Check that the target location is set to correct CRS (causes error if it
   # is not) and is located within the study area (prints warning if it is not)-
   check_target_location(target)
 
+  # Load existing displacement curves.
+  dispdat = load(system.file("extdata/displacement_curves.rda",
+                  package = "shoredate",
+                  mustWork = TRUE))
 
   bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to
                                           # match displacement data.
@@ -67,7 +65,18 @@ interpolate_curve <- function(target,
       values <- displacement_curves[displacement_curves$name ==
                                   names(dists)[which(as.numeric(dists) == 0)],]
 
-    } else { for(j in 1:length(bce)){
+    } else {
+      if(verbose){
+        # If a site is not on a isobase, the displacement curve needs to be
+        # interpolated, in which case printing progress might be of interest.
+        print("Interpolating displacement curve")
+        pb <- utils::txtProgressBar(min = 0,
+                                    max = length(bce),
+                                    style = 3,
+                                    char = "=")
+      }
+
+      for(j in 1:length(bce)){
       for(k in 1:ncol(dists)){
         le <- displacement_curves[which(displacement_curves$name ==
                                   names(dists)[k] & displacement_curves$bce ==
@@ -99,7 +108,13 @@ interpolate_curve <- function(target,
       }
       values[j, 1:3] <- c(bce[j], lowerval, upperval)
 
+      if(verbose){
+        utils::setTxtProgressBar(pb, j)
+      }
+      }
     }
+    if(verbose){
+      close(pb)
     }
     values$direction <- unique(isobases$direction)[i]
     interpolated_curves[[i]] <- values

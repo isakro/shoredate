@@ -2,7 +2,7 @@ Package: shoredate
 Title: Shoreline date sites on the Norwegian Skagerrak coast
 Version: 0.0.0.9000
 Authors@R: 
-    person("Isak", "Roalkvam", , "isak.roalkvam@iakh.uio.no", role = c("aut", "cre"),
+    person("Isak", "Roalkvam", , "isakroa@protonmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6974-1374"))
 Description: The package offers tools to date Stone Age sites located on the Norwegian Skagerrak coast based on their present day elevation and reconstruction of past sea-level change.
 License: MIT + file LICENSE
@@ -11,12 +11,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
     ggplot2,
+    ggrepel,
     ggridges,
     grid,
     patchwork,
     scales,
     sf,
-    terra
+    terra,
+    utils
 Suggests: 
     covr,
     ggmap,

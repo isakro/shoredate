@@ -12,7 +12,7 @@ shoredate_hdr(shorelinedate, prob = 0.95)
 \item{prob}{A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.}
 }
 \value{
-A data frame holding start and end points for segments of the 95\% highest density region.
+A data frame holding start and end points for segments of the highest density region.
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline date.

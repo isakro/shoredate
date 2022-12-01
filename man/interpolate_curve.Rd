@@ -4,32 +4,25 @@
 \alias{interpolate_curve}
 \title{Interpolate displacement curve using IDW}
 \usage{
-interpolate_curve(
-  target,
-  dispdat = load(system.file("extdata/displacement_curves.rda", package = "shoredate",
-    mustWork = TRUE)),
-  isobases = NA,
-  cal_reso = 1
-)
+interpolate_curve(target, isobases = NA, cal_reso = 1, verbose = FALSE)
 }
 \arguments{
-\item{target}{A spatial target location to where the new displacement curve is interpolated}
+\item{target}{A spatial target location to where the new displacement curve is interpolated.}
 
-\item{dispdat}{Load existing displacement curves.}
-
-\item{isobases}{Spatial lines representing the isobases of the existing displacement curves}
+\item{isobases}{Spatial lines representing the shoreline isobases of the existing displacement curves.}
 
 \item{cal_reso}{Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.}
+
+\item{verbose}{Logical value indicating whether progress should be printed to console. Defaults to FALSE.}
 }
 \value{
 A data frame holding the interpolated displacement curve
 }
 \description{
-Interpolate the trajectory of past shoreline displacement to a single location based on the. This is done using inverse distance weighting.
+Interpolate the trajectory of past shoreline displacement to a single location based on the distance of the location to the shoreline isobases of the geologically derived displacement curves. This is done using inverse distance weighting.
 }
 \examples{
-# Create example point using the required coordinate system
-# WGS84 UTM32N (EPSG: 32632).
+# Create example point using the required coordinate system WGS84 / zone UTM32N (EPSG: 32632).
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
 # Interpolate shoreline displacement curve to the target point location.

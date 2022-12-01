@@ -1,6 +1,6 @@
 #' Plot shoreline date
 #'
-#' Function for plotting shoreline date along with associated metadata.
+#' Function for plotting shoreline dates along with associated metadata.
 #'
 #' @param shorelinedates A list of objects returned from shoreline_date().
 #' @param elevation_distribution Logical value indicating whether the gamma distribution should be displayed. Default is TRUE.
@@ -9,9 +9,13 @@
 #' @param isobase_direction  Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.
 #' @param highest_density_region Logical value indicating whether the 95% highest density region should be displayed. Defaults to TRUE.
 #' @param hdr_label Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.
+#' @param multiplot Logical value indicating whether multiple dates should be plotted individually, or be collapsed into a single plot. Default is FALSE.
 #' @param greyscale Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.
 #'
-#' @return Returns a plot displaying the provided shoreline date.
+#' @details shoredate_plot() returns a plot displaying the provided shoreline dates. A single plot is created for each date, where a range of settings can
+#' be adjusted to display or hide various parameters and results. Setting the parameter multiplot to TRUE returns a sparser version for multiple dates,
+#' where the only option is whether or not to display the highest density region in addition to each date. The does not allow for several isobase directions.
+#'
 #' @export
 #'
 #' @import ggplot2
@@ -33,6 +37,7 @@ shoredate_plot <- function(shorelinedates,
                            isobase_direction = FALSE,
                            highest_density_region = TRUE,
                            hdr_label = TRUE,
+                           multiplot = FALSE,
                            greyscale = FALSE){
 
 
@@ -44,13 +49,14 @@ shoredate_plot <- function(shorelinedates,
     sitedistcol <- "#046c9a"
   }
 
-
-  plts <- list()
+  # Keep track of number of dates with all NA values (out of bounds)
   no_plots <- 0
+
+  if(!multiplot){
+  plts <- list()
   for(k in 1:length(shorelinedates)){
 
     iso_shoredate <- shorelinedates[[k]]
-
     # List to hold plots per site in case of multiple isobase directions
     iso_plts <- list()
     for(j in 1:length(iso_shoredate)){
@@ -81,24 +87,13 @@ shoredate_plot <- function(shorelinedates,
       if(highest_density_region){
         hdrs <- shoredate_hdr(nshoredate)
 
-        # hdr_list <- vector("list", length(hdrs))
-        # for (i in 1:length(hdrs)) {
-        #   hdr_list[[i]] <- data.frame(
-        #     min = min(hdrs[[i]]),
-        #     max = max(hdrs[[i]]),
-        #     hdr = i
-        #   )
-        # }
-        # hdr_df <- do.call(rbind, hdr_list)
-
         plt <- plt +
-          ggplot2::geom_segment(data = hdrs, ggplot2::aes(x = .data$start,
-                                                              xend = .data$end,
-                                                              y = 0, yend = 0),
-                                col = "black")
-
+          ggplot2::geom_segment(data = hdrs,
+                                ggplot2::aes(x = .data$start,
+                                            xend = .data$end,
+                                            y = 0, yend = 0),
+                                            col = "black")
       }
-
 
       paramval <- as.numeric(nshoredate$model_parameters)
       dirval <- unique(nshoredate$dispcurve$direction)
@@ -166,7 +161,6 @@ shoredate_plot <- function(shorelinedates,
 
       if(hdr_label & highest_density_region){
 
-
         label_hdrs <- ""
         for(i in 1:nrow(hdrs)){
           label_hdrs <- paste0(label_hdrs, hdrs$start[i]," to ",
@@ -184,9 +178,85 @@ shoredate_plot <- function(shorelinedates,
     }
     plts[[k]] <- iso_plts
   }
-  if(no_plots > 0){
-    warning(paste("Skipped", no_plots, "dates that were NA."))
+    print(patchwork::wrap_plots(flatten_list(plts), ncol = 1))
+  } else {
+
+    if(length(unique(shorelinedates[[1]])) > 1){
+       stop("The parameter setting multiplot = TRUE is not compatible with more than one isobase direction.")
+    }
+
+    # Find cal_reso
+    cal_reso <- shorelinedates[[1]][[1]]$cal_reso
+
+    # Unpack shoreline dates
+    dateslist <- sapply(shorelinedates, function(y) sapply(y, head, 1))
+    datesdf <- do.call(rbind.data.frame, dateslist)
+
+    # Identify number of and exclude dates with NAs
+    probsums <- aggregate(datesdf$probability,
+                          list(datesdf$site_name), FUN = sum)
+    # Subset based on this (excluding dates with all NA in column probability)
+    datesdfna <-  datesdf[!(datesdf$site_name %in%
+                              probsums[which(is.na(probsums$x)), 1]),]
+
+    # Find number of dates that were excluded
+    no_plots <- sum(is.na(probsums$x))
+
+    # Find HDRs for ordering even if these are not to be displayed
+    hdrs <- data.frame()
+    for(i in 1:length(unique(datesdfna$site_name))){
+
+      nshoredate <- list(date = datesdfna[datesdfna$site_name ==
+                                            unique(datesdfna$site_name)[i],],
+                         cal_reso = cal_reso)
+
+      hdrs <- rbind(hdrs, shoredate_hdr(nshoredate))
+    }
+
+    # Compile plot without HDRS, but using these to order the sites
+    plt <- ggplot2::ggplot(data = hdrs,
+      ggplot2::aes(x = .data$start, y = stats::reorder(.data$site_name,
+                                                .data$start, FUN = min,
+                                                decreasing = TRUE))) +
+      ggplot2::geom_segment(data = hdrs, ggplot2::aes(x = .data$start,
+                                                      xend = .data$end,
+                                       yend = .data$site_name), col = NA) +
+      ggridges::geom_ridgeline(data = datesdfna,
+        ggplot2::aes(x = .data$bce,
+                     y = .data$site_name,
+                      height = .data$probability * 100/cal_reso),
+                     colour = NA, fill = "darkgrey", alpha = 0.7) +
+      ggplot2::labs(y = "",
+                    x = "Shoreline date (BCE)") +
+      ggplot2::theme_bw()
+
+    if(highest_density_region){
+
+      # Add HDR segments
+      plt <- plt +
+             ggplot2::geom_linerange(data = hdrs,
+                          ggplot2::aes(xmin = .data$start, xmax = .data$end,
+                          y = .data$site_name), size = 0.5,
+                          col = "black",
+                          # Parameter preserve = "single" causes warning
+                          # that I can not make sense of or find any info on.
+                       position = ggplot2::position_dodge(width = 0.05,
+                                                 preserve = "single"),
+                       inherit.aes = FALSE)
+    }
+
+    # Suppress warnings if highest_density_region = TRUE, as I have not found a
+    # way to handle the warning from preserve = "single"
+    if(highest_density_region){
+      suppressWarnings(print(plt))
+    } else {
+      print(plt)
+    }
   }
 
-  print(patchwork::wrap_plots(flatten_list(plts), ncol = 1))
+  if(no_plots == 1){
+    warning(paste("Skipped one date that was out of bounds."))
+  } else if(no_plots > 1){
+    warning(paste("Skipped", no_plots, "dates that were out of bounds."))
+  }
 }

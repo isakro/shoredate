@@ -24,16 +24,16 @@ check_target_location <- function(target,
                                               mustWork = TRUE), quiet = TRUE)){
 
   if(is.na(sf::st_crs(target))){
-    stop("Undefined coordinate reference system. This needs to be set to WGS84 UTM32N (EPSG: 32632).")
+    stop("Undefined coordinate reference system. This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632).")
   }
 
   if(sf::st_crs(target)$epsg != 32632){
     stop(paste0("Target has coordinate reference system with EPSG ",
                 sf::st_crs(target)$epsg,
-                ". This needs to be set to WGS84 UTM32N (EPSG: 32632)."))
+                ". This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632)."))
   }
 
   if(!(sf::st_intersects(target, spatial_limit, sparse = FALSE))){
-  warning(paste("Target location is not located within the study area for which the method was derived."))
+  warning(paste("Target location is not within the study area for which the method was derived."))
   }
 }
