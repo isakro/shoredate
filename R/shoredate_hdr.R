@@ -1,40 +1,43 @@
 #' Highest density region of shoreline dates
 #'
-#' Function to find 95% highest density region (HDR) for a provided shoreline date.
+#' Function to find 95% highest density region (HDR) for a provided shoreline
+#'  date.
 #'
-#' @param shorelinedate A single date consisting of a list of objects returned from shoreline_date().
-#' @param prob A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.
+#' @param bce A vector holding calendar years associated with a date
+#' @param probability A vector holding the probability corresponding to each
+#'  year in `date`.
+#' @param site_name A vector holding the name of the site that has been dated.
+#' @param cal_reso Resolution on the calendar scale used when dating the site.
+#' @param prob A numerical value indicating the probability coverage of the HDR.
+#'  Defaults to 0.95.
 #'
-#' @return A data frame holding start and end points for segments of the highest density region.
+#' @return A data frame holding start and end points for segments of the highest
+#'  density region.
 #' @export
 #'
 #' @examples
-#' # Create point to shoreline date.
+#' # Create point to shoreline date
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
-#' # Perform shoreline dating.
+#' # Perform shoreline dating
 #' target_date <- shoreline_date(sites = target_point, elevation = 65)
 #'
-#' # Retrieve and print HDR for the shoreline date.
-#' (shoredate_hdr(target_date))
-shoredate_hdr <- function(shorelinedate, prob = 0.95){
-
-  # Check if results are passed as a nested listed or not.
-  if(is.null(names(shorelinedate))){
-    date <- shorelinedate[[1]][[1]]$date
-    cal_reso <- shorelinedate[[1]][[1]]$cal_reso
-  } else{
-    date <- shorelinedate$date
-    cal_reso <- shorelinedate$cal_reso
-  }
-
-  # Retrieve the name of the site
-  site_name = unique(date$site_name)
+#' # shoredate_hdr() is already called under the hood with shoreline_date, and
+#' # is printed with the date
+#' target_date
+#'
+#' # However, shoredate_hdr() can be applied separately by pulling the necessary
+#' # data from the date
+#' (shoredate_hdr(target_date[[1]][[1]]$date$bce,
+#'                target_date[[1]][[1]]$date$probability,
+#'                target_date[[1]][[1]]$site_name,
+#'                target_date[[1]][[1]]$cal_reso))
+shoredate_hdr <- function(bce, probability, site_name, cal_reso, prob = 0.95){
 
   # Extend the calendar scale to individual years for the HDR to work
   # irrespective of calendar resolution
-  date <- data.frame(bce = head(seq(max(date$bce), min(date$bce)), -1),
-                      probability = rep(head(date$probability, -1),
+  date <- data.frame(bce = head(seq(max(bce), min(bce)), -1),
+                      probability = rep(head(probability, -1),
                                         each = cal_reso))
 
   # Re-normalise probability to sum to unity
@@ -98,10 +101,11 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
   #   start_breaks <- c(start_breaks, out$start[nrow(out)])
   # }
 
-  hdrs <- data.frame(start = start_breaks,
+  shdr <- list(start = start_breaks,
                      end = end_breaks,
+                     prob = prob,
                      site_name = site_name)
-  return(hdrs)
+  shdr
 }
 
 # hdrdat <- hdrcde::hdr(den = list("x" = date$bce,
@@ -118,10 +122,3 @@ shoredate_hdr <- function(shorelinedate, prob = 0.95){
 # hdrsegs$year_median <- median(as.numeric(hdrdat$mode))
 #
 # return(hdrsegs)
-
-
-
-
-
-
-

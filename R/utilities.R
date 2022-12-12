@@ -1,8 +1,9 @@
 #' Internal helper function for unpacking nested lists of plots
 #'
-#' Utility function to extract a nested list of ggplots. Code taken from answers on Stackoverflow.
-#' From user \@divibsan here:  https://stackoverflow.com/a/55733001 who in turn based their answer on user
-#' \@Michael here: https://stackoverflow.com/a/41882883
+#' Utility function to extract a nested list of ggplots. Code taken from answers
+#'  on Stackoverflow. From user \@divibsan here:
+#'  https://stackoverflow.com/a/55733001 who in turn based their answer on user
+#'  \@Michael here: https://stackoverflow.com/a/41882883
 #'
 #' @param x Nested list of ggplot .
 #'
@@ -22,16 +23,23 @@ flatten_list <- function(x){
 
 #' Internal helper function for custom text annotation
 #'
-#' The code for this function is taken from an answer on SO given by user Rosen Matev: https://stackoverflow.com/a/22500252/11376454
-#' This allows for the placement of a multi-line text-label using `Inf`, which can be problematic with `ggplot2::annotate`.
+#' The code for this function is taken from an answer on SO given by user
+#'  Rosen Matev: https://stackoverflow.com/a/22500252/11376454
+#'  This allows for the placement of a multi-line text-label using `Inf`,
+#'  which can be problematic with `ggplot2::annotate`.
 #'
 #'
 #' @param label Text label.
-#' @param x Numerical value to adjust label position relative to the extremes of the x-axis.
-#' @param y Numerical value to adjust label position relative to the extremes of the y-axis.
-#' @param hjust Numerical value indicating the horizontal justification of the text label.
-#' @param vjust Numerical value indicating the vertical justification of the text label.
-#' @param thm Get thematic parameters from the ggplot object to which the annotation is added.
+#' @param x Numerical value to adjust label position relative to the extremes of
+#'  the x-axis.
+#' @param y Numerical value to adjust label position relative to the extremes of
+#'  the y-axis.
+#' @param hjust Numerical value indicating the horizontal justification of the
+#'  text label.
+#' @param vjust Numerical value indicating the vertical justification of the
+#'  text label.
+#' @param thm Get thematic parameters from the ggplot object to which the
+#'  annotation is added.
 #'
 #' @import ggplot2
 #' @importFrom grid textGrob gpar unit.c viewport grobWidth grobHeight editGrob grobTree

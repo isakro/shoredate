@@ -9,21 +9,28 @@ annotate_custom(label, x, y, hjust = 0, vjust = 0, thm = ggplot2::theme_get())
 \arguments{
 \item{label}{Text label.}
 
-\item{x}{Numerical value to adjust label position relative to the extremes of the x-axis.}
+\item{x}{Numerical value to adjust label position relative to the extremes of
+the x-axis.}
 
-\item{y}{Numerical value to adjust label position relative to the extremes of the y-axis.}
+\item{y}{Numerical value to adjust label position relative to the extremes of
+the y-axis.}
 
-\item{hjust}{Numerical value indicating the horizontal justification of the text label.}
+\item{hjust}{Numerical value indicating the horizontal justification of the
+text label.}
 
-\item{vjust}{Numerical value indicating the vertical justification of the text label.}
+\item{vjust}{Numerical value indicating the vertical justification of the
+text label.}
 
-\item{thm}{Get thematic parameters from the ggplot object to which the annotation is added.}
+\item{thm}{Get thematic parameters from the ggplot object to which the
+annotation is added.}
 }
 \value{
 A ggplot layer holding text label
 }
 \description{
-The code for this function is taken from an answer on SO given by user Rosen Matev: https://stackoverflow.com/a/22500252/11376454
-This allows for the placement of a multi-line text-label using \code{Inf}, which can be problematic with \code{ggplot2::annotate}.
+The code for this function is taken from an answer on SO given by user
+Rosen Matev: https://stackoverflow.com/a/22500252/11376454
+This allows for the placement of a multi-line text-label using \code{Inf},
+which can be problematic with \code{ggplot2::annotate}.
 }
 \keyword{internal}

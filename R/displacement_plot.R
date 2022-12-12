@@ -1,20 +1,25 @@
 #' Plot shoreline displacement curves
 #'
-#' Function for plotting shoreline displacement curves. Calling to plot without providing interpolated curves will display the four underlying curves.
+#' Function for plotting shoreline displacement curves. Calling to plot without
+#'  providing interpolated curves will display the four underlying curves.
 #'
-#' @param interpolated_curve List holding one or more interpolated shoreline displacement curves.
-#' @param greyscale Logical value indicating whether the plot should include colours or not. Defaults to FALSE.
+#' @param interpolated_curve List holding one or more interpolated shoreline
+#'  displacement curves.
+#' @param greyscale Logical value indicating whether the plot should include
+#'  colours or not. Defaults to FALSE.
 #'
-#' @return A plot displaying the underlying shoreline displacement curves and, if provided, interpolated curve.
+#' @return A plot displaying the underlying shoreline displacement curves and,
+#'  if provided, interpolated curve.
 #' @export
 #'
 #' @import ggplot2
 #'
 #' @examples
-#' # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632).
-#' target_point <- sf::st_sfc(sf::st_point(c(538310, 65442551)), crs = 32632)
+#' # Create example point using the required coordinate system WGS84 / UTM zone
+#' # 32N (EPSG: 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
 #'
-#' # Interpolate shoreline displacement curve to the target point location.
+#' # Interpolate shoreline displacement curve to the target point location
 #' target_curve <- interpolate_curve(target_point)
 #'
 #' # Call to plot
@@ -28,53 +33,58 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                   package = "shoredate",
                   mustWork = TRUE)))
 
-  if(greyscale){
-    if(is.na(interpolated_curve)){
-      colour_scheme <- c("Horten" = "black",
-                         "Larvik" = "black",
-                         "Tvedestrand" = "black",
-                         "Arendal" = "black")
+  if (greyscale) {
+    if (is.na(interpolated_curve)) {
 
-      line_scheme <- c("Horten" = "twodash",
-                       "Larvik" = "dashed",
-                       "Tvedestrand" = "dotted",
-                       "Arendal" = "longdash")
-    } else{
-      colour_scheme <- c("Horten" = "black",
-                         "Larvik" = "black",
-                         "Tvedestrand" = "black",
-                         "Arendal" = "black",
+      colour_scheme <- c("Skoppum" = "black",
+                         "Gunnarsr\u00f8d" = "black",
+                         "Hanto" = "black",
+                         "Bj\u00f8rnebu" = "black")
+
+      line_scheme <- c("Skoppum" = "twodash",
+                       "Gunnarsr\u00f8d" = "dashed",
+                       "Hanto" = "dotted",
+                       "Bj\u00f8rnebu" = "longdash")
+    } else {
+
+      colour_scheme <- c("Skoppum" = "black",
+                         "Gunnarsr\u00f8d" = "black",
+                         "Hanto" = "black",
+                         "Bj\u00f8rnebu" = "black",
                          "Interpolated curve" = "black")
 
-      line_scheme <- c("Horten" = "twodash",
-                       "Larvik" = "dashed",
-                       "Tvedestrand" = "dotted",
-                       "Arendal" = "longdash",
+      line_scheme <- c("Skoppum" = "twodash",
+                       "Gunnarsr\u00f8d" = "dashed",
+                       "Hanto" = "dotted",
+                       "Bj\u00f8rnebu" = "longdash",
                        "Interpolated curve" = "solid")
     }
-  } else{
-      if(is.na(interpolated_curve)){
-      colour_scheme <- c("Horten" = "darkorange",
-                "Larvik" = "darkgreen",
-                "Tvedestrand" = "blue",
-                "Arendal" = "black")
+  } else {
 
-      line_scheme <- c("Horten" = "solid",
-                       "Larvik" = "solid",
-                       "Tvedestrand" = "solid",
-                       "Arendal" = "solid")
+      if (is.na(interpolated_curve)) {
 
-      } else{
-        colour_scheme <- c("Horten" = "darkorange",
-                  "Larvik" = "darkgreen",
-                  "Tvedestrand" = "blue",
-                  "Arendal" = "black",
+      colour_scheme <- c("Skoppum" = "darkorange",
+                         "Gunnarsr\u00f8d" = "darkgreen",
+                         "Hanto" = "blue",
+                         "Bj\u00f8rnebu" = "black")
+
+      line_scheme <- c("Skoppum" = "solid",
+                       "Gunnarsr\u00f8d" = "solid",
+                       "Hanto" = "solid",
+                       "Bj\u00f8rnebu" = "solid")
+
+      } else {
+
+        colour_scheme <- c("Skoppum" = "darkorange",
+                           "Gunnarsr\u00f8d" = "darkgreen",
+                  "Hanto" = "blue",
+                  "Bj\u00f8rnebu" = "black",
                   "Interpolated curve" = "red")
 
-        line_scheme <- c("Horten" = "solid",
-                         "Larvik" = "solid",
-                         "Tvedestrand" = "solid",
-                         "Arendal" = "solid",
+        line_scheme <- c("Skoppum" = "solid",
+                        "Gunnarsr\u00f8d" = "solid",
+                         "Hanto" = "solid",
+                         "Bj\u00f8rnebu" = "solid",
                          "Interpolated curve" = "solid")
     }
   }
@@ -88,7 +98,10 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                    legend.position = "bottom",
                    legend.direction = "horizontal")
 
-    if(any(is.na(interpolated_curve))){
+    if (any(is.na(interpolated_curve))) {
+      limit_scheme <- c("Skoppum", "Gunnarsr\u00f8d",
+                        "Hanto", "Bj\u00f8rnebu")
+
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
                            ggplot2::aes(x = .data$bce,
@@ -102,12 +115,17 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                                         col = .data$name,
                                         linetype = .data$name),
                                         na.rm = TRUE) +
-        ggplot2::scale_colour_manual(values = colour_scheme) +
-        ggplot2::scale_linetype_manual(values = line_scheme)
+        ggplot2::scale_colour_manual(values = colour_scheme,
+                                     limits = limit_scheme) +
+        ggplot2::scale_linetype_manual(values = line_scheme,
+                                       limits = limit_scheme)
 
-    } else{
+    } else {
       intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
       intcurves$name <- "Interpolated curve"
+
+      limit_scheme <- c("Skoppum", "Gunnarsr\u00f8d",
+                        "Hanto", "Bj\u00f8rnebu", "Interpolated curve")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
@@ -125,16 +143,19 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
         ggplot2::geom_line(data = intcurves,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$upperelev,
-                                        col = .data$name,
-                                        linetype = .data$name)) +
+                                        col = as.factor(.data$name),
+                                        linetype = as.factor(.data$name)),
+                           na.rm = TRUE) +
         ggplot2::geom_line(data = intcurves,
                            ggplot2::aes(x = .data$bce,
                                         y = .data$lowerelev,
-                                        col = .data$name,
-                                        linetype = .data$name),
-                                        na.rm = TRUE) +
-        ggplot2::scale_colour_manual(values = colour_scheme) +
-        ggplot2::scale_linetype_manual(values = line_scheme)
+                                        col = as.factor(.data$name),
+                                        linetype = as.factor(.data$name)),
+                           na.rm = TRUE) +
+        ggplot2::scale_colour_manual(values = colour_scheme,
+                                     limits = limit_scheme) +
+        ggplot2::scale_linetype_manual(values = line_scheme,
+                                       limits = limit_scheme)
     }
   plt
 }

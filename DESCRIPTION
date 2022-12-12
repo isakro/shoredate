@@ -4,8 +4,10 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Isak", "Roalkvam", , "isakroa@protonmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6974-1374"))
-Description: The package offers tools to date Stone Age sites located on the Norwegian Skagerrak coast based on their present day elevation and reconstruction of past sea-level change.
-License: GPL (>= 3)
+Description: Provides tools for dating Stone Age sites located on the Norwegian Skagerrak coast based on their present day elevation and reconstructions of past sea-level change.
+License: GPL (>= 3) + file LICENSE
+URL: https://github.com/isakro/shoredate
+BugReports: https://github.com/isakro/shoredate/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1

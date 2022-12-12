@@ -1,58 +1,64 @@
 #' Interpolate displacement curve using IDW
 #'
-#' Interpolate the trajectory of past shoreline displacement to a single location based on the distance of the location to the shoreline isobases of the geologically derived displacement curves. This is done using inverse distance weighting.
+#' Interpolate the trajectory of past shoreline displacement to a single
+#'  location based on the distance of the location to the shoreline isobases of
+#'  the geologically derived displacement curves. This is done using inverse
+#'  distance weighting.
 #'
-#' @param target A spatial target location to where the new displacement curve is interpolated.
-#' @param isobases Spatial lines representing the shoreline isobases of the existing displacement curves.
-#' @param cal_reso Numeric value specifying the resolution to use on the calendar scale. Defaults to 1.
-#' @param verbose Logical value indicating whether progress should be printed to console. Defaults to FALSE.
+#' @param target A spatial target location to where the new displacement curve
+#'  is interpolated.
+#' @param isobases Spatial lines representing the shoreline isobases of the
+#'  existing displacement curves.
+#' @param cal_reso Numeric value specifying the resolution to use on the
+#'  calendar scale. Defaults to 10.
+#' @param verbose Logical value indicating whether progress should be printed to
+#'  console. Defaults to FALSE.
 #'
-#' @return A data frame holding the interpolated displacement curve
+#' @return A list holding the interpolated displacement curve.
 #' @export
 #'
 #' @import sf
 #'
 #' @examples
-#' # Create example point using the required coordinate system WGS84 / zone UTM32N (EPSG: 32632).
+#' # Create example point using the required coordinate system
+#' # WGS84 / zone UTM32N (EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
-#' # Interpolate shoreline displacement curve to the target point location.
+#' # Interpolate shoreline displacement curve to the target point location
 #' target_curve <- interpolate_curve(target_point)
 #'
 #' # Call to plot
 #' displacement_plot(target_curve)
 interpolate_curve <- function(target,
                               isobases = NA,
-                              cal_reso = 1,
+                              cal_reso = 10,
                               verbose = FALSE){
 
   # Check that the target location is set to correct CRS (causes error if it
-  # is not) and is located within the study area (prints warning if it is not)-
+  # is not) and is located within the study area (prints warning if it is not)
   check_target_location(target)
 
-  # Load existing displacement curves.
-  dispdat = load(system.file("extdata/displacement_curves.rda",
+  # Load existing displacement curves
+  displacement_curves <- get(load(system.file("extdata/displacement_curves.rda",
                   package = "shoredate",
-                  mustWork = TRUE))
+                  mustWork = TRUE)))
 
   bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to
-                                          # match displacement data.
+                                          # match displacement data
 
-  # Use default isobases unless others are provided.
-  if(any(is.na(isobases))){
+  # Use default isobases unless others are provided
+  if (any(is.na(isobases))) {
     isobases <- sf::st_read(
-      system.file("extdata/isobases.gpkg",
+                system.file("extdata/isobases.gpkg",
                   package = "shoredate",
                   mustWork = TRUE), quiet = TRUE)
   }
-
-  displacement_curves <- get(dispdat)
 
   interpolated_curves <- list()
 
   for(i in 1:length(unique(isobases$direction))){
     isobases_dir <- isobases[isobases$direction ==
-                               unique(isobases$direction)[i],]
+                               unique(isobases$direction)[i], ]
     dists <- as.data.frame(sf::st_distance(target, isobases_dir))
     names(dists) <- isobases_dir$name
 
@@ -61,14 +67,14 @@ interpolate_curve <- function(target,
 
     # In the case that a site is on the isobase of a
     # displacement curve, simply return that displacement curve
-    if(any(as.numeric(dists) == 0)){
+    if (any(as.numeric(dists) == 0)) {
       values <- displacement_curves[displacement_curves$name ==
-                                  names(dists)[which(as.numeric(dists) == 0)],]
+                                  names(dists)[which(as.numeric(dists) == 0)], ]
 
     } else {
-      if(verbose){
+      if (verbose) {
         # If a site is not on a isobase, the displacement curve needs to be
-        # interpolated, in which case printing progress might be of interest.
+        # interpolated, in which case printing progress might be of interest
         print("Interpolating displacement curve")
         pb <- utils::txtProgressBar(min = 0,
                                     max = length(bce),
@@ -94,7 +100,7 @@ interpolate_curve <- function(target,
 
       # No sites are older than the lowest limit of any displacement curve
       # so in case of NA values, simply assign NA
-      if(any(is.na(distdat))){
+      if (any(is.na(distdat))) {
         lowerval <- upperval <- NA
       } else {
         # Inverse distance weighting
@@ -106,18 +112,20 @@ interpolate_curve <- function(target,
           sum(apply(distdat, 1, function(x) x["distance"] ^-2))
 
       }
+
       values[j, 1:3] <- c(bce[j], lowerval, upperval)
 
-      if(verbose){
+      if (verbose) {
         utils::setTxtProgressBar(pb, j)
       }
       }
     }
-    if(verbose){
+    if (verbose) {
       close(pb)
     }
     values$direction <- unique(isobases$direction)[i]
     interpolated_curves[[i]] <- values
   }
-  return(interpolated_curves)
+
+  interpolated_curves
 }

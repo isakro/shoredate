@@ -17,31 +17,43 @@ shoredate_plot(
 )
 }
 \arguments{
-\item{shorelinedates}{A list of objects returned from shoreline_date().}
+\item{shorelinedates}{Object of class \code{shoreline_date}.}
 
-\item{elevation_distribution}{Logical value indicating whether the gamma distribution should be displayed. Default is TRUE.}
+\item{elevation_distribution}{Logical value indicating whether the gamma
+distribution should be displayed. Default is TRUE.}
 
-\item{displacement_curve}{Logical value indicating whether the displacement curve should be displayed. Default is TRUE.}
+\item{displacement_curve}{Logical value indicating whether the displacement
+curve should be displayed. Default is TRUE.}
 
-\item{parameters}{Logical value indicating whether the parameters of the gamma distribution should be displayed. Default is FALSE.}
+\item{parameters}{Logical value indicating whether the parameters of the
+gamma distribution should be displayed. Default is FALSE.}
 
-\item{isobase_direction}{Logical value indicating whether the direction of the isobases should be displayed. Default is FALSE.}
+\item{isobase_direction}{Logical value indicating whether the direction of
+the isobases should be displayed. Default is FALSE.}
 
-\item{highest_density_region}{Logical value indicating whether the 95\% highest density region should be displayed. Defaults to TRUE.}
+\item{highest_density_region}{Logical value indicating whether the 95\%
+highest density region should be displayed. Defaults to TRUE.}
 
-\item{hdr_label}{Logical value indicating whether the numeric values for the highest density regions should be displayed. Default is TRUE.}
+\item{hdr_label}{Logical value indicating whether the numeric values for the
+highest density regions should be displayed. Default is TRUE.}
 
-\item{multiplot}{Logical value indicating whether multiple dates should be plotted individually, or be collapsed into a single plot. Default is FALSE.}
+\item{multiplot}{Logical value indicating whether multiple dates should be
+plotted individually, or be collapsed into a single plot. Default is FALSE.}
 
-\item{greyscale}{Logical value indicating whether the plot should be in greyscale or not. Defaults to FALSE.}
+\item{greyscale}{Logical value indicating whether the plot should be in
+greyscale or not. Defaults to FALSE.}
 }
 \description{
 Function for plotting shoreline dates along with associated metadata.
 }
 \details{
-shoredate_plot() returns a plot displaying the provided shoreline dates. A single plot is created for each date, where a range of settings can
-be adjusted to display or hide various parameters and results. Setting the parameter multiplot to TRUE returns a sparser version for multiple dates,
-where the only option is whether or not to display the highest density region in addition to each date. The does not allow for several isobase directions.
+\code{shoredate_plot()} returns a plot displaying the provided shoreline
+dates. A single plot is created for each date, where a range of settings can
+be adjusted to display or hide various parameters and results. Setting the
+parameter \code{multiplot} to \code{TRUE} returns a sparser version for multiple
+dates, where the only option is whether or not to display the highest
+density region in addition to each date. \code{multiplot} does not allow for
+multiple isobase directions.
 }
 \examples{
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)

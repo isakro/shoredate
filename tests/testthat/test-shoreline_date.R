@@ -1,7 +1,7 @@
-test_that("returns list", {
+test_that("returns list of class shoreline_date", {
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   target_date <- shoreline_date(site = target_point, elevation = 46)
-  expect_type(target_date, "list")
+  expect_equal(class(target_date), c("shoreline_date", "list"))
 })
 
 test_that("throws error if resolution is not a power of ten", {
@@ -47,5 +47,11 @@ test_that("gives warning and returns NA if date has a later start than 2500 BCE"
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   warn <- expect_warning(shoreline_date(site = target_point, elevation = 17))
   expect_equal(warn$message, "Site 1 has a younger possible start date than 2500 BCE and is returned as NA.")
+})
+
+test_that("lack of both elevation value and elevation raster throws error", {
+  target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+  err <- expect_error(shoreline_date(site = target_point))
+  expect_equal(err$message, "A numeric value specifying the site elevation or an elevation raster must be provided.")
 })
 

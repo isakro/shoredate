@@ -13,8 +13,9 @@ flatten_list(x)
 List of ggplot objects
 }
 \description{
-Utility function to extract a nested list of ggplots. Code taken from answers on Stackoverflow.
-From user \@divibsan here:  https://stackoverflow.com/a/55733001 who in turn based their answer on user
+Utility function to extract a nested list of ggplots. Code taken from answers
+on Stackoverflow. From user \@divibsan here:
+https://stackoverflow.com/a/55733001 who in turn based their answer on user
 \@Michael here: https://stackoverflow.com/a/41882883
 }
 \keyword{internal}

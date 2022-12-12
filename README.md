@@ -89,7 +89,7 @@ displacement_plot(target_curve)
 <img src="man/figures/README-interpolate_curve-1.png" style="display: block; margin: auto;" />
 
 This interpolation procedure is performed under the hood for each site
-when calling shoreline_date().
+when calling `shoreline_date()`.
 
 ## Example of shoreline dating a site
 
@@ -156,10 +156,15 @@ target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
 # Performing shoreline dating, specifying site elevations. 
 target_dates <- shoreline_date(sites = target_points, 
                                elevation = c(70, 46, 62, 72))
+#> Warning in shoreline_date(sites = target_points, elevation = c(70, 46, 62, : The
+#> elevation of site Example 4 implies an earliest possible date older than -9460
+#> BCE and is out of bounds. The date is returned as NA.
 
 # Plot the dates with 95% HDRs (these can be removed by setting 
 # highest_density_region = FALSE).
 shoredate_plot(target_dates, multiplot = TRUE)
+#> Warning in shoredate_plot(target_dates, multiplot = TRUE): Skipped one date that
+#> was out of bounds.
 ```
 
 <img src="man/figures/README-multiplot-1.png" style="display: block; margin: auto;" />

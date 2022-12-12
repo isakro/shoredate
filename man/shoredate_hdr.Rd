@@ -4,26 +4,44 @@
 \alias{shoredate_hdr}
 \title{Highest density region of shoreline dates}
 \usage{
-shoredate_hdr(shorelinedate, prob = 0.95)
+shoredate_hdr(bce, probability, site_name, cal_reso, prob = 0.95)
 }
 \arguments{
-\item{shorelinedate}{A single date consisting of a list of objects returned from shoreline_date().}
+\item{bce}{A vector holding calendar years associated with a date}
 
-\item{prob}{A numerical value indicating the probability coverage of the HDR. Defaults to 0.95.}
+\item{probability}{A vector holding the probability corresponding to each
+year in \code{date}.}
+
+\item{site_name}{A vector holding the name of the site that has been dated.}
+
+\item{cal_reso}{Resolution on the calendar scale used when dating the site.}
+
+\item{prob}{A numerical value indicating the probability coverage of the HDR.
+Defaults to 0.95.}
 }
 \value{
-A data frame holding start and end points for segments of the highest density region.
+A data frame holding start and end points for segments of the highest
+density region.
 }
 \description{
-Function to find 95\% highest density region (HDR) for a provided shoreline date.
+Function to find 95\% highest density region (HDR) for a provided shoreline
+date.
 }
 \examples{
-# Create point to shoreline date.
+# Create point to shoreline date
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-# Perform shoreline dating.
+# Perform shoreline dating
 target_date <- shoreline_date(sites = target_point, elevation = 65)
 
-# Retrieve and print HDR for the shoreline date.
-(shoredate_hdr(target_date))
+# shoredate_hdr() is already called under the hood with shoreline_date, and
+# is printed with the date
+target_date
+
+# However, shoredate_hdr() can be applied separately by pulling the necessary
+# data from the date
+(shoredate_hdr(target_date[[1]][[1]]$date$bce,
+               target_date[[1]][[1]]$date$probability,
+               target_date[[1]][[1]]$site_name,
+               target_date[[1]][[1]]$cal_reso))
 }

@@ -1,9 +1,12 @@
 #' Create isobases
 #'
-#' Function to create isobases for interpolating shoreline displacement curves. This is done from the centre points of the supplied displacement curves.
-#' Isobases can also be created for multiple directions, which is useful for testing the sensitivity of dates to the direction of the isobases.
+#' Function to create isobases for interpolating shoreline displacement curves.
+#'  This is done from the centre points of the supplied displacement curves.
+#'  Isobases can also be created for multiple directions, which is useful for
+#'  testing the sensitivity of dates to the direction of the isobases.
 #'
-#' @param isobase_direction A vector holding a single or multiple directions for the isobases.
+#' @param isobase_direction A vector holding a single or multiple directions for
+#'  the isobases.
 #'
 #' @return A simple feature holding the isobases represented as lines
 #' @export
@@ -13,10 +16,10 @@
 #' isobases <- create_isobases(327)
 #' plot(sf::st_geometry(isobases))
 #'
-#' # Create isobases using different directions.
+#' # Create isobases using different directions
 #' isobases <- create_isobases(c(327, 338))
 #'
-#' # Plot for visualisation.
+#' # Plot for visualisation
 #' plot(sf::st_geometry(isobases))
 create_isobases <- function(isobase_direction){
   centrepoints <- sf::st_read(
@@ -24,7 +27,7 @@ create_isobases <- function(isobase_direction){
                 package = "shoredate",
                 mustWork = TRUE), quiet = TRUE)
 
-  # Arbitrarily long length of lines to represent the isobases.
+  # Arbitrarily long length of lines to represent the isobases
   isobase_length = 9000000
 
   # Create empty sf object to hold the isobases
@@ -79,6 +82,6 @@ create_isobases <- function(isobase_direction){
     isobases[(nrow(centrepoints)*i-(nrow(centrepoints)-1)):
                (nrow(centrepoints)*i),] <- isobases_temp
   }
-  return(isobases)
+  isobases
 }
 

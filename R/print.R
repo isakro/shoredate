@@ -1,0 +1,68 @@
+#' print.shoreline_date
+#'
+#' Print the dates in a `shoreline_date` object. Each date is printed with
+#'  site name, elevation and highest density region. If the isobase direction is
+#'  different or more are provided than the single default, the directions and
+#'  dates associated with these are also printed.
+#'
+#' @param x Object of class `shoreline_date`.
+#' @param ... Addiontal arguments.
+#'
+#' @return Print the site names, elevations, non-default isobase directions and
+#'  HDRs of a shoreline_date object.
+#' @export
+#'
+#' @examples
+#'
+#' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_date <- shoreline_date(site = target_point, elevation = 70)
+#' target_date
+#'
+print.shoreline_date <- function(x, ...){
+
+  for (i in 1:length(x)) {
+    if (all(is.na(x[[i]][[1]]$date$probability))) {
+
+      cat("===============")
+      cat("\nSite: ", x[[i]][[1]]$site_name)
+      cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
+      cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\nNA\n", sep = "")
+
+   } else if (length(x[[i]]) == 1 & x[[i]][[1]]$dispcurve_direction == 327) {
+
+      cat("===============")
+      cat("\nSite: ", x[[i]][[1]]$site_name)
+      cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
+      cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
+      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
+                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+
+    } else if (length(x[[i]]) == 1 & x[[i]][[1]]$dispcurve_direction != 327) {
+
+      cat("===============")
+      cat("\nSite: ", x[[i]][[1]]$site_name)
+      cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
+      cat("\nIsobase direction: ", x[[i]][[1]]$dispcurve_direction, "\n")
+      cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
+      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
+                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+
+    } else if (length(x[[i]]) > 1) {
+      cat("===============")
+      cat("\nSite: ", x[[i]][[1]]$site_name)
+      cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
+      cat("\nIsobase direction: ", x[[i]][[1]]$dispcurve_direction, "\n")
+      cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
+      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
+                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+
+        for(j in 2:length(x[[i]])) {
+        cat("\nIsobase direction: ", x[[i]][[j]]$dispcurve_direction, "\n")
+        cat("\n",  x[[i]][[j]]$hdr_prob*100, "% HDR:\n", sep = "")
+        cat(rbind(paste0(x[[i]][[j]]$hdr_start * -1, "-"),
+                  paste0(x[[i]][[j]]$hdr_end * -1, " BCE\n")), sep = "")
+        }
+  }
+  }
+}
+

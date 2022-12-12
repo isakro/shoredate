@@ -7,23 +7,26 @@
 create_isobases(isobase_direction)
 }
 \arguments{
-\item{isobase_direction}{A vector holding a single or multiple directions for the isobases.}
+\item{isobase_direction}{A vector holding a single or multiple directions for
+the isobases.}
 }
 \value{
 A simple feature holding the isobases represented as lines
 }
 \description{
-Function to create isobases for interpolating shoreline displacement curves. This is done from the centre points of the supplied displacement curves.
-Isobases can also be created for multiple directions, which is useful for testing the sensitivity of dates to the direction of the isobases.
+Function to create isobases for interpolating shoreline displacement curves.
+This is done from the centre points of the supplied displacement curves.
+Isobases can also be created for multiple directions, which is useful for
+testing the sensitivity of dates to the direction of the isobases.
 }
 \examples{
 # Create isobases in a specified direction
 isobases <- create_isobases(327)
 plot(sf::st_geometry(isobases))
 
-# Create isobases using different directions.
+# Create isobases using different directions
 isobases <- create_isobases(c(327, 338))
 
-# Plot for visualisation.
+# Plot for visualisation
 plot(sf::st_geometry(isobases))
 }

@@ -89,7 +89,7 @@ target_curve <- interpolate_curve(target_point)
 displacement_plot(target_curve)
 ```
 
-This interpolation procedure is performed under the hood for each site when calling shoreline_date().
+This interpolation procedure is performed under the hood for each site when calling `shoreline_date()`.
 
 ## Example of shoreline dating a site
 
