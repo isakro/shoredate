@@ -36,55 +36,55 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
   if (greyscale) {
     if (is.na(interpolated_curve)) {
 
-      colour_scheme <- c("Skoppum" = "black",
-                         "Gunnarsr\u00f8d" = "black",
-                         "Hanto" = "black",
-                         "Bj\u00f8rnebu" = "black")
+      colour_scheme <- c("Horten" = "black",
+                         "Larvik" = "black",
+                         "Tvedestrand" = "black",
+                         "Arendal" = "black")
 
-      line_scheme <- c("Skoppum" = "twodash",
-                       "Gunnarsr\u00f8d" = "dashed",
-                       "Hanto" = "dotted",
-                       "Bj\u00f8rnebu" = "longdash")
+      line_scheme <- c("Horten" = "twodash",
+                       "Larvik" = "dashed",
+                       "Tvedestrand" = "dotted",
+                       "Arendal" = "longdash")
     } else {
 
-      colour_scheme <- c("Skoppum" = "black",
-                         "Gunnarsr\u00f8d" = "black",
-                         "Hanto" = "black",
-                         "Bj\u00f8rnebu" = "black",
+      colour_scheme <- c("Horten" = "black",
+                         "Larvik" = "black",
+                         "Tvedestrand" = "black",
+                         "Arendal" = "black",
                          "Interpolated curve" = "black")
 
-      line_scheme <- c("Skoppum" = "twodash",
-                       "Gunnarsr\u00f8d" = "dashed",
-                       "Hanto" = "dotted",
-                       "Bj\u00f8rnebu" = "longdash",
+      line_scheme <- c("Horten" = "twodash",
+                       "Larvik" = "dashed",
+                       "Tvedestrand" = "dotted",
+                       "Arendal" = "longdash",
                        "Interpolated curve" = "solid")
     }
   } else {
 
       if (is.na(interpolated_curve)) {
 
-      colour_scheme <- c("Skoppum" = "darkorange",
-                         "Gunnarsr\u00f8d" = "darkgreen",
-                         "Hanto" = "blue",
-                         "Bj\u00f8rnebu" = "black")
+      colour_scheme <- c("Horten" = "darkorange",
+                         "Larvik" = "darkgreen",
+                         "Tvedestrand" = "blue",
+                         "Arendal" = "black")
 
-      line_scheme <- c("Skoppum" = "solid",
-                       "Gunnarsr\u00f8d" = "solid",
-                       "Hanto" = "solid",
-                       "Bj\u00f8rnebu" = "solid")
+      line_scheme <- c("Horten" = "solid",
+                       "Larvik" = "solid",
+                       "Tvedestrand" = "solid",
+                       "Arendal" = "solid")
 
       } else {
 
-        colour_scheme <- c("Skoppum" = "darkorange",
-                           "Gunnarsr\u00f8d" = "darkgreen",
-                  "Hanto" = "blue",
-                  "Bj\u00f8rnebu" = "black",
+        colour_scheme <- c("Horten" = "darkorange",
+                           "Larvik" = "darkgreen",
+                  "Tvedestrand" = "blue",
+                  "Arendal" = "black",
                   "Interpolated curve" = "red")
 
-        line_scheme <- c("Skoppum" = "solid",
-                        "Gunnarsr\u00f8d" = "solid",
-                         "Hanto" = "solid",
-                         "Bj\u00f8rnebu" = "solid",
+        line_scheme <- c("Horten" = "solid",
+                        "Larvik" = "solid",
+                         "Tvedestrand" = "solid",
+                         "Arendal" = "solid",
                          "Interpolated curve" = "solid")
     }
   }
@@ -99,8 +99,8 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                    legend.direction = "horizontal")
 
     if (any(is.na(interpolated_curve))) {
-      limit_scheme <- c("Skoppum", "Gunnarsr\u00f8d",
-                        "Hanto", "Bj\u00f8rnebu")
+      limit_scheme <- c("Horten", "Larvik",
+                        "Tvedestrand", "Arendal")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
@@ -124,8 +124,8 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
       intcurves$name <- "Interpolated curve"
 
-      limit_scheme <- c("Skoppum", "Gunnarsr\u00f8d",
-                        "Hanto", "Bj\u00f8rnebu", "Interpolated curve")
+      limit_scheme <- c("Horten", "Larvik",
+                        "Tvedestrand", "Arendal", "Interpolated curve")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
