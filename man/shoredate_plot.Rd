@@ -53,7 +53,8 @@ be adjusted to display or hide various parameters and results. Setting the
 parameter \code{multiplot} to \code{TRUE} returns a sparser version for multiple
 dates, where the only option is whether or not to display the highest
 density region in addition to each date. \code{multiplot} does not allow for
-multiple isobase directions.
+multiple isobase directions. Negative values denote years BCE while positive
+values denote CE.
 }
 \examples{
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)

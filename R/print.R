@@ -6,10 +6,10 @@
 #'  dates associated with these are also printed.
 #'
 #' @param x Object of class `shoreline_date`.
-#' @param ... Addiontal arguments.
+#' @param ... Additional arguments.
 #'
 #' @return Print the site names, elevations, non-default isobase directions and
-#'  HDRs of a shoreline_date object.
+#'  HDRs contained in a `shoreline_date` object.
 #' @export
 #'
 #' @examples
@@ -34,8 +34,14 @@ print.shoreline_date <- function(x, ...){
       cat("\nSite: ", x[[i]][[1]]$site_name)
       cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
       cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
-      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
-                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+      cat(rbind(paste0(ifelse(grepl("^[-]", x[[i]][[1]]$hdr_start),
+            paste(gsub("^[-]", "", x[[i]][[1]]$hdr_start), "BCE"),
+             gsub("$", " CE", x[[i]][[1]]$hdr_start)), "-"),
+      ifelse(grepl("^[-]", x[[i]][[1]]$hdr_end),
+             gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
+             gsub("$", " CE\n", x[[i]][[1]]$hdr_end))), sep = "")
+      # cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
+      #           paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
 
     } else if (length(x[[i]]) == 1 & x[[i]][[1]]$dispcurve_direction != 327) {
 
@@ -44,8 +50,12 @@ print.shoreline_date <- function(x, ...){
       cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
       cat("\nIsobase direction: ", x[[i]][[1]]$dispcurve_direction, "\n")
       cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
-      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
-                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+      cat(rbind(paste0(ifelse(grepl("^[-]", x[[i]][[1]]$hdr_start),
+                       paste(gsub("^[-]", "", x[[i]][[1]]$hdr_start), "BCE"),
+                       gsub("$", " CE", x[[i]][[1]]$hdr_start)), "-"),
+                ifelse(grepl("^[-]", x[[i]][[1]]$hdr_end),
+                       gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
+                       gsub("$", " CE\n", x[[i]][[1]]$hdr_end))), sep = "")
 
     } else if (length(x[[i]]) > 1) {
       cat("===============")
@@ -53,14 +63,27 @@ print.shoreline_date <- function(x, ...){
       cat("\nElevation: ", x[[i]][[1]]$site_elev, "\n")
       cat("\nIsobase direction: ", x[[i]][[1]]$dispcurve_direction, "\n")
       cat("\n",  x[[i]][[1]]$hdr_prob*100, "% HDR:\n", sep = "")
-      cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
-                paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
+      cat(rbind(paste0(ifelse(grepl("^[-]", x[[i]][[1]]$hdr_start),
+                       paste(gsub("^[-]", "", x[[i]][[1]]$hdr_start), "BCE"),
+                       gsub("$", " CE", x[[i]][[1]]$hdr_start)), "-"),
+                ifelse(grepl("^[-]", x[[i]][[1]]$hdr_end),
+                       gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
+                       gsub("$", " CE\n", x[[i]][[1]]$hdr_end))), sep = "")
+      # cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
+      #           paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
 
-        for(j in 2:length(x[[i]])) {
+        for (j in 2:length(x[[i]])) {
         cat("\nIsobase direction: ", x[[i]][[j]]$dispcurve_direction, "\n")
         cat("\n",  x[[i]][[j]]$hdr_prob*100, "% HDR:\n", sep = "")
-        cat(rbind(paste0(x[[i]][[j]]$hdr_start * -1, "-"),
-                  paste0(x[[i]][[j]]$hdr_end * -1, " BCE\n")), sep = "")
+        cat(rbind(paste0(ifelse(grepl("^[-]", x[[i]][[j]]$hdr_start),
+                         paste(gsub("^[-]", "", x[[i]][[j]]$hdr_start), "BCE"),
+                         gsub("$", " CE", x[[i]][[j]]$hdr_start)), "-"),
+                  ifelse(grepl("^[-]", x[[i]][[j]]$hdr_end),
+                         gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
+                         gsub("$", " CE\n", x[[i]][[j]]$hdr_end))), sep = "")
+
+        # cat(rbind(paste0(x[[i]][[j]]$hdr_start * -1, "-"),
+        #           paste0(x[[i]][[j]]$hdr_end * -1, " BCE\n")), sep = "")
         }
   }
   }

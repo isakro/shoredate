@@ -26,7 +26,8 @@
 #'  parameter `multiplot` to `TRUE` returns a sparser version for multiple
 #'  dates, where the only option is whether or not to display the highest
 #'  density region in addition to each date. `multiplot` does not allow for
-#'  multiple isobase directions.
+#'  multiple isobase directions. Negative values denote years BCE while positive
+#'  values denote CE.
 #'
 #' @export
 #'
@@ -172,7 +173,7 @@ shoredate_plot <- function(shorelinedates,
         label_hdrs <- ""
         for(i in 1:nrow(hdrs)){
           label_hdrs <- paste0(label_hdrs, hdrs$start[i]," to ",
-                              hdrs$end[i], " BCE\n")
+                              hdrs$end[i], " \n")
         }
         # for(i in 1:nrow(hdrs)){
         #   label_hdrs <- paste0(label_hdrs, round(hdrs$start[i])," to ",
@@ -240,7 +241,7 @@ shoredate_plot <- function(shorelinedates,
     # Find number of dates that were excluded
     no_plots <- sum(is.na(probsums$x))
 
-    # Exclude NA dates from the HDRs to be plottes
+    # Exclude NA dates from the HDRs to be plotted
     hdrs <- hdrs[hdrs$site_name %in% unique(dates_dfna$site_name),]
 
     # Compile plot without HDRS, but using these to order the sites

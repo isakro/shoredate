@@ -25,7 +25,7 @@ density region.
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline
-date.
+date. Negative values denote years BCE while positive values denote CE.
 }
 \examples{
 # Create point to shoreline date

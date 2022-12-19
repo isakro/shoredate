@@ -1,7 +1,7 @@
 #' Highest density region of shoreline dates
 #'
 #' Function to find 95% highest density region (HDR) for a provided shoreline
-#'  date.
+#'  date. Negative values denote years BCE while positive values denote CE.
 #'
 #' @param bce A vector holding calendar years associated with a date
 #' @param probability A vector holding the probability corresponding to each
@@ -85,7 +85,7 @@ shoredate_hdr <- function(bce, probability, site_name, cal_reso, prob = 0.95){
 
   # Check if end value is cal_reso from next start value, except last row.
   # This returns indices of end values more than cal_reso from next start.
-  end_indices <- which(out$end -  c(tail(out$start, -1), 0) < -cal_reso)
+  end_indices <- which(abs(out$end -  c(tail(out$start, -1), 0)) > abs(cal_reso))
   end_breaks <- out$end[end_indices]
 
   # First select start breaks of HDRs. First row is always included, last row

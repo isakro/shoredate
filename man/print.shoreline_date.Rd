@@ -9,11 +9,11 @@
 \arguments{
 \item{x}{Object of class \code{shoreline_date}.}
 
-\item{...}{Addiontal arguments.}
+\item{...}{Additional arguments.}
 }
 \value{
 Print the site names, elevations, non-default isobase directions and
-HDRs of a shoreline_date object.
+HDRs contained in a \code{shoreline_date} object.
 }
 \description{
 Print the dates in a \code{shoreline_date} object. Each date is printed with

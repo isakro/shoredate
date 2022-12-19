@@ -70,7 +70,7 @@ plt1 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = c(left = 2, bottom = 54,
     ymax = limit_bbox[4],
     fill = NA, 
     colour = "black",
-    size = 0.5)
+    linewidth = 0.5)
 
 # Points representing towns of interest
 cities <- sf::st_sfc(sf::st_point(c(486348, 6480478)),
