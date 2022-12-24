@@ -89,8 +89,15 @@ shoredate_plot <- function(shorelinedates,
                        height = .data$probability * 10000/nshoredate$cal_reso),
                                colour = NA, fill = "darkgrey", alpha = 0.7) +
       ggplot2::labs(y = "Meters above present sea-level",
-                    x = "Shoreline date (BCE)") +
-        ggplot2::theme_bw()
+                    x = "Shoreline date (BCE/CE)") +
+        ggplot2::theme_bw() +
+        ggplot2::scale_x_continuous(expand = c(0,0),
+                                    limits = c(min(dategrid$bce) - 1250,
+                                      ifelse(
+                                        (max(nshoredate$hdr_end) + 1250) < 1950,
+                                    max(nshoredate$hdr_end) + 1250, 1950))) +
+        ggplot2:: coord_cartesian(ylim = c(0,
+                                  as.numeric(nshoredate$site_elev) + 10))
 
       if (highest_density_region) {
         hdrs <- data.frame(start = nshoredate$hdr_start,
@@ -135,12 +142,7 @@ shoredate_plot <- function(shorelinedates,
           ggplot2::geom_line(data = nshoredate$dispcurve,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$lowerelev),
-                             colour = dispcol, na.rm = TRUE) +
-          ggplot2::scale_x_continuous(expand = c(0,0),
-                                      limits = c(min(dategrid$bce) - 1250,
-                                                 max(dategrid$bce))) +
-          ggplot2:: coord_cartesian(ylim = c(0,
-                                    as.numeric(nshoredate$site_elev) + 10))
+                             colour = dispcol, na.rm = TRUE)
       }
 
       if (elevation_distribution) {
@@ -181,7 +183,7 @@ shoredate_plot <- function(shorelinedates,
         # }
         label_text <- paste0("95% HDR:\n", label_hdrs)
 
-       plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.9, hjust = 0)
+       plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.8, hjust = 0)
       }
 
       if (!all(is.na(nshoredate$date$probability))) {

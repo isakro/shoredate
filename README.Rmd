@@ -74,9 +74,9 @@ Furthermore, as human occupation in the region only occurred some time after the
 
 In @roalkvam2023 it was found that sites tend to be located on or close to the shoreline up until around the transition to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for the applicability of the method. A date that has a later start date than this is therefore returned as NA with a warning. Additionally, the geological displacement curves are reported as years cal BP. If a date extends beyond 1950 CE (which equates to 0 cal BP), thus indicating a site location below the present sea-level, this overshooting probability is cut off and the date is normalised to sum to unity. 
 
-## Interpolating shoreline displacement curve
+## Interpolating shoreline displacement to a site location
 
-To date a site a reconstruction of local shoreline displacement is necessary. There are currently four reliable geological displacement curves available from within the study area. Each of these is associated with a shoreline isobase, along which the trajectory of relative sea-level change has been the same. To find the local displacement curve, the curves are interpolated to the site location using inverse distance weighting---weighting the distances by the square of the inverse distance between site and isobases.
+To date a site a reconstruction of local shoreline displacement is necessary. There are currently four reliable geological displacement curves available from within the study area. Each of these is associated with a shoreline isobase, along which the trajectory of relative sea-level change has been the same. To find the local displacement curve, the curves are interpolated to the site location using inverse distance weighting, weighting the distances by the square of the inverse distance between site and isobases.
 
 ```{r interpolate_curve, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 4}
 library(shoredate)
@@ -105,6 +105,11 @@ shoredate_plot(target_date)
 
 The blue gamma distribution on the y-axis indicates the likely elevation of the site above sea-level when it was in use which is described by an empirically derived gamma distribution with the parameters of shape ($\alpha$) = 0.286 and scale ($\sigma$) = 0.048. The red envelope is the shoreline displacement curve as interpolated to the site location. Transferring the probability from the gamma distribution to the calendar scale using the displacement curve gives the resulting shoreline date in grey which is underlined with the 95% highest density region in black. By default, the shoreline date is normalised to sum to unity. The default resolution on the calendar scale is 10 years, but this can be adjusted to any power of 10 (including 1).
 
+Calling the the date object, which has the custom class `shoreline_date` prints the name of the site, its elevation and the HDR
+```{r print_date}
+target_date
+```
+
 It is also possible to plot a more sparse version of the date by specifying what elements are to be excluded:
 
 ```{r sparse}
@@ -114,7 +119,7 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 
 
 It is also possible to date multiple sites at once. The default behaviour when providing multiple shoreline dates is to plot a series of individual plots for each date. However, setting `multiplot = TRUE` when calling shoredate_plot() collapses the dates on a single plot that is more sparse, ordering the sites from earliest to latest possible start date for the occupation of the sites. 
-```{r multiplot}
+```{r multidate}
 # Creating multiple points to be dated.
 target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
                               sf::st_point(c(538300, 6544250)),
@@ -131,7 +136,7 @@ target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
 
 # Performing shoreline dating, specifying site elevations. 
 target_dates <- shoreline_date(sites = target_points, 
-                               elevation = c(70, 46, 62, 72))
+                               elevation = c(70, 46, 62, 30))
 
 # Plot the dates with 95% HDRs (these can be removed by setting 
 # highest_density_region = FALSE).

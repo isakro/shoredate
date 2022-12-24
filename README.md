@@ -64,7 +64,7 @@ curves are reported as years cal BP. If a date extends beyond 1950 CE
 present sea-level, this overshooting probability is cut off and the date
 is normalised to sum to unity.
 
-## Interpolating shoreline displacement curve
+## Interpolating shoreline displacement to a site location
 
 To date a site a reconstruction of local shoreline displacement is
 necessary. There are currently four reliable geological displacement
@@ -72,7 +72,7 @@ curves available from within the study area. Each of these is associated
 with a shoreline isobase, along which the trajectory of relative
 sea-level change has been the same. To find the local displacement
 curve, the curves are interpolated to the site location using inverse
-distance weighting—weighting the distances by the square of the inverse
+distance weighting, weighting the distances by the square of the inverse
 distance between site and isobases.
 
 ``` r
@@ -121,6 +121,20 @@ gives the resulting shoreline date in grey which is underlined with the
 normalised to sum to unity. The default resolution on the calendar scale
 is 10 years, but this can be adjusted to any power of 10 (including 1).
 
+Calling the the date object, which has the custom class `shoreline_date`
+prints the name of the site, its elevation and the HDR
+
+``` r
+target_date
+#> ===============
+#> Site:  1
+#> Elevation:  70 
+#> 
+#> 95% HDR:
+#> 7500 BCE-6080 BCE
+#> 6010 BCE-5460 BCE
+```
+
 It is also possible to plot a more sparse version of the date by
 specifying what elements are to be excluded:
 
@@ -155,16 +169,11 @@ target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
 
 # Performing shoreline dating, specifying site elevations. 
 target_dates <- shoreline_date(sites = target_points, 
-                               elevation = c(70, 46, 62, 72))
-#> Warning in shoreline_date(sites = target_points, elevation = c(70, 46, 62, : The
-#> elevation of site Example 4 implies an earliest possible date older than -9460
-#> BCE and is out of bounds. The date is returned as NA.
+                               elevation = c(70, 46, 62, 30))
 
 # Plot the dates with 95% HDRs (these can be removed by setting 
 # highest_density_region = FALSE).
 shoredate_plot(target_dates, multiplot = TRUE)
-#> Warning in shoredate_plot(target_dates, multiplot = TRUE): Skipped one date that
-#> was out of bounds.
 ```
 
-<img src="man/figures/README-multiplot-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-multidate-1.png" style="display: block; margin: auto;" />
