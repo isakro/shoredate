@@ -27,7 +27,7 @@ spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
 [![Codecov test coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
 <!-- badges: end -->
 
-The goal of *shoredate* is to offer methods to shoreline date Stone Age sites located along the Norwegian Skagerrak coast based on their present-day elevation and the trajectory of past relative sea-level change. The method is based on the likely elevation of the sites above the contemporaneous sea-level when they were in use (see @roalkvam2023 for details).
+The goal of *shoredate* is to offer methods to shoreline date Stone Age sites located along the Norwegian Skagerrak coast based on their present-day elevation and the trajectory of past relative sea-level change. The method is based on the likely elevation of the sites above the contemporaneous sea-level when they were in use (see Roalkvam 2023 for details).
 
 ## Installation
 
@@ -40,9 +40,10 @@ devtools::install_github("isakro/shoredate")
 
 ## Geographical and temporal coverage
 
-As the method of shoreline dating is contingent on relative sea-level change, it is dependent on good geological reconstructions of this development. At present, the method as outlined here is therefore limited to being applicable in the region between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for. The region also formed the study area for @roalkvam2023, in which the method and its parameters were derived. The spatial coverage is indicated in the maps below:
+As the method of shoreline dating is contingent on relative sea-level change, it is dependent on good geological reconstructions of this development. At present, the method as outlined here is therefore limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Horten (Romundset 2021) Larvik (Sørensen et al. 2014; Sørensen et al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal (Romundset 2018). The region also formed the study area for @roalkvam2023, in which the method and its parameters were derived. The spatial coverage is indicated in the maps below:
 
 ```{r, echo = FALSE}
+library(shoredate)
 
 limit_reproj <- sf::st_transform(spatial_limit, crs = 4326)
 limit_bbox <- as.numeric(sf::st_bbox(limit_reproj))
@@ -60,19 +61,30 @@ plt1 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = c(left = 2, bottom = 54,
     linewidth = 0.6
   )
 
-plt2 <- ggmap::ggmap(ggmap::get_stamenmap(bbox = 
-                                            c(left = limit_bbox[1],
-                                              bottom = limit_bbox[2],
-                                              right = limit_bbox[3],
-                                              top = limit_bbox[4]), zoom = 8,
-                      maptype = 'terrain', source = 'stamen'))
+# Use the target_plot() function from this package as the basis for the map
+plt2 <- target_plot() +  
+    ggplot2::labs(
+    subtitle = "Spatial limit and shoreline isobases\nCRS: WGS 84 / UTM zone 32N (EPSG:32632)") +
+  ggplot2::theme_bw() + ggplot2::theme(axis.title = ggplot2::element_blank(),
+                     rect = ggplot2::element_rect(),
+                     panel.grid.major = ggplot2::element_blank(),
+                     legend.position = "none") 
 
-patchwork::wrap_elements(plt1 + plt2)
+# Display displacement curves
+plt3 <- displacement_plot() + 
+  ggplot2::geom_vline(xintercept = c(-9460, -2500),
+             linetype = "dashed", colour = "black") +
+  ggplot2::scale_x_continuous(breaks = c(-9460, -8000, -4000, -2500, 0, 1950)) +
+  ggplot2::labs(
+    subtitle = "Shoreline displacement curves and temporal coverage")
+
+patchwork::wrap_elements((plt1 + plt2) / plt3)
+
 ```
 
-Furthermore, as human occupation in the region only occurred some time after the retreat of the ice, the currently oldest known sites are from around 9300 BCE. The oldest possible age to achieve with *shoredate* is 9460 BCE, although no sites are yet known to be that old. A warning is given if a site location is outside the spatial extent outlined above, but the dating procedure is still performed. If a site has an elevation that implies a date older than 9460 BCE the date is returned as NA and a warning is given. 
+Furthermore, as human occupation in the region only occurred some time after the retreat of the ice, the currently oldest known sites are from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* is 9460 BCE, although no sites are yet known to be that old. A warning is given if a site location is outside the spatial extent outlined above, but the dating procedure is still performed. If a site has an elevation that implies a date older than 9460 BCE the date is returned as NA and a warning is given. 
 
-In @roalkvam2023 it was found that sites tend to be located on or close to the shoreline up until around the transition to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for the applicability of the method. A date that has a later start date than this is therefore returned as NA with a warning. Additionally, the geological displacement curves are reported as years cal BP. If a date extends beyond 1950 CE (which equates to 0 cal BP), thus indicating a site location below the present sea-level, this overshooting probability is cut off and the date is normalised to sum to unity. 
+In Roalkvam 2023 it was found that sites tend to be located on or close to the shoreline up until around the transition to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for the applicability of the method. A date that has a later start date than this is therefore returned as NA with a warning. The temporal range is indicated by the dashed lines in the plot displaying the shoreline displacement curves, above. Additionally, if a date extends beyond 1950 CE (0 cal BP), thus indicating a site location below the present sea-level, this overshooting probability is cut off and the date is normalised to sum to unity.
 
 ## Interpolating shoreline displacement to a site location
 
@@ -118,7 +130,7 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 ```
 
 
-It is also possible to date multiple sites at once. The default behaviour when providing multiple shoreline dates is to plot a series of individual plots for each date. However, setting `multiplot = TRUE` when calling shoredate_plot() collapses the dates on a single plot that is more sparse, ordering the sites from earliest to latest possible start date for the occupation of the sites. 
+It is also possible to date multiple sites at once. The default behaviour when providing multiple shoreline dates is to plot a series of individual plots for each date. However, setting `multiplot = TRUE` when calling `shoredate_plot()` collapses the dates on a single plot that is more sparse, ordering the sites from earliest to latest possible start date for the occupation of the sites. 
 ```{r multidate}
 # Creating multiple points to be dated.
 target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
@@ -144,3 +156,18 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 ```
 
+# References
+
+Glørstad, H. 2016 Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25.
+
+Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Gaute, Reitan and Lars Sundström.  Cappelen Damm Akademisk, Oslo, pp. 463--478.
+
+Romundset, A. 2021 *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
+
+Romundset, A., Lakeman, T.R. and Høgaas, F. 2018. Quantifying variable rates of postglacial relative sea level fall from a cluster of 24 isolation basins in southern Norway. *Quaternary Science Reviews* 197:175e192. DOI: https://doi.org/10.1016/ j.quascirev.2018.07.041
+
+Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: 10.1016/j.quascirev.2022.107880
+
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Per Persson and Steinar Solheim, in press.  
+
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014 Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Stine Melvold and Per Persson. Portal forlag, Kristiansand, pp. 36--47. 

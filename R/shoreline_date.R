@@ -74,7 +74,8 @@ shoreline_date <- function(sites,
     stop("Resolution on calendar scale must be powers of 10 (including 1).")
   }
 
-  if (any(is.na(elevation)) & is.na(elev_raster)){
+  if (any(is.na(elevation)) &
+      !(inherits(elev_raster, c("raster","SpatRaster")))){
     stop("A numeric value specifying the site elevation or an elevation raster must be provided.")
   }
 
@@ -311,8 +312,6 @@ shoreline_date <- function(sites,
 
     shorelinedates[[i]] <- date_isobases
 
-  # shorelinedates[[i]] <- lapply(rapply(date_isobases,
-  #                                      enquote, how = "unlist"), eval)
   }
 
   class(shorelinedates) <- c("shoreline_date", class(shorelinedates))
