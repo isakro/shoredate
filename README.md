@@ -82,7 +82,7 @@ distance between site and isobases.
 library(shoredate)
 
 # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 target_curve <- interpolate_curve(target_point)
 
@@ -134,8 +134,8 @@ target_date
 #> Elevation:  70 
 #> 
 #> 95% HDR:
-#> 7500 BCE-6080 BCE
-#> 6010 BCE-5460 BCE
+#> 8620 BCE-6900 BCE
+#> 5950 BCE-5100 BCE
 ```
 
 It is also possible to plot a more sparse version of the date by

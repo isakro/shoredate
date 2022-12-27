@@ -42,7 +42,7 @@ devtools::install_github("isakro/shoredate")
 
 As the method of shoreline dating is contingent on relative sea-level change, it is dependent on good geological reconstructions of this development. At present, the method as outlined here is therefore limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Horten (Romundset 2021) Larvik (Sørensen et al. 2014; Sørensen et al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal (Romundset 2018). The region also formed the study area for @roalkvam2023, in which the method and its parameters were derived. The spatial coverage is indicated in the maps below:
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width = 7, fig.height = 10, fig.align='center'}
 library(shoredate)
 
 limit_reproj <- sf::st_transform(spatial_limit, crs = 4326)
@@ -94,7 +94,7 @@ To date a site a reconstruction of local shoreline displacement is necessary. Th
 library(shoredate)
 
 # Create example point using the required coordinate system WGS84 UTM32N (EPSG: 32632).
-target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 target_curve <- interpolate_curve(target_point)
 
