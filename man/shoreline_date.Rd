@@ -84,5 +84,4 @@ target_points <- sf::st_set_crs(target_points, 32632)
 # Date target points, manually specifying the elevations instead of providing
 # an elevation raster and print the results to console.
 shoreline_date(sites = target_points, elevation = c(46, 60))
-
 }

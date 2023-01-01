@@ -8,7 +8,7 @@ test_that("throws error if resolution is not a power of ten", {
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   err <- expect_error(shoreline_date(site = target_point, elevation = 46,
                                 cal_reso = 5))
-  expect_equal(err$message, "Resolution on calendar scale must be powers of 10 (including 1).")
+  expect_equal(err$message, "Resolution on calendar scale must be a power of 10 (including 1).")
 })
 
 test_that("gives warning if the elevation of a site implies a date that is out of bounds", {

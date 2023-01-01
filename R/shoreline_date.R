@@ -55,7 +55,6 @@
 #' # Date target points, manually specifying the elevations instead of providing
 #' # an elevation raster and print the results to console.
 #' shoreline_date(sites = target_points, elevation = c(46, 60))
-#'
 shoreline_date <- function(sites,
                            elevation = NA,
                            elev_raster = NA,
@@ -70,8 +69,8 @@ shoreline_date <- function(sites,
                            sparse = FALSE,
                            verbose = FALSE){
 
-  if (cal_reso %% 10 != 0) {
-    stop("Resolution on calendar scale must be powers of 10 (including 1).")
+  if (log10(cal_reso) %% 1 != 0) {
+    stop("Resolution on calendar scale must be a power of 10 (including 1).")
   }
 
   if (any(is.na(elevation)) &

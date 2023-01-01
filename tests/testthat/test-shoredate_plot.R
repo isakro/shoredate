@@ -51,3 +51,19 @@ test_that("dates omitted as out of bounds throws warning", {
   warn <- expect_warning(shoredate_plot(target_dates, multiplot = TRUE))
   expect_equal(warn$message, "Skipped one date that was out of bounds.")
 })
+
+test_that("returns expected plot when a single date i passed", {
+  target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
+  target_date <- shoreline_date(site = target_point, elevation = 70)
+  p <- shoredate_plot(target_date)
+  vdiffr::expect_doppelganger("plot with a single date", p)
+})
+
+test_that("returns expected multiplot when multiple dates are passed", {
+  target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
+                              sf::st_point(c(572985, 6563115)))
+  target_points <- sf::st_set_crs(target_points, 32632)
+  target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
+  p <- shoredate_plot(target_dates, multiplot = TRUE)
+  vdiffr::expect_doppelganger("plot with multiplot", p)
+})
