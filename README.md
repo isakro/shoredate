@@ -188,13 +188,14 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 Glørstad, H. 2016 Deglaciation, sea-level change and the Holocene
 colonization of Norway. *Geological Society, London, Special
-Publications* 411(1):9–25.
-<DOI:%5B10.1144/SP411.7>\](<http://sp.lyellcollection.org/lookup/doi/10.1144/SP411.7>)
+Publications* 411(1):9–25. DOI:
+[10.1144/SP411.7](http://sp.lyellcollection.org/lookup/doi/10.1144/SP411.7)
 
 Romundset, A. 2018. Postglacial shoreline displacement in the
 Tvedestrand–Arendal area. In *The Stone Age Coastal Settlement in
 Aust-Agder, Southeast Norway*, edited by Gaute, Reitan and Lars
-Sundström. Cappelen Damm Akademisk, Oslo, pp. 463–478.
+Sundström. Cappelen Damm Akademisk, Oslo, pp. 463–478. DOI:
+[10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
 Romundset, A. 2021 *Resultater fra NGUs undersøkelse av etteristidas
 strandforskyvning nord i Vestfold*. Geological Survey of Norway,
@@ -203,13 +204,13 @@ Trondheim.
 Romundset, A., Lakeman, T.R. and Høgaas, F. 2018. Quantifying variable
 rates of postglacial relative sea level fall from a cluster of 24
 isolation basins in southern Norway. *Quaternary Science Reviews*
-197:175e192. <DOI:%5Bhttps://doi.org/10.1016/>
-j.quascirev.2018.07.041\](<http://www.sciencedirect.com/science/article/pii/S0277379118302890>)
+197:175e192. DOI: [https://doi.org/10.1016/
+j.quascirev.2018.07.041](http://www.sciencedirect.com/science/article/pii/S0277379118302890)
 
 Roalkvam, I. 2023 A simulation-based assessment of the relation between
 Stone Age sites and relative sea-level change along the Norwegian
-Skagerrak coast. *Quaternary Science Reviews* 299:107880.
-<DOI:%5B10.1016/j.quascirev.2022.107880>\](<https://www.sciencedirect.com/science/article/pii/S027737912200511X>)
+Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI:
+[10.1016/j.quascirev.2022.107880](https://www.sciencedirect.com/science/article/pii/S027737912200511X)
 
 Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen
 vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre
@@ -222,4 +223,4 @@ landhevningsstudier i søndre Vestfold og sørøstre Telemark – Revidert
 kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i
 forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited
 by Stine Melvold and Per Persson. Portal forlag, Kristiansand,
-pp. 36–47.
+pp. 36–47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
