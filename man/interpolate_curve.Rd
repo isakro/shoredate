@@ -10,8 +10,9 @@ interpolate_curve(target, isobases = NA, cal_reso = 10, verbose = FALSE)
 \item{target}{A spatial target location to where the new displacement curve
 is interpolated.}
 
-\item{isobases}{Spatial lines representing the shoreline isobases of the
-existing displacement curves.}
+\item{isobases}{4 spatial lines representing the shoreline isobases of the
+existing displacement curves. Multiple sets of 4 lines with different
+isobase dirctions can be provided (see \code{\link[=create_isobases]{create_isobases()}}).}
 
 \item{cal_reso}{Numeric value specifying the resolution to use on the
 calendar scale. Defaults to 10.}
@@ -20,7 +21,13 @@ calendar scale. Defaults to 10.}
 console. Defaults to FALSE.}
 }
 \value{
-A list holding the interpolated displacement curve.
+A list holding an interpolated displacement curve for each isobase
+direction. Each displacement curve is represented by a data frame with
+the coulmns \code{bce} where negative values indicate years BCE and positive CE,
+\code{lowerelev}, represeting the lower limit for the elevation of the shoreline
+for each year. \code{upperelev}, the upper limit for elevation of the shoreline
+for each year, and \code{direction} which indicates the direction of the isobases
+used when interpolating the curve.
 }
 \description{
 Interpolate the trajectory of past shoreline displacement to a single

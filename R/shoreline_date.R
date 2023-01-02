@@ -23,7 +23,7 @@
 #'   scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 #'   shape and scale, respectively.
 #' @param elevavg Specified statistic to define elevation if this is to be
-#'   derived from elevation raster. Defaults to mean.
+#'   derived from an elevation raster. Defaults to mean.
 #' @param interpolated_curve List holding shoreline displacement curve.
 #'   `interpolate_curve()` will be run if this is not provided.
 #' @param hdr_prob Numeric value specifying the coverage of the highest density
@@ -35,8 +35,33 @@
 #' @param verbose Logical value indicating whether progress should be printed to
 #'   console. Defaults to FALSE.
 #'
-#' @return A nested list of class `shoredates` holding the shoreline date
-#'  results and associated metadata.
+#' @return A nested list of class `shoreline_date` holding the shoreline date
+#'  results and associated metadata for each dated site for each isobase
+#'  direction. The elements of each date is:
+#'
+#'  * The name of the site, `site_name`.
+#'  * The elevation of the site, `site_elev`.
+#'  * A data frame, `date` , with the columns `bce` where negative values
+#'  indicate years BCE and positive CE, and `probability`, which gives the
+#'  probability mass for each year.
+#'  * The start values for the HDR ranges, `hdr_start`.
+#'  * The end values for the HDR ranges, `hdr_end`.
+#'  * The probability level for the HDR, `hdr_prob`.
+#'  * A data frame, `dispcurve`, holding the displacement curve used for dating
+#'  the site. This has the columns `bce`, giving years BCE/CE. `lowerelev`,
+#'  the lower limit for the elevation of the shoreline for each year.
+#'  `upperelev`, the upper limit for elevation of the shoreline for each year.
+#'  * The direction of the isobases in use if the displacement curve has been
+#'  interpolated, `dispcurve_direction`.
+#'  * The parameters for the gamma distribution, `dispcurve_direction`. The
+#'  first value gives the shape and the second value the scale of the
+#'  distribution.
+#'  * A data frame holding the gamma distribution, `gammdat`. The column
+#'  `offset` denotes the vertical distance (m) from the shoreline, as specified
+#'  by the `elev_reso` argument. `px` is the cumulative probability at each step
+#'  of `offset`, and `probs` is the probability of each step found by
+#'  subtracting the preceeding value from each value of `px`.
+#'  * The resolution on the calendar scale, `cal_reso`.
 #'
 #' @export
 #'

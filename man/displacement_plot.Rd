@@ -15,7 +15,7 @@ colours or not. Defaults to FALSE.}
 }
 \value{
 A plot displaying the underlying shoreline displacement curves and,
-if provided, interpolated curve.
+if provided, an interpolated curve.
 }
 \description{
 Function for plotting shoreline displacement curves. Calling to plot without

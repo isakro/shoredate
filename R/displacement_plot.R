@@ -9,7 +9,7 @@
 #'  colours or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the underlying shoreline displacement curves and,
-#'  if provided, interpolated curve.
+#'  if provided, an interpolated curve.
 #' @export
 #'
 #' @import ggplot2

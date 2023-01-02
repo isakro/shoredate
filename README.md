@@ -15,9 +15,9 @@ coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)]
 The goal of *shoredate* is to offer methods to shoreline date Stone Age
 sites located along the Norwegian Skagerrak coast based on their
 present-day elevation and the trajectory of past relative sea-level
-change. The method is based on the likely elevation of the sites above
-the contemporaneous sea-level when they were in use (see Roalkvam 2023
-for details).
+change. The method is based on an empirically derived estimate of the
+likely elevation of the sites above sea-level when they were in use (see
+Roalkvam 2023 for details).
 
 ## Installation
 

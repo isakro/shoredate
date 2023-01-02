@@ -11,8 +11,8 @@
 #' @param prob A numerical value indicating the probability coverage of the HDR.
 #'  Defaults to 0.95.
 #'
-#' @return A data frame holding start and end points for segments of the highest
-#'  density region.
+#' @return A list holding start and end points for segments of the highest
+#'  density region of a shoreline date, the probability coverage and site name.
 #' @export
 #'
 #' @examples

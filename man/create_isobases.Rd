@@ -11,7 +11,7 @@ create_isobases(isobase_direction)
 the isobases.}
 }
 \value{
-A simple feature holding the isobases represented as lines
+A simple feature holding the isobases represented as lines.
 }
 \description{
 Function to create isobases for interpolating shoreline displacement curves.

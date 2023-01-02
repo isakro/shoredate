@@ -47,7 +47,7 @@ scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 shape and scale, respectively.}
 
 \item{elevavg}{Specified statistic to define elevation if this is to be
-derived from elevation raster. Defaults to mean.}
+derived from an elevation raster. Defaults to mean.}
 
 \item{interpolated_curve}{List holding shoreline displacement curve.
 \code{interpolate_curve()} will be run if this is not provided.}
@@ -65,8 +65,34 @@ should be returned. Defaults to FALSE.}
 console. Defaults to FALSE.}
 }
 \value{
-A nested list of class \code{shoredates} holding the shoreline date
-results and associated metadata.
+A nested list of class \code{shoreline_date} holding the shoreline date
+results and associated metadata for each dated site for each isobase
+direction. The elements of each date is:
+\itemize{
+\item The name of the site, \code{site_name}.
+\item The elevation of the site, \code{site_elev}.
+\item A data frame, \code{date} , with the columns \code{bce} where negative values
+indicate years BCE and positive CE, and \code{probability}, which gives the
+probability mass for each year.
+\item The start values for the HDR ranges, \code{hdr_start}.
+\item The end values for the HDR ranges, \code{hdr_end}.
+\item The probability level for the HDR, \code{hdr_prob}.
+\item A data frame, \code{dispcurve}, holding the displacement curve used for dating
+the site. This has the columns \code{bce}, giving years BCE/CE. \code{lowerelev},
+the lower limit for the elevation of the shoreline for each year.
+\code{upperelev}, the upper limit for elevation of the shoreline for each year.
+\item The direction of the isobases in use if the displacement curve has been
+interpolated, \code{dispcurve_direction}.
+\item The parameters for the gamma distribution, \code{dispcurve_direction}. The
+first value gives the shape and the second value the scale of the
+distribution.
+\item A data frame holding the gamma distribution, \code{gammdat}. The column
+\code{offset} denotes the vertical distance (m) from the shoreline, as specified
+by the \code{elev_reso} argument. \code{px} is the cumulative probability at each step
+of \code{offset}, and \code{probs} is the probability of each step found by
+subtracting the preceeding value from each value of \code{px}.
+\item The resolution on the calendar scale, \code{cal_reso}.
+}
 }
 \description{
 A function for shoreline dating Stone Age sites based on their present-day

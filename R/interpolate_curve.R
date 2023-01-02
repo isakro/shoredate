@@ -7,14 +7,22 @@
 #'
 #' @param target A spatial target location to where the new displacement curve
 #'  is interpolated.
-#' @param isobases Spatial lines representing the shoreline isobases of the
-#'  existing displacement curves.
+#' @param isobases 4 spatial lines representing the shoreline isobases of the
+#'  existing displacement curves. Multiple sets of 4 lines with different
+#'  isobase dirctions can be provided (see [create_isobases()]).
 #' @param cal_reso Numeric value specifying the resolution to use on the
 #'  calendar scale. Defaults to 10.
 #' @param verbose Logical value indicating whether progress should be printed to
 #'  console. Defaults to FALSE.
 #'
-#' @return A list holding the interpolated displacement curve.
+#' @return A list holding an interpolated displacement curve for each isobase
+#'  direction. Each displacement curve is represented by a data frame with
+#'  the coulmns `bce` where negative values indicate years BCE and positive CE,
+#'  `lowerelev`, represeting the lower limit for the elevation of the shoreline
+#'  for each year. `upperelev`, the upper limit for elevation of the shoreline
+#'  for each year, and `direction` which indicates the direction of the isobases
+#'  used when interpolating the curve.
+#'
 #' @export
 #'
 #' @import sf

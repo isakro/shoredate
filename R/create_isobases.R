@@ -8,7 +8,7 @@
 #' @param isobase_direction A vector holding a single or multiple directions for
 #'  the isobases.
 #'
-#' @return A simple feature holding the isobases represented as lines
+#' @return A simple feature holding the isobases represented as lines.
 #' @export
 #'
 #' @examples

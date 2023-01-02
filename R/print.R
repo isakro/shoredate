@@ -40,8 +40,6 @@ print.shoreline_date <- function(x, ...){
       ifelse(grepl("^[-]", x[[i]][[1]]$hdr_end),
              gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
              gsub("$", " CE\n", x[[i]][[1]]$hdr_end))), sep = "")
-      # cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
-      #           paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
 
     } else if (length(x[[i]]) == 1 & x[[i]][[1]]$dispcurve_direction != 327) {
 
@@ -69,8 +67,6 @@ print.shoreline_date <- function(x, ...){
                 ifelse(grepl("^[-]", x[[i]][[1]]$hdr_end),
                        gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
                        gsub("$", " CE\n", x[[i]][[1]]$hdr_end))), sep = "")
-      # cat(rbind(paste0(x[[i]][[1]]$hdr_start * -1, "-"),
-      #           paste0(x[[i]][[1]]$hdr_end * -1, " BCE\n")), sep = "")
 
         for (j in 2:length(x[[i]])) {
         cat("\nIsobase direction: ", x[[i]][[j]]$dispcurve_direction, "\n")
@@ -81,9 +77,6 @@ print.shoreline_date <- function(x, ...){
                   ifelse(grepl("^[-]", x[[i]][[j]]$hdr_end),
                          gsub("^[-](.*)", "\\1 BCE\n", x[[i]][[1]]$hdr_end),
                          gsub("$", " CE\n", x[[i]][[j]]$hdr_end))), sep = "")
-
-        # cat(rbind(paste0(x[[i]][[j]]$hdr_start * -1, "-"),
-        #           paste0(x[[i]][[j]]$hdr_end * -1, " BCE\n")), sep = "")
         }
   }
   }
