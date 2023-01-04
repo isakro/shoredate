@@ -29,6 +29,8 @@
 #'  multiple isobase directions. Negative values denote years BCE while positive
 #'  values denote CE.
 #'
+#' @return Plot(s) displaying shoreline dates and associated meta data.
+#'
 #' @export
 #'
 #' @import ggplot2
@@ -37,12 +39,13 @@
 #'
 #'
 #' @examples
+#' # Create example point with correct coordinate reference system
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' target_date <- shoreline_date(sites = target_point, elevation = 46,
-#'                               isobase_direction = c(327,338))
+#'                               cal_reso = 50)
 #'
-#' shoredate_plot(target_date, isobase_direction = TRUE)
+#' shoredate_plot(target_date)
 shoredate_plot <- function(shorelinedates,
                            elevation_distribution = TRUE,
                            displacement_curve = TRUE,

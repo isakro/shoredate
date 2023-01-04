@@ -15,15 +15,20 @@
 #' @import ggplot2
 #'
 #' @examples
-#' # Create example point using the required coordinate system WGS84 / UTM zone
-#' # 32N (EPSG: 32632)
+#' # Plot displaying geologically derived displacement curves
+#' displacement_plot()
+#'
+#' \dontrun{
+#' # Create example point to which a displacement curve interpolating
+#' # (using the required CRS, EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location
 #' target_curve <- interpolate_curve(target_point)
 #'
 #' # Call to plot
-#' displacement_plot(target_curve)
+#' displacement_plot()
+#' }
 displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
 
   # Load pre-compiled geological displacement curves

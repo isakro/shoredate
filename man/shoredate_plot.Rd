@@ -43,6 +43,9 @@ plotted individually, or be collapsed into a single plot. Default is FALSE.}
 \item{greyscale}{Logical value indicating whether the plot should be in
 greyscale or not. Defaults to FALSE.}
 }
+\value{
+Plot(s) displaying shoreline dates and associated meta data.
+}
 \description{
 Function for plotting shoreline dates along with associated metadata.
 }
@@ -57,10 +60,11 @@ multiple isobase directions. Negative values denote years BCE while positive
 values denote CE.
 }
 \examples{
+# Create example point with correct coordinate reference system
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 target_date <- shoreline_date(sites = target_point, elevation = 46,
-                              isobase_direction = c(327,338))
+                              cal_reso = 50)
 
-shoredate_plot(target_date, isobase_direction = TRUE)
+shoredate_plot(target_date)
 }

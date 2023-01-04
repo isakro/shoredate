@@ -20,8 +20,8 @@ year in \code{date}.}
 Defaults to 0.95.}
 }
 \value{
-A data frame holding start and end points for segments of the highest
-density region.
+A list holding start and end points for segments of the highest
+density region of a shoreline date, the probability coverage and site name.
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline
@@ -32,14 +32,15 @@ date. Negative values denote years BCE while positive values denote CE.
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Perform shoreline dating
-target_date <- shoreline_date(sites = target_point, elevation = 65)
+target_date <- shoreline_date(sites = target_point,
+                              elevation = 65, cal_reso = 30)
 
-# shoredate_hdr() is already called under the hood with shoreline_date, and
-# is printed with the date
-target_date
+# `shoredate_hdr()` is already called under the hood with `shoreline_date()`,
+# and is printed when calling `summary()` on a date
+summary(target_date)
 
-# However, shoredate_hdr() can be applied separately by pulling the necessary
-# data from the date
+# However, `shoredate_hdr()` can be applied separately by pulling the
+# necessary data from the date
 (shoredate_hdr(target_date[[1]][[1]]$date$bce,
                target_date[[1]][[1]]$date$probability,
                target_date[[1]][[1]]$site_name,

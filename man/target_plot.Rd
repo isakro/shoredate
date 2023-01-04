@@ -16,8 +16,8 @@ create_isobases() can be used to create isobases with other directions that
 can then be passed to \code{target_plot()}.}
 }
 \value{
-A plot displaying the target locations relative to the shoreline
-isobases.
+A map displaying the location of the shoreline isobases, and, if
+provided, the position of target locations represented as centroids.
 }
 \description{
 Function to plot the centroids of one or more sites to be dated, relative to

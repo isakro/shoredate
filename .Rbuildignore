@@ -3,6 +3,7 @@
 ^shoredate\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^CONTRIBUTING.md$
 ^README\.Rmd$
 ^doc$
 ^Meta$

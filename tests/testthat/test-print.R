@@ -1,7 +1,7 @@
 test_that("A NA date is printed correctly", {
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   target_date <- suppressWarnings(shoreline_date(site = target_point,
-                                               elevation = 200))
+                                                 elevation = 200))
   expect_equal(print(target_date),
                cat(
                  "===============
@@ -32,8 +32,8 @@ test_that("A date that extends into CE is printed correctly", {
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   target_date <- shoreline_date(site = target_point, elevation = 25)
   expect_equal(print(target_date),
-  cat(
-"===============
+               cat(
+                 "===============
 Site:  1
 Elevation:  25
 
@@ -46,7 +46,7 @@ test_that("Dates that extend into CE with multiple isobase directions are printe
                               sf::st_point(c(572985, 6563115)))
   target_points <- sf::st_set_crs(target_points, 32632)
   target_dates <- shoreline_date(site = target_points, elevation = c(25, 60),
-                                isobase_direction = c(325, 338))
+                                 isobase_direction = c(325, 338))
   expect_equal(print(target_dates),
                cat(
                  "===============

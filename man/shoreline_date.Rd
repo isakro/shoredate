@@ -29,15 +29,15 @@ site name.}
 \item{elevation}{Vector of numeric elevation values to inform shoreline dates
 unless an elevation raster is provided.}
 
-\item{elev_raster}{Elevation raster to be input if the elevation values are
-not provided manually.}
+\item{elev_raster}{Elevation raster of class \code{SpatRaster} from the package
+\code{terra} to be input if the elevation values are not provided manually.}
 
 \item{elev_reso}{Numeric value specifying the resolution with which to step
-through the elevation distance between site and shoreline.
-Defaults to 0.001m.}
+through the gamma distribution representing the distance between site and
+shoreline. Defaults to 0.01m.}
 
 \item{cal_reso}{Numeric value specifying the resolution to use on the
-calendar scale. Must be a power of 10. Defaults to 10.}
+calendar scale. Defaults to 10.}
 
 \item{isobase_direction}{A vector of numeric values defining the direction(s)
 of the isobases. Defaults to 327.}
@@ -46,11 +46,11 @@ of the isobases. Defaults to 327.}
 scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 shape and scale, respectively.}
 
-\item{elevavg}{Specified statistic to define elevation if this is to be
-derived from an elevation raster. Defaults to mean.}
+\item{elevavg}{Statistic to define site elevation if this is to be derived
+from an elevation raster. Defaults to mean.}
 
 \item{interpolated_curve}{List holding shoreline displacement curve.
-\code{interpolate_curve()} will be run if this is not provided.}
+\code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not provided.}
 
 \item{hdr_prob}{Numeric value specifying the coverage of the highest density
 region. Defaults to 0.95.}
@@ -90,7 +90,7 @@ distribution.
 \code{offset} denotes the vertical distance (m) from the shoreline, as specified
 by the \code{elev_reso} argument. \code{px} is the cumulative probability at each step
 of \code{offset}, and \code{probs} is the probability of each step found by
-subtracting the preceeding value from each value of \code{px}.
+subtracting the preceding value from each value of \code{px}.
 \item The resolution on the calendar scale, \code{cal_reso}.
 }
 }
@@ -100,14 +100,10 @@ elevation, their likely elevation above sea-level when in use and the
 trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 }
 \examples{
-# Create two example points
-target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
-  sf::st_point(c(572985, 6563115)))
+# Create example point using the required crs WGS84 UTM32N (EPSG: 32632)
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-# Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632)
-target_points <- sf::st_set_crs(target_points, 32632)
-
-# Date target points, manually specifying the elevations instead of providing
-# an elevation raster and print the results to console.
-shoreline_date(sites = target_points, elevation = c(46, 60))
+# Date target point, manually specifying the elevation instead of providing
+# an elevation raster
+shoreline_date(sites = target_point, elevation = 80, cal_reso = 50)
 }

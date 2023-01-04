@@ -10,22 +10,22 @@
 #'   site name.
 #' @param elevation Vector of numeric elevation values to inform shoreline dates
 #'   unless an elevation raster is provided.
-#' @param elev_raster Elevation raster to be input if the elevation values are
-#'   not provided manually.
+#' @param elev_raster Elevation raster of class `SpatRaster` from the package
+#'  `terra` to be input if the elevation values are not provided manually.
 #' @param elev_reso Numeric value specifying the resolution with which to step
-#'   through the elevation distance between site and shoreline.
-#'   Defaults to 0.001m.
+#'  through the gamma distribution representing the distance between site and
+#'  shoreline. Defaults to 0.01m.
 #' @param cal_reso Numeric value specifying the resolution to use on the
-#'   calendar scale. Must be a power of 10. Defaults to 10.
+#'   calendar scale. Defaults to 10.
 #' @param isobase_direction A vector of numeric values defining the direction(s)
 #'   of the isobases. Defaults to 327.
 #' @param model_parameters Vector of two numeric values specifying the shape and
 #'   scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 #'   shape and scale, respectively.
-#' @param elevavg Specified statistic to define elevation if this is to be
-#'   derived from an elevation raster. Defaults to mean.
+#' @param elevavg Statistic to define site elevation if this is to be derived
+#'  from an elevation raster. Defaults to mean.
 #' @param interpolated_curve List holding shoreline displacement curve.
-#'   `interpolate_curve()` will be run if this is not provided.
+#'   [interpolate_curve()] will be run if this is not provided.
 #' @param hdr_prob Numeric value specifying the coverage of the highest density
 #'  region. Defaults to 0.95.
 #' @param normalise Logical value specifying whether the shoreline date should
@@ -60,7 +60,7 @@
 #'  `offset` denotes the vertical distance (m) from the shoreline, as specified
 #'  by the `elev_reso` argument. `px` is the cumulative probability at each step
 #'  of `offset`, and `probs` is the probability of each step found by
-#'  subtracting the preceeding value from each value of `px`.
+#'  subtracting the preceding value from each value of `px`.
 #'  * The resolution on the calendar scale, `cal_reso`.
 #'
 #' @export
@@ -70,16 +70,12 @@
 #' @importFrom utils txtProgressBar
 #'
 #' @examples
-#' # Create two example points
-#' target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
-#'   sf::st_point(c(572985, 6563115)))
+#' # Create example point using the required crs WGS84 UTM32N (EPSG: 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
-#' # Set these to the required coordinate system WGS84 UTM32N (EPSG: 32632)
-#' target_points <- sf::st_set_crs(target_points, 32632)
-#'
-#' # Date target points, manually specifying the elevations instead of providing
-#' # an elevation raster and print the results to console.
-#' shoreline_date(sites = target_points, elevation = c(46, 60))
+#' # Date target point, manually specifying the elevation instead of providing
+#' # an elevation raster
+#' shoreline_date(sites = target_point, elevation = 80, cal_reso = 50)
 shoreline_date <- function(sites,
                            elevation = NA,
                            elev_raster = NA,
@@ -93,10 +89,6 @@ shoreline_date <- function(sites,
                            normalise = TRUE,
                            sparse = FALSE,
                            verbose = FALSE){
-
-  if (log10(cal_reso) %% 1 != 0) {
-    stop("Resolution on calendar scale must be a power of 10 (including 1).")
-  }
 
   if (any(is.na(elevation)) &
       !(inherits(elev_raster, c("raster","SpatRaster")))){
@@ -192,8 +184,8 @@ shoreline_date <- function(sites,
                             max(temp_curve[,"lowerelev"], na.rm = TRUE)), "bce"]
 
       # Check that site date is not above this limit
-      msdate <- round(stats::approx(temp_curve[,"lowerelev"],
-                    bce, xout = siteelev)[['y']])
+      msdate <- stats::approx(temp_curve[,"lowerelev"],
+                    bce, xout = siteelev, method = "constant")[['y']]
 
       # If it is msdate will be NA and the date is returned as NA with a
       # warning. Do not print isobase direction if this is
@@ -236,12 +228,14 @@ shoreline_date <- function(sites,
           adjusted_elev <- as.numeric(siteelev - gammadat$offset[j])
 
           # Find lower date
-          lowerd <- round(stats::approx(temp_curve[,"lowerelev"],
-                                 bce, xout = adjusted_elev)[['y']])
+          lowerd <- stats::approx(temp_curve[,"lowerelev"], bce,
+                                  xout = adjusted_elev,
+                                  method = "constant")[['y']]
 
           # Find upper date
-          upperd <- round(stats::approx(temp_curve[,"upperelev"],
-                                 bce, xout = adjusted_elev)[['y']])
+          upperd <- stats::approx(temp_curve[,"upperelev"], bce,
+                                 xout = adjusted_elev,
+                                 method = "constant")[['y']]
 
           # Find youngest and oldest date
           earliest <- min(c(lowerd, upperd))
@@ -251,9 +245,8 @@ shoreline_date <- function(sites,
           if (!is.na(latest) && !is.na(earliest)) {
 
             # Identify range, rounding to closest cal_reso
-            # (requires powers of 10)
-            year_range <- round(seq(earliest, latest, cal_reso),
-                                digits = (floor(log10(cal_reso / 10)) + 1)* -1)
+            year_range <- seq(earliest, latest, cal_reso)
+
             # Identify probability to be distributed across range
             prob <- 1/length(year_range) * gammadat$probs[j]
 

@@ -13,18 +13,20 @@
 }
 \value{
 Print the site names, elevations, non-default isobase directions and
-HDRs contained in a \code{shoreline_date} object.
+HDRs contained in a \code{shoreline_date} object to console.
 }
 \description{
-Print the dates in a \code{shoreline_date} object. Each date is printed with
-site name, elevation and highest density region. If the isobase direction is
-different or more are provided than the single default, the directions and
-dates associated with these are also printed.
+Print a summary of dates in a \code{shoreline_date} object. Each date is printed
+with site name, elevation and highest density region. If the isobase
+direction is different or more are provided than the single default, the
+directions and dates associated with these are also printed.
 }
 \examples{
 
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-target_date <- shoreline_date(site = target_point, elevation = 70)
+target_date <- shoreline_date(site = target_point,
+                              elevation = 70,
+                              cal_reso = 50)
 target_date
 
 }

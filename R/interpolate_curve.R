@@ -8,8 +8,10 @@
 #' @param target A spatial target location to where the new displacement curve
 #'  is interpolated.
 #' @param isobases 4 spatial lines representing the shoreline isobases of the
-#'  existing displacement curves. Multiple sets of 4 lines with different
+#'  existing displacement curves. Multiple sets of 4 isobases with different
 #'  isobase dirctions can be provided (see [create_isobases()]).
+#' @param power A numerical value indicating the inverse distance power for IDW.
+#'  Defaults to 2.
 #' @param cal_reso Numeric value specifying the resolution to use on the
 #'  calendar scale. Defaults to 10.
 #' @param verbose Logical value indicating whether progress should be printed to
@@ -17,8 +19,8 @@
 #'
 #' @return A list holding an interpolated displacement curve for each isobase
 #'  direction. Each displacement curve is represented by a data frame with
-#'  the coulmns `bce` where negative values indicate years BCE and positive CE,
-#'  `lowerelev`, represeting the lower limit for the elevation of the shoreline
+#'  the columns `bce` where negative values indicate years BCE and positive CE,
+#'  `lowerelev`, representing the lower limit for the elevation of the shoreline
 #'  for each year. `upperelev`, the upper limit for elevation of the shoreline
 #'  for each year, and `direction` which indicates the direction of the isobases
 #'  used when interpolating the curve.
@@ -33,12 +35,14 @@
 #' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 #'
 #' # Interpolate shoreline displacement curve to the target point location
-#' target_curve <- interpolate_curve(target_point)
+#' # setting the resolution on the calendar scale to 100 years
+#' target_curve <- interpolate_curve(target_point, cal_reso = 20)
 #'
 #' # Call to plot
 #' displacement_plot(target_curve)
 interpolate_curve <- function(target,
                               isobases = NA,
+                              power = 2,
                               cal_reso = 10,
                               verbose = FALSE){
 
@@ -113,11 +117,11 @@ interpolate_curve <- function(target,
       } else {
         # Inverse distance weighting
         lowerval <- sum(apply(distdat, 1,
-                              function(x) x["lower"] * x["distance"]^-2)) /
-          sum(apply(distdat, 1, function(x) x["distance"] ^-2))
+                              function(x) x["lower"] * x["distance"]^-power)) /
+          sum(apply(distdat, 1, function(x) x["distance"] ^-power))
         upperval <- sum(apply(distdat, 1,
-                              function(x) x["upper"] * x["distance"]^-2)) /
-          sum(apply(distdat, 1, function(x) x["distance"] ^-2))
+                              function(x) x["upper"] * x["distance"]^-power)) /
+          sum(apply(distdat, 1, function(x) x["distance"] ^-power))
 
       }
 

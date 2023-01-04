@@ -9,6 +9,7 @@
 #'
 #' @return List of ggplot objects
 #' @keywords internal
+#' @noRd
 flatten_list <- function(x){
   morelists <- sapply(x, function(xprime) {
     'list' %in% class(xprime) & !('gg' %in% class(xprime))
@@ -47,6 +48,7 @@ flatten_list <- function(x){
 #'
 #' @return A ggplot layer holding text label
 #' @keywords internal
+#' @noRd
 annotate_custom <- function(label, x, y, hjust = 0,
                             vjust = 0, thm = ggplot2::theme_get()) {
 

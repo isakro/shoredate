@@ -14,7 +14,7 @@
 #'  create_isobases() can be used to create isobases with other directions that
 #'  can then be passed to `target_plot()`.
 #'
-#' @return A plot displaying the location of the shoreline isobases, and, if
+#' @return A map displaying the location of the shoreline isobases, and, if
 #'  provided, the position of target locations represented as centroids.
 #'
 #' @export
