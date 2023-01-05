@@ -21,11 +21,11 @@
 #'
 #' # Perform shoreline dating
 #' target_date <- shoreline_date(sites = target_point,
-#'                               elevation = 65, cal_reso = 30)
+#'                               elevation = 65, cal_reso = 50)
 #'
 #' # `shoredate_hdr()` is already called under the hood with `shoreline_date()`,
-#' # and is printed when calling `summary()` on a date
-#' summary(target_date)
+#' # and is printed when calling the `shoreline_date object`
+#' target_date
 #'
 #' # However, `shoredate_hdr()` can be applied separately by pulling the
 #' # necessary data from the date

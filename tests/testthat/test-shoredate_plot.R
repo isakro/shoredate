@@ -52,11 +52,18 @@ test_that("dates omitted as out of bounds throws warning", {
   expect_equal(warn$message, "Skipped one date that was out of bounds.")
 })
 
-test_that("returns expected plot when a single date i passed", {
+test_that("returns expected plot when a single date is passed", {
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   target_date <- shoreline_date(site = target_point, elevation = 70)
   p <- shoredate_plot(target_date)
   vdiffr::expect_doppelganger("plot with a single date", p)
+})
+
+test_that("returns expected plot in greyscale", {
+  target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
+  target_date <- shoreline_date(site = target_point, elevation = 70)
+  p <- shoredate_plot(target_date, greyscale = TRUE)
+  vdiffr::expect_doppelganger("plot in greyscale", p)
 })
 
 test_that("returns expected multiplot when multiple dates are passed", {

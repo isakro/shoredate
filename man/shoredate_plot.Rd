@@ -8,6 +8,7 @@ shoredate_plot(
   shorelinedates,
   elevation_distribution = TRUE,
   displacement_curve = TRUE,
+  site_name = TRUE,
   parameters = FALSE,
   isobase_direction = FALSE,
   highest_density_region = TRUE,
@@ -25,11 +26,14 @@ distribution should be displayed. Default is TRUE.}
 \item{displacement_curve}{Logical value indicating whether the displacement
 curve should be displayed. Default is TRUE.}
 
+\item{site_name}{Logical value indicating whether the name of the site should
+be printed. Defaults to FALSE.}
+
 \item{parameters}{Logical value indicating whether the parameters of the
-gamma distribution should be displayed. Default is FALSE.}
+gamma distribution should be printed. Default is FALSE.}
 
 \item{isobase_direction}{Logical value indicating whether the direction of
-the isobases should be displayed. Default is FALSE.}
+the isobases should be printed. Default is FALSE.}
 
 \item{highest_density_region}{Logical value indicating whether the 95\%
 highest density region should be displayed. Defaults to TRUE.}
@@ -38,13 +42,15 @@ highest density region should be displayed. Defaults to TRUE.}
 highest density regions should be displayed. Default is TRUE.}
 
 \item{multiplot}{Logical value indicating whether multiple dates should be
-plotted individually, or be collapsed into a single plot. Default is FALSE.}
+plotted individually, or be collapsed into a single plot. The only other
+graphical option with \code{multiplot} set to TRUE is \code{highest_density_region}.
+Default is FALSE.}
 
 \item{greyscale}{Logical value indicating whether the plot should be in
 greyscale or not. Defaults to FALSE.}
 }
 \value{
-Plot(s) displaying shoreline dates and associated meta data.
+Plot(s) displaying shoreline dates and associated metadata.
 }
 \description{
 Function for plotting shoreline dates along with associated metadata.

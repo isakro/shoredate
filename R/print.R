@@ -2,7 +2,7 @@
 #'
 #' Print the dates in a `shoreline_date` object. Each date is printed
 #'  with site name, elevation and highest density region. If the isobase
-#'  direction is different or more are provided than the single default, the
+#'  direction is different or more are provided than the default, the
 #'  directions and dates associated with these are also printed.
 #'
 #' @param x Object of class `shoreline_date`.

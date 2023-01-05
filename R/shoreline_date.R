@@ -39,29 +39,28 @@
 #'  results and associated metadata for each dated site for each isobase
 #'  direction. The elements of each date is:
 #'
-#'  * The name of the site, `site_name`.
-#'  * The elevation of the site, `site_elev`.
-#'  * A data frame, `date` , with the columns `bce` where negative values
-#'  indicate years BCE and positive CE, and `probability`, which gives the
-#'  probability mass for each year.
-#'  * The start values for the HDR ranges, `hdr_start`.
-#'  * The end values for the HDR ranges, `hdr_end`.
-#'  * The probability level for the HDR, `hdr_prob`.
-#'  * A data frame, `dispcurve`, holding the displacement curve used for dating
+#'  * `site_name` name of the site.
+#'  * `site_elev` elevation of the site.
+#'  * `date` data frame with the columns `bce` where negative values
+#'  indicate years BCE and positive CE, as well as `probability`, which gives
+#'  the probability mass for each year.
+#'  * `hdr_start` start values for the HDR ranges.
+#'  * `hdr_end` end values for the HDR ranges.
+#'  * `hdr_prob` probability level for the HDR.
+#'  * `dispcurve` data frame holding the displacement curve used for dating
 #'  the site. This has the columns `bce`, giving years BCE/CE. `lowerelev`,
 #'  the lower limit for the elevation of the shoreline for each year.
 #'  `upperelev`, the upper limit for elevation of the shoreline for each year.
-#'  * The direction of the isobases in use if the displacement curve has been
-#'  interpolated, `dispcurve_direction`.
-#'  * The parameters for the gamma distribution, `dispcurve_direction`. The
+#'  * `dispcurve_direction` direction of the isobases in use.
+#'  * `model_parameters` parameters for the gamma distribution. The
 #'  first value gives the shape and the second value the scale of the
 #'  distribution.
-#'  * A data frame holding the gamma distribution, `gammdat`. The column
+#'  * `gammdat` data frame holding the gamma distribution. The column
 #'  `offset` denotes the vertical distance (m) from the shoreline, as specified
 #'  by the `elev_reso` argument. `px` is the cumulative probability at each step
 #'  of `offset`, and `probs` is the probability of each step found by
 #'  subtracting the preceding value from each value of `px`.
-#'  * The resolution on the calendar scale, `cal_reso`.
+#'  * `cal_reso` resolution on the calendar scale.
 #'
 #' @export
 #'
@@ -74,7 +73,8 @@
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing
-#' # an elevation raster
+#' # an elevation raster and setting the resolution on the calendar scale to
+#' # 50 years.
 #' shoreline_date(sites = target_point, elevation = 80, cal_reso = 50)
 shoreline_date <- function(sites,
                            elevation = NA,
@@ -275,9 +275,10 @@ shoreline_date <- function(sites,
                           "has a younger possible start date than 2500 BCE and is returned as NA."))
           } else {
             warning(paste("Site", site_name,
+                          "has a younger possible start date than 2500 BCE",
                           "with an isobase direction of",
-                          unique(temp_curve$direction) ,
-                          "has a younger possible start date than 2500 BCE and is returned as NA."))
+                          unique(temp_curve$direction),
+                          "and is returned as NA."))
           }
         }
       }

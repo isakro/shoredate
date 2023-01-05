@@ -4,7 +4,7 @@
 \alias{target_plot}
 \title{Target plot}
 \usage{
-target_plot(targets = NA, isobases = NA)
+target_plot(targets = NA, isobases = NA, greyscale = FALSE)
 }
 \arguments{
 \item{targets}{Objects of class \code{sf} representing the sites to be dated. The
@@ -14,6 +14,9 @@ first column beyond geom is taken as site name.}
 shoreline isobases. Defaults to isobases with a direction of 327, but
 create_isobases() can be used to create isobases with other directions that
 can then be passed to \code{target_plot()}.}
+
+\item{greyscale}{Logical value indicating whether the plot should include
+colours or not. Defaults to FALSE.}
 }
 \value{
 A map displaying the location of the shoreline isobases, and, if

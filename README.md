@@ -15,9 +15,14 @@ coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)]
 The goal of shoredate is to offer methods to shoreline date Stone Age
 sites located along the Norwegian Skagerrak coast based on their
 present-day elevation and the trajectory of past relative sea-level
-change. The method is based on an empirically derived estimate of the
-likely elevation of the sites above sea-level when they were in use (see
-Roalkvam 2023 for details).
+change. The method of shoreline dating is based on the premise that
+coastal Stone Age sites in the region were located on or close to the
+shoreline when they were in use, and is implemented here based on an
+empirically derived estimate of the likely elevation of the sites above
+sea-level when they were occupied (Roalkvam 2023). However, do note that
+as there are limitations to the Roalkvam (2023) study, and as the method
+is dependent on regularities in human behaviour, the dates achieved with
+the package should be treated with care.
 
 ## Installation and loading
 
@@ -29,7 +34,7 @@ You can install the development version of shoredate from
 devtools::install_github("isakro/shoredate")
 ```
 
-The package can then be loaded by a `library()` call:
+The package can then be loaded:
 
 ``` r
 library(shoredate)
@@ -37,7 +42,7 @@ library(shoredate)
 
 ## Geographical and temporal coverage
 
-As the method of shoreline dating is contingent on relative sea-level
+As the method of shoreline dating is determined by relative sea-level
 change, it is dependent on reliable geological reconstructions of this
 development. At present, the method as outlined here is therefore
 limited to being applicable in the region of south-eastern Norway
@@ -46,7 +51,7 @@ region has newly compiled shoreline displacement curves for Horten
 (Romundset 2021) Larvik (Sørensen et al. 2014; Sørensen et al. 2023),
 Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal
 (Romundset 2018). The region also formed the study area for Roalkvam
-2023, in which the method and its parameters were derived. The spatial
+(2023), in which the method and its parameters were derived. The spatial
 coverage is indicated in the maps below. The shoreline isobases in the
 second figure represent contours along which the shoreline displacement
 has followed the same trajectory. These correspond to the displacement
@@ -63,10 +68,10 @@ in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest
 possible age to achieve with shoredate is 9460 BCE, although no sites
 are yet known to be that old. A warning is given if a site location is
 outside the spatial extent outlined above, as this involves a more
-uncertain extrapolation of development of shoreline displacement, but
-the dating procedure is still performed. Conversely, if a site has an
-elevation that implies a date older than 9460 BCE the date is returned
-as NA and a warning is given.
+uncertain extrapolation of the development of shoreline displacement.
+However, the dating procedure is still performed. Conversely, if a site
+has an elevation that implies a date older than 9460 BCE the date is
+returned as NA and a warning is given.
 
 In Roalkvam (2023) it was found that sites tend to be located on or
 close to the shoreline up until around the transition to the Late
@@ -79,12 +84,6 @@ shoreline displacement curves. Additionally, if a date extends beyond
 present-day sea-level, this overshooting probability is cut off and the
 date is normalised to sum to unity.
 
-Do note that the method of shoreline dating is based on the premise
-people settled on or close to the shoreline. While this was found to be
-the case in Roalkvam (2023), it’s dependency on regularities in human
-behaviour means that the dates achieved with the package should be
-treated with care.
-
 ## Interpolating shoreline displacement to a site location
 
 To shoreline date a site, a reconstruction of local shoreline
@@ -92,10 +91,9 @@ displacement is necessary. There are currently four reliable geological
 displacement curves available from within the study area. Each of these
 is associated with a shoreline isobase, along which the trajectory of
 relative sea-level change has been the same. To find the local
-displacement curve, the curves are interpolated to the site location
-using inverse distance weighting, where the default is to weight the
-distances by the square of the inverse distance between site and
-isobases.
+displacement curve, the curves are interpolated to a site location using
+inverse distance weighting, where the default is to weight the distances
+by the square of the inverse distance between site and isobases.
 
 ``` r
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
@@ -137,9 +135,10 @@ shoredate_plot(target_date)
 
 <img src="man/figures/README-date-1.png" style="display: block; margin: auto;" />
 
-The blue gamma distribution on the y-axis indicates the likely elevation
-of the site above sea-level when it was in use which is described by an
-empirically derived gamma distribution with the parameters of shape
+The blue gamma distribution on the y-axis represents the likely
+elevation of the site above sea-level when it was in use, which is
+described by an empirically derived gamma distribution with the
+parameters of shape
 (![\\alpha](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Calpha "\alpha"))
 = 0.286 and scale
 (![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma"))
@@ -165,15 +164,9 @@ target_date
 #> 5880 BCE-5100 BCE
 ```
 
-It is also possible to plot a more sparse version of the date by
-specifying what elements are to be excluded:
-
-``` r
-shoredate_plot(target_date, elevation_distribution = FALSE, 
-               displacement_curve = FALSE, highest_density_region = FALSE)
-```
-
-<img src="man/figures/README-sparse-1.png" style="display: block; margin: auto;" />
+The first column of a data frame beyond the geometry of the spatial
+objects will be taken to represent site names. If no such column exist,
+the sites are simply numbered as they are passed to `shoreline_date()`.
 
 It is also possible to date multiple sites at once.
 
@@ -187,9 +180,7 @@ target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 # Specifying the correct CRS and making the points a sf data frame
 target_points <- sf::st_as_sf(target_points, crs = 32632)
 
-# The first column of a data frame beyond the geometry of the spatial objects 
-# will be taken as site names. If no such column exist, the sites will simply be 
-# numbered as they are passed to shoreline_date(). Adding example names:
+# Adding example names:
 target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
 
 # Performing shoreline dating, specifying site elevations
@@ -229,22 +220,20 @@ target_dates
 ```
 
 The default behaviour when providing multiple shoreline dates to
-`shoredate_plot()` is to plot a series of individual plots for each
-date. However, setting `multiplot = TRUE` collapses the dates on a
-single plot that is more sparse, ordering the sites from earliest to
-latest possible start date for the occupation of the sites.
+`shoredate_plot()` is to plot a series of individual plots. However,
+setting `multiplot = TRUE` collapses the dates on a single plot that is
+more sparse, ordering the sites from earliest to latest possible start
+date for the occupation of the sites.
 
 ``` r
-# Plot the dates with 95% HDRs (these can be removed by setting 
-# highest_density_region = FALSE)
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
 <img src="man/figures/README-multiplot-1.png" style="display: block; margin: auto;" />
 
-The procedures outlined above have focused on the the default
-behaviours. For further usage and a more detailed walk through see the
-vignette for the package by calling `vignette("shoredate")`.
+The procedures outlined above have focused on the the default behaviours
+of the package. For further usage and a more detailed walk through see
+the vignette by calling `vignette("shoredate")`.
 
 # References
 

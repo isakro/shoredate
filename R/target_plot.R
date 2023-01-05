@@ -13,6 +13,8 @@
 #'  shoreline isobases. Defaults to isobases with a direction of 327, but
 #'  create_isobases() can be used to create isobases with other directions that
 #'  can then be passed to `target_plot()`.
+#' @param greyscale Logical value indicating whether the plot should include
+#'  colours or not. Defaults to FALSE.
 #'
 #' @return A map displaying the location of the shoreline isobases, and, if
 #'  provided, the position of target locations represented as centroids.
@@ -32,7 +34,37 @@
 #' # isobases.
 #' target_plot(target_point)
 target_plot <- function(targets = NA,
-                        isobases = NA){
+                        isobases = NA,
+                        greyscale = FALSE){
+
+  if (greyscale) {
+
+    target_fill <- "black"
+
+    isobase_col <- c("Arendal" = "black",
+                    "Larvik" = "black",
+                    "Tvedestrand" = "black",
+                    "Horten" = "black")
+
+    isobase_line <- c("Horten" = "twodash",
+                      "Larvik" = "dashed",
+                      "Tvedestrand" = "dotted",
+                      "Arendal" = "longdash")
+
+  } else {
+
+    target_fill <- "red"
+
+    isobase_col <- c("Arendal" = "black",
+                    "Larvik" = "darkgreen",
+                    "Tvedestrand" = "blue",
+                    "Horten" = "darkorange")
+
+    isobase_line <- c("Horten" = "solid",
+                      "Larvik" = "solid",
+                      "Tvedestrand" = "solid",
+                      "Arendal" = "solid")
+  }
 
   # Load required background map distributed with the package
   basemap <- sf::st_read(system.file("extdata/naturalearth_basemap.gpkg",
@@ -49,11 +81,10 @@ target_plot <- function(targets = NA,
   # Create baseplot with isobases
   plt <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = basemap, fill = "grey", colour = NA) +
-    ggplot2::geom_sf(data = isobases, ggplot2::aes(colour = .data$name)) +
-    ggplot2::scale_colour_manual(values = c("Arendal" = "black",
-                                            "Larvik" = "darkgreen",
-                                            "Tvedestrand" = "blue",
-                                            "Horten" = "darkorange")) +
+    ggplot2::geom_sf(data = isobases, ggplot2::aes(colour = .data$name,
+                                                   linetype = .data$name)) +
+    ggplot2::scale_colour_manual(values = isobase_col) +
+    ggplot2::scale_linetype_manual(values = isobase_line) +
     ggplot2::theme_bw() + ggplot2::theme(
       axis.title = ggplot2::element_blank(),
       axis.text.y = element_blank(),
@@ -86,7 +117,7 @@ target_plot <- function(targets = NA,
 
     plt <- plt +
       ggplot2::geom_sf(data = suppressWarnings(sf::st_centroid(targets)),
-                           fill = "red",
+                           fill = target_fill,
                            size = 2.25, shape = 21,
                            colour = "black") +
       ggrepel::geom_text_repel(data = targets,

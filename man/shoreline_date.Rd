@@ -69,29 +69,28 @@ A nested list of class \code{shoreline_date} holding the shoreline date
 results and associated metadata for each dated site for each isobase
 direction. The elements of each date is:
 \itemize{
-\item The name of the site, \code{site_name}.
-\item The elevation of the site, \code{site_elev}.
-\item A data frame, \code{date} , with the columns \code{bce} where negative values
-indicate years BCE and positive CE, and \code{probability}, which gives the
-probability mass for each year.
-\item The start values for the HDR ranges, \code{hdr_start}.
-\item The end values for the HDR ranges, \code{hdr_end}.
-\item The probability level for the HDR, \code{hdr_prob}.
-\item A data frame, \code{dispcurve}, holding the displacement curve used for dating
+\item \code{site_name} name of the site.
+\item \code{site_elev} elevation of the site.
+\item \code{date} data frame with the columns \code{bce} where negative values
+indicate years BCE and positive CE, as well as \code{probability}, which gives
+the probability mass for each year.
+\item \code{hdr_start} start values for the HDR ranges.
+\item \code{hdr_end} end values for the HDR ranges.
+\item \code{hdr_prob} probability level for the HDR.
+\item \code{dispcurve} data frame holding the displacement curve used for dating
 the site. This has the columns \code{bce}, giving years BCE/CE. \code{lowerelev},
 the lower limit for the elevation of the shoreline for each year.
 \code{upperelev}, the upper limit for elevation of the shoreline for each year.
-\item The direction of the isobases in use if the displacement curve has been
-interpolated, \code{dispcurve_direction}.
-\item The parameters for the gamma distribution, \code{dispcurve_direction}. The
+\item \code{dispcurve_direction} direction of the isobases in use.
+\item \code{model_parameters} parameters for the gamma distribution. The
 first value gives the shape and the second value the scale of the
 distribution.
-\item A data frame holding the gamma distribution, \code{gammdat}. The column
+\item \code{gammdat} data frame holding the gamma distribution. The column
 \code{offset} denotes the vertical distance (m) from the shoreline, as specified
 by the \code{elev_reso} argument. \code{px} is the cumulative probability at each step
 of \code{offset}, and \code{probs} is the probability of each step found by
 subtracting the preceding value from each value of \code{px}.
-\item The resolution on the calendar scale, \code{cal_reso}.
+\item \code{cal_reso} resolution on the calendar scale.
 }
 }
 \description{
@@ -104,6 +103,7 @@ trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Date target point, manually specifying the elevation instead of providing
-# an elevation raster
+# an elevation raster and setting the resolution on the calendar scale to
+# 50 years.
 shoreline_date(sites = target_point, elevation = 80, cal_reso = 50)
 }

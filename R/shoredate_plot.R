@@ -7,16 +7,20 @@
 #'  distribution should be displayed. Default is TRUE.
 #' @param displacement_curve Logical value indicating whether the displacement
 #'  curve should be displayed. Default is TRUE.
+#' @param site_name Logical value indicating whether the name of the site should
+#'  be printed. Defaults to FALSE.
 #' @param parameters Logical value indicating whether the parameters of the
-#'  gamma distribution should be displayed. Default is FALSE.
+#'  gamma distribution should be printed. Default is FALSE.
 #' @param isobase_direction  Logical value indicating whether the direction of
-#'  the isobases should be displayed. Default is FALSE.
+#'  the isobases should be printed. Default is FALSE.
 #' @param highest_density_region Logical value indicating whether the 95%
 #'  highest density region should be displayed. Defaults to TRUE.
 #' @param hdr_label Logical value indicating whether the numeric values for the
 #'  highest density regions should be displayed. Default is TRUE.
 #' @param multiplot Logical value indicating whether multiple dates should be
-#'  plotted individually, or be collapsed into a single plot. Default is FALSE.
+#'  plotted individually, or be collapsed into a single plot. The only other
+#'  graphical option with `multiplot` set to TRUE is `highest_density_region`.
+#'  Default is FALSE.
 #' @param greyscale Logical value indicating whether the plot should be in
 #'  greyscale or not. Defaults to FALSE.
 #'
@@ -29,14 +33,12 @@
 #'  multiple isobase directions. Negative values denote years BCE while positive
 #'  values denote CE.
 #'
-#' @return Plot(s) displaying shoreline dates and associated meta data.
+#' @return Plot(s) displaying shoreline dates and associated metadata.
 #'
 #' @export
 #'
 #' @import ggplot2
 #' @import ggridges
-#' @importFrom patchwork wrap_plots
-#'
 #'
 #' @examples
 #' # Create example point with correct coordinate reference system
@@ -49,6 +51,7 @@
 shoredate_plot <- function(shorelinedates,
                            elevation_distribution = TRUE,
                            displacement_curve = TRUE,
+                           site_name = TRUE,
                            parameters = FALSE,
                            isobase_direction = FALSE,
                            highest_density_region = TRUE,
@@ -104,7 +107,8 @@ shoredate_plot <- function(shorelinedates,
 
       if (highest_density_region) {
         hdrs <- data.frame(start = nshoredate$hdr_start,
-                           end = nshoredate$hdr_end)
+                           end = nshoredate$hdr_end,
+                           prob = nshoredate$hdr_prob * 100)
 
         plt <- plt +
           ggplot2::geom_segment(data = hdrs,
@@ -116,18 +120,37 @@ shoredate_plot <- function(shorelinedates,
 
       paramval <- as.numeric(nshoredate$model_parameters)
       dirval <- nshoredate$dispcurve_direction
-      if (parameters & isobase_direction) {
+      if (site_name & parameters & isobase_direction) {
         plt <- plt +
-          ggplot2::ggtitle(bquote(alpha ~ "=" ~ .(paramval[1]) ~
+          ggplot2::labs(title = nshoredate$site_name,
+            subtitle = bquote(alpha ~ "=" ~ .(paramval[1]) ~
                                     sigma ~ "=" ~ .(paramval[2]) ~
                                     "Isobase direction =" ~ .(dirval)))
-      } else if (parameters) {
+      } else if (site_name & parameters) {
         plt <- plt +
-          ggplot2::ggtitle(bquote(alpha ~ "=" ~ .(paramval[1]) ~
+          ggplot2::labs(title = nshoredate$site_name,
+            subtitle = bquote(alpha ~ "=" ~ .(paramval[1]) ~
                                     sigma ~ "=" ~ .(paramval[2])))
-      } else if (isobase_direction) {
+      } else if (site_name & isobase_direction) {
         plt <- plt +
-          ggplot2::ggtitle(bquote("Isobase direction =" ~ .(dirval)))
+          ggplot2::labs(title = nshoredate$site_name,
+            subtitle = bquote("Isobase direction =" ~ .(dirval)))
+
+      } else if (parameters & isobase_direction) {
+        plt <- plt +
+          ggplot2::labs(subtitle =
+                          bquote(alpha ~ "=" ~ .(paramval[1]) ~
+                          sigma ~ "=" ~ .(paramval[2]) ~
+                          "Isobase direction =" ~ .(dirval)))
+
+      } else if (parameters){
+        plt <- plt +
+          ggplot2::labs(subtitle = bquote(alpha ~ "=" ~ .(paramval[1]) ~
+                                            sigma ~ "=" ~ .(paramval[2])))
+
+      } else if (isobase_direction){
+        plt <- plt +
+          ggplot2::labs(subtitle = bquote("Isobase direction =" ~ .(dirval)))
       }
 
       if (displacement_curve) {
@@ -180,11 +203,8 @@ shoredate_plot <- function(shorelinedates,
           label_hdrs <- paste0(label_hdrs, hdrs$start[i]," to ",
                               hdrs$end[i], " \n")
         }
-        # for(i in 1:nrow(hdrs)){
-        #   label_hdrs <- paste0(label_hdrs, round(hdrs$start[i])," to ",
-        #                        round(hdrs$end[i]), " BCE\n")
-        # }
-        label_text <- paste0("95% HDR:\n", label_hdrs)
+
+        label_text <- paste0(hdrs$prob, "% HDR:\n", label_hdrs)
 
        plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.8, hjust = 0)
       }
@@ -208,7 +228,11 @@ shoredate_plot <- function(shorelinedates,
       plts_nonull[[i]] <- plts[[plts_index[i]]]
     }
 
-    print(patchwork::wrap_plots(flatten_list(plts_nonull), ncol = 1))
+    # print(patchwork::wrap_plots(flatten_list(plts_nonull), ncol = 1))
+    plts <- flatten_list(plts_nonull)
+    for(i in 1:length(plts)){
+      print(plts[[i]])
+    }
 
   } else {
 
@@ -216,7 +240,7 @@ shoredate_plot <- function(shorelinedates,
        stop("The parameter setting multiplot = TRUE is not compatible with more than one isobase direction.")
     }
 
-    # Find cal_reso
+    # Retrieve cal_reso
     cal_reso <- shorelinedates[[1]][[1]]$cal_reso
 
     # Unpack shoreline dates and HDRs
@@ -262,8 +286,14 @@ shoredate_plot <- function(shorelinedates,
                      y = .data$site_name,
                       height = .data$probability * 100/cal_reso),
                      colour = NA, fill = "darkgrey", alpha = 0.7) +
-      ggplot2::labs(y = "", x = "Shoreline date (BCE)") +
-      ggplot2::theme_bw()
+      ggplot2::labs(y = "", x = "Shoreline date (BCE/CE)") +
+      ggplot2::theme_bw() +
+      ggplot2::scale_x_continuous(expand = c(0,0),
+                                  limits = c(min(hdrs$start) - 1250,
+                                             ifelse(
+                                               (max(hdrs$end) + 1250) < 1950,
+                                               max(hdrs$end) + 1250, 1950)))
+
 
     if (highest_density_region) {
 

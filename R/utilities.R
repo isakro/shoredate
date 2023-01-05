@@ -5,7 +5,7 @@
 #'  https://stackoverflow.com/a/55733001 who in turn based their answer on user
 #'  \@Michael here: https://stackoverflow.com/a/41882883
 #'
-#' @param x Nested list of ggplot .
+#' @param x Nested list of `ggplot` objects.
 #'
 #' @return List of ggplot objects
 #' @keywords internal
@@ -46,7 +46,7 @@ flatten_list <- function(x){
 #' @importFrom grid textGrob gpar unit.c viewport grobWidth grobHeight editGrob grobTree
 #' @importFrom scales squish_infinite
 #'
-#' @return A ggplot layer holding text label
+#' @return A `ggplot` layer holding a text label.
 #' @keywords internal
 #' @noRd
 annotate_custom <- function(label, x, y, hjust = 0,

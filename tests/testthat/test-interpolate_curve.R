@@ -17,3 +17,13 @@ test_that("if a site is located outside the limit of the study area, a warning i
   err <- expect_warning(interpolate_curve(target_point))
   expect_equal(err$message, "Target location is not within the study area for which the method was derived.")
 })
+
+test_that("the IDW works for a point on an isobase", {
+  target_point <- sf::st_sfc(sf::st_point(c(579569.4, 6582981)), crs = 32632)
+  expect_type(interpolate_curve(target_point), "list")
+})
+
+test_that("progress is printed with verbose = TRUE", {
+  target_point <- sf::st_sfc(sf::st_point(c(579569.4, 6582981)), crs = 32632)
+  expect_snapshot(interpolate_curve(target_point, verbose = TRUE))
+})
