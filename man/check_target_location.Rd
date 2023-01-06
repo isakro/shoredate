@@ -11,7 +11,8 @@ check_target_location(target)
 \item{target}{A spatial object of class \code{sf}, representing a site location.}
 }
 \value{
-A warning if the site does not intersect the study area.
+An error if the site does not intersect the study area or is lacking
+or is set to the incorrect coordinate reference system.
 }
 \description{
 Checks if a target sites is set to the correct coordinate reference system

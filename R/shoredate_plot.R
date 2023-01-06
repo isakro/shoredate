@@ -51,7 +51,7 @@
 shoredate_plot <- function(shorelinedates,
                            elevation_distribution = TRUE,
                            displacement_curve = TRUE,
-                           site_name = TRUE,
+                           site_name = FALSE,
                            parameters = FALSE,
                            isobase_direction = FALSE,
                            highest_density_region = TRUE,
@@ -148,9 +148,13 @@ shoredate_plot <- function(shorelinedates,
           ggplot2::labs(subtitle = bquote(alpha ~ "=" ~ .(paramval[1]) ~
                                             sigma ~ "=" ~ .(paramval[2])))
 
-      } else if (isobase_direction){
+      } else if (isobase_direction) {
         plt <- plt +
           ggplot2::labs(subtitle = bquote("Isobase direction =" ~ .(dirval)))
+
+      } else if (site_name) {
+        plt <- plt +
+          ggplot2::labs(title = nshoredate$site_name)
       }
 
       if (displacement_curve) {

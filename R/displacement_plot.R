@@ -42,24 +42,24 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
     if (is.na(interpolated_curve)) {
 
       colour_scheme <- c("Horten" = "black",
-                         "Larvik" = "black",
+                         "Porsgrunn" = "black",
                          "Tvedestrand" = "black",
                          "Arendal" = "black")
 
       line_scheme <- c("Horten" = "twodash",
-                       "Larvik" = "dashed",
+                       "Porsgrunn" = "dashed",
                        "Tvedestrand" = "dotted",
                        "Arendal" = "longdash")
     } else {
 
       colour_scheme <- c("Horten" = "black",
-                         "Larvik" = "black",
+                         "Porsgrunn" = "black",
                          "Tvedestrand" = "black",
                          "Arendal" = "black",
                          "Interpolated curve" = "black")
 
       line_scheme <- c("Horten" = "twodash",
-                       "Larvik" = "dashed",
+                       "Porsgrunn" = "dashed",
                        "Tvedestrand" = "dotted",
                        "Arendal" = "longdash",
                        "Interpolated curve" = "solid")
@@ -69,25 +69,25 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       if (is.na(interpolated_curve)) {
 
       colour_scheme <- c("Horten" = "darkorange",
-                         "Larvik" = "darkgreen",
+                         "Porsgrunn" = "darkgreen",
                          "Tvedestrand" = "blue",
                          "Arendal" = "black")
 
       line_scheme <- c("Horten" = "solid",
-                       "Larvik" = "solid",
+                       "Porsgrunn" = "solid",
                        "Tvedestrand" = "solid",
                        "Arendal" = "solid")
 
       } else {
 
         colour_scheme <- c("Horten" = "darkorange",
-                           "Larvik" = "darkgreen",
+                           "Porsgrunn" = "darkgreen",
                   "Tvedestrand" = "blue",
                   "Arendal" = "black",
                   "Interpolated curve" = "red")
 
         line_scheme <- c("Horten" = "solid",
-                        "Larvik" = "solid",
+                        "Porsgrunn" = "solid",
                          "Tvedestrand" = "solid",
                          "Arendal" = "solid",
                          "Interpolated curve" = "solid")
@@ -104,7 +104,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                    legend.direction = "horizontal")
 
     if (any(is.na(interpolated_curve))) {
-      limit_scheme <- c("Horten", "Larvik",
+      limit_scheme <- c("Horten", "Porsgrunn",
                         "Tvedestrand", "Arendal")
 
       plt <- plt +
@@ -129,7 +129,7 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
       intcurves$name <- "Interpolated curve"
 
-      limit_scheme <- c("Horten", "Larvik",
+      limit_scheme <- c("Horten", "Porsgrunn",
                         "Tvedestrand", "Arendal", "Interpolated curve")
 
       plt <- plt +

@@ -28,6 +28,7 @@ Imports:
     ggplot2,
     ggrepel,
     ggridges,
+    ggsn,
     grid,
     scales,
     sf,
@@ -35,7 +36,7 @@ Imports:
     utils
 Suggests: 
     covr,
-    ggmap,
+    elevatr,
     knitr,
     patchwork,
     rmarkdown,

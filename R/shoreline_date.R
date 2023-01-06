@@ -22,8 +22,8 @@
 #' @param model_parameters Vector of two numeric values specifying the shape and
 #'   scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 #'   shape and scale, respectively.
-#' @param elevavg Statistic to define site elevation if this is to be derived
-#'  from an elevation raster. Defaults to mean.
+#' @param elev_fun Statistic to define site elevation if this is to be derived
+#'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
 #' @param interpolated_curve List holding shoreline displacement curve.
 #'   [interpolate_curve()] will be run if this is not provided.
 #' @param hdr_prob Numeric value specifying the coverage of the highest density
@@ -83,7 +83,7 @@ shoreline_date <- function(sites,
                            cal_reso = 10,
                            isobase_direction = 327,
                            model_parameters = c(0.286, 0.048),
-                           elevavg = "mean",
+                           elev_fun = "mean",
                            interpolated_curve = NA,
                            hdr_prob = 0.95,
                            normalise = TRUE,
@@ -153,7 +153,7 @@ shoreline_date <- function(sites,
       }
     } else {
       siteelev <- terra::extract(elev_raster,
-                                 terra::vect(sites[i,]), fun = elevavg)[,-1]
+                                 terra::vect(sites[i,]), fun = elev_fun)[,-1]
     }
 
     # Elevation offsets to step through by increments of elev_reso

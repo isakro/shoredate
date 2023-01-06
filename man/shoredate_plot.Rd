@@ -8,7 +8,7 @@ shoredate_plot(
   shorelinedates,
   elevation_distribution = TRUE,
   displacement_curve = TRUE,
-  site_name = TRUE,
+  site_name = FALSE,
   parameters = FALSE,
   isobase_direction = FALSE,
   highest_density_region = TRUE,

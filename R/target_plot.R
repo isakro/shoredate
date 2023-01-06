@@ -22,6 +22,7 @@
 #' @export
 #'
 #' @import ggrepel
+#' @importFrom ggsn scalebar
 #'
 #' @examples
 #' # Display the background map and default isobases
@@ -42,12 +43,12 @@ target_plot <- function(targets = NA,
     target_fill <- "black"
 
     isobase_col <- c("Arendal" = "black",
-                    "Larvik" = "black",
+                    "Porsgrunn" = "black",
                     "Tvedestrand" = "black",
                     "Horten" = "black")
 
     isobase_line <- c("Horten" = "twodash",
-                      "Larvik" = "dashed",
+                      "Porsgrunn" = "dashed",
                       "Tvedestrand" = "dotted",
                       "Arendal" = "longdash")
 
@@ -56,12 +57,12 @@ target_plot <- function(targets = NA,
     target_fill <- "red"
 
     isobase_col <- c("Arendal" = "black",
-                    "Larvik" = "darkgreen",
+                    "Porsgrunn" = "darkgreen",
                     "Tvedestrand" = "blue",
                     "Horten" = "darkorange")
 
     isobase_line <- c("Horten" = "solid",
-                      "Larvik" = "solid",
+                      "Porsgrunn" = "solid",
                       "Tvedestrand" = "solid",
                       "Arendal" = "solid")
   }
@@ -85,6 +86,10 @@ target_plot <- function(targets = NA,
                                                    linetype = .data$name)) +
     ggplot2::scale_colour_manual(values = isobase_col) +
     ggplot2::scale_linetype_manual(values = isobase_line) +
+    ggsn::scalebar(data = basemap, dist = 20, dist_unit = "km",
+                   transform = FALSE, st.size = 4, height = 0.02,
+                   border.size = 0.1, st.dist = 0.03,
+                   anchor = c(x = 587964.8, y = 6483243.0)) +
     ggplot2::theme_bw() + ggplot2::theme(
       axis.title = ggplot2::element_blank(),
       axis.text.y = element_blank(),

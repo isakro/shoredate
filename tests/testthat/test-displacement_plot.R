@@ -16,3 +16,8 @@ test_that("returns expected plot with greyscale = TRUE", {
   p <- displacement_plot(target_curve, greyscale = TRUE)
   vdiffr::expect_doppelganger("greyscale plot", p)
 })
+
+test_that("returns expected plot with greyscale = TRUE and no passed curve", {
+  p <- displacement_plot(greyscale = TRUE)
+  vdiffr::expect_doppelganger("greyscale plot, no curve", p)
+})

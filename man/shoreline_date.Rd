@@ -12,7 +12,7 @@ shoreline_date(
   cal_reso = 10,
   isobase_direction = 327,
   model_parameters = c(0.286, 0.048),
-  elevavg = "mean",
+  elev_fun = "mean",
   interpolated_curve = NA,
   hdr_prob = 0.95,
   normalise = TRUE,
@@ -46,8 +46,8 @@ of the isobases. Defaults to 327.}
 scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 shape and scale, respectively.}
 
-\item{elevavg}{Statistic to define site elevation if this is to be derived
-from an elevation raster. Defaults to mean.}
+\item{elev_fun}{Statistic to define site elevation if this is to be derived
+from an elevation raster. Uses \code{terra::extract()}. Defaults to mean.}
 
 \item{interpolated_curve}{List holding shoreline displacement curve.
 \code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not provided.}

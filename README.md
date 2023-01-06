@@ -12,21 +12,21 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
 <!-- badges: end -->
 
-The goal of shoredate is to offer methods to shoreline date Stone Age
-sites located along the Norwegian Skagerrak coast based on their
-present-day elevation and the trajectory of past relative sea-level
-change. The method of shoreline dating is based on the premise that
-coastal Stone Age sites in the region were located on or close to the
-shoreline when they were in use, and is implemented here based on an
-empirically derived estimate of the likely elevation of the sites above
-sea-level when they were occupied (Roalkvam 2023). However, do note that
-as there are limitations to the Roalkvam (2023) study, and as the method
-is dependent on regularities in human behaviour, the dates achieved with
-the package should be treated with care.
+The package *shoredate* offers methods to shoreline date Stone Age sites
+located along the Norwegian Skagerrak coast based on their present-day
+elevation and the trajectory of past relative sea-level change.
+Shoreline dating is based on the premise that coastal Stone Age sites in
+the region were located on or close to the shoreline when they were in
+use, and is implemented here based on an empirically derived estimate of
+the likely elevation of the sites above sea-level when they were
+occupied (Roalkvam 2023). However, do note that as there are limitations
+to the Roalkvam (2023) study, and as the method is dependent on
+regularities in human behaviour, the dates achieved with the package
+should be treated with care.
 
 ## Installation and loading
 
-You can install the development version of shoredate from
+You can install the development version of *shoredate* from
 [GitHub](https://github.com/isakro/shoredate) with:
 
 ``` r
@@ -58,14 +58,12 @@ has followed the same trajectory. These correspond to the displacement
 curves and place names in the third figure, which also indicates the
 temporal coverage of the package:
 
-    #> ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-<img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="../../../../tmp/Rtmp4HNDyM/temp_libpath6ce41741ec9a/shoredate/precompiled_figures/spatiotemporal_coverage.png" width="100%" style="display: block; margin: auto;" />
 
 As human occupation in the region only occurred some time after the
 retreat of the Fennoscandian Ice Sheet, the currently oldest known sites
 in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest
-possible age to achieve with shoredate is 9460 BCE, although no sites
+possible age to achieve with *shoredate* is 9460 BCE, although no sites
 are yet known to be that old. A warning is given if a site location is
 outside the spatial extent outlined above, as this involves a more
 uncertain extrapolation of the development of shoreline displacement.
@@ -99,7 +97,7 @@ by the square of the inverse distance between site and isobases.
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-# Plot displaying the target location relative to the isobases of the displacement curves
+# Simple map showing the target location relative to the isobases of the displacement curves
 target_plot(target_point)
 ```
 
@@ -122,8 +120,8 @@ procedure.
 ## Example of shoreline dating a site
 
 Below is a basic example outlining how to date a single site by manually
-specifying the site elevation using the default setting for the dating
-procedure and for plotting the date.
+specifying the site elevation. The default settings are used for the
+dating procedure and for plotting the resulting shoreline date.
 
 ``` r
 # Using the example point from above and specifying it's elevation
@@ -146,9 +144,9 @@ parameters of shape
 shoreline displacement curve as interpolated to the site location.
 Transferring the probability from the gamma distribution to the calendar
 scale using the displacement curve gives the resulting shoreline date in
-grey which is underlined by the 95% highest density region in black. By
-default, the shoreline date is normalised to sum to unity. The default
-resolution on the calendar scale is 10 years.
+grey which is underlined by the 95% highest density region (HDR) in
+black. By default, the shoreline date is normalised to sum to unity. The
+default resolution on the calendar scale is 10 years.
 
 Calling the date object, which has the custom class `shoreline_date`,
 prints the name of the site, its elevation and the HDR:
@@ -167,6 +165,8 @@ target_date
 The first column of a data frame beyond the geometry of the spatial
 objects will be taken to represent site names. If no such column exist,
 the sites are simply numbered as they are passed to `shoreline_date()`.
+
+## Dating multiple sites
 
 It is also possible to date multiple sites at once.
 
