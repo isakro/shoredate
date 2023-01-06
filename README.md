@@ -58,7 +58,7 @@ has followed the same trajectory. These correspond to the displacement
 curves and place names in the third figure, which also indicates the
 temporal coverage of the package:
 
-<img src="../../../../tmp/Rtmp4HNDyM/temp_libpath6ce41741ec9a/shoredate/precompiled_figures/spatiotemporal_coverage.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/coverage.png" width="100%" style="display: block; margin: auto;" />
 
 As human occupation in the region only occurred some time after the
 retreat of the Fennoscandian Ice Sheet, the currently oldest known sites
@@ -101,7 +101,7 @@ target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 target_plot(target_point)
 ```
 
-<img src="man/figures/README-target_location-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/target_location-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Interpolate shoreline displacement curve for the target location
@@ -111,7 +111,7 @@ target_curve <- interpolate_curve(target_point)
 displacement_plot(target_curve)
 ```
 
-<img src="man/figures/README-interpolated_curve-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/interpolated_curve-1.png" style="display: block; margin: auto;" />
 
 This interpolation procedure is performed under the hood for each site
 when calling `shoreline_date()` which performs the shoreline dating
@@ -131,7 +131,7 @@ target_date <- shoreline_date(site = target_point, elevation = 70)
 shoredate_plot(target_date)
 ```
 
-<img src="man/figures/README-date-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/date-1.png" style="display: block; margin: auto;" />
 
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
@@ -229,7 +229,7 @@ date for the occupation of the sites.
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
-<img src="man/figures/README-multiplot-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/multiplot-1.png" style="display: block; margin: auto;" />
 
 The procedures outlined above have focused on the the default behaviours
 of the package. For further usage and a more detailed walk through see

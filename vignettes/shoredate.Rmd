@@ -36,9 +36,8 @@ Shoreline dating of Stone Age sites in northern Scandinavia is based on the prem
 As the method is dependent on good geological reconstructions of shoreline displacement, *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The spatial coverage of *shoredate* is indicated in the maps below. Spatial data to be used with the package should be set to the coordinate reference system WGS 84 / UTM zone 32N (EPSG:32632).
 
 ```{r limit, echo = FALSE, out.width = '100%'}
-knitr::include_graphics(
-  file.path(system.file("precompiled_figures", package = "shoredate"), "spatiotemporal_coverage.png")
-)
+# Include precompiled figure (uses more spatial data than what is included in the package)
+knitr::include_graphics("../man/figures/coverage.png")
 ```
 
 A warning is given if one attempts to date a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to apply the method outside this limit, the dating procedure is still performed.
@@ -81,7 +80,7 @@ To visualise the interpolated curve alongside the geological reconstructions, th
 target_plot(target_point)
 ```
 
-```{r plot_intcurve, fig.width = 5.5, fig.height = 4.2}
+```{r plot_intcurve, fig.width = 5.7, fig.height = 4}
 displacement_plot(target_curve)
 ```
 
@@ -169,10 +168,10 @@ This example demonstrates how to find the elevation of one or more sites by pass
 
 ```{r retrieve_raster, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
 # Reproject target_point for retrieving raster data with elevatr
-target_crs <- sf::st_transform(target_point, crs = 4326)
+target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
 # Retrieve raster data 
-elevation <- elevatr::get_elev_raster(target_crs, z = 14,  src = "aws")
+elevation <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
 
 # Make the retrieved raster a SpatRaster and re-project it to the correct coordinate system
 elevation <- terra::project(terra::rast(elevation), "epsg:32632")
