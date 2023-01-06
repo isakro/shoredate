@@ -15,10 +15,10 @@
 #'
 #' @examples
 #'
-#' target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+#' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #' target_date <- shoreline_date(site = target_point,
 #'                               elevation = 70,
-#'                               cal_reso = 50)
+#'                               cal_reso = 80)
 #' target_date
 #'
 print.shoreline_date <- function(x, ...){
