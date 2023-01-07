@@ -136,7 +136,7 @@ shoredate_plot(target_date)
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
-parameters of shape
+parameters shape
 (![\\alpha](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Calpha "\alpha"))
 = 0.286 and scale
 (![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma"))

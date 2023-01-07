@@ -67,6 +67,7 @@
 #' @import sf
 #' @import terra
 #' @importFrom utils txtProgressBar
+#' @importFrom elevatr get_elev_raster
 #'
 #' @examples
 #' # Create example point using the required crs WGS84 UTM32N (EPSG: 32632)
