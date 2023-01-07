@@ -33,7 +33,7 @@ target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Perform shoreline dating
 target_date <- shoreline_date(sites = target_point,
-                              elevation = 65, cal_reso = 50)
+                              elevation = 80, cal_reso = 50)
 
 # `shoredate_hdr()` is already called under the hood with `shoreline_date()`,
 # and is printed when calling the `shoreline_date object`
