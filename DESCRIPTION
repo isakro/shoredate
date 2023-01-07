@@ -30,7 +30,6 @@ Imports:
     ggridges,
     ggsn,
     grid,
-    rgdal,
     scales,
     sf,
     terra,
