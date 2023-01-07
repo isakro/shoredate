@@ -45,7 +45,7 @@
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' target_date <- shoreline_date(sites = target_point, elevation = 80,
-#'                               cal_reso = 50)
+#'                               cal_reso = 80)
 #'
 #' shoredate_plot(target_date)
 shoredate_plot <- function(shorelinedates,

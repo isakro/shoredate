@@ -164,7 +164,7 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 ## Using an elevation raster to find the elevation of a site
 
-This example demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example used here uses data from Amazon Web Service Terrain Tiles with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
+This example demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example used here uses data from Amazon Web Service Terrain Tiles with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
 The example raster is distributed with the package, so this code is not run:
 ```{r retrieve_raster, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
