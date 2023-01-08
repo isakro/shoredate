@@ -104,6 +104,6 @@ target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Date target point, manually specifying the elevation instead of providing
 # an elevation raster and setting the resolution on the calendar scale to
-# 50 years.
-shoreline_date(sites = target_point, elevation = 80, cal_reso = 50)
+# 75 years for speed.
+shoreline_date(sites = target_point, elevation = 80, cal_reso = 80)
 }

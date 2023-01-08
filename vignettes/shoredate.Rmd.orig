@@ -13,9 +13,21 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 
 ---
+```{r rmd_setup, include = FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.path = "shore-")
 
+# This vignette is precompiled following:
+# https://ropensci.org/blog/2019/12/08/precompute-vignettes/
 
+# Run this code to recompile:
+# knitr::knit("vignettes/shoredate.Rmd.orig", output = "vignettes/shoredate.Rmd")
+```
 
+```{r load, include = FALSE}
+spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
+                                              package = "shoredate",
+                                              mustWork = TRUE), quiet = TRUE)
+```
 
 # Introduction
 The concept of dating sites based on their present-day elevation with reference to past shoreline displacement has been an important tool for archaeologists in northern Scandinavia since the early 1900s (e.g. Brøgger 1905). This is based on the observation that Stone Age sites in the region tend to have been located close to the contemporaneous shoreline when they were in use. Following the retreat of the Fennoscandian Ice Sheet, the isostatic uplift has been so severe that despite corresponding eustatic sea-level rise, the relative sea-level has been falling throughout prehistory in large parts of this region. Within any given area where this is the case, the general pattern is thus that older sites will be located at higher altitudes than younger sites.
@@ -28,7 +40,10 @@ Shoreline dating of Stone Age sites in northern Scandinavia is based on the prem
 
 As the method is dependent on good geological reconstructions of shoreline displacement, *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The spatial coverage of *shoredate* is indicated in the maps below. Spatial data to be used with the package should be set to the coordinate reference system WGS 84 / UTM zone 32N (EPSG:32632).
 
-<img src="../man/figures/coverage.png" title="plot of chunk limit" alt="plot of chunk limit" width="100%" style="display: block; margin: auto;" />
+```{r limit, echo = FALSE, out.width = '100%'}
+# Include precompiled figure (uses more spatial data than what is included in the package)
+knitr::include_graphics("../man/figures/coverage.png")
+```
 
 A warning is given if one attempts to date a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to apply the method outside this limit, the dating procedure is still performed.
 
@@ -38,8 +53,7 @@ Furthermore, as human occupation in the region only occurred some time after the
 
 The package can be installed from the [GitHub repository](https://github.com/isakro/shoredate). This requires the devtools package.
 
-
-```r
+```{r install, eval = FALSE}
 # Uncomment and run to install devtools
 # install.packages("devtools")
 
@@ -48,8 +62,7 @@ devtools::install_github("isakro/shoredate")
 ```
 
 When installed the package can be loaded:
-
-```r
+```{r setup, message = FALSE, warning = FALSE}
 library(shoredate)
 ```
 
@@ -58,8 +71,7 @@ library(shoredate)
 
 The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. When calling `shoreline_date()` the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood, based on the four different geological reconstructions of shoreline displacement in the region. Each of these are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
 
-
-```r
+```{r interpolate, fig.width = 6, fig.height = 5}
 # Create example point using the required coordinate system
 target_point <- sf::st_sfc(sf::st_point(c(517250, 6527250)), crs = 32632)
 
@@ -69,19 +81,13 @@ target_curve <- interpolate_curve(target_point)
 
 To visualise the interpolated curve alongside the geological reconstructions, the curve can be passed to `displacement_plot()`. A simple map showing the location of one or more target sites relative to the isobases can also be displayed by using the command `target_plot()`.
 
-
-```r
+```{r plot_location, fig.width = 4.3, fig.height = 3.5}
 target_plot(target_point)
 ```
 
-<img src="shore-plot_location-1.png" title="plot of chunk plot_location" alt="plot of chunk plot_location" style="display: block; margin: auto;" />
-
-
-```r
+```{r plot_intcurve, fig.width = 5.7, fig.height = 4}
 displacement_plot(target_curve)
 ```
-
-<img src="shore-plot_intcurve-1.png" title="plot of chunk plot_intcurve" alt="plot of chunk plot_intcurve" style="display: block; margin: auto;" />
 
 # Shoreline dating
 
@@ -91,65 +97,43 @@ The following section outlines how to perform shoreline dating and ways in which
 
 To perform a basic shoreline date, a site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster (see below). The elevation of the site will then be derived from the raster. In Roalkvam (2023) it was found that the vertical distance from the sites to the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implementation of shoreline dating in the package.
 
-
-```r
+```{r example_site, message = FALSE}
 # Date the example point, manually specifying it's elevation
 target_date <- shoreline_date(target_point, elevation = 58.5)
 ```
 
 The results can then be plotted using the `shoredate_plot()` command:
 
-
-```r
+```{r plot_example, fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_date)
 ```
-
-<img src="shore-plot_example-1.png" title="plot of chunk plot_example" alt="plot of chunk plot_example" style="display: block; margin: auto;" />
 
 The blue gamma distribution on the y-axis indicates the likely elevation of the site above sea-level when it was in use, which is described by an empirically derived gamma distribution with the parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 0.048. These parameters can be adjusted by specifying the values passed to `model_parameters` when calling `shoreline_date()`. The red envelope is the shoreline displacement curve as interpolated to the site location with `interpolate_curve()`, which is run under the hood if a curve is not provided to `shoreline_date()`. Transferring the probability from the gamma distribution to the calendar scale using the displacement curve gives the resulting shoreline date in grey, which is underlined with the 95% highest density region (HDR) in black. The coverage of the HDR can be adjusted with the `hdr_prob` parameter. The dating procedure involves stepping through the cumulative version of the gamma distribution, and at each step subtracting the probability at the previous step from the current one. The probability at each step is divided uniformly across the calendar years in the range between the lower and upper limit of the displacement curve. The default resolution on the calendar scale is 10 years, but this can be adjusted by specifying the `cal_reso` argument. The gamma distribution is stepped through using increments of 0.01m, which can be adjusted by using the argument `elev_reso`. By default, the resulting shoreline date is normalised to sum to unity.
 
 The function `shoreline_date()` returns an object of class `shoreline_date`. By calling the object the dates are printed to console, displaying site name, site elevation and the HDR of the date. The first column of a data frame beyond the `geom` column holding the `sf` geometry will be used as site names. If no such column is present, the sites will simply be numbered as they are passed to `shoreline_date()`.
 
-
-```r
+```{r}
 target_date
-```
-
-```
-## ===============
-## Site:  1
-## Elevation:  58.5 
-## 
-## 95% HDR:
-## 8600 BCE-6900 BCE
-## 5730 BCE-5070 BCE
 ```
 
 There is also an option to plot a date in greyscale by setting `greyscale = TRUE`.
 
-
-```r
+```{r greyscale, fig.width = 4, fig.height = 3.7}
 shoredate_plot(target_date,  greyscale = TRUE)
 ```
 
-<img src="shore-greyscale-1.png" title="plot of chunk greyscale" alt="plot of chunk greyscale" style="display: block; margin: auto;" />
-
 A more sparse version can also be plotted by specifying what elements are to be excluded.
 
-
-```r
+```{r sparse, fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_date,  elevation_distribution = FALSE,
                displacement_curve = FALSE, highest_density_region = FALSE)
 ```
-
-<img src="shore-sparse-1.png" title="plot of chunk sparse" alt="plot of chunk sparse" style="display: block; margin: auto;" />
 
 ## Dating multiple sites
 
 As exemplified in the code chunks to follow, it is also possible to date multiple sites at once.
 
-
-```r
+```{r multipoint, fig.width = 4.3, fig.height = 3.5}
 # Create multiple example points to be dated
 target_points <- sf::st_sfc(sf::st_point(c(576052, 6567955)),
                               sf::st_point(c(554212, 6538835)),
@@ -165,60 +149,30 @@ target_points$names <- c("Site 1", "Site 2", "Site 3")
 target_plot(target_points)
 ```
 
-<img src="shore-multipoint-1.png" title="plot of chunk multipoint" alt="plot of chunk multipoint" style="display: block; margin: auto;" />
-
 When dating multiple sites it can be useful to track the progress by setting `verbose = TRUE` to print the progress to console (this output is not reproduced here).
 
-
-```r
+```{r multidate, results='hide'}
 # Dating the target points, specifying the elevations in a vector of numeric values
 target_dates <- shoreline_date(target_points, elevation = c(68, 98, 73), verbose = TRUE)
 ```
 
-
-```r
+```{r print_multidate}
 # Print results
 target_dates
 ```
 
-```
-## ===============
-## Site:  Site 1
-## Elevation:  68 
-## 
-## 95% HDR:
-## 7630 BCE-6110 BCE
-## 6000 BCE-5430 BCE
-## ===============
-## Site:  Site 2
-## Elevation:  98 
-## 
-## 95% HDR:
-## 9020 BCE-8470 BCE
-## ===============
-## Site:  Site 3
-## Elevation:  73 
-## 
-## 95% HDR:
-## 9170 BCE-8340 BCE
-```
-
 The default behaviour when passing multiple dates is to plot a series of individual plots for each date. However, setting `multiplot = TRUE` when calling `shoredate_plot()` collapses the dates on a single, more sparse plot. The sites are ordered from from earliest to latest possible start date for the occupation of the sites.
 
-
-```r
+```{r multiplot, fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
-
-<img src="shore-multiplot-1.png" title="plot of chunk multiplot" alt="plot of chunk multiplot" style="display: block; margin: auto;" />
 
 ## Using an elevation raster to find the elevation of a site
 
 This example demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example used here uses data from Amazon Web Service Terrain Tiles with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
 The example raster is distributed with the package, so this code is not run:
-
-```r
+```{r retrieve_raster, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
 # Reproject target_point for retrieving raster data with elevatr
 target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
@@ -233,33 +187,19 @@ terra::plot(elevation)
 plot(target_point, add = TRUE)
 ```
 
-<img src="shore-retrieve_raster-1.png" title="plot of chunk retrieve_raster" alt="plot of chunk retrieve_raster" style="display: block; margin: auto;" />
-
 When a `SpatRaster` has been loaded into the R session this can be passed to `shoreline_date()` by specifying the argument `elev_raster` to find site elevations without having to provide this manually, as was done above. Note that if the site is represented by an object with a spatial extent (i.e. not a point feature) the default is to use the mean of the elevation on the raster, but this can be changed with the `elev_fun` argument. Any function accepted by the `fun` argument in `terra::extract()` can be used (see `?terra::extract`).
 
-
-```r
+```{r raster_date}
 raster_date <- shoreline_date(target_point, elev_raster = elevation)
 
 # Print to console
 raster_date
 ```
 
-```
-## ===============
-## Site:  1
-## Elevation:  58.51383 
-## 
-## 95% HDR:
-## 8600 BCE-6900 BCE
-## 5730 BCE-5070 BCE
-```
-
 ## Direction of uplift gradient
 The precise direction of the uplift gradient is specified by the isobases that run perpendicular to this gradient. When interpolating the displacement curve used for dating a site, the direction of these isobases defaults to 327$^\circ$, following Romundset et al. (2018:180, fig.1). However, some authors operate with different isobase directions, with Sørensen et al. (2014:fig.2.2.3) using 338$^\circ$. Furthermore, the direction of the uplift gradient might have varied throughout the Holocene (Sørensen et al. 2014:42--44). While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline date using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
 
-
-```r
+```{r example_site_isobases, message = FALSE}
 # Using the same target point and elevation as above, but specifying two different directions
 # for the isobases when dating
 iso_date <- shoreline_date(site = target_point, elev_raster = elevation, isobase_direction = c(325, 338))
@@ -267,13 +207,10 @@ iso_date <- shoreline_date(site = target_point, elev_raster = elevation, isobase
 
 In the call to plot it can then be specified that the direction of the isobases is printed with each date. Note that it is not possible use `multiplot` when having used multiple isobase directions when dating the sites. The following thus also shows the default behaviour when plotting multiple dates at once and not setting `multiplot = TRUE`.
 
-
-```r
+```{r plot_example_isobases, fig.width = 4, fig.height = 3.5}
 # Call to plot
 shoredate_plot(iso_date, isobase_direction = TRUE)
 ```
-
-<img src="shore-plot_example_isobases-1.png" title="plot of chunk plot_example_isobases" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" title="plot of chunk plot_example_isobases" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" />
 
 # References
 
@@ -293,27 +230,14 @@ Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegeta
 
 Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014 Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Stine Melvold and Per Persson. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
+```{r, include = FALSE}
+# Move figures into the vignettes/ directory
+figs <- list.files("..", pattern = "shore-")
+file.copy(file.path("../", figs), figs)
+file.remove(file.path("../", figs))
+```
 
-
-
-```r
+```{r}
 print(file.path("../", figs))
-```
-
-```
-##  [1] "..//shore-greyscale-1.png"             "..//shore-multiplot-1.png"             "..//shore-multipoint-1.png"           
-##  [4] "..//shore-plot_example_isobases-1.png" "..//shore-plot_example_isobases-2.png" "..//shore-plot_example-1.png"         
-##  [7] "..//shore-plot_intcurve-1.png"         "..//shore-plot_location-1.png"         "..//shore-retrieve_raster-1.png"      
-## [10] "..//shore-sparse-1.png"
-```
-
-```r
 print(file.path("vignettes/", figs))
-```
-
-```
-##  [1] "vignettes//shore-greyscale-1.png"             "vignettes//shore-multiplot-1.png"             "vignettes//shore-multipoint-1.png"           
-##  [4] "vignettes//shore-plot_example_isobases-1.png" "vignettes//shore-plot_example_isobases-2.png" "vignettes//shore-plot_example-1.png"         
-##  [7] "vignettes//shore-plot_intcurve-1.png"         "vignettes//shore-plot_location-1.png"         "vignettes//shore-retrieve_raster-1.png"      
-## [10] "vignettes//shore-sparse-1.png"
 ```
