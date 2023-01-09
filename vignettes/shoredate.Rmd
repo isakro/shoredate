@@ -294,26 +294,3 @@ Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegeta
 Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014 Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Stine Melvold and Per Persson. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
 
-
-
-```r
-print(file.path("../", figs))
-```
-
-```
-##  [1] "..//shore-greyscale-1.png"             "..//shore-multiplot-1.png"             "..//shore-multipoint-1.png"           
-##  [4] "..//shore-plot_example_isobases-1.png" "..//shore-plot_example_isobases-2.png" "..//shore-plot_example-1.png"         
-##  [7] "..//shore-plot_intcurve-1.png"         "..//shore-plot_location-1.png"         "..//shore-retrieve_raster-1.png"      
-## [10] "..//shore-sparse-1.png"
-```
-
-```r
-print(file.path("vignettes/", figs))
-```
-
-```
-##  [1] "vignettes//shore-greyscale-1.png"             "vignettes//shore-multiplot-1.png"             "vignettes//shore-multipoint-1.png"           
-##  [4] "vignettes//shore-plot_example_isobases-1.png" "vignettes//shore-plot_example_isobases-2.png" "vignettes//shore-plot_example-1.png"         
-##  [7] "vignettes//shore-plot_intcurve-1.png"         "vignettes//shore-plot_location-1.png"         "vignettes//shore-retrieve_raster-1.png"      
-## [10] "vignettes//shore-sparse-1.png"
-```

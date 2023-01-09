@@ -52,9 +52,6 @@ As the method of shoreline dating is determined by relative sea-level change, it
 knitr::include_graphics(
   "man/figures/coverage.png"
 )
-
-# print(list.files("man/figures/"))
-# file.path(system.file("precompiled_figures", package = "shoredate"), "spatiotemporal_coverage.png")
 ```
 
 As human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the currently oldest known sites in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* is 9460 BCE, although no sites are yet known to be that old. A warning is given if a site location is outside the spatial extent outlined above, as this involves a more uncertain extrapolation of the development of shoreline displacement. However, the dating procedure is still performed. Conversely, if a site has an elevation that implies a date older than 9460 BCE the date is returned as NA and a warning is given. 
@@ -64,6 +61,8 @@ In Roalkvam (2023) it was found that sites tend to be located on or close to the
 ## Interpolating shoreline displacement to a site location
 
 To shoreline date a site, a reconstruction of local shoreline displacement is necessary. There are currently four reliable geological displacement curves available from within the study area. Each of these is associated with a shoreline isobase, along which the trajectory of relative sea-level change has been the same. To find the local displacement curve, the curves are interpolated to a site location using inverse distance weighting, where the default is to weight the distances by the square of the inverse distance between site and isobases.
+
+Note that spatial data used with the package should be set to WGS 84 / Zone 32N (EPSG:32632).
 
 ```{r target_location, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 4}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
@@ -117,12 +116,14 @@ target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 # Specifying the correct CRS and making the points a sf data frame
 target_points <- sf::st_as_sf(target_points, crs = 32632)
 
-# Adding example names:
-target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
+# Adding example names
+target_points$name <- c("Example 1", "Example 2", "Example 3", "Example 4")
+# Adding fictitious site elevations
+target_points$elevation <- c(70, 46, 62, 30)
 
-# Performing shoreline dating, specifying site elevations
+# Perform shoreline dating
 target_dates <- shoreline_date(sites = target_points, 
-                               elevation = c(70, 46, 62, 30))
+                               elevation = target_points$elevation)
 
 # Print to console
 target_dates

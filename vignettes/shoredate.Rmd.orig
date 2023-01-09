@@ -236,8 +236,3 @@ figs <- list.files("..", pattern = "shore-")
 file.copy(file.path("../", figs), figs)
 file.remove(file.path("../", figs))
 ```
-
-```{r}
-print(file.path("../", figs))
-print(file.path("vignettes/", figs))
-```

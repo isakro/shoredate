@@ -93,6 +93,9 @@ displacement curve, the curves are interpolated to a site location using
 inverse distance weighting, where the default is to weight the distances
 by the square of the inverse distance between site and isobases.
 
+Note that spatial data used with the package should be set to WGS 84 /
+Zone 32N (EPSG:32632).
+
 ``` r
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
@@ -180,12 +183,14 @@ target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 # Specifying the correct CRS and making the points a sf data frame
 target_points <- sf::st_as_sf(target_points, crs = 32632)
 
-# Adding example names:
-target_points$names <- c("Example 1", "Example 2", "Example 3", "Example 4")
+# Adding example names
+target_points$name <- c("Example 1", "Example 2", "Example 3", "Example 4")
+# Adding fictitious site elevations
+target_points$elevation <- c(70, 46, 62, 30)
 
-# Performing shoreline dating, specifying site elevations
+# Perform shoreline dating
 target_dates <- shoreline_date(sites = target_points, 
-                               elevation = c(70, 46, 62, 30))
+                               elevation = target_points$elevation)
 
 # Print to console
 target_dates
