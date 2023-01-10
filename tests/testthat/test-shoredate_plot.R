@@ -52,18 +52,48 @@ test_that("dates omitted as out of bounds throws warning", {
   expect_equal(warn$message, "Skipped one date that was out of bounds.")
 })
 
+# Create date for multiple tests below
+target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
+target_date <- shoreline_date(site = target_point, elevation = 70)
+
 test_that("returns expected plot when a single date is passed", {
-  target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
-  target_date <- shoreline_date(site = target_point, elevation = 70)
   p <- shoredate_plot(target_date)
   vdiffr::expect_doppelganger("plot with a single date", p)
 })
 
 test_that("returns expected plot in greyscale", {
-  target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
-  target_date <- shoreline_date(site = target_point, elevation = 70)
   p <- shoredate_plot(target_date, greyscale = TRUE)
   vdiffr::expect_doppelganger("plot in greyscale", p)
+})
+
+test_that("returns only site name, when specified", {
+  p <- shoredate_plot(target_date, site_name = TRUE)
+  vdiffr::expect_doppelganger("plot with name", p)
+})
+
+test_that("returns site name and model parameters, when specified", {
+  p <- shoredate_plot(target_date, site_name = TRUE, parameters = TRUE)
+  vdiffr::expect_doppelganger("plot with name & model parameters", p)
+})
+
+test_that("returns site name and isobase directions, when specified", {
+  p <- shoredate_plot(target_date, site_name = TRUE, isobase_direction = TRUE)
+  vdiffr::expect_doppelganger("plot with name & isobase directions", p)
+})
+
+test_that("returns model parameters and isobase directions, when specified", {
+  p <- shoredate_plot(target_date, parameters = TRUE, isobase_direction = TRUE)
+  vdiffr::expect_doppelganger("plot with model parameters & isobase directions", p)
+})
+
+test_that("returns only model parameters, when specified", {
+  p <- shoredate_plot(target_date, parameters = TRUE)
+  vdiffr::expect_doppelganger("plot with model parameters", p)
+})
+
+test_that("returns only isobase directions, when specified", {
+  p <- shoredate_plot(target_date, isobase_direction = TRUE)
+  vdiffr::expect_doppelganger("plot with isobase directions", p)
 })
 
 test_that("returns expected multiplot when multiple dates are passed", {
