@@ -59,7 +59,8 @@ region. Defaults to 0.95.}
 be normalised to sum to unity. Defaults to TRUE.}
 
 \item{sparse}{Logical value specifying if only site name and shoreline date
-should be returned. Defaults to FALSE.}
+should be returned. Defaults to FALSE. Note that sparse dates are only
+compatible with \code{\link[=sum_shoredates]{sum_shoredates()}}.}
 
 \item{verbose}{Logical value indicating whether progress should be printed to
 console. Defaults to FALSE.}

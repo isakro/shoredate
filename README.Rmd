@@ -82,7 +82,7 @@ displacement_plot(target_curve)
 
 This interpolation procedure is performed under the hood for each site when calling `shoreline_date()` which performs the shoreline dating procedure.
 
-## Example of shoreline dating a site
+## Shoreline dating a site
 
 Below is a basic example outlining how to date a single site by manually specifying the site elevation. The default settings are used for the dating procedure and for plotting the resulting shoreline date.
 
@@ -103,7 +103,7 @@ target_date
 
 The first column of a data frame beyond the geometry of the spatial objects will be taken to represent site names. If no such column exist, the sites are simply numbered as they are passed to `shoreline_date()`.
 
-## Dating multiple sites
+## Shoreline dating multiple sites
 
 It is also possible to date multiple sites at once. 
 ```{r multiple_dates}

@@ -31,7 +31,8 @@
 #' @param normalise Logical value specifying whether the shoreline date should
 #'   be normalised to sum to unity. Defaults to TRUE.
 #' @param sparse Logical value specifying if only site name and shoreline date
-#'   should be returned. Defaults to FALSE.
+#'   should be returned. Defaults to FALSE. Note that sparse dates are only
+#'   compatible with [sum_shoredates()].
 #' @param verbose Logical value indicating whether progress should be printed to
 #'   console. Defaults to FALSE.
 #'

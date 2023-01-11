@@ -14,10 +14,11 @@ flatten_list <- function(x){
   morelists <- sapply(x, function(xprime) {
     'list' %in% class(xprime) & !('gg' %in% class(xprime))
   })
+
   out <- c(x[!morelists], unlist(x[morelists], recursive = FALSE))
-  if(sum(morelists)){
+  if (sum(morelists)) {
     Recall(out)
-  }else{
+  } else{
     return(out)
   }
 }
@@ -27,7 +28,7 @@ flatten_list <- function(x){
 #' The code for this function is taken from an answer on SO given by user
 #'  Rosen Matev: https://stackoverflow.com/a/22500252/11376454
 #'  This allows for the placement of a multi-line text-label using `Inf`,
-#'  which can be problematic with `ggplot2::annotate`.
+#'  which can be problematic with `ggplot2::annotate()`.
 #'
 #'
 #' @param label Text label.
