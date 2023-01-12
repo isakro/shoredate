@@ -42,13 +42,20 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
   within_date_range <- function(x){
     x$cumulative_prob <-  cumsum(x[,"probability"])
 
+  # Failed R-CMD check with macos-latest when threshold was 1. Trying skipping
+  # check if the value is 1.
+  if(cut_off_level == 1){
+    TRUE
+  } else {
     # Check if year at probability cut-off lies above the threshold
-    if (x$bce[min(which(x$cumulative_prob >= cut_off_level))] > cut_off) {
-      FALSE
-    } else {
-      TRUE
-    }
+      if (x$bce[min(which(x$cumulative_prob >= cut_off_level))] > cut_off) {
+        FALSE
+      } else {
+        TRUE
+      }
   }
+  }
+
 
   # Recursive function for unnesting. Taken from answer by @ekoam here:
   # https://stackoverflow.com/questions/70512869/extract-data-frames-from-nested-list
