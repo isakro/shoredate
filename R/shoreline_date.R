@@ -19,6 +19,9 @@
 #'   calendar scale. Defaults to 10.
 #' @param isobase_direction A vector of numeric values defining the direction(s)
 #'   of the isobases. Defaults to 327.
+#' @param sum_isobase_directions Logical value indicating that if multiple
+#'  isobase directions are specified in `isobase_direction` the results should be
+#'  summed for each site using `sum_shoredates`. Defaults to FALSE.
 #' @param model_parameters Vector of two numeric values specifying the shape and
 #'   scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
 #'   shape and scale, respectively.
@@ -70,7 +73,7 @@
 #' @importFrom utils txtProgressBar
 #'
 #' @examples
-#' # Create example point using the required crs WGS84 UTM32N (EPSG: 32632)
+#' # Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing
@@ -83,6 +86,7 @@ shoreline_date <- function(sites,
                            elev_reso = 0.01,
                            cal_reso = 10,
                            isobase_direction = 327,
+                           sum_isobase_directions = FALSE,
                            model_parameters = c(0.286, 0.048),
                            elev_fun = "mean",
                            interpolated_curve = NA,
@@ -110,7 +114,7 @@ shoreline_date <- function(sites,
                   mustWork = TRUE), quiet = TRUE)
   }
 
-  # Make sure the geometries are represented as a sf data frame
+  # Make the geometries be represented as a sf data frame
   # (and not for example sfc)
   if (!inherits(sites, c("sf", "data.frame"))) {
     sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
@@ -327,6 +331,30 @@ shoreline_date <- function(sites,
       } else {
         date_isobases[[k]] <- dategrid
       }
+    }
+
+    if (sum_isobase_directions) {
+     sum_isobases <- sum_shoredates(date_isobases, normalise = normalise)
+
+     # Find the HDR for the sum
+     hdr <- shoredate_hdr(sum_isobases$sum$bce, sum_isobases$sum$probability,
+                          site_name, cal_reso, hdr_prob)
+
+     date_isobases <- list(list(
+       site_name = site_name,
+       site_elev = siteelev,
+       date = sum_isobases$sum,
+       hdr_start = hdr$start,
+       hdr_end = hdr$end,
+       hdr_prob = hdr_prob,
+       dispcurve = NA,
+       dispcurve_direction = unlist(lapply(date_isobases,
+                                 function(x) unique(x["dispcurve_direction"]))),
+       model_parameters = model_parameters,
+       gammadat = gammadat,
+       cal_reso = cal_reso
+     ))
+
     }
 
     shorelinedates[[i]] <- date_isobases

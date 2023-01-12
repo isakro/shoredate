@@ -33,7 +33,7 @@ shoredate_sumplot <- function(shoredates_sum){
     ggplot2::labs(y = "Meters above present sea-level",
                   x = "Shoreline date (BCE/CE)") +
     ggplot2::labs(x = "BCE/CE", y = "Summed probability",
-                  subtitle = paste("Number of sites:",
+                  subtitle = paste("Summed dates = ",
                                       shoredates_sum$dates_n)) +
     ggplot2::theme_bw()
 }

@@ -6,9 +6,9 @@
 #' @param shoreline_dates Object of class `shoreline_date`.
 #' @param cut_off Calender year specifying where dates should be cut off.
 #'  Defaults to 2500 BCE.
-#' @param cut_off_level Probability for the cut-off. Defaults to 0.5, removing
-#' dates where more than 50% of the probability mass falls after the cut-off.
-#' Set this to 1 to retain all dates.
+#' @param cut_off_level Numerical value between 0 and 1 indicating the
+#'  probability mass that has to faller after the cut-off for a date to be
+#'  excluded. Defaults to 1, retaining all dates.
 #' @param normalise Logical value indicating whether the probability sum of the
 #'  dates should be normalised to sum to unity. Defaults to TRUE.
 #'
@@ -32,10 +32,10 @@
 #'
 #' sum_shoredates(target_dates)
 sum_shoredates <- function(shoreline_dates, cut_off = -2500,
-                           cut_off_level = 0.5, normalise = TRUE){
+                           cut_off_level = 1, normalise = TRUE){
 
-  if (!inherits(shoreline_dates, "shoreline_date")) {
-    stop("Dates to be summarised must be of class shoreline_date")
+  if(cut_off_level < 0 | cut_off_level > 1){
+    stop("Probability level for cut-off should be a value between 0 and 1.")
   }
 
   # Define function to check if date falls before cut-off
@@ -43,7 +43,7 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
     x$cumulative_prob <-  cumsum(x[,"probability"])
 
     # Check if year at probability cut-off lies above the threshold
-    if (x$bce[min(which(x$cumulative_prob > cut_off_level))] > cut_off) {
+    if (x$bce[min(which(x$cumulative_prob >= cut_off_level))] > cut_off) {
       FALSE
     } else {
       TRUE

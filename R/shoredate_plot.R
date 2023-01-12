@@ -120,6 +120,10 @@ shoredate_plot <- function(shorelinedates,
 
       paramval <- as.numeric(nshoredate$model_parameters)
       dirval <- nshoredate$dispcurve_direction
+      if(length(dirval) > 1){
+        dirval <- paste(dirval, collapse = ", ")
+      }
+
       if (site_name & parameters & isobase_direction) {
         plt <- plt +
           ggplot2::labs(title = nshoredate$site_name,
@@ -158,6 +162,7 @@ shoredate_plot <- function(shorelinedates,
       }
 
       if (displacement_curve) {
+        if(!all(is.na(nshoredate$dispcurve))){
         plt <- plt +
           ggplot2::theme(legend.position = "None") +
           ggplot2::geom_ribbon(data = nshoredate$dispcurve,
@@ -173,10 +178,13 @@ shoredate_plot <- function(shorelinedates,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$lowerelev),
                              colour = dispcol, na.rm = TRUE)
+        }
       }
 
       if (elevation_distribution) {
-
+        # If a sum of multiple isobase directions, elevation_distribution can
+        # not be plotted.
+        if(!all(is.na(nshoredate$dispcurve))){
         # For plotting purposes to close the geom_polygon on the y-axis
         gammadatg <- rbind(c(0, 0, 0), nshoredate$gammadat)
 
@@ -198,6 +206,7 @@ shoredate_plot <- function(shorelinedates,
                                             ggplot2::aes(x = .data$x,
                                         y = .data$y), col = sitedistcol,
                                  fill = sitedistcol, alpha = 0.6)
+        }
       }
 
       if (hdr_label & highest_density_region) {

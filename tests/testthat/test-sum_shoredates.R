@@ -28,6 +28,7 @@ test_that("summing sparse dates with multiple isobase directions", {
 
 test_that("date with more than 50% prob mass above 2500 BCE is excluded", {
   target_dates <- shoreline_date(target_points, elevation = c(19, 62))
-  target_sum <- sum_shoredates(target_dates)
+  target_sum <- sum_shoredates(target_dates, cut_off_level = 0.5)
   expect_equal(target_sum$dates_n, 1)
 })
+

@@ -11,6 +11,7 @@ shoreline_date(
   elev_reso = 0.01,
   cal_reso = 10,
   isobase_direction = 327,
+  sum_isobase_directions = FALSE,
   model_parameters = c(0.286, 0.048),
   elev_fun = "mean",
   interpolated_curve = NA,
@@ -41,6 +42,10 @@ calendar scale. Defaults to 10.}
 
 \item{isobase_direction}{A vector of numeric values defining the direction(s)
 of the isobases. Defaults to 327.}
+
+\item{sum_isobase_directions}{Logical value indicating that if multiple
+isobase directions are specified in \code{isobase_direction} the results should be
+summed for each site using \code{sum_shoredates}. Defaults to FALSE.}
 
 \item{model_parameters}{Vector of two numeric values specifying the shape and
 scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
@@ -100,7 +105,7 @@ elevation, their likely elevation above sea-level when in use and the
 trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
 }
 \examples{
-# Create example point using the required crs WGS84 UTM32N (EPSG: 32632)
+# Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Date target point, manually specifying the elevation instead of providing

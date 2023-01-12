@@ -7,7 +7,7 @@
 sum_shoredates(
   shoreline_dates,
   cut_off = -2500,
-  cut_off_level = 0.5,
+  cut_off_level = 1,
   normalise = TRUE
 )
 }
@@ -17,9 +17,9 @@ sum_shoredates(
 \item{cut_off}{Calender year specifying where dates should be cut off.
 Defaults to 2500 BCE.}
 
-\item{cut_off_level}{Probability for the cut-off. Defaults to 0.5, removing
-dates where more than 50\% of the probability mass falls after the cut-off.
-Set this to 1 to retain all dates.}
+\item{cut_off_level}{Numerical value between 0 and 1 indicating the
+probability mass that has to faller after the cut-off for a date to be
+excluded. Defaults to 1, retaining all dates.}
 
 \item{normalise}{Logical value indicating whether the probability sum of the
 dates should be normalised to sum to unity. Defaults to TRUE.}
