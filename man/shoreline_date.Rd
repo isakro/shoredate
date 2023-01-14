@@ -7,7 +7,6 @@
 shoreline_date(
   sites,
   elevation = NA,
-  elev_raster = NA,
   elev_reso = 0.01,
   cal_reso = 10,
   isobase_direction = 327,
@@ -27,11 +26,9 @@ are to be interpolated, objects of class \code{sf} representing the sites to be
 dated. In the case of a spatial geometry, the first column is taken as
 site name.}
 
-\item{elevation}{Vector of numeric elevation values to inform shoreline dates
-unless an elevation raster is provided.}
-
-\item{elev_raster}{Elevation raster of class \code{SpatRaster} from the package
-\code{terra} to be input if the elevation values are not provided manually.}
+\item{elevation}{Vector of numeric elevation values for each site or a
+an elevation raster of class \code{SpatRaster} from the package
+\code{terra} from where the elevation values are to be derived.}
 
 \item{elev_reso}{Numeric value specifying the resolution with which to step
 through the gamma distribution representing the distance between site and

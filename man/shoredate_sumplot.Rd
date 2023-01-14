@@ -4,10 +4,13 @@
 \alias{shoredate_sumplot}
 \title{Plot the probability sum of multiple shoreline dates}
 \usage{
-shoredate_sumplot(shoredates_sum)
+shoredate_sumplot(shoredates_sum, sample_size = TRUE)
 }
 \arguments{
 \item{shoredates_sum}{Object of class \code{shoredates_sum}.}
+
+\item{sample_size}{Logical indicating whether or not to display the number of
+summed dates on the plot. Defaults to TRUE.}
 }
 \value{
 A line plot showing the provided probability sum and number of dates.

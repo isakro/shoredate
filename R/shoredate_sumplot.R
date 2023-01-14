@@ -4,6 +4,8 @@
 #' resulting from running `sum_shoredates()`.
 #'
 #' @param shoredates_sum Object of class `shoredates_sum`.
+#' @param sample_size Logical indicating whether or not to display the number of
+#'  summed dates on the plot. Defaults to TRUE.
 #'
 #' @return A line plot showing the provided probability sum and number of dates.
 #' @export
@@ -22,18 +24,21 @@
 #' target_sum <- sum_shoredates(target_dates)
 #'
 #' shoredate_sumplot(target_sum)
-shoredate_sumplot <- function(shoredates_sum){
+shoredate_sumplot <- function(shoredates_sum, sample_size = TRUE){
 
   if (!inherits(shoredates_sum, "shoredates_sum")) {
     stop("Sum to be plotted must be of class shoredates_sum, as returned from sum_shoredates()")
   }
 
-  ggplot2::ggplot(shoredates_sum$sum) +
+  plt <- ggplot2::ggplot(shoredates_sum$sum) +
     ggplot2::geom_line(ggplot2::aes(x = .data$bce, y = .data$probability)) +
-    ggplot2::labs(y = "Meters above present sea-level",
-                  x = "Shoreline date (BCE/CE)") +
-    ggplot2::labs(x = "BCE/CE", y = "Summed probability",
-                  subtitle = paste("Summed dates = ",
-                                      shoredates_sum$dates_n)) +
+    ggplot2::labs(x = "BCE/CE", y = "Summed probability") +
     ggplot2::theme_bw()
+
+  if (sample_size) {
+    plt <- plt + ggplot2::labs(subtitle = paste("Summed dates = ",
+                                         shoredates_sum$dates_n))
+  }
+
+  plt
 }

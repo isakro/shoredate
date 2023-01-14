@@ -96,6 +96,12 @@ test_that("returns only isobase directions, when specified", {
   vdiffr::expect_doppelganger("plot with isobase directions", p)
 })
 
+test_that("returns site name, model parameteres and isobase directions, when specified", {
+  p <- shoredate_plot(target_date, site_name = TRUE,
+                      parameters = TRUE, isobase_direction = TRUE)
+  vdiffr::expect_doppelganger("plot with all elements of title", p)
+})
+
 test_that("returns expected multiplot when multiple dates are passed", {
   target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
                               sf::st_point(c(572985, 6563115)))

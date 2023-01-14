@@ -15,3 +15,18 @@
       95% HDR:
       6660 BCE-3180 BCE
 
+# summing multiple isobase directions works
+
+    Code
+      shoreline_date(site = target_point, elevation = 60, isobase_direction = c(327,
+        338), sum_isobase_directions = TRUE)
+    Output
+      ===============
+      Site:  1
+      Elevation:  60 
+      
+      Sum of isobase directions:  327 338 
+      
+      95% HDR:
+      7010 BCE-4880 BCE
+

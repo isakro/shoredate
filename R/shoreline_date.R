@@ -8,10 +8,9 @@
 #'   are to be interpolated, objects of class `sf` representing the sites to be
 #'   dated. In the case of a spatial geometry, the first column is taken as
 #'   site name.
-#' @param elevation Vector of numeric elevation values to inform shoreline dates
-#'   unless an elevation raster is provided.
-#' @param elev_raster Elevation raster of class `SpatRaster` from the package
-#'  `terra` to be input if the elevation values are not provided manually.
+#' @param elevation Vector of numeric elevation values for each site or a
+#'  an elevation raster of class `SpatRaster` from the package
+#'  `terra` from where the elevation values are to be derived.
 #' @param elev_reso Numeric value specifying the resolution with which to step
 #'  through the gamma distribution representing the distance between site and
 #'  shoreline. Defaults to 0.01m.
@@ -82,7 +81,6 @@
 #' shoreline_date(sites = target_point, elevation = 80, cal_reso = 80)
 shoreline_date <- function(sites,
                            elevation = NA,
-                           elev_raster = NA,
                            elev_reso = 0.01,
                            cal_reso = 10,
                            isobase_direction = 327,
@@ -95,9 +93,20 @@ shoreline_date <- function(sites,
                            sparse = FALSE,
                            verbose = FALSE){
 
-  if (any(is.na(elevation)) &
-      !(inherits(elev_raster, c("raster","SpatRaster")))){
-    stop("A numeric value specifying the site elevation or an elevation raster must be provided.")
+  # Make the geometries be represented as a sf data frame
+  # (and not for example sfc)
+  if (!inherits(sites, c("sf", "data.frame"))) {
+    sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
+  }
+
+  if (!(is.numeric(elevation) |
+      (inherits(elevation, c("raster","SpatRaster"))))){
+    stop("Numeric values specifying the site elevations or an elevation raster must be provided.")
+  }
+
+  if(is.numeric(elevation) & length(elevation) != nrow(sites)){
+    stop(paste("Specify one elevation value per site.", length(elevation),
+          "elevation values and", nrow(sites), "sites were provided."))
   }
 
   bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to match
@@ -112,12 +121,6 @@ shoreline_date <- function(sites,
       system.file("extdata/isobases.gpkg",
                   package = "shoredate",
                   mustWork = TRUE), quiet = TRUE)
-  }
-
-  # Make the geometries be represented as a sf data frame
-  # (and not for example sfc)
-  if (!inherits(sites, c("sf", "data.frame"))) {
-    sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
   }
 
   # List to hold dates
@@ -150,14 +153,13 @@ shoreline_date <- function(sites,
       sitecurve <- do.call(rbind.data.frame, sitecurve)
     }
 
-    if (!(inherits(elev_raster, c("raster","SpatRaster")))) {
-      if (any(is.na(elevation))) {
-        return(NA)
-      } else {
+    if (!inherits(elevation, c("raster", "SpatRaster"))) {
+      # if (any(is.na(elevation))) {
+      #   return(NA)
+      # } else {
         siteelev <- elevation[i]
-      }
     } else {
-      siteelev <- terra::extract(elev_raster,
+      siteelev <- terra::extract(elevation,
                                  terra::vect(sites[i,]), fun = elev_fun)[,-1]
     }
 
@@ -166,7 +168,7 @@ shoreline_date <- function(sites,
 
     # Perform one shoreline date per isobase direction.
     date_isobases <- list()
-    for(k in 1:length(unique(sitecurve$direction))){
+    for (k in 1:length(unique(sitecurve$direction))) {
 
       temp_curve <- sitecurve[sitecurve$direction ==
                                 unique(sitecurve$direction)[k],]
@@ -227,7 +229,7 @@ shoreline_date <- function(sites,
                                char = "=")
         }
 
-        for(j in 1:nrow(gammadat)){
+        for (j in 1:nrow(gammadat)) {
 
           # Subtract offset
           adjusted_elev <- as.numeric(siteelev - gammadat$offset[j])
@@ -272,7 +274,7 @@ shoreline_date <- function(sites,
       # younger than 2500 BCE. Also return isobase direction if this is not the
       # default.
       if (!all(is.na(dategrid$probability))) {
-        if(min(dategrid$bce[dategrid$probability > 0]) > -2500){
+        if (min(dategrid$bce[dategrid$probability > 0]) > -2500) {
           dategrid$probability <- NA
 
           if (unique(temp_curve$direction) == 327) {

@@ -121,7 +121,10 @@ shoredate_plot <- function(shorelinedates,
       paramval <- as.numeric(nshoredate$model_parameters)
       dirval <- nshoredate$dispcurve_direction
       if(length(dirval) > 1){
-        dirval <- paste(dirval, collapse = ", ")
+        dirval <- paste("Sum of isobase directions:",
+                        paste(dirval, collapse = ", "))
+      } else {
+        dirval <- paste("Isobase direction =", dirval)
       }
 
       if (site_name & parameters & isobase_direction) {
@@ -129,7 +132,8 @@ shoredate_plot <- function(shorelinedates,
           ggplot2::labs(title = nshoredate$site_name,
             subtitle = bquote(alpha ~ "=" ~ .(paramval[1]) ~
                                     sigma ~ "=" ~ .(paramval[2]) ~
-                                    "Isobase direction =" ~ .(dirval)))
+                                .(dirval)))
+
       } else if (site_name & parameters) {
         plt <- plt +
           ggplot2::labs(title = nshoredate$site_name,
@@ -138,14 +142,14 @@ shoredate_plot <- function(shorelinedates,
       } else if (site_name & isobase_direction) {
         plt <- plt +
           ggplot2::labs(title = nshoredate$site_name,
-            subtitle = bquote("Isobase direction =" ~ .(dirval)))
+            subtitle = bquote(.(dirval)))
 
       } else if (parameters & isobase_direction) {
         plt <- plt +
           ggplot2::labs(subtitle =
                           bquote(alpha ~ "=" ~ .(paramval[1]) ~
                           sigma ~ "=" ~ .(paramval[2]) ~
-                          "Isobase direction =" ~ .(dirval)))
+                          .(dirval)))
 
       } else if (parameters){
         plt <- plt +
@@ -154,7 +158,7 @@ shoredate_plot <- function(shorelinedates,
 
       } else if (isobase_direction) {
         plt <- plt +
-          ggplot2::labs(subtitle = bquote("Isobase direction =" ~ .(dirval)))
+          ggplot2::labs(subtitle = bquote(.(dirval)))
 
       } else if (site_name) {
         plt <- plt +
@@ -188,7 +192,7 @@ shoredate_plot <- function(shorelinedates,
         # For plotting purposes to close the geom_polygon on the y-axis
         gammadatg <- rbind(c(0, 0, 0), nshoredate$gammadat)
 
-        # Code taken from oxcAAR to plot density to y-axis
+        # Code adapted from oxcAAR to plot density to y-axis
         x_extent <-
           ggplot2::ggplot_build(plt)$layout$panel_scales_x[[1]]$range$range
         gammadatg$probs_scaled <- gammadatg$probs / max(gammadatg$probs) *
