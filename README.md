@@ -19,10 +19,11 @@ Shoreline dating is based on the premise that coastal Stone Age sites in
 the region were located on or close to the shoreline when they were in
 use, and is implemented here based on an empirically derived estimate of
 the likely elevation of the sites above sea-level when they were
-occupied (Roalkvam 2023). However, do note that as there are limitations
-to the Roalkvam (2023) study, and as the method is dependent on
-regularities in human behaviour, the dates achieved with the package
-should be treated with care.
+occupied (Roalkvam 2023). However, do note that as the Roalkvam (2023)
+study provides a first formalisation of the method it is hefted with
+unexplored uncertainties, and as the method is dependent on regularities
+in human behaviour, the dates achieved with the package should be
+treated with care.
 
 ## Installation and loading
 
@@ -139,17 +140,14 @@ shoredate_plot(target_date)
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
-parameters shape
-(![\\alpha](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Calpha "\alpha"))
-= 0.286 and scale
-(![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma"))
-= 0.048 (see Roalkvam 2023 for more details). The red envelope is the
-shoreline displacement curve as interpolated to the site location.
-Transferring the probability from the gamma distribution to the calendar
-scale using the displacement curve gives the resulting shoreline date in
-grey which is underlined by the 95% highest density region (HDR) in
-black. By default, the shoreline date is normalised to sum to unity. The
-default resolution on the calendar scale is 10 years.
+parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 0.048 (see
+Roalkvam 2023 for more details). The red envelope is the shoreline
+displacement curve as interpolated to the site location. Transferring
+the probability from the gamma distribution to the calendar scale using
+the displacement curve gives the resulting shoreline date in grey which
+is underlined by the 95% highest density region (HDR) in black. By
+default, the shoreline date is normalised to sum to unity. The default
+resolution on the calendar scale is 10 years.
 
 Calling the date object, which has the custom class `shoreline_date`,
 prints the name of the site, its elevation and the HDR:
@@ -236,9 +234,9 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 <img src="man/figures/multiplot-1.png" style="display: block; margin: auto;" />
 
-The procedures outlined above have focused on the the default behaviours
-of the package. For further usage and a more detailed walk through see
-the vignette by calling `vignette("shoredate")`.
+The procedures outlined above have focused on the basic functions and
+default behaviours of the package. For further usage and a more detailed
+walk through, see the vignette by calling `vignette("shoredate")`.
 
 # References
 

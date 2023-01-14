@@ -224,13 +224,13 @@ This example demonstrates how to find the elevation of one or more sites by pass
 target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
 # Retrieve raster data
-elevation <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
+elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
 
 # Make the retrieved raster a SpatRaster and re-project it to the correct coordinate system
-elevation <- terra::project(terra::rast(elevation), "epsg:32632")
+elev_raster <- terra::project(terra::rast(elev_raster), "epsg:32632")
 
 # Plot the raster and target point for inspection
-terra::plot(elevation)
+terra::plot(elev_raster)
 plot(target_point, add = TRUE)
 ```
 
@@ -240,7 +240,7 @@ When a `SpatRaster` has been loaded into the R session this can be passed to `sh
 
 
 ```r
-raster_date <- shoreline_date(target_point, elevation = elevation)
+raster_date <- shoreline_date(target_point, elevation = elev_raster)
 
 # Print to console
 raster_date
@@ -256,9 +256,9 @@ raster_date
 ## 5730 BCE-5070 BCE
 ```
 
-# Summed probability distribution (SPD) of shoreline dates
+# Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema ans Bevan 2021). Note that as this procedure involves collapsing the frequency of dates with their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Crema 2022 for ways to approach this issue).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates with their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Crema 2022 for ways to approach this issue).
 
 
 ```r
@@ -275,26 +275,38 @@ shoredate_sumplot(summed_dates)
 
 <img src="shore-sum_plot-1.png" alt="plot of chunk sum_plot" style="display: block; margin: auto;" />
 
-# Direction of uplift gradient
-The precise direction of the uplift gradient is specified by the isobases that run perpendicular to this gradient. When interpolating the displacement curve used for dating a site, the direction of these isobases defaults to 327$^\circ$, following Romundset et al. (2018:180, fig.1). However, some authors operate with different isobase directions, with Sørensen et al. (2014:fig.2.2.3) using 338$^\circ$. Furthermore, the direction of the uplift gradient might have varied throughout the Holocene (Sørensen et al. 2014:42--44). While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline date using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
+# Direction of shoreline gradient
+The direction of the shoreline gradient is specified by the isobases that run perpendicular to this gradient. When interpolating the displacement curve used for dating a site, the direction of these isobases defaults to 327$^\circ$, following Romundset et al. (2018:180, fig.1). However, some authors operate with different isobase directions, with Sørensen et al. (2014:fig.2.2.3) using 338$^\circ$. Furthermore, the direction of the uplift gradient might have varied throughout the Holocene (Sørensen et al. 2014:42--44).
+
+## Specifying different isobase directions
+
+While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline date using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
 
 
 ```r
 # Using the same target point and elevation as above, but specifying two different directions
 # for the isobases when dating
-iso_date <- shoreline_date(site = target_point, elevevation = elevation, isobase_direction = c(325, 338))
-```
+iso_date <- shoreline_date(site = target_point, elevation = elev_raster, isobase_direction = c(325, 338))
 
-```
-## Error in shoreline_date(site = target_point, elevevation = elevation, : unused argument (elevevation = elevation)
-```
-
-```r
 iso_date
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'iso_date' not found
+## ===============
+## Site:  1
+## Elevation:  58.51383 
+## 
+## Isobase direction:  325 
+## 
+## 95% HDR:
+## 8610 BCE-6900 BCE
+## 5710 BCE-5070 BCE
+## 
+## Isobase direction:  338 
+## 
+## 95% HDR:
+## 8560 BCE-6900 BCE
+## 5810 BCE-5070 BCE
 ```
 
 In the call to plot it can then be specified that the direction of the isobases is printed with each date. Note that it is not possible use `multiplot` when having used multiple isobase directions when dating the sites. The following thus also shows the default behaviour when plotting multiple dates at once and not setting `multiplot = TRUE`.
@@ -304,15 +316,14 @@ In the call to plot it can then be specified that the direction of the isobases 
 shoredate_plot(iso_date, isobase_direction = TRUE)
 ```
 
-```
-## Error in shoredate_plot(iso_date, isobase_direction = TRUE): object 'iso_date' not found
-```
+<img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" />
+## Sum the probability of dates across isobase directions
 
 As an alternative to keeping the two dates separate, the parameter `sum_isobase_directions` can be set to `TRUE` when calling `shoreline_date()` to sum the probability of the dates. Again, by default this is normalised to sum to unity.
 
 
 ```r
-sum_iso_date <- shoreline_date(site = target_point, elevation = elevation,
+sum_iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
                                isobase_direction = c(325, 338), sum_isobase_directions = TRUE)
 
 sum_iso_date
@@ -330,7 +341,7 @@ sum_iso_date
 ## 5760 BCE-5060 BCE
 ```
 
-This can then be passed to `shoredate_plot()`. Note that the interpolated displacement curves and the gamma distribution for the elevation of the site can not be included.
+This can then be passed to `shoredate_plot()`. Note that the interpolated displacement curves and the gamma distribution for the elevation of the site above sea-level is not included in the plot when summing the probability of dates across isobase directions.
 
 
 ```r

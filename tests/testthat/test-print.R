@@ -1,4 +1,9 @@
+# Set up data to be used with tests
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+
+target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
+                            sf::st_point(c(572985, 6563115)))
+target_points <- sf::st_set_crs(target_points, 32632)
 
 test_that("A NA date is printed correctly", {
   target_date <- suppressWarnings(shoreline_date(site = target_point,
@@ -41,9 +46,6 @@ Elevation:  25
 })
 
 test_that("Dates that extend into CE with multiple isobase directions are printed correctly", {
-  target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
-                              sf::st_point(c(572985, 6563115)))
-  target_points <- sf::st_set_crs(target_points, 32632)
   target_dates <- shoreline_date(site = target_points, elevation = c(25, 60),
                                  isobase_direction = c(325, 338))
   expect_equal(print(target_dates),
@@ -97,4 +99,28 @@ Sum of isobase directions:  327 338
 
 95% HDR:
 3620 BCE-0 CE"))
+})
+
+test_that("multiple site dates each consisting of summed isobase directions is printed correctly", {
+  target_dates <- shoreline_date(sites = target_points, elevation = c(55, 60),
+                                isobase_direction = c(327, 338),
+                                sum_isobase_directions = TRUE)
+  expect_equal(print(target_dates),
+               cat(
+                 "===============
+Site:  1
+Elevation:  55
+
+Sum of isobase directions:  327 338
+
+95% HDR:
+7890 BCE-4540 BCE
+===============
+Site:  2
+Elevation:  60
+
+Sum of isobase directions:  327 338
+
+95% HDR:
+7600 BCE-4980 BCE"))
 })

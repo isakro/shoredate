@@ -30,3 +30,15 @@
       95% HDR:
       7010 BCE-4880 BCE
 
+# finding site elevation from a raster works
+
+    Code
+      shoreline_date(target_point, elevation = elev_raster)
+    Output
+      ===============
+      Site:  1
+      Elevation:  59.96235 
+      
+      95% HDR:
+      7010 BCE-4880 BCE
+
