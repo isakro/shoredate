@@ -1,4 +1,4 @@
-#' Plot the probability sum of multiple shoreline dates
+#' Plot the summed probability distribution of multiple shoreline dates
 #'
 #' Function to plot the sum of the probabilities of multiple shoreline dates as
 #' resulting from running `sum_shoredates()`.
@@ -7,7 +7,7 @@
 #' @param sample_size Logical indicating whether or not to display the number of
 #'  summed dates on the plot. Defaults to TRUE.
 #'
-#' @return A line plot showing the provided probability sum and number of dates.
+#' @return A line plot showing the provided summed probability distribution.
 #' @export
 #'
 #' @import ggplot2
