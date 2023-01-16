@@ -2,7 +2,7 @@
 % Please edit documentation in R/shoredate_sumplot.R
 \name{shoredate_sumplot}
 \alias{shoredate_sumplot}
-\title{Plot the probability sum of multiple shoreline dates}
+\title{Plot the summed probability distribution of multiple shoreline dates}
 \usage{
 shoredate_sumplot(shoredates_sum, sample_size = TRUE)
 }
@@ -13,7 +13,7 @@ shoredate_sumplot(shoredates_sum, sample_size = TRUE)
 summed dates on the plot. Defaults to TRUE.}
 }
 \value{
-A line plot showing the provided probability sum and number of dates.
+A line plot showing the provided summed probability distribution.
 }
 \description{
 Function to plot the sum of the probabilities of multiple shoreline dates as

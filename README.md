@@ -247,7 +247,7 @@ Publications* 411(1):9–25. DOI:
 
 Romundset, A. 2018. Postglacial shoreline displacement in the
 Tvedestrand–Arendal area. In *The Stone Age Coastal Settlement in
-Aust-Agder, Southeast Norway*, edited by Gaute, Reitan and Lars
+Aust-Agder, Southeast Norway*, edited by Gaute Reitan and Lars
 Sundström. Cappelen Damm Akademisk, Oslo, pp. 463–478. DOI:
 [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
@@ -281,8 +281,8 @@ pp. 36–47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
 # Contributing
 
-Contributions are all very welcome. Instructions for contributing can be
-found in the [Guide to Contributing](CONTRIBUTING.md). Please note that
-this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
-to abide by its terms.
+Contributions and suggestions for improvement are all very welcome.
+Instructions for contributing can be found in the [Guide to
+Contributing](CONTRIBUTING.md). Please note that this project is
+released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By
+participating in this project you agree to abide by its terms.

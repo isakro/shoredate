@@ -100,22 +100,22 @@ shoreline_date <- function(sites,
   }
 
   if (!(is.numeric(elevation) |
-      (inherits(elevation, c("raster","SpatRaster"))))){
+        (inherits(elevation, c("raster","SpatRaster"))))){
     stop("Numeric values specifying the site elevations or an elevation raster must be provided.")
   }
 
   if(is.numeric(elevation) & length(elevation) != nrow(sites)){
     stop(paste("Specify one elevation value per site.", length(elevation),
-          "elevation values and", nrow(sites), "sites were provided."))
+               "elevation values and", nrow(sites), "sites were provided."))
   }
 
   bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to match
-                                           # displacement data
+  # displacement data
 
   # If isobase directions other than the default is provided, create these
   if (all(is.na(interpolated_curve)) & any(isobase_direction != 327)) {
-      isobases <- create_isobases(isobase_direction)
-  # If the default is used, load the precompiled isobases
+    isobases <- create_isobases(isobase_direction)
+    # If the default is used, load the precompiled isobases
   } else{
     isobases <- sf::st_read(
       system.file("extdata/isobases.gpkg",
@@ -128,7 +128,7 @@ shoreline_date <- function(sites,
   for(i in 1:nrow(sites)){
 
     if (verbose) {
-    print(paste("Site", i, "of", nrow(sites)))
+      print(paste("Site", i, "of", nrow(sites)))
     }
 
     # If interpolated curve is not provided and multiple isobase directions have
@@ -157,7 +157,7 @@ shoreline_date <- function(sites,
       # if (any(is.na(elevation))) {
       #   return(NA)
       # } else {
-        siteelev <- elevation[i]
+      siteelev <- elevation[i]
     } else {
       siteelev <- terra::extract(elevation,
                                  terra::vect(sites[i,]), fun = elev_fun)[,-1]
@@ -180,53 +180,53 @@ shoreline_date <- function(sites,
 
       # Assign site name (to be returned/used in errors below)
       if (ncol(sites) == 1) {
-          site_name <- as.character(i)
-       } else {
-          site_name <- as.character(st_drop_geometry(sites)[i,1])
-       }
+        site_name <- as.character(i)
+      } else {
+        site_name <- as.character(st_drop_geometry(sites)[i,1])
+      }
 
 
       # Find oldest possible date
       mdate <- temp_curve[which(temp_curve[,"lowerelev"] ==
-                            max(temp_curve[,"lowerelev"], na.rm = TRUE)), "bce"]
+                                  max(temp_curve[,"lowerelev"], na.rm = TRUE)), "bce"]
 
       # Check that site date is not above this limit
       msdate <- stats::approx(temp_curve[,"lowerelev"],
-                    bce, xout = siteelev, method = "constant")[['y']]
+                              bce, xout = siteelev, method = "constant")[['y']]
 
       # If it is msdate will be NA and the date is returned as NA with a
       # warning. Do not print isobase direction if this is
       # the default.
       if (is.na(msdate) & unique(temp_curve$direction) == 327) {
         warning(paste0("The elevation of site ", site_name,
-                    " implies an earliest possible date older than ", mdate,
-                    " BCE and is out of bounds. The date is returned as NA."))
+                       " implies an earliest possible date older than ", mdate,
+                       " BCE and is out of bounds. The date is returned as NA."))
         dategrid$probability <- NA
         gammadat <- NA
       } else if (is.na(msdate)) {
         warning(paste0("The elevation of site ", site_name,
-                      " with an isobase direction of ",
-                      unique(temp_curve$direction),
-                      " implies an earliest possible date older than ", mdate,
-                      " BCE and is out of bounds. The date is returned as NA."))
+                       " with an isobase direction of ",
+                       unique(temp_curve$direction),
+                       " implies an earliest possible date older than ", mdate,
+                       " BCE and is out of bounds. The date is returned as NA."))
         dategrid$probability <- NA
         gammadat <- NA
-        } else {
+      } else {
 
         # Set up data frame and assign probability to the offset increments
         gammadat <- data.frame(
           offset = inc,
           px = stats::pgamma(inc, shape = model_parameters[1],
-                      rate =  model_parameters[2]))
+                             rate =  model_parameters[2]))
         gammadat$probs <- c(diff(gammadat$px), 0)
         gammdat <- gammadat[gammadat$px < 0.99999,]
 
         if (verbose) {
           print("Performing shoreline dating")
           pb <- utils::txtProgressBar(min = 0,
-                               max = nrow(gammadat),
-                               style = 3,
-                               char = "=")
+                                      max = nrow(gammadat),
+                                      style = 3,
+                                      char = "=")
         }
 
         for (j in 1:nrow(gammadat)) {
@@ -241,8 +241,8 @@ shoreline_date <- function(sites,
 
           # Find upper date
           upperd <- stats::approx(temp_curve[,"upperelev"], bce,
-                                 xout = adjusted_elev,
-                                 method = "constant")[['y']]
+                                  xout = adjusted_elev,
+                                  method = "constant")[['y']]
 
           # Find youngest and oldest date
           earliest <- min(c(lowerd, upperd))
@@ -266,7 +266,7 @@ shoreline_date <- function(sites,
           }
         }
         if (verbose) {
-        close(pb)
+          close(pb)
         }
       }
 
@@ -300,7 +300,7 @@ shoreline_date <- function(sites,
       if (!(all(is.na(dategrid$probability))) & !sparse) {
 
         hdr <- shoredate_hdr(dategrid$bce, dategrid$probability,
-                      site_name, cal_reso, hdr_prob)
+                             site_name, cal_reso, hdr_prob)
 
         date_isobases[[k]] <- list(
           site_name = site_name,
@@ -336,26 +336,26 @@ shoreline_date <- function(sites,
     }
 
     if (sum_isobase_directions) {
-     sum_isobases <- sum_shoredates(date_isobases, normalise = normalise)
+      sum_isobases <- sum_shoredates(date_isobases, normalise = normalise)
 
-     # Find the HDR for the sum
-     hdr <- shoredate_hdr(sum_isobases$sum$bce, sum_isobases$sum$probability,
-                          site_name, cal_reso, hdr_prob)
+      # Find the HDR for the sum
+      hdr <- shoredate_hdr(sum_isobases$sum$bce, sum_isobases$sum$probability,
+                           site_name, cal_reso, hdr_prob)
 
-     date_isobases <- list(list(
-       site_name = site_name,
-       site_elev = siteelev,
-       date = sum_isobases$sum,
-       hdr_start = hdr$start,
-       hdr_end = hdr$end,
-       hdr_prob = hdr_prob,
-       dispcurve = NA,
-       dispcurve_direction = unlist(lapply(date_isobases,
-                                 function(x) unique(x["dispcurve_direction"]))),
-       model_parameters = model_parameters,
-       gammadat = gammadat,
-       cal_reso = cal_reso
-     ))
+      date_isobases <- list(list(
+        site_name = site_name,
+        site_elev = siteelev,
+        date = sum_isobases$sum,
+        hdr_start = hdr$start,
+        hdr_end = hdr$end,
+        hdr_prob = hdr_prob,
+        dispcurve = NA,
+        dispcurve_direction = unlist(lapply(date_isobases,
+                                            function(x) unique(x["dispcurve_direction"]))),
+        model_parameters = model_parameters,
+        gammadat = gammadat,
+        cal_reso = cal_reso
+      ))
 
     }
 

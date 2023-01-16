@@ -258,7 +258,7 @@ raster_date
 
 # Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates with their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Crema 2022 for ways to approach this issue).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates with their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for ways to approach this issue in the context of radiocarbon dates).
 
 
 ```r
@@ -352,6 +352,8 @@ shoredate_plot(sum_iso_date, isobase_direction = TRUE)
 
 # References
 
+Bronk Ramsey, C. Methods for Summarizing Radiocarbon Datasets. *Radiocarbon* 59(6):1809--1833. DOI: [10.1017/RDC.2017.108](https://doi.org/10.1017/RDC.2017.108)
+
 Brøgger, W.C. 1905 *Strandliniens beliggenhed under stenalderen i det sydøstlige Norge*. Geological Survey of Norway, Kristiania. URI: https://hdl.handle.net/11250/2675184
 
 Crema, E. and Bevan, A. 2021 Inference from Large Sets of Radiocarbon Dates: Software and Methods. *Radiocarbon* 61(1):23--39. DOI: [10.1017/RDC.2020.95](https://doi.org/10.1017/RDC.2020.95)
@@ -360,7 +362,7 @@ Crema, E. 2022 Statistical Inference of Prehistoric Demography from Frequency Di
 
 Glørstad, H. 2016 Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
 
-Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Gaute, Reitan and Lars Sundström. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
+Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Gaute Reitan and Lars Sundström. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
 Romundset, A. 2021 *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
 
