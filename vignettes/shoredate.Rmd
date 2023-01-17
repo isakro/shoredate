@@ -258,7 +258,7 @@ raster_date
 
 # Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates with their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for ways to approach this issue in the context of radiocarbon dates).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
 
 
 ```r
@@ -317,15 +317,24 @@ shoredate_plot(iso_date, isobase_direction = TRUE)
 ```
 
 <img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" />
+
 ## Sum the probability of dates across isobase directions
 
-As an alternative to keeping the two dates separate, the parameter `sum_isobase_directions` can be set to `TRUE` when calling `shoreline_date()` to sum the probability of the dates. Again, by default this is normalised to sum to unity.
+As an alternative to keeping the two shoreline dates of the site separate, the parameter `sum_isobase_directions` can be set to `TRUE` when calling `shoreline_date()` to sum the probability of the dates. Again, by default this is normalised to sum to unity.
 
 
 ```r
+target_point$name <- "Example site"
+
 sum_iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
                                isobase_direction = c(325, 338), sum_isobase_directions = TRUE)
+```
 
+```
+## Error in UseMethod("st_bbox"): no applicable method for 'st_bbox' applied to an object of class "list"
+```
+
+```r
 sum_iso_date
 ```
 
@@ -345,7 +354,7 @@ This can then be passed to `shoredate_plot()`. Note that the interpolated displa
 
 
 ```r
-shoredate_plot(sum_iso_date, isobase_direction = TRUE)
+shoredate_plot(sum_iso_date, site_name = TRUE, isobase_direction = TRUE)
 ```
 
 <img src="shore-plot_sum_isobases-1.png" alt="plot of chunk plot_sum_isobases" style="display: block; margin: auto;" />
