@@ -141,13 +141,14 @@ The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
 parameters $\alpha$ (shape) = 0.286 and $\sigma$ (scale) = 0.048 (see
-Roalkvam 2023 for more details). The red envelope is the shoreline
-displacement curve as interpolated to the site location. The probability
-from the gamma distribution is transferred to the calendar scale using
-the displacement curve which gives the resulting shoreline date in grey
-that is underlined by the 95% highest density region (HDR) in black. By
-default, the shoreline date is normalised to sum to unity. The default
-resolution on the calendar scale is 10 years.
+Roalkvam 2023 for more details). This starts from the elevation of the
+site. The red envelope is the shoreline displacement curve as
+interpolated to the site location. The probability from the gamma
+distribution is transferred to the calendar scale using the displacement
+curve. This gives the resulting shoreline date in grey, which is
+underlined by the 95% highest density region (HDR) in black. By default,
+the shoreline date is normalised to sum to unity. The default resolution
+on the calendar scale is 10 years.
 
 Calling the date object, which has the custom class `shoreline_date`,
 prints the name of the site, its elevation and the HDR:
@@ -284,5 +285,6 @@ pp. 36–47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 Contributions and suggestions for improvement are all very welcome.
 Instructions for contributing can be found in the [Guide to
 Contributing](CONTRIBUTING.md). Please note that this project is
-released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By
-participating in this project you agree to abide by its terms.
+released with a [Contributor Code of
+Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
+you agree to abide by its terms.
