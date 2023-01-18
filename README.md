@@ -140,7 +140,7 @@ shoredate_plot(target_date)
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
-parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 0.048 (see
+parameters shape, $\alpha$ = 0.286 and scale, $\sigma$ = 0.048 (see
 Roalkvam 2023 for more details). The red envelope is the shoreline
 displacement curve as interpolated to the site location. The probability
 from the gamma distribution is transferred to the calendar scale using

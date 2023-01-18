@@ -28,7 +28,7 @@
 #'
 #' target_dates <- shoreline_date(target_points,
 #'                                elevation = c(65, 70),
-#'                                cal_reso = 100)
+#'                                cal_reso = 150)
 #'
 #' sum_shoredates(target_dates)
 sum_shoredates <- function(shoreline_dates, cut_off = -2500,
