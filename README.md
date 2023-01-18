@@ -20,7 +20,7 @@ the region were located on or close to the shoreline when they were in
 use, and is implemented here based on an empirically derived estimate of
 the likely elevation of the sites above sea-level when they were
 occupied (Roalkvam 2023). However, do note that as the Roalkvam (2023)
-study provides a first formalisation of the method it is hefted with
+study provides a first formalisation of the method, it is hefted with
 unexplored uncertainties, and as the method is dependent on regularities
 in human behaviour, the dates achieved with the package should be
 treated with care.
@@ -57,7 +57,10 @@ coverage is indicated in the maps below. The shoreline isobases in the
 second figure represent contours along which the shoreline displacement
 has followed the same trajectory. These correspond to the displacement
 curves and place names in the third figure, which also indicates the
-temporal coverage of the package:
+temporal coverage of the package.
+
+Note that spatial data used with the package should be set to WGS 84 /
+UTM zone 32N (EPSG:32632).
 
 <img src="man/figures/coverage.png" width="100%" style="display: block; margin: auto;" />
 
@@ -94,9 +97,6 @@ displacement curve, the curves are interpolated to a site location using
 inverse distance weighting, where the default is to weight the distances
 by the square of the inverse distance between site and isobases.
 
-Note that spatial data used with the package should be set to WGS 84 /
-Zone 32N (EPSG:32632).
-
 ``` r
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
@@ -117,8 +117,8 @@ displacement_plot(target_curve)
 
 <img src="man/figures/interpolated_curve-1.png" style="display: block; margin: auto;" />
 
-This interpolation procedure is performed under the hood for each site
-when calling `shoreline_date()` which performs the shoreline dating
+This interpolation is performed under the hood for each site when
+calling `shoreline_date()`, which performs the shoreline dating
 procedure.
 
 ## Shoreline dating a site
@@ -142,10 +142,10 @@ elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
 parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 0.048 (see
 Roalkvam 2023 for more details). The red envelope is the shoreline
-displacement curve as interpolated to the site location. Transferring
-the probability from the gamma distribution to the calendar scale using
-the displacement curve gives the resulting shoreline date in grey which
-is underlined by the 95% highest density region (HDR) in black. By
+displacement curve as interpolated to the site location. The probability
+from the gamma distribution is transferred to the calendar scale using
+the displacement curve which gives the resulting shoreline date in grey
+that is underlined by the 95% highest density region (HDR) in black. By
 default, the shoreline date is normalised to sum to unity. The default
 resolution on the calendar scale is 10 years.
 
