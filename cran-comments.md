@@ -1,6 +1,8 @@
 ## Release summary
 
-This is the first submission of the package.
+Re-submission of the package after rejected first attempt. Handled notes
+pertaining to possible misspelling, possibly incorrect URIs and long run-time 
+for examples.
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 

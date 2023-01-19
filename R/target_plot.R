@@ -4,7 +4,7 @@
 #'  the shoreline isobases of the employed displacement curves. The basemap is a
 #'  simplified representation of the coastline within the study area. Calling
 #'  the function without providing a target displays the map with the isobases.
-#'  This can be combined with create_isobases() to visualise isobases with a
+#'  This can be combined with `create_isobases()` to visualise isobases with a
 #'  different direction than the default of 327.
 #'
 #' @param targets Objects of class `sf` representing the sites to be dated. The

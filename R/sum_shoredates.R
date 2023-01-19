@@ -26,9 +26,12 @@
 #'                             sf::st_point(c(538300, 6544250)))
 #' target_points <- sf::st_as_sf(target_points, crs = 32632)
 #'
+#' # Shoreline date, reducing resoltuion on elevation and calendar scales for
+#' # speed.
 #' target_dates <- shoreline_date(target_points,
 #'                                elevation = c(65, 70),
-#'                                cal_reso = 150)
+#'                                elev_reso = 1,
+#'                                cal_reso = 350)
 #'
 #' sum_shoredates(target_dates)
 sum_shoredates <- function(shoreline_dates, cut_off = -2500,

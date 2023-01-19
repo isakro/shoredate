@@ -81,10 +81,10 @@ Neolithic, c. 2500 BCE, which thus marks the upper limit for the
 applicability of the method. A date that has a later start date than
 this is therefore returned as NA with a warning. The temporal range is
 indicated by the dashed lines in the plot above that displays the
-shoreline displacement curves. Additionally, if a date extends beyond
-1950 CE (0 cal BP), thus indicating a site location below the
-present-day sea-level, this overshooting probability is cut off and the
-date is normalised to sum to unity.
+shoreline displacement curves. Additionally, if the probability of a
+date extends beyond 1950 CE (0 cal BP), thus indicating a site location
+below the present-day sea-level, this overshooting probability is cut
+off and the date is normalised to sum to unity.
 
 ## Interpolating shoreline displacement to a site location
 
@@ -284,7 +284,7 @@ pp. 36–47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
 Contributions and suggestions for improvement are all very welcome.
 Instructions for contributing can be found in the [Guide to
-Contributing](CONTRIBUTING.md). Please note that this project is
-released with a [Contributor Code of
-Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
-you agree to abide by its terms.
+Contributing](https://github.com/isakro/shoredate/blob/master/CONTRIBUTING.md).
+Please note that this project is released with a [Contributor Code of
+Conduct](https://github.com/isakro/shoredate/blob/master/.github/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
