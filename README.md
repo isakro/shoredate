@@ -94,8 +94,9 @@ displacement curves available from within the study area. Each of these
 is associated with a shoreline isobase, along which the trajectory of
 relative sea-level change has been the same. To find the local
 displacement curve, the curves are interpolated to a site location using
-inverse distance weighting, where the default is to weight the distances
-by the square of the inverse distance between site and isobases.
+inverse distance weighting, where the default is to weight the
+interpolation by the square of the inverse distance between site and
+isobases.
 
 ``` r
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
