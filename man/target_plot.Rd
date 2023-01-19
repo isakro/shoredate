@@ -27,7 +27,7 @@ Function to plot the centroids of one or more sites to be dated, relative to
 the shoreline isobases of the employed displacement curves. The basemap is a
 simplified representation of the coastline within the study area. Calling
 the function without providing a target displays the map with the isobases.
-This can be combined with create_isobases() to visualise isobases with a
+This can be combined with \code{create_isobases()} to visualise isobases with a
 different direction than the default of 327.
 }
 \examples{
