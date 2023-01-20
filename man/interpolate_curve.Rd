@@ -50,8 +50,8 @@ distance weighting.
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
 # Interpolate shoreline displacement curve to the target point location
-# setting the resolution on the calendar scale to 400 years for speed.
-target_curve <- interpolate_curve(target_point, cal_reso = 400)
+# setting the resolution on the calendar scale to 1000 years for speed.
+target_curve <- interpolate_curve(target_point, cal_reso = 1000)
 
 # Call to plot
 displacement_plot(target_curve)
