@@ -4,11 +4,20 @@
 \alias{displacement_plot}
 \title{Plot shoreline displacement curves}
 \usage{
-displacement_plot(interpolated_curve = NA, greyscale = FALSE)
+displacement_plot(
+  interpolated_curve = NA,
+  displacement_curves = c("Horten", "Porsgrunn", "Tvedestrand", "Arendal"),
+  greyscale = FALSE
+)
 }
 \arguments{
 \item{interpolated_curve}{List holding one or more interpolated shoreline
 displacement curves.}
+
+\item{displacement_curves}{Character vector specifying which geologically
+informed displacement curves that should be plotted. Accepted values are
+\code{c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")}. All are included by
+default.}
 
 \item{greyscale}{Logical value indicating whether the plot should include
 colours or not. Defaults to FALSE.}
@@ -22,18 +31,7 @@ Function for plotting shoreline displacement curves. Calling to plot without
 providing interpolated curves will display the four underlying curves.
 }
 \examples{
-# Plot displaying geologically derived displacement curves
-displacement_plot()
+# Plot displaying geologically derived displacement curve for Horten.
+displacement_plot(displacement_curves = "Horten")
 
-\dontrun{
-# Create example point to which a displacement curve interpolating
-# (using the required CRS, EPSG: 32632)
-target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
-
-# Interpolate shoreline displacement curve to the target point location
-target_curve <- interpolate_curve(target_point)
-
-# Call to plot
-displacement_plot()
-}
 }

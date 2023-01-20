@@ -5,6 +5,10 @@
 #'
 #' @param interpolated_curve List holding one or more interpolated shoreline
 #'  displacement curves.
+#'@param displacement_curves Character vector specifying which geologically
+#'  informed displacement curves that should be plotted. Accepted values are
+#'  `c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")`. All are included by
+#'  default.
 #' @param greyscale Logical value indicating whether the plot should include
 #'  colours or not. Defaults to FALSE.
 #'
@@ -15,21 +19,13 @@
 #' @import ggplot2
 #'
 #' @examples
-#' # Plot displaying geologically derived displacement curves
-#' displacement_plot()
+#' # Plot displaying geologically derived displacement curve for Horten.
+#' displacement_plot(displacement_curves = "Horten")
 #'
-#' \dontrun{
-#' # Create example point to which a displacement curve interpolating
-#' # (using the required CRS, EPSG: 32632)
-#' target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
-#'
-#' # Interpolate shoreline displacement curve to the target point location
-#' target_curve <- interpolate_curve(target_point)
-#'
-#' # Call to plot
-#' displacement_plot()
-#' }
-displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
+displacement_plot <- function(interpolated_curve = NA,
+                              displacement_curves = c("Horten", "Porsgrunn",
+                                                     "Tvedestrand", "Arendal"),
+                              greyscale = FALSE){
 
   # Load pre-compiled geological displacement curves
   dispdat <-
@@ -37,6 +33,8 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
       system.file("extdata/displacement_curves.rda",
                   package = "shoredate",
                   mustWork = TRUE)))
+
+  dispdat <- dispdat[dispdat$name %in% displacement_curves,]
 
   if (greyscale) {
     if (is.na(interpolated_curve)) {
@@ -104,8 +102,6 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                    legend.direction = "horizontal")
 
     if (any(is.na(interpolated_curve))) {
-      limit_scheme <- c("Horten", "Porsgrunn",
-                        "Tvedestrand", "Arendal")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
@@ -120,17 +116,14 @@ displacement_plot <- function(interpolated_curve = NA, greyscale = FALSE){
                                         col = .data$name,
                                         linetype = .data$name),
                                         na.rm = TRUE) +
-        ggplot2::scale_colour_manual(values = colour_scheme,
-                                     limits = limit_scheme) +
-        ggplot2::scale_linetype_manual(values = line_scheme,
-                                       limits = limit_scheme)
+        ggplot2::scale_colour_manual(values = colour_scheme) +
+        ggplot2::scale_linetype_manual(values = line_scheme)
 
     } else {
       intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
       intcurves$name <- "Interpolated curve"
 
-      limit_scheme <- c("Horten", "Porsgrunn",
-                        "Tvedestrand", "Arendal", "Interpolated curve")
+      limit_scheme <- c(unique(dispdat$name), "Interpolated curve")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,

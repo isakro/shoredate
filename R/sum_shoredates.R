@@ -30,8 +30,8 @@
 #' # speed.
 #' target_dates <- shoreline_date(target_points,
 #'                                elevation = c(65, 70),
-#'                                elev_reso = 1,
-#'                                cal_reso = 350)
+#'                                elev_reso = 10,
+#'                                cal_reso = 500)
 #'
 #' sum_shoredates(target_dates)
 sum_shoredates <- function(shoreline_dates, cut_off = -2500,

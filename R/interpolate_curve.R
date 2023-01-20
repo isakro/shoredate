@@ -36,7 +36,7 @@
 #'
 #' # Interpolate shoreline displacement curve to the target point location
 #' # setting the resolution on the calendar scale to 1000 years for speed.
-#' target_curve <- interpolate_curve(target_point, cal_reso = 1000)
+#' target_curve <- interpolate_curve(target_point, cal_reso = 2000)
 #'
 #' # Call to plot
 #' displacement_plot(target_curve)

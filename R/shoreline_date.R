@@ -77,11 +77,11 @@
 #'
 #' # Date target point, manually specifying the elevation instead of providing
 #' # an elevation raster and setting the resolution on the calendar scale to
-#' # 200 years and elevation scale to 0.1 for speed.
+#' # 200 years and elevation scale to 1 for speed.
 #' shoreline_date(sites = target_point,
 #'                elevation = 80,
-#'                elev_reso = 0.1,
-#'                cal_reso = 200)
+#'                elev_reso = 1,
+#'                cal_reso = 400)
 shoreline_date <- function(sites,
                            elevation = NA,
                            elev_reso = 0.01,

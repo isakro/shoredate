@@ -28,7 +28,7 @@ target_points <- sf::st_as_sf(target_points, crs = 32632)
 # speed.
 target_dates <- shoreline_date(target_points,
                                elevation = c(65, 70),
-                               elev_reso = 1,
+                               elev_reso = 10,
                                cal_reso = 750)
 
 target_sum <- sum_shoredates(target_dates)

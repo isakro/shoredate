@@ -22,8 +22,8 @@
 #' # Reduce date resolution with cal_reso and elevation_reso for speed.
 #' target_date <- shoreline_date(sites = target_point,
 #'                               elevation = 80,
-#'                               elev_reso = 0.1,
-#'                               cal_reso = 200)
+#'                               elev_reso = 1,
+#'                               cal_reso = 400)
 #'
 #' # `shoredate_hdr()` is already called under the hood with `shoreline_date()`,
 #' # and is printed when calling the `shoreline_date object`

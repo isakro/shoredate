@@ -28,8 +28,8 @@ target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 # Reduce date resolution with cal_reso and elevation_reso for speed.
 target_date <- shoreline_date(site = target_point,
                               elevation = 70,
-                              elev_reso = 0.1,
-                              cal_reso = 200)
+                              elev_reso = 1,
+                              cal_reso = 400)
 target_date
 
 }

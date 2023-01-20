@@ -34,10 +34,4 @@ different direction than the default of 327.
 # Display the background map and default isobases
 target_plot()
 
-# Create a example point set to the correct CRS
-target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-
-# Plot the example point within the geographical limit along with the default
-# isobases.
-target_plot(target_point)
 }
