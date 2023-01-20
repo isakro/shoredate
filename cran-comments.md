@@ -1,6 +1,6 @@
 ## Release summary
 
-Re-submission of the package after rejected first attempt. Handled notes
+Re-submission of the package after rejection on first attempt. Handled notes
 pertaining to possible misspelling, possibly incorrect URIs and long run-time 
 for examples.
 
