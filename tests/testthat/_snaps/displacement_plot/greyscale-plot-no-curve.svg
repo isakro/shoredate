@@ -71,21 +71,21 @@
 <text transform='translate(13.05,264.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='153.50px' lengthAdjust='spacingAndGlyphs'>Meters above present sea-level</text>
 <rect x='241.01' y='542.28' width='270.20' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='251.96' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='253.69' y1='556.40' x2='267.52' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 2.85,2.85,8.54,2.85; stroke-linecap: butt;' />
-<line x1='253.69' y1='556.40' x2='267.52' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 2.85,2.85,8.54,2.85; stroke-linecap: butt;' />
-<rect x='306.62' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='308.35' y1='556.40' x2='322.17' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
-<line x1='308.35' y1='556.40' x2='322.17' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
-<rect x='375.47' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='377.19' y1='556.40' x2='391.02' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;' />
-<line x1='377.19' y1='556.40' x2='391.02' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;' />
-<rect x='452.63' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='454.36' y1='556.40' x2='468.18' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 9.96,4.27; stroke-linecap: butt;' />
-<line x1='454.36' y1='556.40' x2='468.18' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 9.96,4.27; stroke-linecap: butt;' />
-<text x='274.72' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='26.42px' lengthAdjust='spacingAndGlyphs'>Horten</text>
-<text x='329.38' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='40.61px' lengthAdjust='spacingAndGlyphs'>Porsgrunn</text>
-<text x='398.23' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='48.92px' lengthAdjust='spacingAndGlyphs'>Tvedestrand</text>
-<text x='475.39' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='30.33px' lengthAdjust='spacingAndGlyphs'>Arendal</text>
+<line x1='253.69' y1='556.40' x2='267.52' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 9.96,4.27; stroke-linecap: butt;' />
+<line x1='253.69' y1='556.40' x2='267.52' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 9.96,4.27; stroke-linecap: butt;' />
+<rect x='310.54' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='312.27' y1='556.40' x2='326.09' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 2.85,2.85,8.54,2.85; stroke-linecap: butt;' />
+<line x1='312.27' y1='556.40' x2='326.09' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 2.85,2.85,8.54,2.85; stroke-linecap: butt;' />
+<rect x='365.19' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='366.92' y1='556.40' x2='380.74' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
+<line x1='366.92' y1='556.40' x2='380.74' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
+<rect x='434.04' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='435.77' y1='556.40' x2='449.59' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;' />
+<line x1='435.77' y1='556.40' x2='449.59' y2='556.40' style='stroke-width: 1.07; stroke-dasharray: 1.42,4.27; stroke-linecap: butt;' />
+<text x='274.72' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='30.33px' lengthAdjust='spacingAndGlyphs'>Arendal</text>
+<text x='333.30' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='26.42px' lengthAdjust='spacingAndGlyphs'>Horten</text>
+<text x='387.95' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='40.61px' lengthAdjust='spacingAndGlyphs'>Porsgrunn</text>
+<text x='456.80' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='48.92px' lengthAdjust='spacingAndGlyphs'>Tvedestrand</text>
 <text x='37.69' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='139.43px' lengthAdjust='spacingAndGlyphs'>greyscale plot, no curve</text>
 </g>
 </svg>
