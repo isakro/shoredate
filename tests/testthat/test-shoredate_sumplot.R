@@ -14,6 +14,7 @@ test_that("expected sumplot is produced", {
 })
 
 test_that("passing a shoreline_date object and not shoredates_sum throws error", {
+  skip_on_cran()
   err <- expect_error(shoredate_sumplot(target_dates))
   expect_equal(err$message, "Sum to be plotted must be of class shoredates_sum, as returned from sum_shoredates()")
 })

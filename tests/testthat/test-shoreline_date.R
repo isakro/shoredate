@@ -27,12 +27,14 @@ test_that("gives warning if the elevation of a site implies a date that is out o
 })
 
 test_that("undefined CRS throws error", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)))
   err <- expect_error(shoreline_date(site = target_point, elevation = 46))
   expect_equal(err$message, "Undefined coordinate reference system. This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632).")
 })
 
 test_that("wrong CRS throws error and that this is printed", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 4326)
   err <- expect_error(shoreline_date(site = target_point, elevation = 46))
   expect_equal(err$message, paste0("Target has coordinate reference system with EPSG ",

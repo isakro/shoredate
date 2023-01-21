@@ -61,6 +61,7 @@ target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 target_date <- shoreline_date(site = target_point, elevation = 70)
 
 test_that("returns expected plot when a single date is passed", {
+  skip_on_cran()
   p <- shoredate_plot(target_date)
   vdiffr::expect_doppelganger("plot with a single date", p)
 })

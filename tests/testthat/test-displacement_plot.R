@@ -1,4 +1,5 @@
 test_that("returns expected plot when no parameters are passed", {
+  skip_on_cran()
   p <- displacement_plot()
   vdiffr::expect_doppelganger("bare displacement plot", p)
 })

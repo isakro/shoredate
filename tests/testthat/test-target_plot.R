@@ -1,9 +1,11 @@
 test_that("returns expected plot no targets are passed", {
+  skip_on_cran()
   p <- target_plot()
   vdiffr::expect_doppelganger("bare study area plot", p)
 })
 
 test_that("returns expected plot when a target is passed", {
+  skip_on_cran()
   set.seed(123) # For label placement
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   p <- target_plot(target_point)

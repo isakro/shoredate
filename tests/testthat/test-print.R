@@ -6,6 +6,7 @@ target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 target_points <- sf::st_set_crs(target_points, 32632)
 
 test_that("A NA date is printed correctly", {
+  skip_on_cran()
   target_date <- suppressWarnings(shoreline_date(site = target_point,
                                                  elevation = 200))
   expect_equal(print(target_date),
