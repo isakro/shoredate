@@ -53,6 +53,4 @@ target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 # setting the resolution on the calendar scale to 1000 years for speed.
 target_curve <- interpolate_curve(target_point, cal_reso = 2000)
 
-# Call to plot
-displacement_plot(target_curve)
 }

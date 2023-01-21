@@ -1,22 +1,26 @@
 test_that("returns list of class shoreline_date", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   target_date <- shoreline_date(site = target_point, elevation = 46)
   expect_equal(class(target_date), c("shoreline_date", "list"))
 })
 
 test_that("progress is printed with verbose = TRUE", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   expect_snapshot(shoreline_date(site = target_point,
                                  elevation = 46, verbose = TRUE ))
 })
 
 test_that("gives warning if the elevation of a site implies a date that is out of bounds", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   expect_warning(shoreline_date(site = target_point, elevation = 150))
 })
 
 test_that("gives warning if the elevation of a site implies a date that is out of bounds,
           and specifies isobase direction if others than the default are provided", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
   expect_warning(shoreline_date(site = target_point, elevation = 150,
                                 isobase_direction = 338))
@@ -37,36 +41,42 @@ test_that("wrong CRS throws error and that this is printed", {
 })
 
 test_that("gives warning if a site is located outside the limit of the study area", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(458310, 6544255)), crs = 32632)
   warn <- expect_warning(shoreline_date(site = target_point, elevation = 46))
   expect_equal(warn$message, "Target location is not within the study area for which the method was derived.")
 })
 
 test_that("gives warning and returns NA if date has a later start than 2500 BCE", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   warn <- expect_warning(shoreline_date(site = target_point, elevation = 17))
   expect_equal(warn$message, "Site 1 has a younger possible start date than 2500 BCE and is returned as NA.")
 })
 
 test_that("gives warning and returns NA if date has a later start than 2500 BCE and non-default isobase direction", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   warn <- expect_warning(shoreline_date(site = target_point, elevation = 17, isobase_direction = 338))
   expect_equal(warn$message, "Site 1 has a younger possible start date than 2500 BCE with an isobase direction of 338 and is returned as NA.")
 })
 
 test_that("lack of both elevation value and elevation raster throws error", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   err <- expect_error(shoreline_date(site = target_point))
   expect_equal(err$message, "Numeric values specifying the site elevations or an elevation raster must be provided.")
 })
 
 test_that("providing different number of elevation values than number of sites throws error", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   err <- expect_error(shoreline_date(site = target_point, elevation = c(56, 64)))
   expect_equal(err$message, "Specify one elevation value per site. 2 elevation values and 1 sites were provided.")
 })
 
 test_that("summing multiple isobase directions works", {
+  skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   expect_snapshot(shoreline_date(site = target_point, elevation = 60,
                       isobase_direction = c(327, 338),
@@ -74,6 +84,7 @@ test_that("summing multiple isobase directions works", {
 })
 
 test_that("finding site elevation from a raster works", {
+  skip_on_cran()
   skip_if_not_installed("progress") # Having issues with R CMD check on GitHub with progress
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   target_wgs84 <- sf::st_transform(target_point, crs = 4326)

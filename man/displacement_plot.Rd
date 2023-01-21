@@ -31,7 +31,7 @@ Function for plotting shoreline displacement curves. Calling to plot without
 providing interpolated curves will display the four underlying curves.
 }
 \examples{
-# Plot displaying geologically derived displacement curve for Horten.
-displacement_plot(displacement_curves = "Horten")
+# Empty plot for speed of the example
+displacement_plot(displacement_curves = "")
 
 }

@@ -19,8 +19,8 @@
 #' @import ggplot2
 #'
 #' @examples
-#' # Plot displaying geologically derived displacement curve for Horten.
-#' displacement_plot(displacement_curves = "Horten")
+#' # Empty plot for speed of the example
+#' displacement_plot(displacement_curves = "")
 #'
 displacement_plot <- function(interpolated_curve = NA,
                               displacement_curves = c("Horten", "Porsgrunn",

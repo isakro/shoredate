@@ -19,6 +19,7 @@ NA"))
 })
 
 test_that("A date with non-default isobase direction is printed correctly", {
+  skip_on_cran()
   target_date <- shoreline_date(site = target_point, elevation = 30,
                                 isobase_direction = 338)
   expect_equal(print(target_date),
@@ -34,6 +35,7 @@ Isobase direction:  338
 })
 
 test_that("A date that extends into CE is printed correctly", {
+  skip_on_cran()
   target_date <- shoreline_date(site = target_point, elevation = 25)
   expect_equal(print(target_date),
                cat(
@@ -46,6 +48,7 @@ Elevation:  25
 })
 
 test_that("Dates that extend into CE with multiple isobase directions are printed correctly", {
+  skip_on_cran()
   target_dates <- shoreline_date(site = target_points, elevation = c(25, 60),
                                  isobase_direction = c(325, 338))
   expect_equal(print(target_dates),
@@ -86,6 +89,7 @@ Isobase direction:  338
 })
 
 test_that("A date consisting of summed isobase directions is printed correctly", {
+  skip_on_cran()
   target_date <- shoreline_date(sites = target_point, elevation = 25,
                                 isobase_direction = c(327, 338),
                                 sum_isobase_directions = TRUE)
@@ -102,6 +106,7 @@ Sum of isobase directions:  327 338
 })
 
 test_that("multiple site dates each consisting of summed isobase directions is printed correctly", {
+  skip_on_cran()
   target_dates <- shoreline_date(sites = target_points, elevation = c(55, 60),
                                 isobase_direction = c(327, 338),
                                 sum_isobase_directions = TRUE)

@@ -10,6 +10,7 @@ test_that("summing sparse dates", {
 })
 
 test_that("summing dates with multiple isobase directions", {
+  skip_on_cran()
   target_dates <- shoreline_date(target_points,
                                  elevation = c(70, 62),
                                  isobase_direction = c(327, 338))
@@ -18,6 +19,7 @@ test_that("summing dates with multiple isobase directions", {
 })
 
 test_that("summing sparse dates with multiple isobase directions", {
+  skip_on_cran()
   target_dates <- shoreline_date(target_points,
                                  elevation = c(70, 62),
                                  isobase_direction = c(327, 338),

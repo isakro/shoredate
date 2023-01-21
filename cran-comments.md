@@ -1,8 +1,8 @@
 ## Release summary
 
-Second re-submission of the package after automatic rejection on first attempts.
+Third re-submission of the package after automatic rejection on first attempts.
 Handled notes pertaining to possible misspelling, possibly incorrect URIs and 
-long run-time for examples.
+long run-time for examples and tests.
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
