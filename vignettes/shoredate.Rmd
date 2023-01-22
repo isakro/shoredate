@@ -22,7 +22,7 @@ vignette: >
 # Introduction
 The concept of dating sites based on their present-day elevation with reference to past shoreline displacement has been an important tool for archaeologists in northern Scandinavia since the early 1900s (e.g. Brøgger 1905). This is based on the observation that Stone Age sites in the region tend to have been located close to the contemporaneous shoreline when they were in use. Furthermore, following the retreat of the Fennoscandian Ice Sheet, the isostatic uplift has been so severe that despite corresponding eustatic sea-level rise, the relative sea-level has been falling throughout prehistory in large parts of this region. Within any given area where this is the case, the general pattern is thus that older sites will be located at higher altitudes than younger sites.
 
-This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on the an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the package is at present limited to coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west.
+This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the package is at present limited to coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west.
 
 ## Geographical and temporal coverage
 
@@ -140,7 +140,7 @@ A more sparse version can also be plotted by specifying what elements are to be 
 
 
 ```r
-shoredate_plot(target_date,  elevation_distribution = FALSE,
+shoredate_plot(target_date, elevation_distribution = FALSE,
                displacement_curve = FALSE, highest_density_region = FALSE)
 ```
 
@@ -284,16 +284,21 @@ While the range of the typically employed isobase directions generally result in
 
 
 ```r
+# Add a name to the example site
+target_point <- sf::st_as_sf(target_point, crs = 32632)
+target_point$name <- "Example site"
+
 # Using the same target point and elevation as above, but specifying two different directions
 # for the isobases when dating
-iso_date <- shoreline_date(site = target_point, elevation = elev_raster, isobase_direction = c(325, 338))
+iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
+                           isobase_direction = c(325, 338))
 
 iso_date
 ```
 
 ```
 ## ===============
-## Site:  1
+## Site:  Example site
 ## Elevation:  58.51383 
 ## 
 ## Isobase direction:  325 
@@ -313,7 +318,7 @@ In the call to plot it can then be specified that the direction of the isobases 
 
 
 ```r
-shoredate_plot(iso_date, isobase_direction = TRUE)
+shoredate_plot(iso_date, site_name = TRUE, isobase_direction = TRUE)
 ```
 
 <img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" />
@@ -324,23 +329,15 @@ As an alternative to keeping the two shoreline dates of the site separate, the p
 
 
 ```r
-target_point$name <- "Example site"
-
 sum_iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
                                isobase_direction = c(325, 338), sum_isobase_directions = TRUE)
-```
 
-```
-## Error in UseMethod("st_bbox"): no applicable method for 'st_bbox' applied to an object of class "list"
-```
-
-```r
 sum_iso_date
 ```
 
 ```
 ## ===============
-## Site:  1
+## Site:  Example site
 ## Elevation:  58.51383 
 ## 
 ## Sum of isobase directions:  325 338 

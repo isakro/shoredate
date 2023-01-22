@@ -49,15 +49,15 @@ development. At present, the method as outlined here is therefore
 limited to being applicable in the region of south-eastern Norway
 between Horten in the north east to Arendal in the south west. This
 region has newly compiled shoreline displacement curves for Horten
-(Romundset 2021) Larvik (Sørensen et al. 2014; Sørensen et al. 2023),
-Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal
-(Romundset 2018). The region also formed the study area for Roalkvam
-(2023), in which the method and its parameters were derived. The spatial
-coverage is indicated in the maps below. The shoreline isobases in the
-second figure represent contours along which the shoreline displacement
-has followed the same trajectory. These correspond to the displacement
-curves and place names in the third figure, which also indicates the
-temporal coverage of the package.
+(Romundset 2021), Porsgrunn (Sørensen et al. 2014; Sørensen et
+al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and
+Arendal (Romundset 2018). The region also formed the study area for
+Roalkvam (2023), in which the method and its parameters were derived.
+The spatial coverage is indicated in the maps below. The shoreline
+isobases in the second figure represent contours along which the
+shoreline displacement has followed the same trajectory. These
+correspond to the displacement curves and place names in the third
+figure, which also indicates the temporal coverage of the package.
 
 Note that spatial data used with the package should be set to WGS 84 /
 UTM zone 32N (EPSG:32632).
