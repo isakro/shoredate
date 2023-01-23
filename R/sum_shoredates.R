@@ -104,7 +104,7 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
 
     # Sum probability by year
     sdates <-  aggregate(sdates$probability,
-                         by = list(bce = sdates$bce), FUN = sum)
+                         by = list(bce = sdates$bce), FUN = sum, na.rm = TRUE)
 
   # If the dates are not sparse
   } else {
@@ -130,12 +130,12 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
     # Collapse the retrieved data frames
     sdates <- do.call(rbind, dates_dfs)
     sdates <-  aggregate(sdates$probability,
-                         by = list(bce = sdates$bce), FUN = sum)
+                         by = list(bce = sdates$bce), FUN = sum, na.rm = TRUE)
   }
 
   # Normalise sum of dates to sum to unity
   if (normalise) {
-    sdates$probability <- sdates$x/sum(sdates$x)
+    sdates$probability <- sdates$x/sum(sdates$x, na.rm = TRUE)
     sdates <- sdates[, c("bce", "probability")]
 
   # If not, only rename columns

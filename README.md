@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/shoredate)](https://cran.r-project.org/package=shoredate)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
@@ -19,16 +21,23 @@ Shoreline dating is based on the premise that coastal Stone Age sites in
 the region were located on or close to the shoreline when they were in
 use, and is implemented here based on an empirically derived estimate of
 the likely elevation of the sites above sea-level when they were
-occupied (Roalkvam 2023). However, do note that as the Roalkvam (2023)
-study provides a first formalisation of the method, it is hefted with
-unexplored uncertainties, and as the method is dependent on regularities
-in human behaviour, the dates achieved with the package should be
-treated with care.
+occupied (Roalkvam 2023). However, do note that as the method is
+dependent on regularities in human behaviour and as the Roalkvam (2023)
+study provides an initial formalisation of the method, it is hefted with
+unexplored uncertainties. Consequently, the dates achieved with the
+package should be treated with care.
 
 ## Installation and loading
 
-You can install the development version of *shoredate* from
-[GitHub](https://github.com/isakro/shoredate) with:
+*shoredate* can be installed from
+[CRAN](https://cran.r-project.org/package=shoredate) with:
+
+``` r
+install.packages("shoredate")
+```
+
+The development version can be installed from
+[GitHub](https://github.com/isakro/shoredate) using `devtools`:
 
 ``` r
 # install.packages("devtools")
@@ -191,8 +200,10 @@ target_points$elevation <- c(70, 46, 62, 30)
 # Perform shoreline dating
 target_dates <- shoreline_date(sites = target_points, 
                                elevation = target_points$elevation)
+```
 
-# Print to console
+``` r
+# Print the dates to console
 target_dates
 #> ===============
 #> Site:  Example 1
