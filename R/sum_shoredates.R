@@ -94,6 +94,10 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
       dates_dfs <- lapply(shoreline_dates, as.data.frame)
     }
 
+    # Remove dates that are NA
+    dates_dfs <- dates_dfs[!(sapply(dates_dfs, function(x)
+      all(is.na(x["probability"]))))]
+
     # Exclude dates that fall after the cut-off
     dates_dfs <- dates_dfs[which(sapply(dates_dfs, within_date_range))]
 
@@ -122,8 +126,13 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
       dates_dfs <- sapply(dates_list, function(x) x["date"])
     }
 
+    # Remove dates were all probability is NA
+    dates_dfs <- dates_dfs[!(sapply(dates_dfs, function(x)
+                                               all(is.na(x["probability"]))))]
+
     # Select dates that fall before cut-off
     dates_dfs <- dates_dfs[which(sapply(dates_dfs, within_date_range))]
+
 
     ndates <- length(dates_dfs)
 

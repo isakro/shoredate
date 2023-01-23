@@ -36,3 +36,19 @@ test_that("date with more than 50% prob mass above 2500 BCE is excluded", {
   expect_equal(target_sum$dates_n, 1)
 })
 
+
+test_that("handles when one or more dates are NA", {
+  skip_on_cran()
+  target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
+                              sf::st_point(c(538300, 6544250)),
+                              sf::st_point(c(538250, 6544250)))
+  target_points <- sf::st_set_crs(target_points, 32632)
+
+  # shoreline_date() gives an expected warning here, which is already tested in
+  # test-shoreline_date.R. This is therefore suppressed.
+  target_dates <- suppressWarnings(shoreline_date(sites = target_points,
+                                                  elevation = c(46, 200, 100),
+                                                  sparse = TRUE))
+  target_sum <- sum_shoredates(target_dates, cut_off_level = 0.5)
+  expect_equal(length(target_sum), 2)
+})
