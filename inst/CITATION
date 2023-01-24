@@ -1,0 +1,17 @@
+citHeader("To cite shoredate in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast",
+  author   = as.person("Isak Roalkvam"),
+  journal  = "Quaternary Science Reviews",
+  year     = "2023",
+  volume   = "299",
+  pages    = "107880",
+  url      = "https://doi.org/10.1016/j.quascirev.2022.107880",
+  textVersion = paste("Roalkvam, Isak (2023)",
+  "A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast",
+  "Quaternary Science Reviews, 299, 107880",
+  "URL https://doi.org/10.1016/j.quascirev.2022.107880"
+  )
+)

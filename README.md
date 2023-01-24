@@ -44,7 +44,7 @@ The development version can be installed from
 devtools::install_github("isakro/shoredate")
 ```
 
-The package can then be loaded:
+When it has been installed the package can be loaded:
 
 ``` r
 library(shoredate)
@@ -150,15 +150,16 @@ shoredate_plot(target_date)
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
-parameters $\alpha$ (shape) = 0.286 and $\sigma$ (scale) = 0.048 (see
-Roalkvam 2023 for more details). This starts from the elevation of the
-site. The red envelope is the shoreline displacement curve as
+parameters $\alpha$ (shape) = 0.286 and $\sigma$ (scale) = 1/0.048
+(1/$sigma$ is also known as the rate). This starts from the elevation of
+the site. The red envelope is the shoreline displacement curve as
 interpolated to the site location. The probability from the gamma
 distribution is transferred to the calendar scale using the displacement
 curve. This gives the resulting shoreline date in grey, which is
-underlined by the 95% highest density region (HDR) in black. By default,
-the shoreline date is normalised to sum to unity. The default resolution
-on the calendar scale is 10 years.
+underlined by the 95% highest density region (HDR) in black (see
+Roalkvam 2023 for more details). By default, the shoreline date is
+normalised to sum to unity. The default resolution on the calendar scale
+is 10 years.
 
 Calling the date object, which has the custom class `shoreline_date`,
 prints the name of the site, its elevation and the HDR:

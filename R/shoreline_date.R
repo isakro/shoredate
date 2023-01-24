@@ -22,8 +22,8 @@
 #'  isobase directions are specified in `isobase_direction` the results should be
 #'  summed for each site using `sum_shoredates`. Defaults to FALSE.
 #' @param model_parameters Vector of two numeric values specifying the shape and
-#'   scale of the gamma distribution. Defaults to c(0.286, 0.048), denoting the
-#'   shape and scale, respectively.
+#'   scale of the gamma distribution. Defaults to c(0.286, 1/0.048), denoting
+#'   the shape and scale, respectively.
 #' @param elev_fun Statistic to define site elevation if this is to be derived
 #'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
 #' @param interpolated_curve List holding shoreline displacement curve.
@@ -88,7 +88,7 @@ shoreline_date <- function(sites,
                            cal_reso = 10,
                            isobase_direction = 327,
                            sum_isobase_directions = FALSE,
-                           model_parameters = c(0.286, 0.048),
+                           model_parameters = c(0.286, 1/0.048),
                            elev_fun = "mean",
                            interpolated_curve = NA,
                            hdr_prob = 0.95,
@@ -220,7 +220,7 @@ shoreline_date <- function(sites,
         gammadat <- data.frame(
           offset = inc,
           px = stats::pgamma(inc, shape = model_parameters[1],
-                             rate =  model_parameters[2]))
+                             scale =  model_parameters[2]))
         gammadat$probs <- c(diff(gammadat$px), 0)
         gammdat <- gammadat[gammadat$px < 0.99999,]
 
@@ -354,7 +354,7 @@ shoreline_date <- function(sites,
         hdr_prob = hdr_prob,
         dispcurve = NA,
         dispcurve_direction = unlist(lapply(date_isobases,
-                                            function(x) unique(x["dispcurve_direction"]))),
+                             function(x) unique(x["dispcurve_direction"]))),
         model_parameters = model_parameters,
         gammadat = gammadat,
         cal_reso = cal_reso
