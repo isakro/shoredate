@@ -42,3 +42,15 @@
       95% HDR:
       7010 BCE-4880 BCE
 
+# precomputing interpolation and passing site as a site name
+
+    Code
+      shoreline_date(site = "Example site", elevation = 60, interpolated_curve = target_curve)
+    Output
+      ===============
+      Site:  1
+      Elevation:  60 
+      
+      95% HDR:
+      7010 BCE-4880 BCE
+

@@ -23,7 +23,7 @@ shoreline_date(
 \arguments{
 \item{sites}{Vector giving one or more site names, or, if displacement curves
 are to be interpolated, objects of class \code{sf} representing the sites to be
-dated. In the case of a spatial geometry, the first column is taken as
+dated. In the case of a spatial geometry, the first column is taken as the
 site name.}
 
 \item{elevation}{Vector of numeric elevation values for each site or a

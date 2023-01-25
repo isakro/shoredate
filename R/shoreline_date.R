@@ -6,7 +6,7 @@
 #'
 #' @param sites Vector giving one or more site names, or, if displacement curves
 #'   are to be interpolated, objects of class `sf` representing the sites to be
-#'   dated. In the case of a spatial geometry, the first column is taken as
+#'   dated. In the case of a spatial geometry, the first column is taken as the
 #'   site name.
 #' @param elevation Vector of numeric elevation values for each site or a
 #'  an elevation raster of class `SpatRaster` from the package
@@ -96,10 +96,13 @@ shoreline_date <- function(sites,
                            sparse = FALSE,
                            verbose = FALSE){
 
-  # Make the geometries be represented as a sf data frame
+  # Make spatial geometries be represented as a sf data frame
   # (and not for example sfc)
-  if (!inherits(sites, c("sf", "data.frame"))) {
+  if (is.na(interpolated_curve) & !inherits(sites, c("sf", "data.frame"))) {
     sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
+  # Make vector of site names a data frame for nrow() below
+  } else {
+    sites <- as.data.frame(sites)
   }
 
   if (!(is.numeric(elevation) |
@@ -182,16 +185,19 @@ shoreline_date <- function(sites,
         probability = 0)
 
       # Assign site name (to be returned/used in errors below)
-      if (ncol(sites) == 1) {
+      if (inherits(sites, c("sf", "data.frame")) & ncol(sites) == 1) {
         site_name <- as.character(i)
-      } else {
+      } else if (inherits(sites, c("sf", "data.frame"))){
         site_name <- as.character(st_drop_geometry(sites)[i,1])
+      } else {
+        site_name <- as.character(sites[i])
       }
 
 
       # Find oldest possible date
       mdate <- temp_curve[which(temp_curve[,"lowerelev"] ==
-                                  max(temp_curve[,"lowerelev"], na.rm = TRUE)), "bce"]
+                                  max(temp_curve[,"lowerelev"],
+                                      na.rm = TRUE)), "bce"]
 
       # Check that site date is not above this limit
       msdate <- stats::approx(temp_curve[,"lowerelev"],
@@ -202,8 +208,8 @@ shoreline_date <- function(sites,
       # the default.
       if (is.na(msdate) & unique(temp_curve$direction) == 327) {
         warning(paste0("The elevation of site ", site_name,
-                       " implies an earliest possible date older than ", mdate,
-                       " BCE and is out of bounds. The date is returned as NA."))
+                      " implies an earliest possible date older than ", mdate,
+                      " BCE and is out of bounds. The date is returned as NA."))
         dategrid$probability <- NA
         gammadat <- NA
       } else if (is.na(msdate)) {

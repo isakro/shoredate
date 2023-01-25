@@ -87,10 +87,19 @@ test_that("summing multiple isobase directions works", {
 
 test_that("finding site elevation from a raster works", {
   skip_on_cran()
-  skip_if_not_installed("progress") # Having issues with R CMD check on GitHub with progress
+  # Having issues with R CMD check on GitHub with progress
+  skip_if_not_installed("progress")
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   target_wgs84 <- sf::st_transform(target_point, crs = 4326)
   elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
   elev_raster <- terra::project(terra::rast(elev_raster), "epsg:32632")
   expect_snapshot(shoreline_date(target_point, elevation = elev_raster))
+})
+
+test_that("precomputing interpolation and passing site as a site name", {
+  skip_on_cran()
+  target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+  target_curve <- interpolate_curve(target_point)
+  expect_snapshot(shoreline_date(site = "Example site", elevation = 60,
+                                 interpolated_curve = target_curve))
 })
