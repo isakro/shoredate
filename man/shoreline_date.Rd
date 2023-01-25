@@ -45,7 +45,7 @@ isobase directions are specified in \code{isobase_direction} the results should 
 summed for each site using \code{sum_shoredates}. Defaults to FALSE.}
 
 \item{model_parameters}{Vector of two numeric values specifying the shape and
-scale of the gamma distribution. Defaults to c(0.286, 1/0.048), denoting
+scale of the gamma distribution. Defaults to c(0.286, 20.833), denoting
 the shape and scale, respectively.}
 
 \item{elev_fun}{Statistic to define site elevation if this is to be derived

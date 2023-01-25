@@ -22,7 +22,7 @@
 #'  isobase directions are specified in `isobase_direction` the results should be
 #'  summed for each site using `sum_shoredates`. Defaults to FALSE.
 #' @param model_parameters Vector of two numeric values specifying the shape and
-#'   scale of the gamma distribution. Defaults to c(0.286, 1/0.048), denoting
+#'   scale of the gamma distribution. Defaults to c(0.286, 20.833), denoting
 #'   the shape and scale, respectively.
 #' @param elev_fun Statistic to define site elevation if this is to be derived
 #'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
