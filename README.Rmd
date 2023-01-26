@@ -38,7 +38,7 @@ The package *shoredate* offers methods to shoreline date Stone Age sites located
 install.packages("shoredate")
 ```
 
-The development version can be installed from [GitHub](https://github.com/isakro/shoredate) using `devtools`:
+The latest development version can be installed from [GitHub](https://github.com/isakro/shoredate) using `devtools`:
 
 ```{r setup, eval = FALSE}
 # install.packages("devtools")

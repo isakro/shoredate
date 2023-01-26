@@ -36,7 +36,7 @@ package should be treated with care.
 install.packages("shoredate")
 ```
 
-The development version can be installed from
+The latest development version can be installed from
 [GitHub](https://github.com/isakro/shoredate) using `devtools`:
 
 ``` r
