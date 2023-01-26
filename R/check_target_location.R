@@ -1,7 +1,7 @@
 #' Check if a target site is set to the correct CRS and is located within the
 #'  spatial limit
 #'
-#' Checks if a target sites is set to the correct coordinate reference system
+#' Checks if a target site is set to the correct coordinate reference system
 #'  WGS84 UTM32N (EPSG: 32632). Throws an error if this is not the case. Checks
 #'  if the location intersects the study area for which the method was derived
 #'  (see Roalkvam 2022). Returns a warning if this is not the case.

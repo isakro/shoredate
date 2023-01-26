@@ -19,24 +19,27 @@
 #' @param isobase_direction A vector of numeric values defining the direction(s)
 #'   of the isobases. Defaults to 327.
 #' @param sum_isobase_directions Logical value indicating that if multiple
-#'  isobase directions are specified in `isobase_direction` the results should be
-#'  summed for each site using `sum_shoredates`. Defaults to FALSE.
+#'  isobase directions are specified in `isobase_direction` the results should
+#'  be summed for each site using `sum_shoredates`. Defaults to FALSE.
 #' @param model_parameters Vector of two numeric values specifying the shape and
 #'   scale of the gamma distribution. Defaults to c(0.286, 20.833), denoting
 #'   the shape and scale, respectively.
 #' @param elev_fun Statistic to define site elevation if this is to be derived
 #'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
-#' @param interpolated_curve List holding shoreline displacement curve.
-#'   [interpolate_curve()] will be run if this is not provided.
+#' @param interpolated_curve List holding precomputed shoreline displacement
+#'  curve. This has to have the same resolution on the calendar scale as the one
+#'  specified with `cal_reso`. [interpolate_curve()] will be run if this is not
+#'  provided.
 #' @param hdr_prob Numeric value specifying the coverage of the highest density
 #'  region. Defaults to 0.95.
 #' @param normalise Logical value specifying whether the shoreline date should
-#'   be normalised to sum to unity. Defaults to TRUE.
+#'  be normalised to sum to unity. Defaults to TRUE.
 #' @param sparse Logical value specifying if only site name and shoreline date
-#'   should be returned. Defaults to FALSE. Note that sparse dates are only
-#'   compatible with [sum_shoredates()].
+#'  should be returned. Defaults to FALSE. Note that of the functions for
+#'  further treatment, sparse dates are only compatible with
+#'  [sum_shoredates()].
 #' @param verbose Logical value indicating whether progress should be printed to
-#'   console. Defaults to FALSE.
+#'  console. Defaults to FALSE.
 #'
 #' @return A nested list of class `shoreline_date` holding the shoreline date
 #'  results and associated metadata for each dated site for each isobase
@@ -88,7 +91,7 @@ shoreline_date <- function(sites,
                            cal_reso = 10,
                            isobase_direction = 327,
                            sum_isobase_directions = FALSE,
-                           model_parameters = c(0.286, 1/0.048),
+                           model_parameters = c(0.286, 20.833),
                            elev_fun = "mean",
                            interpolated_curve = NA,
                            hdr_prob = 0.95,

@@ -11,7 +11,7 @@ shoreline_date(
   cal_reso = 10,
   isobase_direction = 327,
   sum_isobase_directions = FALSE,
-  model_parameters = c(0.286, 1/0.048),
+  model_parameters = c(0.286, 20.833),
   elev_fun = "mean",
   interpolated_curve = NA,
   hdr_prob = 0.95,
@@ -51,8 +51,10 @@ the shape and scale, respectively.}
 \item{elev_fun}{Statistic to define site elevation if this is to be derived
 from an elevation raster. Uses \code{terra::extract()}. Defaults to mean.}
 
-\item{interpolated_curve}{List holding shoreline displacement curve.
-\code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not provided.}
+\item{interpolated_curve}{List holding precomputed shoreline displacement
+curve. This has to have the same resolution on the calendar scale as the one
+specified with \code{cal_reso}. \code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not
+provided.}
 
 \item{hdr_prob}{Numeric value specifying the coverage of the highest density
 region. Defaults to 0.95.}
