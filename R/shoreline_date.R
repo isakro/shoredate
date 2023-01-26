@@ -99,9 +99,8 @@ shoreline_date <- function(sites,
                            sparse = FALSE,
                            verbose = FALSE){
 
-  # Make spatial geometries be represented as a sf data frame
-  # (and not for example sfc)
-  if (is.na(interpolated_curve) & !inherits(sites, c("sf", "data.frame"))) {
+  # Make sfc geometries be represented as a sf data frame
+  if (is.na(interpolated_curve) & inherits(sites, "sfc")) {
     sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
   # Make vector of site names a data frame for nrow() below
   } else {

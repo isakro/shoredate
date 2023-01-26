@@ -41,8 +41,8 @@ calendar scale. Defaults to 10.}
 of the isobases. Defaults to 327.}
 
 \item{sum_isobase_directions}{Logical value indicating that if multiple
-isobase directions are specified in \code{isobase_direction} the results should be
-summed for each site using \code{sum_shoredates}. Defaults to FALSE.}
+isobase directions are specified in \code{isobase_direction} the results should
+be summed for each site using \code{sum_shoredates}. Defaults to FALSE.}
 
 \item{model_parameters}{Vector of two numeric values specifying the shape and
 scale of the gamma distribution. Defaults to c(0.286, 20.833), denoting
@@ -63,8 +63,9 @@ region. Defaults to 0.95.}
 be normalised to sum to unity. Defaults to TRUE.}
 
 \item{sparse}{Logical value specifying if only site name and shoreline date
-should be returned. Defaults to FALSE. Note that sparse dates are only
-compatible with \code{\link[=sum_shoredates]{sum_shoredates()}}.}
+should be returned. Defaults to FALSE. Note that of the functions for
+further treatment, sparse dates are only compatible with
+\code{\link[=sum_shoredates]{sum_shoredates()}}.}
 
 \item{verbose}{Logical value indicating whether progress should be printed to
 console. Defaults to FALSE.}
