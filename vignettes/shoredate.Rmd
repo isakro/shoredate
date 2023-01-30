@@ -34,7 +34,7 @@ As the method is dependent on good geological reconstructions of shoreline displ
 
 A warning is given if one attempts to date a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to apply the method outside this limit, the dating procedure is still performed.
 
-Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* is 9460 BCE, although no sites are yet known to be that old. 9460 BCE is the latest start date among the geologically derived displacement curves. If a site has an elevation that implies a date older than 9460 BCE, the date is returned as NA and a warning is given.
+Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* is 9469 BCE, although no sites are yet known to be that old. 9469 BCE is the latest start date among the geologically derived displacement curves. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
 
 ## Installing and loading *shoredate*
 

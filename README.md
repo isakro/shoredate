@@ -76,12 +76,12 @@ UTM zone 32N (EPSG:32632).
 As human occupation in the region only occurred some time after the
 retreat of the Fennoscandian Ice Sheet, the currently oldest known sites
 in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest
-possible age to achieve with *shoredate* is 9460 BCE, although no sites
+possible age to achieve with *shoredate* is 9469 BCE, although no sites
 are yet known to be that old. A warning is given if a site location is
 outside the spatial extent outlined above, as this involves a more
 uncertain extrapolation of the development of shoreline displacement.
 However, the dating procedure is still performed. Conversely, if a site
-has an elevation that implies a date older than 9460 BCE the date is
+has an elevation that implies a date older than 9469 BCE the date is
 returned as NA and a warning is given.
 
 In Roalkvam (2023) it was found that sites tend to be located on or
