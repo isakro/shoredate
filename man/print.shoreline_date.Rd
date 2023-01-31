@@ -19,7 +19,7 @@ HDRs contained in a \code{shoreline_date} object to console.
 Print the dates in a \code{shoreline_date} object. Each date is printed
 with site name, elevation and highest density region. If the isobase
 direction is different or more are provided than the default, the
-directions and dates associated with these are also printed.
+directions and dates associated with these are printed seperately.
 }
 \examples{
 
