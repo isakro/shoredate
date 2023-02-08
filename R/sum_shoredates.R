@@ -45,8 +45,8 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
   within_date_range <- function(x){
     x$cumulative_prob <-  cumsum(x[,"probability"])
 
-  # Failed R-CMD check with macos-latest when threshold was 1. Trying skipping
-  # check if the value is 1.
+  # Failed R-CMD check with macos-latest when threshold was 1. Hardcoding TRUE
+  # if the value is 1.
   if(cut_off_level == 1){
     TRUE
   } else {

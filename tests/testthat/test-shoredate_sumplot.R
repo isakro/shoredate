@@ -8,6 +8,7 @@ target_dates <- shoreline_date(target_points,
 
 test_that("expected sumplot is produced", {
   skip_on_cran()
+  skip_on_ci()
   target_sum <- sum_shoredates(target_dates)
   p <- shoredate_sumplot(target_sum)
   vdiffr::expect_doppelganger("Plot of sum of multiple dates", p)

@@ -4,8 +4,8 @@
 #'  date. Negative values denote years BCE while positive values denote CE.
 #'
 #' @param bce A vector holding calendar years associated with a date
-#' @param probability A vector holding the probability corresponding to each
-#'  year in `date`.
+#' @param probability A vector holding the probability mass corresponding to
+#'  each calendar year.
 #' @param site_name A vector holding the name of the site that has been dated.
 #' @param cal_reso Resolution on the calendar scale used when dating the site.
 #' @param prob A numerical value indicating the probability coverage of the HDR.
@@ -25,11 +25,11 @@
 #'                               elev_reso = 1,
 #'                               cal_reso = 400)
 #'
-#' # `shoredate_hdr()` is already called under the hood with `shoreline_date()`,
-#' # and is printed when calling the `shoreline_date object`
+#' # shoredate_hdr() is already called under the hood with shoreline_date(),
+#' # the result of which is printed when calling the shoreline_date object
 #' target_date
 #'
-#' # However, `shoredate_hdr()` can be applied separately by pulling the
+#' # However, shoredate_hdr() can be applied separately by pulling the
 #' # necessary data from the date
 #' (shoredate_hdr(target_date[[1]][[1]]$date$bce,
 #'                target_date[[1]][[1]]$date$probability,
