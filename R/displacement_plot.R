@@ -19,9 +19,10 @@
 #' @import ggplot2
 #'
 #' @examples
-#' # Empty plot for speed of the example
-#' displacement_plot(displacement_curves = "")
-#'
+#' \dontrun{
+#' # Plot the geologically derived displacement curves
+#' displacement_plot()
+#'}
 displacement_plot <- function(interpolated_curve = NA,
                               displacement_curves = c("Horten", "Porsgrunn",
                                                      "Tvedestrand", "Arendal"),

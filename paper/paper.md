@@ -13,7 +13,7 @@ authors:
 affiliations:
  - name: University of Oslo, Institute of Archaeology, Conservation and History
    index: 1
-# date: 1 February 2023 
+# date: 1 March 2023 
 bibliography: paper.bib
 output: 
   pdf_document
@@ -21,8 +21,8 @@ output:
 
 # Summary
 
-As a result of glacio-isostatic rebound, large regions of northern
-Scandinavia have undergone a process of relative sea-level fall following the 
+As a result of glacio-isostatic rebound, large regions of Fennoscandia have 
+undergone a process of relative sea-level fall following the 
 retreat of the Fennoscandian Ice Sheet. Furthermore, as coastal Stone Age sites 
 in the region appear to have been predominantly located on or close to the 
 shoreline when they were in use, a reconstruction of past relative sea-level 
@@ -61,7 +61,7 @@ resource management sectors in Norway, both to plan archaeological
 investigations and for establishing temporal frameworks with which to
 approach the archaeological material. Case-studies employing `shoredate`
 are currently being undertaken. Furthermore, future archaeological
-material can be drawn on to test the method as implemented here, and
+material can be drawn on to test the method as it is implemented here, and
 potentially lead to adjustments in how it could be applied in a given setting.
 
 # Spatial and temporal coverage
@@ -97,8 +97,8 @@ lines.\label{fig:coverage}](../inst/precompiled_figures/spatiotemporal_coverage.
 To shoreline date a site, this has to provided as a spatial object of
 class `sf` from the `sf` package [@pebesma2018], and be set to the coordinate 
 reference system WGS 84 / UTM zone 32N (EPSG:32632). The elevation of the site
-above present sea-level can be provided when running `shoreline_date()`
-by manually specifying it, or by providing an elevation raster of class
+above present sea-level must be provided when running `shoreline_date()`
+by either manually specifying it, or by providing an elevation raster of class
 `SpatRaster` from the `terra` package [@hijmans2022], from where the site 
 elevation is derived. When calling `shoreline_date()`, the trajectory of 
 shoreline displacement at the location of the site is interpolated under the 
