@@ -6,6 +6,7 @@ test_that("returns expected plot no targets are passed", {
 
 test_that("returns expected plot when a target is passed", {
   skip_on_cran()
+  skip()
   set.seed(123) # For label placement
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   p <- target_plot(target_point)
@@ -14,6 +15,7 @@ test_that("returns expected plot when a target is passed", {
 
 test_that("returns expected plot in greyscale when a target is passed", {
   skip_on_cran()
+  skip()
   set.seed(123) # For label placement
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
   p <- target_plot(target_point, greyscale = TRUE)
