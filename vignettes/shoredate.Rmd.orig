@@ -42,7 +42,7 @@ This vignette describes the R package *shoredate* which provides tools for shore
 
 ## Geographical and temporal coverage
 
-Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline when they were in use. By reconstructing the past trajectory of shoreline displacement this thus allows us to ascribe an approximate date to when the sites were in use, based on their present-day elevation. The method is therefore dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
+Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline when they were in use. By reconstructing the past trajectory of shoreline displacement, this thus allows us to ascribe an approximate date to when the sites were in use, based on their present-day elevation. The method is therefore dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
 
 As the method is dependent on good geological reconstructions of shoreline displacement, *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The spatial coverage of *shoredate* is indicated in the maps below. Note that spatial data to be used with the package should be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632), which is the CRS used in the maps.
 
@@ -57,7 +57,13 @@ Furthermore, as human occupation in the region only occurred some time after the
 
 ## Installing and loading *shoredate*
 
-The package can be installed from the [GitHub repository](https://github.com/isakro/shoredate). This requires the devtools package.
+The package can be installed from [CRAN](https://cran.r-project.org/package=shoredate):
+
+```{r cran_install, eval = FALSE}
+install.packages("shoredate")
+```
+
+The development version of the package can be installed from the [GitHub repository](https://github.com/isakro/shoredate). This requires the `devtools` package. Note that the development version can be unstable.
 
 ```{r install, eval = FALSE}
 # Uncomment and run to install devtools
@@ -68,7 +74,7 @@ devtools::install_github("isakro/shoredate")
 ```
 
 When installed the package can be loaded.
-```{r setup, message = FALSE, warning = FALSE}
+```{r library, message = FALSE, warning = FALSE}
 library(shoredate)
 ```
 

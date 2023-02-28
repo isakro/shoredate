@@ -9,8 +9,8 @@
 #'  informed displacement curves that should be plotted. Accepted values are
 #'  `c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")`. All are included by
 #'  default.
-#' @param greyscale Logical value indicating whether the plot should include
-#'  colours or not. Defaults to FALSE.
+#' @param greyscale Logical value indicating whether the plot should be in
+#'  greyscale or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the underlying shoreline displacement curves and,
 #'  if provided, an interpolated curve.

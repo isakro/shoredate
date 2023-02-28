@@ -23,13 +23,13 @@ output:
 
 As a result of glacio-isostatic rebound, large regions of Fennoscandia have 
 undergone a process of relative sea-level fall following the 
-retreat of the Fennoscandian Ice Sheet. Furthermore, as coastal Stone Age sites 
+retreat of the Fennoscandian Ice Sheet. Furthermore, coastal Stone Age sites 
 in the region appear to have been predominantly located on or close to the 
-shoreline when they were in use, a reconstruction of past relative sea-level 
-change can be drawn on to assign an approximate date to when the sites were in 
-use, based on their altitude relative to the present-day sea-level. This method,
-called shoreline dating, has been used in the region since the early
-1900s [e.g. @brogger1905] and is still widely applied today [e.g.
+shoreline when they were in use. This can be combined with a reconstruction of 
+past relative sea-level change to assign an approximate date to when the sites 
+were in use, based on their altitude relative to the present-day sea-level. 
+This method, called shoreline dating, has been used in the region since the 
+early 1900s [e.g. @brogger1905] and is still widely applied today [e.g.
 @solheim2018; @manninen2021].
 
 # Statement of need
@@ -61,8 +61,9 @@ resource management sectors in Norway, both to plan archaeological
 investigations and for establishing temporal frameworks with which to
 approach the archaeological material. Case-studies employing `shoredate`
 are currently being undertaken. Furthermore, future archaeological
-material can be drawn on to test the method as it is implemented here, and
-potentially lead to adjustments in how it could be applied in a given setting.
+material can be drawn on to further test the method as it is implemented here, 
+and potentially lead to adjustments in how it could be applied in a given 
+setting.
 
 # Spatial and temporal coverage
 
@@ -97,10 +98,10 @@ lines.\label{fig:coverage}](../inst/precompiled_figures/spatiotemporal_coverage.
 To shoreline date a site, this has to provided as a spatial object of
 class `sf` from the `sf` package [@pebesma2018], and be set to the coordinate 
 reference system WGS 84 / UTM zone 32N (EPSG:32632). The elevation of the site
-above present sea-level must be provided when running `shoreline_date()`
-by either manually specifying it, or by providing an elevation raster of class
-`SpatRaster` from the `terra` package [@hijmans2022], from where the site 
-elevation is derived. When calling `shoreline_date()`, the trajectory of 
+above present sea-level must be provided when running `shoreline_date()`. This
+can be done by either manually specifying the site elevation, or by providing an 
+elevation raster of class `SpatRaster` from the `terra` package [@hijmans2022], 
+from where this is derived. When calling `shoreline_date()`, the trajectory of 
 shoreline displacement at the location of the site is interpolated under the 
 hood with the function `interpolate_curve()`, using inverse distance
 weighting. This is based on the distance between the site and the isobases of

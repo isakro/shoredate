@@ -19,8 +19,8 @@ informed displacement curves that should be plotted. Accepted values are
 \code{c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")}. All are included by
 default.}
 
-\item{greyscale}{Logical value indicating whether the plot should include
-colours or not. Defaults to FALSE.}
+\item{greyscale}{Logical value indicating whether the plot should be in
+greyscale or not. Defaults to FALSE.}
 }
 \value{
 A plot displaying the underlying shoreline displacement curves and,

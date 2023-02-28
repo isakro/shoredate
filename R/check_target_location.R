@@ -8,8 +8,8 @@
 #'
 #' @param target A spatial object of class `sf`, representing a site location.
 #'
-#' @return An error if the site does not intersect the study area or is lacking
-#'  or is set to the incorrect coordinate reference system.
+#' @return A warning if the target does not intersect the study area. An error
+#' if it is lacking or is set to the incorrect coordinate reference system.
 #' @export
 #'
 #' @examples
