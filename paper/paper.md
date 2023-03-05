@@ -59,7 +59,7 @@ temporal data, such as the R packages `rcarbon` [@crema2021], `bchron`
 Shoreline dating is frequently applied in the research and cultural
 resource management sectors in Norway, both to plan archaeological
 investigations and for establishing temporal frameworks with which to
-approach the archaeological material. Case-studies employing `shoredate`
+analyse the archaeological material. Case-studies employing `shoredate`
 are currently being undertaken. Furthermore, future archaeological
 material can be drawn on to further test the method as it is implemented here, 
 and potentially lead to adjustments in how it could be applied in a given 
@@ -88,10 +88,10 @@ the upper temporal limit for shoreline dating with the package.
 ![The spatial and temporal coverage of the package. The first figure
 displays the location of the spatial extent in south-eastern Norway. The
 second figure displays the location of the isobases, representing contours
-along which the shoreline displacement have followed the same
+along which the shoreline displacement has followed the same
 trajectory. The isobases correspond to the displacement curves in the
 third figure, where the temporal limits are marked with dashed
-lines.\label{fig:coverage}](../inst/precompiled_figures/spatiotemporal_coverage.png)
+lines.\label{fig:coverage}](../man/figures/coverage.png)
 
 # Example of base functionality
 
@@ -117,12 +117,12 @@ manually specifying that the site is situated at 58.8m above present sea-level.
 The resulting date is plotted with the function `shoredate_plot()`.
 
 ![The location of the example site relative to the isobases of the
-displacement curves. The basemap is a simplified and lightweight map of
+displacement curves. The base map is a simplified and lightweight map of
 the region.\label{fig:example_site}](example_site.png) 
 
 ![The curve interpolated to the example site by means of inverse distance 
 weighting. This is based on the
-distance between the site and the isobases of the geologically derived
+distance between the site and the isobases of the geological
 displacement curves.\label{fig:example_curve}](example_curve.png) 
 
 ![The resulting shoreline date

@@ -173,7 +173,7 @@ target_dates <- shoreline_date(target_points, elevation = c(68, 98, 73), verbose
 target_dates
 ```
 
-The default behaviour when passing multiple dates is to plot a series of individual plots for each date. However, setting `multiplot = TRUE` when calling `shoredate_plot()` collapses the dates on a single, more sparse plot. The sites are ordered from from earliest to latest possible start date for the occupation of the sites.
+The default behaviour when passing multiple dates to `shoredate_plot()` is to plot a series of individual plots. However, setting `multiplot = TRUE` collapses the dates on a single, more sparse plot. The sites are ordered from from earliest to latest possible start date for the occupation of the sites.
 
 ```{r multiplot, fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_dates, multiplot = TRUE)
@@ -181,7 +181,7 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 ## Using an elevation raster to find site elevations
 
-This example demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example here uses data from Amazon Web Service Terrain Tiles, retrieved with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
+The below code demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example here uses data from Amazon Web Service Terrain Tiles, retrieved with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
 ```{r retrieve_raster, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
 # Reproject target_point for retrieving raster data with elevatr
@@ -198,7 +198,7 @@ terra::plot(elev_raster)
 plot(target_point, add = TRUE)
 ```
 
-When a `SpatRaster` has been loaded into the R session this can be passed to `shoreline_date()` with the `elevation` argument to find site elevations without having to provide this manually, as was done above. Note that if the site is represented by an object with a spatial extent (i.e. not a point feature) the default is to use the mean of the elevation on the raster, but this can be changed with the `elev_fun` argument. Any function accepted by the `fun` argument in `terra::extract()` can be used (see `?terra::extract`).
+When a `SpatRaster` has been loaded into the R session this can be passed to `shoreline_date()` by specifying it in the `elevation` argument. This is then used to find the site elevations without having to provide these manually, as was done above. Note that if a site is represented by an object with a spatial extent (i.e. not a point feature) the default is to use the mean of the elevation on the raster. This can be changed with the `elev_fun` argument which accepts any function that can be passed to the `fun` argument in `terra::extract()` (see `?terra::extract`).
 
 ```{r raster_date}
 raster_date <- shoreline_date(target_point, elevation = elev_raster)
@@ -209,14 +209,14 @@ raster_date
 
 # Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straight-forward as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straight-forward, as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
 
 ```{r sum_dates}
 # Sum the three dates from above
 summed_dates <- sum_shoredates(target_dates)
 ```
 
-A simple line plot displaying the resulting summed probability can then be produced with `shoredate_sumplot()`
+A simple line plot displaying the resulting summed probability can then be produced with `shoredate_sumplot()`.
 
 ```{r sum_plot, fig.width = 4.3, fig.height = 3.5}
 shoredate_sumplot(summed_dates)
@@ -227,7 +227,7 @@ The direction of the shoreline gradient is specified by the isobases that run pe
 
 ## Specifying different isobase directions
 
-While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline date using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
+While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline dating using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
 
 ```{r example_site_isobases, message = FALSE}
 # Add a name to the example site
