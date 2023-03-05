@@ -13,7 +13,6 @@
 #' @import ggplot2
 #'
 #' @examples
-#' \dontrun{
 #' # Create example points
 #' target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 #'                             sf::st_point(c(538300, 6544250)))
@@ -21,15 +20,17 @@
 #' # Set correct CRS
 #' target_points <- sf::st_as_sf(target_points, crs = 32632)
 #'
-#' # Perform shoreline dating
-#' target_dates <- shoreline_date(target_points, elevation = c(65, 70))
+#' # Reduce date resolution with cal_reso and elevation_reso for speed
+#' target_dates <- shoreline_date(target_points,
+#'                                elevation = c(65, 70),
+#'                                elev_reso = 10,
+#'                                cal_reso = 750)
 #'
 #' # Find summed probability
 #' target_sum <- sum_shoredates(target_dates)
 #'
 #' # Call to plot
 #' shoredate_sumplot(target_sum)
-#' }
 shoredate_sumplot <- function(shoredates_sum, sample_size = TRUE){
 
   if (!inherits(shoredates_sum, "shoredates_sum")) {

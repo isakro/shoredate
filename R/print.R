@@ -14,14 +14,16 @@
 #' @export
 #'
 #' @examples
-#'\dontrun{
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
-#' target_date <- shoreline_date(site = target_point, elevation = 70)
+#' # Reduce date resolution with cal_reso and elevation_reso for speed
+#' target_date <- shoreline_date(site = target_point,
+#'                               elevation = 70,
+#'                               elev_reso = 1,
+#'                               cal_reso = 400)
 #'
 #' # Print to console
 #' target_date
-#'}
 print.shoreline_date <- function(x, ...){
 
   for (i in 1:length(x)) {

@@ -75,14 +75,15 @@
 #' @importFrom utils txtProgressBar
 #'
 #' @examples
-#' \dontrun{
 #' # Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing
-#' # an elevation raster.
-#' shoreline_date(sites = target_point, elevation = 80)
-#' }
+#' # an elevation raster. Reducing elev_reso and cal_reso for speed.
+#' shoreline_date(sites = target_point,
+#'                elevation = 80,
+#'                elev_reso = 1,
+#'                cal_reso = 400)
 shoreline_date <- function(sites,
                            elevation = NA,
                            elev_reso = 0.01,
