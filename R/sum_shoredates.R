@@ -4,10 +4,10 @@
 #'  shoreline dates.
 #'
 #' @param shoreline_dates Object of class `shoreline_date`.
-#' @param cut_off Calender year specifying where dates should be cut off.
+#' @param cut_off Calendar year specifying where dates should be cut off.
 #'  Defaults to 2500 BCE.
 #' @param cut_off_level Numerical value between 0 and 1 indicating the
-#'  probability mass that has to faller after the cut-off for a date to be
+#'  probability mass that has to fall after the cut-off for a date to be
 #'  excluded. Defaults to 1, retaining all dates.
 #' @param normalise Logical value indicating whether the probability sum of the
 #'  dates should be normalised to sum to unity. Defaults to TRUE.
