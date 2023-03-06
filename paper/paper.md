@@ -13,7 +13,7 @@ authors:
 affiliations:
  - name: University of Oslo, Institute of Archaeology, Conservation and History
    index: 1
-# date: 1 March 2023 
+# date: 6 March 2023 
 bibliography: paper.bib
 output: 
   pdf_document
