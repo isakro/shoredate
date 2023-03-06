@@ -40,7 +40,7 @@ of past relative sea-level change. Drawing on an empirically derived
 estimate of the likely elevation of the sites above sea-level when they
 were in use, the method for shoreline dating implemented in the package was 
 recently published in @roalkvam2023. No open-source software with which to
-perform shoreline dating has previously been available, and the only
+perform shoreline dating exists. The only
 closed-source software available is `sealev` from the University of
 Tromsø, Tromsø Geophysical Observatory
 [<https://www.tgo.uit.no/sealev/>, see @moller2003], which provides
@@ -48,9 +48,9 @@ non-probabilistic point estimates of shoreline dates based on data last
 updated in 2002.
 
 `shoredate` is aimed at providing researchers and students dealing with
-the coastal Stone Age of south-eastern Norway with a formalised tool for
-performing and handling shoreline dates. This complements already
-available software for handling radiocarbon dates and other sources of
+the coastal Stone Age of south-eastern Norway with tools for
+performing and handling shoreline dates. This complements
+software for handling radiocarbon dates and other sources of
 temporal data, such as the R packages `rcarbon` [@crema2021], `bchron`
 [@haslett2008], `oxcAAR` [@hinz2021], `kairos` [@frerebeau2022] and
 `ArchaeoPhases` [@philippe2020], as well as proprietary software such as
@@ -78,12 +78,12 @@ Arendal [@romundset2018b]. The spatial coverage of `shoredate`  will be extended
 to surrounding regions as forthcoming data on shoreline displacement
 becomes available. 
 
-As the latest start date of the displacement curves is 9469 BCE, and as
-the oldest known anthropogenic activity in Norway dates to around 9300
-BCE [@glorstad2016], 9469 BCE marks the lower temporal limit of the
-package. Furthermore, in @roalkvam2023 it was found that sites tend to
-be more withdrawn from the shoreline after c. 2500 BCE, which thus marks
-the upper temporal limit for shoreline dating with the package.
+Following from the latest start date among the displacement curves, 
+9469 BCE marks the lower temporal limit of the package. The oldest verified 
+anthropogenic activity in Norway currently dates to around 9300 BCE 
+[@glorstad2016]. In @roalkvam2023 it was found that sites tend to be located at 
+more variable distances from the shoreline after c. 2500 BCE. This therefore 
+marks the upper temporal limit of the package.
 
 ![The spatial and temporal coverage of the package. The first figure
 displays the location of the spatial extent in south-eastern Norway. The
