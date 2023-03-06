@@ -28,7 +28,7 @@ present-day sea-level, this can be combined with a reconstruction of
 past relative sea-level change to assign an approximate date to when the sites 
 were in use. This method, called shoreline dating, has been used in the region 
 since the early 1900s [e.g. @brogger1905] and is still widely applied today 
-[e.g. @solheim2018; @manninen2021].
+[e.g. @manninen2021; @solheim2018].
 
 # Statement of need
 
