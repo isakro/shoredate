@@ -1,3 +1,5 @@
+# shoredate (development version)
+
 ## shoredate 1.0.1
 
  - `sum_shoredates()` can now handle NA dates.

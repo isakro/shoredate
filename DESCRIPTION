@@ -1,7 +1,7 @@
 Package: shoredate
 Type: Package
 Title: Shoreline Dating Stone Age Sites on the Norwegian Skagerrak Coast
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: 
     person("Isak", "Roalkvam", , "isakroa@protonmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6974-1374"))
