@@ -15,6 +15,7 @@ affiliations:
    index: 1
 date: 6 March 2023 
 bibliography: paper.bib
+output: word_document
 ---
 
 # Summary
@@ -93,8 +94,8 @@ lines.\label{fig:coverage}](../man/figures/coverage.png)
 
 # Example of base functionality
 
-To shoreline date a site, this has to provided as a spatial object of
-class `sf` from the `sf` package [@pebesma2018]. The elevation of the site
+To shoreline date a site, the site geometry has to provided as a spatial object 
+of class `sf` from the `sf` package [@pebesma2018]. The elevation of the site
 above present sea-level must be provided when running `shoreline_date()`. This
 can be done by either manually specifying the site elevation, or by providing an 
 elevation raster of class `SpatRaster` from the `terra` package [@hijmans2022] 
