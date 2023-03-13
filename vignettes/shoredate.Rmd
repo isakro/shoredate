@@ -2,7 +2,7 @@
 title: "shoredate: Shoreline dating Stone Age sites on the Norwegian Skagerrak coast"
 author: "Isak Roalkvam"
 output:
-  rmarkdown::pdf_document:
+  rmarkdown::html_vignette:
     number_sections: true
     toc: true
 fontsize: 11pt

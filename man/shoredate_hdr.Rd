@@ -28,10 +28,13 @@ Function to find 95\% highest density region (HDR) for a provided shoreline
 date. Negative values denote years BCE while positive values denote CE.
 }
 \examples{
-\dontrun{
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-target_date <- shoreline_date(sites = target_point, elevation = 80)
+# Reduce date resolution with cal_reso and elevation_reso for speed
+target_date <- shoreline_date(sites = target_point,
+                              elevation = 80,
+                              elev_reso = 1,
+                              cal_reso = 400)
 
 # shoredate_hdr() is already called under the hood with shoreline_date(),
 # the result of which is printed when calling the shoreline_date object
@@ -43,5 +46,4 @@ target_date
                target_date[[1]][[1]]$date$probability,
                target_date[[1]][[1]]$site_name,
                target_date[[1]][[1]]$cal_reso))
-}
 }

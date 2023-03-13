@@ -31,8 +31,7 @@ Function for plotting shoreline displacement curves. Calling to plot without
 providing interpolated curves will display the four underlying curves.
 }
 \examples{
-\dontrun{
-# Plot the geologically derived displacement curves
-displacement_plot()
-}
+# Empty plot for speed
+displacement_plot(displacement_curves = "")
+
 }
