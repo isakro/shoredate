@@ -3,6 +3,8 @@
 #' A function for shoreline dating Stone Age sites based on their present-day
 #'  elevation, their likely elevation above sea-level when in use and the
 #'  trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
+#'  Details and caveats pertaining to the implemented method is given in
+#'  Roalkvam (2023).
 #'
 #' @param sites Vector giving one or more site names, or, if displacement curves
 #'   are to be interpolated, objects of class `sf` representing the sites to be
@@ -77,6 +79,12 @@
 #' @examples
 #' # Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
+#'
+#' @references
+#' Roalkvam, I. 2023. A simulation-based assessment of the relation between
+#'  Stone Age sites and relative sea-level change along the Norwegian Skagerrak
+#'  coast. \emph{Quaternary Science Reviews} 299:107880. DOI:
+#'  https://doi.org/10.1016/j.quascirev.2022.107880
 #'
 #' # Date target point, manually specifying the elevation instead of providing
 #' # an elevation raster. Reducing elev_reso and cal_reso for speed.

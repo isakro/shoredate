@@ -4,13 +4,19 @@
 #' Checks if a target site is set to the correct coordinate reference system
 #'  WGS84 UTM32N (EPSG: 32632). Throws an error if this is not the case. Checks
 #'  if the location intersects the study area for which the method was derived
-#'  (see Roalkvam 2022). Returns a warning if this is not the case.
+#'  (see Roalkvam 2023). Returns a warning if this is not the case.
 #'
 #' @param target A spatial object of class `sf`, representing a site location.
 #'
 #' @return A warning if the target does not intersect the study area. An error
 #' if it is lacking or is set to the incorrect coordinate reference system.
 #' @export
+#'
+#' @references
+#' Roalkvam, I. 2023. A simulation-based assessment of the relation between
+#'  Stone Age sites and relative sea-level change along the Norwegian Skagerrak
+#'  coast. \emph{Quaternary Science Reviews} 299:107880. DOI:
+#'  https://doi.org/10.1016/j.quascirev.2022.107880
 #'
 #' @examples
 #' # Create example point using the required coordinate system
