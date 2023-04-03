@@ -52,6 +52,7 @@
 #'  * `date` data frame with the columns `bce` where negative values
 #'  indicate years BCE and positive CE, as well as `probability`, which gives
 #'  the probability mass for each year.
+#'  * `weighted_mean` the weighted mean date.
 #'  * `hdr_start` start values for the HDR ranges.
 #'  * `hdr_end` end values for the HDR ranges.
 #'  * `hdr_prob` probability level for the HDR.
@@ -326,6 +327,7 @@ shoreline_date <- function(sites,
           site_name = site_name,
           site_elev = siteelev,
           date = dategrid,
+          weighted_mean = hdr$weighted_mean,
           hdr_start = hdr$start,
           hdr_end = hdr$end,
           hdr_prob = hdr_prob,
@@ -341,6 +343,7 @@ shoreline_date <- function(sites,
           site_name = site_name,
           site_elev = siteelev,
           date = dategrid,
+          weighted_mean = NA,
           hdr_start = NA,
           hdr_end = NA,
           hdr_prob = hdr_prob,
@@ -366,6 +369,7 @@ shoreline_date <- function(sites,
         site_name = site_name,
         site_elev = siteelev,
         date = sum_isobases$sum,
+        weighted_mean = hdr$weighted_mean,
         hdr_start = hdr$start,
         hdr_end = hdr$end,
         hdr_prob = hdr_prob,
