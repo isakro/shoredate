@@ -21,7 +21,8 @@ Defaults to 0.95.}
 }
 \value{
 A list holding start and end points for segments of the highest
-density region of a shoreline date, the probability coverage and site name.
+density region of a shoreline date, the weighted mean date,
+the probability coverage and site name.
 }
 \description{
 Function to find 95\% highest density region (HDR) for a provided shoreline

@@ -12,7 +12,8 @@
 #'  Defaults to 0.95.
 #'
 #' @return A list holding start and end points for segments of the highest
-#'  density region of a shoreline date, the probability coverage and site name.
+#'  density region of a shoreline date, the weighted mean date,
+#'  the probability coverage and site name.
 #' @export
 #'
 #' @examples
@@ -42,6 +43,8 @@ shoredate_hdr <- function(bce, probability, site_name, cal_reso, prob = 0.95){
 
   ag <- bce
   de <- probability
+
+  wmean <- stats::weighted.mean(ag, de)
 
   # Put the probabilities in order of density
   o <- order(de)
@@ -84,6 +87,7 @@ shoredate_hdr <- function(bce, probability, site_name, cal_reso, prob = 0.95){
   shdr <- list(start = start_breaks,
                      end = end_breaks,
                      prob = prob,
-                     site_name = site_name)
+                     site_name = site_name,
+                     weighted_mean = wmean)
   shdr
 }

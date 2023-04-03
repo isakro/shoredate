@@ -7,5 +7,5 @@ test_that("returns a list of expected length", {
                                  target_date[[1]][[1]]$date$probability,
                                  target_date[[1]][[1]]$site_name,
                                  target_date[[1]][[1]]$cal_reso)
-  expect_equal(length(shdr), 4)
+  expect_equal(length(shdr), 5)
 })

@@ -1,4 +1,5 @@
 ## shoredate 1.0.1.9000 (development version)
+ - `shoredate_hdr()` now returns the weighted arithmetic mean.
 
 ## shoredate 1.0.1 (2023-03-06)
 
