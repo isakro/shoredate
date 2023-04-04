@@ -14,7 +14,7 @@
 #'  an elevation raster of class `SpatRaster` from the package
 #'  `terra` from where the elevation values are to be derived.
 #' @param elev_reso Numeric value specifying the resolution with which to step
-#'  through the gamma distribution representing the distance between site and
+#'  through the distribution representing the distance between site and
 #'  shoreline. Defaults to 0.01m.
 #' @param cal_reso Numeric value specifying the resolution to use on the
 #'   calendar scale. Defaults to 10.
@@ -23,9 +23,13 @@
 #' @param sum_isobase_directions Logical value indicating that if multiple
 #'  isobase directions are specified in `isobase_direction` the results should
 #'  be summed for each site using `sum_shoredates`. Defaults to FALSE.
-#' @param model_parameters Vector of two numeric values specifying the shape and
-#'   scale of the gamma distribution. Defaults to c(0.286, 20.833), denoting
-#'   the shape and scale, respectively.
+#' @param model Character vector specifying the statistical model with which to
+#'  model the distance from site to shoreline. Currently accepts either "none"
+#'  or "gamma". Defaults to "gamma".
+#' @param model_parameters Vector of numeric values specifying the parameters
+#'  for the statistical model describing the distance between site and
+#'  shoreline. Defaults to c(0.286, 20.833), denoting the shape and scale of the
+#'   default gamma function, respectively.
 #' @param elev_fun Statistic to define site elevation if this is to be derived
 #'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
 #' @param interpolated_curve List holding precomputed shoreline displacement
@@ -61,10 +65,8 @@
 #'  the lower limit for the elevation of the shoreline for each year.
 #'  `upperelev`, the upper limit for elevation of the shoreline for each year.
 #'  * `dispcurve_direction` direction of the isobases in use.
-#'  * `model_parameters` parameters for the gamma distribution. The
-#'  first value gives the shape and the second value the scale of the
-#'  distribution.
-#'  * `gammdat` data frame holding the gamma distribution. The column
+#'  * `model_parameters` parameters for the statistical model.
+#'  * `modeldat` data frame holding the model distribution. The column
 #'  `offset` denotes the vertical distance (m) from the shoreline, as specified
 #'  by the `elev_reso` argument. `px` is the cumulative probability at each step
 #'  of `offset`, and `probs` is the probability of each step found by
@@ -99,6 +101,7 @@ shoreline_date <- function(sites,
                            cal_reso = 10,
                            isobase_direction = 327,
                            sum_isobase_directions = FALSE,
+                           model = "gamma",
                            model_parameters = c(0.286, 20.833),
                            elev_fun = "mean",
                            interpolated_curve = NA,
@@ -111,7 +114,7 @@ shoreline_date <- function(sites,
   if(!inherits(sites, c("sf", "data.frame"))){
     if (is.na(interpolated_curve) & inherits(sites, "sfc")) {
       sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
-    # Make vector of site names a data frame for nrow() below
+      # Make vector of site names a data frame for nrow() below
     } else {
       sites <- as.data.frame(sites)
     }
@@ -220,10 +223,10 @@ shoreline_date <- function(sites,
       # the default.
       if (is.na(msdate) & unique(temp_curve$direction) == 327) {
         warning(paste0("The elevation of site ", site_name,
-                      " implies an earliest possible date older than ", mdate,
-                      " BCE and is out of bounds. The date is returned as NA."))
+                       " implies an earliest possible date older than ", mdate,
+                       " BCE and is out of bounds. The date is returned as NA."))
         dategrid$probability <- NA
-        gammadat <- NA
+        modeldat <- NA
       } else if (is.na(msdate)) {
         warning(paste0("The elevation of site ", site_name,
                        " with an isobase direction of ",
@@ -231,29 +234,36 @@ shoreline_date <- function(sites,
                        " implies an earliest possible date older than ", mdate,
                        " BCE and is out of bounds. The date is returned as NA."))
         dategrid$probability <- NA
-        gammadat <- NA
+        modeldat <- NA
       } else {
 
-        # Set up data frame and assign probability to the offset increments
-        gammadat <- data.frame(
-          offset = inc,
-          px = stats::pgamma(inc, shape = model_parameters[1],
-                             scale =  model_parameters[2]))
-        gammadat$probs <- c(diff(gammadat$px), 0)
-        gammdat <- gammadat[gammadat$px < 0.99999,]
+        if(model == "gamma"){
+          # Set up data frame and assign probability to the offset increments
+          modeldat <- data.frame(
+            offset = inc,
+            px = stats::pgamma(inc, shape = model_parameters[1],
+                               scale =  model_parameters[2]))
+          modeldat$probs <- c(diff(modeldat$px), 0)
+          modeldat <- modeldat[modeldat$px < 0.99999,]
+        } else if(model == "none"){
+          modeldat <- data.frame(
+            offset = 0,
+            probs = 1
+          )
+        }
 
         if (verbose) {
           print("Performing shoreline dating")
           pb <- utils::txtProgressBar(min = 0,
-                                      max = nrow(gammadat),
+                                      max = nrow(modeldat),
                                       style = 3,
                                       char = "=")
         }
 
-        for (j in 1:nrow(gammadat)) {
+        for (j in 1:nrow(modeldat)) {
 
           # Subtract offset
-          adjusted_elev <- as.numeric(siteelev - gammadat$offset[j])
+          adjusted_elev <- as.numeric(siteelev - modeldat$offset[j])
 
           # Find lower date
           lowerd <- stats::approx(temp_curve[,"lowerelev"], bce,
@@ -276,7 +286,7 @@ shoreline_date <- function(sites,
             year_range <- seq(earliest, latest, cal_reso)
 
             # Identify probability to be distributed across range
-            prob <- 1/length(year_range) * gammadat$probs[j]
+            prob <- 1/length(year_range) * modeldat$probs[j]
 
             # Add probability to calendar years
             dategrid[dategrid$bce %in% year_range, "probability"] <-
@@ -335,7 +345,7 @@ shoreline_date <- function(sites,
                                    c("bce", "lowerelev", "upperelev")],
           dispcurve_direction = unique(temp_curve$direction),
           model_parameters = model_parameters,
-          gammadat = gammadat,
+          modeldat = modeldat,
           cal_reso = cal_reso)
 
       } else if (all(is.na(dategrid$probability)) & !sparse){
@@ -351,7 +361,7 @@ shoreline_date <- function(sites,
                                    c("bce", "lowerelev", "upperelev")],
           dispcurve_direction = unique(temp_curve$direction),
           model_parameters = model_parameters,
-          gammadat = gammadat,
+          modeldat = modeldat,
           cal_reso = cal_reso)
       } else {
         date_isobases[[k]] <- dategrid
@@ -375,9 +385,9 @@ shoreline_date <- function(sites,
         hdr_prob = hdr_prob,
         dispcurve = NA,
         dispcurve_direction = unlist(lapply(date_isobases,
-                             function(x) unique(x["dispcurve_direction"]))),
+                                            function(x) unique(x["dispcurve_direction"]))),
         model_parameters = model_parameters,
-        gammadat = gammadat,
+        modeldat = modeldat,
         cal_reso = cal_reso
       ))
 

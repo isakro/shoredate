@@ -77,6 +77,14 @@ test_that("providing different number of elevation values than number of sites t
   expect_equal(err$message, "Specify one elevation value per site. 2 elevation values and 1 sites were provided.")
 })
 
+test_that("using no model instead of the gamma works", {
+  skip_on_cran()
+  target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
+  expect_snapshot(shoreline_date(site = target_point,
+                                 elevation = 60,
+                                 model = "none"))
+})
+
 test_that("summing multiple isobase directions works", {
   skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)

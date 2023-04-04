@@ -3,14 +3,15 @@
 #' Function for plotting shoreline dates along with associated metadata.
 #'
 #' @param shorelinedates Object of class `shoreline_date`.
-#' @param elevation_distribution Logical value indicating whether the gamma
-#'  distribution should be displayed. Default is TRUE.
+#' @param elevation_distribution Logical value indicating whether the
+#'  distribution describing the distance between site and shoreline should be
+#'  displayed. Default is TRUE.
 #' @param displacement_curve Logical value indicating whether the displacement
 #'  curve should be displayed. Default is TRUE.
 #' @param site_name Logical value indicating whether the name of the site should
 #'  be printed. Defaults to FALSE.
 #' @param parameters Logical value indicating whether the parameters of the
-#'  gamma distribution should be printed. Default is FALSE.
+#'  statistical function should be displayed. Default is FALSE.
 #' @param isobase_direction  Logical value indicating whether the direction of
 #'  the isobases should be printed. Default is FALSE.
 #' @param highest_density_region Logical value indicating whether the 95%
@@ -192,19 +193,19 @@ shoredate_plot <- function(shorelinedates,
         # not be plotted.
         if(!all(is.na(nshoredate$dispcurve))){
         # For plotting purposes to close the geom_polygon on the y-axis
-        gammadatg <- rbind(c(0, 0, 0), nshoredate$gammadat)
+        modeldatg <- rbind(c(0, 0, 0), nshoredate$modeldat)
 
         # Code adapted from oxcAAR to plot density to y-axis
         x_extent <-
           ggplot2::ggplot_build(plt)$layout$panel_scales_x[[1]]$range$range
-        gammadatg$probs_scaled <- gammadatg$probs / max(gammadatg$probs) *
+        modeldatg$probs_scaled <- modeldatg$probs / max(modeldatg$probs) *
           diff(x_extent) * 20 + x_extent[1]
 
 
-        plotdat <- data.frame(x = c(gammadatg$probs_scaled,
+        plotdat <- data.frame(x = c(modeldatg$probs_scaled,
                                     x_extent[1]:x_extent[2]),
                               y = c(as.numeric(
-                                nshoredate$site_elev) - gammadatg$offset,
+                                nshoredate$site_elev) - modeldatg$offset,
                                     rep(as.numeric(nshoredate$site_elev),
                                         length(x_extent[1]:x_extent[2]))))
 

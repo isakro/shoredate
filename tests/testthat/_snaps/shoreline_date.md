@@ -15,6 +15,18 @@
       95% HDR:
       6660 BCE-3180 BCE
 
+# using no model instead of the gamma works
+
+    Code
+      shoreline_date(site = target_point, elevation = 60, model = "none")
+    Output
+      ===============
+      Site:  1
+      Elevation:  60 
+      
+      95% HDR:
+      7010 BCE-6820 BCE
+
 # summing multiple isobase directions works
 
     Code
