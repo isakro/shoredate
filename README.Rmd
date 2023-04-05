@@ -69,7 +69,7 @@ In Roalkvam (2023) it was found that sites tend to be located on or close to the
 
 ## Interpolating shoreline displacement to a site location
 
-To shoreline date a site, a reconstruction of local shoreline displacement is necessary. There are currently four reliable geological displacement curves available from within the study area. Each of these is associated with a shoreline isobase, along which the trajectory of relative sea-level change has been the same. To find the local displacement curve, the curves are interpolated to a site location using inverse distance weighting, where the default is to weight the interpolation by the square of the inverse distance between site and isobases.
+To shoreline date a site, a reconstruction of local shoreline displacement is necessary. There are currently four reliable geological displacement curves available from within the study area. Each of these is associated with a shoreline isobase, along which the trajectory of relative sea-level change has been the same. To find the local displacement curve, the curves are interpolated to a site location using inverse distance weighting, where the default is to weigh the interpolation by the square of the inverse distance between site and isobases.
 
 ```{r target_location, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 4}
 # Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)

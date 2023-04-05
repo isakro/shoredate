@@ -20,8 +20,9 @@ shoredate_plot(
 \arguments{
 \item{shorelinedates}{Object of class \code{shoreline_date}.}
 
-\item{elevation_distribution}{Logical value indicating whether the gamma
-distribution should be displayed. Default is TRUE.}
+\item{elevation_distribution}{Logical value indicating whether the
+distribution describing the distance between site and shoreline should be
+displayed. Default is TRUE.}
 
 \item{displacement_curve}{Logical value indicating whether the displacement
 curve should be displayed. Default is TRUE.}
@@ -30,7 +31,7 @@ curve should be displayed. Default is TRUE.}
 be printed. Defaults to FALSE.}
 
 \item{parameters}{Logical value indicating whether the parameters of the
-gamma distribution should be printed. Default is FALSE.}
+statistical function should be displayed. Default is FALSE.}
 
 \item{isobase_direction}{Logical value indicating whether the direction of
 the isobases should be printed. Default is FALSE.}
