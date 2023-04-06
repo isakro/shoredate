@@ -192,27 +192,38 @@ shoredate_plot <- function(shorelinedates,
         # If a sum of multiple isobase directions, elevation_distribution can
         # not be plotted.
         if(!all(is.na(nshoredate$dispcurve))){
-        # For plotting purposes to close the geom_polygon on the y-axis
-        modeldatg <- rbind(c(0, 0, 0), nshoredate$modeldat)
 
-        # Code adapted from oxcAAR to plot density to y-axis
-        x_extent <-
-          ggplot2::ggplot_build(plt)$layout$panel_scales_x[[1]]$range$range
-        modeldatg$probs_scaled <- modeldatg$probs / max(modeldatg$probs) *
-          diff(x_extent) * 20 + x_extent[1]
+        # Check if there is a statitical function account for distance between
+        # site and sea.
+        if(nrow(nshoredate$modeldat) > 1){
+
+          # For plotting purposes to close the geom_polygon on the y-axis
+          modeldatg <- rbind(c(0, 0, 0), nshoredate$modeldat)
+
+          # Code adapted from oxcAAR to plot density to y-axis
+          x_extent <-
+            ggplot2::ggplot_build(plt)$layout$panel_scales_x[[1]]$range$range
+          modeldatg$probs_scaled <- modeldatg$probs / max(modeldatg$probs) *
+            diff(x_extent) * 20 + x_extent[1]
 
 
-        plotdat <- data.frame(x = c(modeldatg$probs_scaled,
-                                    x_extent[1]:x_extent[2]),
-                              y = c(as.numeric(
-                                nshoredate$site_elev) - modeldatg$offset,
-                                    rep(as.numeric(nshoredate$site_elev),
-                                        length(x_extent[1]:x_extent[2]))))
+          plotdat <- data.frame(x = c(modeldatg$probs_scaled,
+                                      x_extent[1]:x_extent[2]),
+                                y = c(as.numeric(
+                                  nshoredate$site_elev) - modeldatg$offset,
+                                      rep(as.numeric(nshoredate$site_elev),
+                                          length(x_extent[1]:x_extent[2]))))
 
-        plt <- plt + ggplot2::geom_polygon(data = plotdat,
-                                            ggplot2::aes(x = .data$x,
-                                        y = .data$y), col = sitedistcol,
-                                 fill = sitedistcol, alpha = 0.6)
+          plt <- plt + ggplot2::geom_polygon(data = plotdat,
+                                              ggplot2::aes(x = .data$x,
+                                          y = .data$y), col = sitedistcol,
+                                   fill = sitedistcol, alpha = 0.6)
+          # If no statistical model was in use, i.e. shoreline_date run with
+          # model = "none", plot the elevation as a line
+        } else {
+          plt <- plt + ggplot2::geom_hline(
+            ggplot2::aes(yintercept = nshoredate$site_elev), col = sitedistcol)
+        }
         }
       }
 

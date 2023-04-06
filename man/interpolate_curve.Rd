@@ -18,7 +18,8 @@ is interpolated.}
 
 \item{isobases}{4 spatial lines representing the shoreline isobases of the
 existing displacement curves. Multiple sets of 4 isobases with different
-isobase directions can be provided (see \code{\link[=create_isobases]{create_isobases()}}).}
+isobase directions can be provided (see \code{\link[=create_isobases]{create_isobases()}}). Defaults to
+isobases with a direction of 327.}
 
 \item{power}{A numerical value indicating the inverse distance power for IDW.
 Defaults to 2.}

@@ -29,7 +29,7 @@ Imports:
     ggplot2,
     ggrepel,
     ggridges,
-    ggsn,
+    ggspatial,
     grid,
     scales,
     sf,

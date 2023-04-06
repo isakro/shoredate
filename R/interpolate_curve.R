@@ -9,7 +9,8 @@
 #'  is interpolated.
 #' @param isobases 4 spatial lines representing the shoreline isobases of the
 #'  existing displacement curves. Multiple sets of 4 isobases with different
-#'  isobase directions can be provided (see [create_isobases()]).
+#'  isobase directions can be provided (see [create_isobases()]). Defaults to
+#'  isobases with a direction of 327.
 #' @param power A numerical value indicating the inverse distance power for IDW.
 #'  Defaults to 2.
 #' @param cal_reso Numeric value specifying the resolution to use on the

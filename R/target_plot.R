@@ -1,18 +1,20 @@
 #' Target plot
 #'
 #' Function to plot the centroids of one or more sites to be dated, relative to
-#'  the shoreline isobases of the employed displacement curves. The basemap is a
-#'  simplified representation of the coastline within the study area. Calling
-#'  the function without providing a target displays the map with the isobases.
-#'  This can be combined with `create_isobases()` to visualise isobases with a
-#'  different direction than the default of 327.
+#'  the shoreline isobases of the employed displacement curves. The default
+#'  basemap is a simplified representation of the coastline within the study
+#'  area. Calling the function without providing a target displays the map with
+#'  the isobases. This can be combined with `create_isobases()` to visualise
+#'  isobases with a different direction than the default of 327.
 #'
 #' @param targets Objects of class `sf` representing the sites to be dated. The
 #'  first column beyond geom is taken as site name.
 #' @param isobases Spatial lines as object of class `sf` representing the
 #'  shoreline isobases. Defaults to isobases with a direction of 327, but
-#'  create_isobases() can be used to create isobases with other directions that
-#'  can then be passed to `target_plot()`.
+#'  `create_isobases()` can be used to create isobases with other directions
+#'  that can then be passed to `target_plot()`.
+#' @param basemap Object of class `sf` representing the study area. Defaults to
+#'  a light-weight basemap from https://www.naturalearthdata.com/
 #' @param greyscale Logical value indicating whether the plot should include
 #'  colours or not. Defaults to FALSE.
 #'
@@ -22,7 +24,7 @@
 #' @export
 #'
 #' @import ggrepel
-#' @importFrom ggsn scalebar
+#' @importFrom ggspatial annotation_scale
 #'
 #' @examples
 #' # Display the background map and default isobases
@@ -30,6 +32,7 @@
 #'
 target_plot <- function(targets = NA,
                         isobases = NA,
+                        basemap = NA,
                         greyscale = FALSE){
 
   if (greyscale) {
@@ -62,9 +65,11 @@ target_plot <- function(targets = NA,
   }
 
   # Load required background map distributed with the package
-  basemap <- sf::st_read(system.file("extdata/naturalearth_basemap.gpkg",
+  if(is.na(basemap)){
+    basemap <- sf::st_read(system.file("extdata/naturalearth_basemap.gpkg",
                                      package = "shoredate",
                                      mustWork = TRUE), quiet = TRUE)
+  }
 
   # Use default isobases if none are provided
   if (all(is.na(isobases))) {
@@ -80,10 +85,8 @@ target_plot <- function(targets = NA,
                                                    linetype = .data$name)) +
     ggplot2::scale_colour_manual(values = isobase_col) +
     ggplot2::scale_linetype_manual(values = isobase_line) +
-    ggsn::scalebar(data = basemap, dist = 20, dist_unit = "km",
-                   transform = FALSE, st.size = 4, height = 0.02,
-                   border.size = 0.1, st.dist = 0.03,
-                   anchor = c(x = 587964.8, y = 6483243.0)) +
+    ggspatial::annotation_scale(location = 'br',
+                                width_hint = 0.4, style = "ticks") +
     ggplot2::theme_bw() + ggplot2::theme(
       axis.title = ggplot2::element_blank(),
       axis.text.y = element_blank(),
@@ -120,7 +123,8 @@ target_plot <- function(targets = NA,
                            size = 2.25, shape = 21,
                            colour = "black") +
       ggrepel::geom_text_repel(data = targets,
-                               aes(label = .data$site_name, geometry = .data$x),
+                               aes(label = .data$site_name,
+                                   geometry = .data$x),
                                stat = "sf_coordinates")
   }
   # Create bounding box for constraining plot
