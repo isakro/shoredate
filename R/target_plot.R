@@ -117,6 +117,10 @@ target_plot <- function(targets = NA,
     check_target_location(targets[i, ])
     }
 
+    if(!("geom" %in% names(targets))){
+      st_geometry(targets) <- "geom"
+    }
+
     plt <- plt +
       ggplot2::geom_sf(data = suppressWarnings(sf::st_centroid(targets)),
                            fill = target_fill,
@@ -124,7 +128,7 @@ target_plot <- function(targets = NA,
                            colour = "black") +
       ggrepel::geom_text_repel(data = targets,
                                aes(label = .data$site_name,
-                                   geometry = .data$x),
+                                   geometry = .data$geom),
                                stat = "sf_coordinates")
   }
   # Create bounding box for constraining plot
