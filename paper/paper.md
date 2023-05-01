@@ -84,13 +84,12 @@ anthropogenic activity in Norway currently dates to around 9300 BCE
 more variable distances from the shoreline after c. 2500 BCE. This therefore 
 marks the upper temporal limit of the package.
 
-![The spatial and temporal coverage of the package. The first figure
-displays the location of the spatial extent in south-eastern Norway. The
-second figure displays the location of the isobases, representing contours
-along which the shoreline displacement has followed the same
-trajectory. The isobases correspond to the displacement curves in the
-third figure, where the temporal limits are marked with dashed
-lines.\label{fig:coverage}](../man/figures/coverage.png)
+![The spatial and temporal coverage of the package. A) The location of the 
+spatial coverage in south-eastern Norway. B) The location of the isobases that 
+represent contours along which the shoreline displacement has followed the same
+trajectory. B) The displacement curves corresponding to the isobases, where the 
+temporal limits are marked with dashed lines.
+\label{fig:coverage}](../man/figures/coverage_annotated.png)
 
 # Example of base functionality
 
