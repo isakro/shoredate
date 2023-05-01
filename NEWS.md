@@ -1,3 +1,5 @@
+# shoredate 1.0.2
+
 ## shoredate 1.0.2 (2023-05-01)
  - `shoredate_hdr()` and `shoreline_date()` now returns the weighted mean date.
  - `shoreline_date()` now has the parameter model, which accepts either "none" 
