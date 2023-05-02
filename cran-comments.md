@@ -1,7 +1,6 @@
 ## Release summary
 
-Resubmission of patch release. Was asked to change from citEntry() to bibentry()
-in the original submission.
+Patch release.
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs
