@@ -1,6 +1,6 @@
 # shoredate 1.0.2
 
-## shoredate 1.0.2 (2023-05-01)
+## shoredate 1.0.2 (2023-05-02)
  - `shoredate_hdr()` and `shoreline_date()` now returns the weighted mean date.
  - `shoreline_date()` now has the parameter model, which accepts either "none" 
  or "gamma". If "none" is specified then the distance between site and shoreline

@@ -57,7 +57,7 @@ As the method of shoreline dating is determined by relative sea-level change, it
 
 Note that spatial data used with the package should be set to WGS 84 / UTM zone 32N (EPSG:32632).
 
-```{r,  echo = FALSE, out.width = '100%'}
+```{r,  echo = FALSE, out.width = '90%', out.height = '90%'}
 knitr::include_graphics(
   "man/figures/coverage.png"
 )

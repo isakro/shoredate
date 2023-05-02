@@ -71,7 +71,7 @@ figure, which also indicates the temporal coverage of the package.
 Note that spatial data used with the package should be set to WGS 84 /
 UTM zone 32N (EPSG:32632).
 
-<img src="man/figures/coverage.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/coverage.png" width="90%" height="90%" style="display: block; margin: auto;" />
 
 As human occupation in the region only occurred some time after the
 retreat of the Fennoscandian Ice Sheet, the currently oldest known sites

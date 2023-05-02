@@ -87,7 +87,7 @@ marks the upper temporal limit of the package.
 ![The spatial and temporal coverage of the package. A) The location of the 
 spatial coverage in south-eastern Norway. B) The location of the isobases that 
 represent contours along which the shoreline displacement has followed the same
-trajectory. B) The displacement curves corresponding to the isobases, where the 
+trajectory. C) The displacement curves corresponding to the isobases, where the 
 temporal limits are marked with dashed lines.
 \label{fig:coverage}](../man/figures/coverage_annotated.png)
 
