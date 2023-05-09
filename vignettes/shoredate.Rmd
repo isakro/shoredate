@@ -22,19 +22,17 @@ vignette: >
 # Introduction
 The concept of dating sites based on their present-day elevation with reference to past shoreline displacement has been an important tool for archaeologists in northern Scandinavia since the early 1900s (e.g. Brøgger 1905). This is based on the observation that Stone Age sites in the region tend to have been located close to the contemporaneous shoreline when they were in use. Furthermore, following the retreat of the Fennoscandian Ice Sheet, the isostatic uplift has been so severe that despite corresponding eustatic sea-level rise, the relative sea-level has been falling throughout prehistory in large parts of this region. Within any given area where this is the case, the general pattern is thus that older sites will be located at higher altitudes than younger sites.
 
-This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the package is at present limited to coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west.
+This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the functionality of the package was developed for the purposes of dating coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west. However, in the [second vignette](doc/extending-shoredate.html) ways in which the core functionality of the package can be applied in other areas of the world are presented.
 
 ## Geographical and temporal coverage
 
 Shoreline dating of Stone Age sites in northern Scandinavia is based on the premise that coastal sites within the region tend to have been located on or close to the shoreline when they were in use. By reconstructing the past trajectory of shoreline displacement, this thus allows us to ascribe an approximate date to when the sites were in use, based on their present-day elevation. The method is therefore dependent on local relative sea-level change and the likely elevation of the sites above sea-level when they were in use.
 
-As the method is dependent on good geological reconstructions of shoreline displacement, *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The spatial coverage of *shoredate* is indicated in the maps below. Note that spatial data to be used with the package should be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632), which is the CRS used in the maps.
+As the method is dependent on good geological reconstructions of shoreline displacement, the full functionality of *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The core spatial coverage of *shoredate* is indicated in the maps below.
 
-<img src="../man/figures/coverage.png" alt="plot of chunk limit" width="100%" style="display: block; margin: auto;" />
+<img src="../man/figures/coverage.png" alt="plot of chunk limit" width="90%" style="display: block; margin: auto;" />
 
-A warning is given if one attempts to date a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to apply the method outside this limit, the dating procedure is still performed.
-
-Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* is 9469 BCE, although no sites are yet known to be that old. 9469 BCE is the latest start date among the geologically derived displacement curves. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
+Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
 
 ## Installing and loading *shoredate*
 
@@ -59,13 +57,15 @@ devtools::install_github("isakro/shoredate")
 When installed the package can be loaded.
 
 ```r
-library(shoredate)
+# library(shoredate)
 ```
 
 
 # Interpolating shoreline displacement to a site location
 
-The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. When calling `shoreline_date()` the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood, based on the four different geological reconstructions of shoreline displacement in the region. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
+The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a precompiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement in along the Norwegian Skagerrak coat. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
+
+Note that spatial geometries representing sites to which interpolate_curve() is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](doc/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
 
 
 ```r
@@ -76,7 +76,7 @@ target_point <- sf::st_sfc(sf::st_point(c(517250, 6527250)), crs = 32632)
 target_curve <- interpolate_curve(target_point)
 ```
 
-To visualise the interpolated curve alongside the geological reconstructions, the curve can be passed to `displacement_plot()`. A simple map showing the location of one or more target sites relative to the isobases can also be displayed by using the command `target_plot()`.
+To visualise the interpolated curve alongside the geological reconstructions, this can be passed to `displacement_plot()`. A simple map showing the location of one or more target sites relative to the isobases can also be displayed by using the command `target_plot()`.
 
 
 ```r
@@ -152,6 +152,22 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 ```
 
 <img src="shore-sparse-1.png" alt="plot of chunk sparse" style="display: block; margin: auto;" />
+
+## Finding the *terminus post quem* date
+
+It is also possible to not account for the likely distance between the site and the shoreline. This is done by setting the `model` parameter to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, the earliest possible date for when the site could have been in use, under the assumption that when the sea receeded from the site location marks the earliest possible point in time for the occupation of the site.
+
+
+```r
+# Date the example point, manually specifying it's elevation
+tpq_date <- shoreline_date(target_point, elevation = 58.5, model = "none")
+
+# Plot and adjust the position of the HDR label on the y-axis
+shoredate_plot(tpq_date, hdr_label_yadj = 0.9)
+```
+
+<img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date" style="display: block; margin: auto;" />
+
 
 ## Dating multiple sites
 
@@ -265,7 +281,7 @@ raster_date
 
 # Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straight-forward, as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Do note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straightforward, as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
 
 
 ```r
