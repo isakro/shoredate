@@ -20,7 +20,8 @@ Description: Provides tools for shoreline dating Stone Age sites located on the
   shoreline displacement.
 Language: en-US
 License: GPL (>= 3)
-URL: https://github.com/isakro/shoredate
+URL: https://github.com/isakro/shoredate,
+    https://isakro.github.io/shoredate/
 BugReports: https://github.com/isakro/shoredate/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

@@ -22,9 +22,9 @@ on or close to the shoreline when they were in use. The package and
 method as implemented here was originally developed for the Norwegian
 Skagerrak coast in south-eastern Norway, based on an empirically derived
 estimate of the likely elevation of sites above sea-level when they were
-occupied (Roalkvam 2023). However, do note that as the method is
-dependent on regularities in human behaviour, and as the Roalkvam (2023)
-study provides an initial formalisation of the method, it is hefted with
+occupied (Roalkvam 2023). However, note that as the method is dependent
+on regularities in human behaviour, and as the Roalkvam (2023) study
+provides an initial formalisation of the method, it is hefted with
 unexplored uncertainties. Consequently, the dates achieved with the
 package should be treated with care.
 
@@ -64,8 +64,8 @@ Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal
 (Romundset 2018). The region also formed the study area for Roalkvam
 (2023), in which the method and its parameters were derived. The
 remainder of this document and the [main vignette](doc/shoredate.html)
-focuses on this area. It is, however, possible to adapt the package to
-be applicable in other regions (as outlined in the [second
+focuses on this area. It is, however, possible to adapt the procedures
+for application in other regions, which is outlined in the [second
 vignette](doc/extending-shoredate.html).
 
 The location of the The shoreline isobases in the second figure
