@@ -120,7 +120,7 @@ overview_map <- target_plot(targets = orland,
 
 Having created a base plot, this can now be manipulated using other functions from the package `ggplot2`.
 
-```{r orland, result = FALSE}
+```{r orland, message = FALSE}
 overview_map <- overview_map +
         geom_sf(data = senorway, aes(col = name), fill = NA,
                    lwd = 0.5, show.legend = "polygon") +
@@ -138,7 +138,7 @@ overview_map <- overview_map +
 
 When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. The map is fairly simple, but can nonetheless be a useful excerise to make sure everything looks reasonable.
 
-```{r maps, result = FALSE}
+```{r maps, message = FALSE}
 # Create basemap
 examples_map <- target_plot(targets = target_points,
                       naturalearth_basemap = TRUE,

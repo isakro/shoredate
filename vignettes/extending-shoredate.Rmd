@@ -26,7 +26,7 @@ Finally, the default method used for shoreline dating in the package is based on
 
 ## Shoreline displacement curve for Ørland
 
-Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a list of one or more displacement curves, where each curve is represented as a data frame with the columns `bce`, `upperelev` and `lowerelev`. Here, upperelev and lowerelev denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE should here be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
+Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a list of one or more displacement curves, where each curve is represented as a data frame with the columns `bce`, `upperelev` and `lowerelev`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE defined by `bce` should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
 
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
@@ -60,7 +60,7 @@ displacement_plot(target_curve = orland_disp, displacement_curves = "") +
 
 <img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp" style="display: block; margin: auto;" />
 
-A note should be made here that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
+A note should be made here that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
 
 Furthermore, while variable uplift rates are also relevant for this area, this is not corrected for in this example. The example therefore focuses on the small area for which the curve was developed, where it can be assumed to be directly applicable. Functionality to adjust for variable displacement rates with  *shoredate* is only accommodated for the Skagerrak area through the function `interpolate_curve()`. Thus, if similar adjustments are to made in other areas, this will at present therefore have to be done independetly of *shoredate*, to which the adjusted curves can then be passed.
 
@@ -130,10 +130,6 @@ overview_map <- overview_map +
         ggtitle("Location of Ørland relative to the spatial limit in south-eastern Norway")
 ```
 
-```
-## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
-```
-
 When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. The map is fairly simple, but can nonetheless be a useful excerise to make sure everything looks reasonable.
 
 
@@ -154,13 +150,7 @@ examples_map <- examples_map +
         axis.ticks = element_line()) +
       coord_sf(datum = st_crs(target_points), expand = FALSE) +
       ggtitle("Location of example points in Ørland")
-```
 
-```
-## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
-```
-
-```r
 # Call overview map
 overview_map
 ```
@@ -203,7 +193,7 @@ terra::extract(elev_raster, terra::vect(target_points))[, -1]
 ## [1] 17.74339 19.53946
 ```
 
-This elevation is retrieved by `shoreline_date()` if the raster is passed to the `elevation` argument. However, just to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and manually providing the name of the sites and their elevations:
+This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and manually providing the name of the sites and their elevations:
 
 
 ```r
