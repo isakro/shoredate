@@ -1,6 +1,20 @@
 # shoredate (development version)
 
-# shoredate 1.0.2
+## shoredate 1.0.2.9000
+- Added a vignette that demonstrates how the package can be applied to other
+ regions outside south-eastern Norway (@benmarwick, #6).
+- Removed the function check_target_location() and set up more specific and
+ appropriate checks within interpolate_curve() and target_plot().
+- Added the package rnaturalearth to suggests in DESCRIPTION. This can be used
+ with target_plot() to create a map for any area of the world, extending the 
+ transferability of the package (@benmarwick, #6).
+- Made most graphical parameters in shoredate_plot(), displacement_plot() and 
+ target_plot() variables that be adjusted by the user (@kanishkan91, #5).
+- Adjusted how the "geom" column of targets passed to target_plot() are evaluated 
+  (@kanishkan91, #2).
+- Cleaned up code to reduce the amount of Import and ImportFrom in NAMESPACE,
+ opting instead for the package::function() syntax (@kanishkan91, #4).
+- Reduced the extent of the README.
 
 ## shoredate 1.0.2 (2023-05-02)
  - `shoredate_hdr()` and `shoreline_date()` now returns the weighted mean date.

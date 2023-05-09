@@ -14,15 +14,16 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
 <!-- badges: end -->
 
-The package *shoredate* offers methods to shoreline date Stone Age sites
-located along the Norwegian Skagerrak coast based on their present-day
-elevation and the trajectory of past relative sea-level change.
-Shoreline dating is based on the premise that coastal Stone Age sites in
-the region were located on or close to the shoreline when they were in
-use, and is implemented here based on an empirically derived estimate of
-the likely elevation of the sites above sea-level when they were
+The package *shoredate* offers methods to shoreline date coastal Stone
+Age sites based on their present-day elevation and the trajectory of
+past relative sea-level change. Shoreline dating is based on the premise
+that coastal Stone Age sites in large parts of Fennoscandia were located
+on or close to the shoreline when they were in use. The package and
+method as implemented here was originally developed for the Norwegian
+Skagerrak coast in south-eastern Norway, based on an empirically derived
+estimate of the likely elevation of sites above sea-level when they were
 occupied (Roalkvam 2023). However, do note that as the method is
-dependent on regularities in human behaviour and as the Roalkvam (2023)
+dependent on regularities in human behaviour, and as the Roalkvam (2023)
 study provides an initial formalisation of the method, it is hefted with
 unexplored uncertainties. Consequently, the dates achieved with the
 package should be treated with care.
@@ -54,22 +55,24 @@ library(shoredate)
 
 As the method of shoreline dating is determined by relative sea-level
 change, it is dependent on reliable geological reconstructions of this
-development. At present, the method as outlined here is therefore
-limited to being applicable in the region of south-eastern Norway
-between Horten in the north east to Arendal in the south west. This
-region has newly compiled shoreline displacement curves for Horten
-(Romundset 2021), Porsgrunn (Sørensen et al. 2014; Sørensen et
-al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and
-Arendal (Romundset 2018). The region also formed the study area for
-Roalkvam (2023), in which the method and its parameters were derived.
-The spatial coverage is indicated in the maps below. The shoreline
-isobases in the second figure represent contours along which the
-shoreline displacement has followed the same trajectory. These
-correspond to the displacement curves and place names in the third
-figure, which also indicates the temporal coverage of the package.
+development. The method as outlined here was therefore originally
+developed for the Skagerrak region of south-eastern Norway – extending
+from Horten in the north east to Arendal in the south west. This region
+has newly compiled shoreline displacement curves for Horten (Romundset
+2021), Porsgrunn (Sørensen et al. 2014; Sørensen et al. 2023),
+Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal
+(Romundset 2018). The region also formed the study area for Roalkvam
+(2023), in which the method and its parameters were derived. The
+remainder of this document and the [main vignette](doc/shoredate.html)
+focuses on this area. It is, however, possible to adapt the package to
+be applicable in other regions (as outlined in the [second
+vignette](doc/extending-shoredate.html).
 
-Note that spatial data used with the package should be set to WGS 84 /
-UTM zone 32N (EPSG:32632).
+The location of the The shoreline isobases in the second figure
+represent contours along which the shoreline displacement has followed
+the same trajectory. These correspond to the displacement curves and
+place names in the third figure, which also indicates the temporal
+coverage of the package.
 
 <img src="man/figures/coverage.png" width="90%" height="90%" style="display: block; margin: auto;" />
 
@@ -81,16 +84,16 @@ are yet known to be that old. A warning is given if a site location is
 outside the spatial extent outlined above, as this involves a more
 uncertain extrapolation of the development of shoreline displacement.
 However, the dating procedure is still performed. Conversely, if a site
-has an elevation that implies a date older than 9469 BCE the date is
-returned as NA and a warning is given.
+has an elevation that a date older than the lower temporal limit of the
+displacement curves it is returned as NA and a warning is given.
 
 In Roalkvam (2023) it was found that sites tend to be located on or
 close to the shoreline up until around the transition to the Late
 Neolithic, c. 2500 BCE, which thus marks the upper limit for the
-applicability of the method. A date that has a later start date than
-this is therefore returned as NA with a warning. The temporal range is
-indicated by the dashed lines in the plot above that displays the
-shoreline displacement curves. Additionally, if the probability of a
+applicability of the method in the region. A date that has a later start
+date than this is therefore returned as NA with a warning. The temporal
+range is indicated by the dashed lines in the plot above that displays
+the shoreline displacement curves. Additionally, if the probability of a
 date extends beyond 1950 CE (0 cal BP), thus indicating a site location
 below the present-day sea-level, this overshooting probability is cut
 off and the date is normalised to sum to unity.
@@ -178,78 +181,16 @@ The first column of a data frame beyond the geometry of the spatial
 objects will be taken to represent site names. If no such column exist,
 the sites are simply numbered as they are passed to `shoreline_date()`.
 
-## Shoreline dating multiple sites
-
-It is also possible to date multiple sites at once.
-
-``` r
-# Creating multiple points to be dated
-target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
-                              sf::st_point(c(538300, 6544250)),
-                              sf::st_point(c(517491, 6511426)),
-                              sf::st_point(c(502059, 6495402)))
-
-# Specifying the correct CRS and making the points a sf data frame
-target_points <- sf::st_as_sf(target_points, crs = 32632)
-
-# Adding example names
-target_points$name <- c("Example 1", "Example 2", "Example 3", "Example 4")
-# Adding fictitious site elevations
-target_points$elevation <- c(70, 46, 62, 30)
-
-# Perform shoreline dating
-target_dates <- shoreline_date(sites = target_points, 
-                               elevation = target_points$elevation)
-```
-
-``` r
-# Print the dates to console
-target_dates
-#> ===============
-#> Site:  Example 1
-#> Elevation:  70 
-#> 
-#> 95% HDR:
-#> 8610 BCE-6910 BCE
-#> 5880 BCE-5100 BCE
-#> ===============
-#> Site:  Example 2
-#> Elevation:  46 
-#> 
-#> 95% HDR:
-#> 6660 BCE-3180 BCE
-#> ===============
-#> Site:  Example 3
-#> Elevation:  62 
-#> 
-#> 95% HDR:
-#> 8940 BCE-7720 BCE
-#> ===============
-#> Site:  Example 4
-#> Elevation:  30 
-#> 
-#> 95% HDR:
-#> 7760 BCE-6020 BCE
-#> 5610 BCE-2400 BCE
-#> 2320 BCE-2140 BCE
-#> 110 CE-430 CE
-```
-
-The default behaviour when providing multiple shoreline dates to
-`shoredate_plot()` is to plot a series of individual plots. However,
-setting `multiplot = TRUE` collapses the dates on a single plot that is
-more sparse, ordering the sites from earliest to latest possible start
-date for the occupation of the sites.
-
-``` r
-shoredate_plot(target_dates, multiplot = TRUE)
-```
-
-<img src="man/figures/multiplot-1.png" style="display: block; margin: auto;" />
+## Further documentation
 
 The procedures outlined above have focused on the basic functions and
-default behaviours of the package. For further usage and a more detailed
-walk through, see the vignette by calling `vignette("shoredate")`.
+default behaviours of the package when dating a single site. For further
+usage and a more detailed walk through, see the main vignette by calling
+`vignette("shoredate")`.
+
+Furthermore, a second vignette which can be accessed with
+`vignette("extending-shoredate")` outlines ways in which the package can
+be applied to other regions.
 
 # References
 
