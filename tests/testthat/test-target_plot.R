@@ -11,6 +11,49 @@ set.seed(123)
 # To be reused
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
 
+test_that("throws error if CRS is undefined for targets", {
+  # skip_on_cran()
+  # skip("Skipped due to R CMD check failure on GitHub")
+  target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)))
+  err <- expect_error(target_plot(target_point))
+  expect_equal(err$message,
+      "The provided targets do not have a defined coordinate reference system.")
+})
+
+test_that("throws error if CRS is undefined for isobases", {
+  # skip_on_cran()
+  # skip("Skipped due to R CMD check failure on GitHub")
+  pts <- rbind(c(579570, 6582982), c(578000, 6582000))
+  isobase <- sf::st_linestring(pts)
+  err <- expect_error(target_plot(isobases = isobase))
+  expect_equal(err$message,
+    "The provided isobases do not have a defined coordinate reference system.")
+})
+
+test_that("throws error if CRS is undefined for basemap", {
+  # skip_on_cran()
+  # skip("Skipped due to R CMD check failure on GitHub")
+  pts1 <- rbind(c(579570, 6582982), c(578000, 6582000),
+                c(578100, 6582100), c(579570, 6582982))
+  pts2 <- rbind(c(570000, 6580000), c(578500, 6582500),
+                c(578700, 6582700), c(570000, 6580000))
+  basemap <- sf::st_polygon(list(pts1, pts2))
+  err <- expect_error(target_plot(basemap = basemap))
+  expect_equal(err$message,
+    "The provided basemap does not have a defined coordinate reference system.")
+})
+
+# test_that("gives warning if basemap and isobases do not intersect", {
+#   # skip_on_cran()
+#   # skip("Skipped due to R CMD check failure on GitHub")
+#   pts <- rbind(c(532791, 7065723), c(502791, 7005723), crs = 32632)
+#   isobase <-sf::st_as_sf(sf::st_sfc(sf::st_linestring(pts), crs = 32632))
+#   isobase$name <- "name"
+#   err <- expect_error(target_plot(isobases = isobase))
+#   expect_equal(err$message,
+#                "The provided basemap does not have a defined coordinate reference system.")
+# })
+
 test_that("returns expected plot when a target is passed", {
   # skip_on_cran()
   # skip("Skipped due to R CMD check failure on GitHub")
