@@ -42,11 +42,11 @@ test_that("wrong CRS throws error and that this is printed", {
                                    ". This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632)."))
 })
 
-test_that("gives warning if a site is located outside the limit of the study area", {
+test_that("gives warning if displacement is to be interpolated to a site located outside the limit of the study area", {
   skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(458310, 6544255)), crs = 32632)
   warn <- expect_warning(shoreline_date(site = target_point, elevation = 46))
-  expect_equal(warn$message, "Target location is not within the study area for which the method was derived.")
+  expect_equal(warn$message, "Target location is not within the study area for which the interpolation method was derived.")
 })
 
 test_that("gives warning and returns NA if date has a later start than 2500 BCE", {
@@ -107,7 +107,7 @@ test_that("finding site elevation from a raster works", {
 test_that("precomputing interpolation and passing site as a site name", {
   skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)
-  target_curve <- interpolate_curve(target_point)
+  precompiled_curve <- interpolate_curve(target_point)
   expect_snapshot(shoreline_date(site = "Example site", elevation = 60,
-                                 interpolated_curve = target_curve))
+                                 target_curve = precompiled_curve))
 })

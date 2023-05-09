@@ -66,6 +66,12 @@ test_that("returns expected plot when a single date is passed", {
   vdiffr::expect_doppelganger("plot with a single date", p)
 })
 
+test_that("returns expected plot without probability distribution of date", {
+  skip_on_cran()
+  p <- shoredate_plot(target_date, date_probability = FALSE)
+  vdiffr::expect_doppelganger("plot without probability", p)
+})
+
 test_that("returns expected plot in greyscale", {
   skip_on_cran()
   p <- shoredate_plot(target_date, greyscale = TRUE)
@@ -123,4 +129,19 @@ test_that("returns expected multiplot when multiple dates are passed", {
   target_dates <- shoreline_date(sites = target_points, elevation = c(46, 60))
   p <- shoredate_plot(target_dates, multiplot = TRUE)
   vdiffr::expect_doppelganger("plot with multiplot", p)
+})
+
+test_that("changing graphical parameters works", {
+  skip_on_cran()
+  p <- shoredate_plot(target_date,
+                      date_col = NA,
+                      date_fill = "gold",
+                      displacement_col = "blue",
+                      displacement_fill = "blue",
+                      site_elevation_col = "darkgreen",
+                      site_elevation_fill = "darkgreen",
+                      hdr_col = "hotpink",
+                      hdr_label_xadj = 0.5,
+                      hdr_label_yadj = 0.5)
+  vdiffr::expect_doppelganger("graphical parameters", p)
 })

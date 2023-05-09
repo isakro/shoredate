@@ -1,5 +1,5 @@
 ---
-title: 'shoredate: An R package for shoreline dating coastal Stone Age sites in south-eastern Norway'
+title: 'shoredate: An R package for shoreline dating coastal Stone Age sites'
 tags:
   - R
   - archaeology
@@ -33,8 +33,8 @@ since the early 1900s [e.g. @brogger1905] and is still widely applied today
 
 # Statement of need
 
-`shoredate` is an R package for shoreline dating Stone Age sites on the
-coast of south-eastern Norway, based on local geological reconstructions
+`shoredate` is an R package developed for shoreline dating Stone Age sites on 
+the coast of south-eastern Norway, based on local geological reconstructions
 of past relative sea-level change. Drawing on an empirically derived
 estimate of the likely elevation of the sites above sea-level when they
 were in use, the method for shoreline dating implemented in the package was 
@@ -47,12 +47,12 @@ non-probabilistic point estimates of shoreline dates based on data last
 updated in 2002.
 
 `shoredate` is aimed at providing researchers and students dealing with
-the coastal Stone Age of south-eastern Norway with tools for
+the coastal Stone Age of the region with tools for
 performing and handling shoreline dates. This complements
 software for handling radiocarbon dates and other sources of
 temporal data, such as the R packages `rcarbon` [@crema2021], `bchron`
 [@haslett2008], `oxcAAR` [@hinz2021], `kairos` [@frerebeau2022] and
-`ArchaeoPhases` [@philippe2020], as well as proprietary software such as
+`ArchaeoPhases` [@philippe2020], as well as closed-source software such as
 `OxCal` [@bronkramsey2009].
 
 Shoreline dating is frequently applied in the research and cultural
@@ -67,42 +67,46 @@ setting.
 # Spatial and temporal coverage
 
 As the method of shoreline dating is dependent on reliable
-reconstructions of relative sea-level change, the package is at present
-limited to being applicable in the coastal region between Horten in the
-north east to Arendal in the south west (\autoref{fig:coverage}).
-Geologically derived displacement curves from this region have recently
-been compiled for Skoppum in Horten [@romundset2021], Gunnarsrød in
-Porsgrunn [@sorensen2023], Hanto in Tvedestrand [@romundset2018] and Bjørnebu in
-Arendal [@romundset2018b]. The spatial coverage of `shoredate`  will be extended
-to surrounding regions as forthcoming data on shoreline displacement
-becomes available. 
+reconstructions of relative sea-level change, the package was developed to be 
+applied in the coastal region between Horten in the north east to Arendal in the
+south west (\autoref{fig:coverage}). Geologically derived displacement curves 
+from this region have recently been published for Skoppum in Horten 
+[@romundset2021], Gunnarsrød in Porsgrunn [@sorensen2023], Hanto in Tvedestrand
+[@romundset2018] and Bjørnebu in Arendal [@romundset2018b]. The spatial coverage
+of `shoredate`  will be extended to surrounding area as forthcoming data on 
+shoreline displacement becomes available. Furthermore, although the direct 
+applicability of the method in other regions remains undetermined,
+suggestions and examples of how such extensions can be achieved is included in
+the documentation for the package.
 
-Following from the latest start date among the displacement curves, 
-9469 BCE marks the lower temporal limit of the package. The oldest verified 
-anthropogenic activity in Norway currently dates to around 9300 BCE 
-[@glorstad2016]. In @roalkvam2023 it was found that sites tend to be located at 
-more variable distances from the shoreline after c. 2500 BCE. This therefore 
-marks the upper temporal limit of the package.
+Following from the latest start date among the geological displacement curves, 
+9469 BCE marks the lower temporal limit of the package within the spatial limit 
+in south-eastern Norway. The oldest verified anthropogenic activity in Norway 
+currently dates to around 9300 BCE [@glorstad2016]. In @roalkvam2023 it was 
+found that sites in the region tend to be located at more variable distances 
+from the shoreline after c. 2500 BCE. This therefore marks the upper temporal 
+limit for shoreline dating in the region.
 
-![The spatial and temporal coverage of the package. A) The location of the 
-spatial coverage in south-eastern Norway. B) The location of the isobases that 
-represent contours along which the shoreline displacement has followed the same
-trajectory. C) The displacement curves corresponding to the isobases, where the 
-temporal limits are marked with dashed lines.
+![The spatial and temporal coverage for which the package was developed. A) The 
+location of the spatial coverage in south-eastern Norway. B) The location of the
+isobases that represent contours along which the shoreline displacement has 
+followed the same trajectory. C) The displacement curves corresponding to the 
+isobases, where the temporal limits are marked with dashed lines.
 \label{fig:coverage}](../man/figures/coverage_annotated.png)
 
 # Example of base functionality
 
-To shoreline date a site, the site geometry has to provided as a spatial object 
-of class `sf` from the `sf` package [@pebesma2018]. The elevation of the site
-above present sea-level must be provided when running `shoreline_date()`. This
-can be done by either manually specifying the site elevation, or by providing an 
-elevation raster of class `SpatRaster` from the `terra` package [@hijmans2022] 
-from where this is derived. When calling `shoreline_date()`, the trajectory of 
-shoreline displacement at the location of the site is interpolated under the 
-hood with the function `interpolate_curve()`, using inverse distance
-weighting. This is based on the distance between the site and the isobases of
-the displacement curves.
+To date a site, its elevation above present sea-level must be provided when 
+running the function `shoreline_date()`. This can be done by either manually
+specifying the site elevation, or by providing an elevation raster of class 
+`SpatRaster` from the `terra` package [@hijmans2022] from where this is derived.
+Unless a pre-compiled curve is provided, the trajectory of shoreline 
+displacement at the location of the site is then interpolated under the hood 
+with the function  `interpolate_curve()`, using inverse distance weighting when 
+`shoreline_date()` is called. This is based on the distance between the site and 
+the isobases of the displacement curves. To perform this interpolation, the site
+geometry has to provided as a spatial object of class `sf` from the `sf` 
+package [@pebesma2018].
 
 \autoref{fig:example_site} shows the location of an example site,
 plotted by passing it to `target_plot()`. \autoref{fig:example_curve} 

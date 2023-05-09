@@ -71,37 +71,37 @@
 <text x='587.77' y='516.90' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
 <text x='376.10' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='40.97px' lengthAdjust='spacingAndGlyphs'>BCE/CE</text>
 <text transform='translate(13.05,264.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='153.50px' lengthAdjust='spacingAndGlyphs'>Meters above present sea-level</text>
-<rect x='191.66' y='542.28' width='368.89' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='202.62' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='204.35' y1='556.40' x2='218.17' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='204.35' y1='556.40' x2='218.17' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='204.35' y1='556.40' x2='218.17' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-linecap: butt;' />
-<line x1='204.35' y1='556.40' x2='218.17' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-linecap: butt;' />
-<rect x='271.47' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='273.20' y1='556.40' x2='287.02' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='273.20' y1='556.40' x2='287.02' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='273.20' y1='556.40' x2='287.02' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-linecap: butt;' />
-<line x1='273.20' y1='556.40' x2='287.02' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-linecap: butt;' />
-<rect x='348.63' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='350.36' y1='556.40' x2='364.18' y2='556.40' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='350.36' y1='556.40' x2='364.18' y2='556.40' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='350.36' y1='556.40' x2='364.18' y2='556.40' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<line x1='350.36' y1='556.40' x2='364.18' y2='556.40' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<rect x='407.20' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='408.93' y1='556.40' x2='422.76' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='408.93' y1='556.40' x2='422.76' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='408.93' y1='556.40' x2='422.76' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-linecap: butt;' />
-<line x1='408.93' y1='556.40' x2='422.76' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-linecap: butt;' />
-<rect x='461.86' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='463.59' y1='556.40' x2='477.41' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='463.59' y1='556.40' x2='477.41' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-opacity: 0.40; stroke-linecap: butt;' />
-<line x1='463.59' y1='556.40' x2='477.41' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-linecap: butt;' />
-<line x1='463.59' y1='556.40' x2='477.41' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-linecap: butt;' />
-<text x='225.38' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='40.61px' lengthAdjust='spacingAndGlyphs'>Porsgrunn</text>
-<text x='294.23' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='48.92px' lengthAdjust='spacingAndGlyphs'>Tvedestrand</text>
-<text x='371.39' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='30.33px' lengthAdjust='spacingAndGlyphs'>Arendal</text>
-<text x='429.96' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='26.42px' lengthAdjust='spacingAndGlyphs'>Horten</text>
-<text x='484.62' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='70.45px' lengthAdjust='spacingAndGlyphs'>Interpolated curve</text>
+<rect x='202.18' y='542.28' width='347.84' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='213.14' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='214.87' y1='556.40' x2='228.69' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='214.87' y1='556.40' x2='228.69' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='214.87' y1='556.40' x2='228.69' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-linecap: butt;' />
+<line x1='214.87' y1='556.40' x2='228.69' y2='556.40' style='stroke-width: 1.07; stroke: #006400; stroke-linecap: butt;' />
+<rect x='281.99' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='283.72' y1='556.40' x2='297.54' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='283.72' y1='556.40' x2='297.54' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='283.72' y1='556.40' x2='297.54' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-linecap: butt;' />
+<line x1='283.72' y1='556.40' x2='297.54' y2='556.40' style='stroke-width: 1.07; stroke: #0000FF; stroke-linecap: butt;' />
+<rect x='359.15' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='360.88' y1='556.40' x2='374.71' y2='556.40' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='360.88' y1='556.40' x2='374.71' y2='556.40' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='360.88' y1='556.40' x2='374.71' y2='556.40' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<line x1='360.88' y1='556.40' x2='374.71' y2='556.40' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<rect x='417.73' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='419.45' y1='556.40' x2='433.28' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='419.45' y1='556.40' x2='433.28' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='419.45' y1='556.40' x2='433.28' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-linecap: butt;' />
+<line x1='419.45' y1='556.40' x2='433.28' y2='556.40' style='stroke-width: 1.07; stroke: #FF8C00; stroke-linecap: butt;' />
+<rect x='472.38' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='474.11' y1='556.40' x2='487.93' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='474.11' y1='556.40' x2='487.93' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<line x1='474.11' y1='556.40' x2='487.93' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-linecap: butt;' />
+<line x1='474.11' y1='556.40' x2='487.93' y2='556.40' style='stroke-width: 1.07; stroke: #FF0000; stroke-linecap: butt;' />
+<text x='235.90' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='40.61px' lengthAdjust='spacingAndGlyphs'>Porsgrunn</text>
+<text x='304.75' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='48.92px' lengthAdjust='spacingAndGlyphs'>Tvedestrand</text>
+<text x='381.91' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='30.33px' lengthAdjust='spacingAndGlyphs'>Arendal</text>
+<text x='440.49' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='26.42px' lengthAdjust='spacingAndGlyphs'>Horten</text>
+<text x='495.14' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='49.40px' lengthAdjust='spacingAndGlyphs'>Target curve</text>
 <text x='37.69' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='157.03px' lengthAdjust='spacingAndGlyphs'>plot with interpolated curve</text>
 </g>
 </svg>

@@ -10,8 +10,6 @@
 #' @return A line plot showing the provided summed probability distribution.
 #' @export
 #'
-#' @import ggplot2
-#'
 #' @examples
 #' # Create example points
 #' target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),

@@ -28,8 +28,6 @@
 #'
 #' @export
 #'
-#' @import sf
-#'
 #' @examples
 #' # Create example point using the required coordinate system
 #' # WGS84 / zone UTM32N (EPSG: 32632)
@@ -45,9 +43,25 @@ interpolate_curve <- function(target,
                               cal_reso = 10,
                               verbose = FALSE){
 
+  # Load the spatial limit in south-eastern Norway
+  spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
+                                           package = "shoredate"), quiet = TRUE)
+
   # Check that the target location is set to correct CRS (causes error if it
   # is not) and is located within the study area (prints warning if it is not)
-  check_target_location(target)
+  if (is.na(sf::st_crs(target))) {
+    stop("Undefined coordinate reference system. This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632).")
+  }
+
+  if (sf::st_crs(target)$epsg != 32632) {
+    stop(paste0("Target has coordinate reference system with EPSG ",
+                sf::st_crs(target)$epsg,
+                ". This needs to be set to WGS84 / UTM zone 32N (EPSG: 32632)."))
+  }
+
+  if (!(sf::st_intersects(target, spatial_limit, sparse = FALSE))) {
+    warning(paste("Target location is not within the study area for which the interpolation method was derived."))
+  }
 
   # Load existing displacement curves
   displacement_curves <- get(load(system.file("extdata/displacement_curves.rda",

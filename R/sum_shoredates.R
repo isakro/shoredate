@@ -107,7 +107,7 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
     sdates <- do.call(rbind, dates_dfs)
 
     # Sum probability by year
-    sdates <-  aggregate(sdates$probability,
+    sdates <-  stats::aggregate(sdates$probability,
                          by = list(bce = sdates$bce), FUN = sum, na.rm = TRUE)
 
   # If the dates are not sparse
@@ -138,7 +138,7 @@ sum_shoredates <- function(shoreline_dates, cut_off = -2500,
 
     # Collapse the retrieved data frames
     sdates <- do.call(rbind, dates_dfs)
-    sdates <-  aggregate(sdates$probability,
+    sdates <-  stats::aggregate(sdates$probability,
                          by = list(bce = sdates$bce), FUN = sum, na.rm = TRUE)
   }
 

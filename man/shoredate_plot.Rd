@@ -6,6 +6,7 @@
 \usage{
 shoredate_plot(
   shorelinedates,
+  date_probability = TRUE,
   elevation_distribution = TRUE,
   displacement_curve = TRUE,
   site_name = FALSE,
@@ -14,11 +15,24 @@ shoredate_plot(
   highest_density_region = TRUE,
   hdr_label = TRUE,
   multiplot = FALSE,
+  date_col = NA,
+  date_fill = "darkgrey",
+  displacement_col = "red",
+  displacement_fill = "red",
+  site_elevation_col = "#046c9a",
+  site_elevation_fill = "#046c9a",
+  hdr_col = "black",
+  hdr_label_xadj = 0.2,
+  hdr_label_yadj = 0.3,
   greyscale = FALSE
 )
 }
 \arguments{
 \item{shorelinedates}{Object of class \code{shoreline_date}.}
+
+\item{date_probability}{Logical value indicating whether the
+probability distribution of the shoreline date should be plotted.
+Defaults to TRUE.}
 
 \item{elevation_distribution}{Logical value indicating whether the
 distribution describing the distance between site and shoreline should be
@@ -28,7 +42,7 @@ displayed. Default is TRUE.}
 curve should be displayed. Default is TRUE.}
 
 \item{site_name}{Logical value indicating whether the name of the site should
-be printed. Defaults to FALSE.}
+be printed in the header of the plot. Defaults to FALSE.}
 
 \item{parameters}{Logical value indicating whether the parameters of the
 statistical function should be displayed. Default is FALSE.}
@@ -47,8 +61,38 @@ plotted individually, or be collapsed into a single plot. The only other
 graphical option with \code{multiplot} set to TRUE is \code{highest_density_region}.
 Default is FALSE.}
 
+\item{date_col}{Character value specifying the outline colour of the
+probability distribution of the shoreline date.}
+
+\item{date_fill}{Character value specifying the fill colour of the
+probability distribution of the shoreline date.}
+
+\item{displacement_col}{Character value specifying the outline colour of the
+displacement curve.}
+
+\item{displacement_fill}{Character value specifying the fill colour of the
+displacement curve.}
+
+\item{site_elevation_col}{Character value specifying the outline colour of
+the distribution describing the likely distance between site and shoreline.}
+
+\item{site_elevation_fill}{Character value specifying the fill colour of
+the distribution describing the likely distance between site and shoreline.}
+
+\item{hdr_col}{Character value specifying the colour of the line
+segment giving the highest density region of the shoreline date.}
+
+\item{hdr_label_xadj}{Numerical value between 0 and 1 specifying the position
+of the HDR label on the x-axis. Increasing the value moves the label further
+from the plot border. Defaults to 0.2.}
+
+\item{hdr_label_yadj}{Numerical value between 0 and 1 specifying the position
+of the HDR label on the y-axis. Increasing the value moves the label further
+from the plot border. Defaults to 0.3.}
+
 \item{greyscale}{Logical value indicating whether the plot should be in
-greyscale or not. Defaults to FALSE.}
+greyscale or not. If TRUE, overrides other colour parameters.
+Defaults to FALSE.}
 }
 \value{
 Plot(s) displaying shoreline dates and associated metadata.

@@ -3,13 +3,16 @@
 #' Function for plotting shoreline dates along with associated metadata.
 #'
 #' @param shorelinedates Object of class `shoreline_date`.
+#' @param date_probability Logical value indicating whether the
+#'  probability distribution of the shoreline date should be plotted.
+#'  Defaults to TRUE.
 #' @param elevation_distribution Logical value indicating whether the
 #'  distribution describing the distance between site and shoreline should be
 #'  displayed. Default is TRUE.
 #' @param displacement_curve Logical value indicating whether the displacement
 #'  curve should be displayed. Default is TRUE.
 #' @param site_name Logical value indicating whether the name of the site should
-#'  be printed. Defaults to FALSE.
+#'  be printed in the header of the plot. Defaults to FALSE.
 #' @param parameters Logical value indicating whether the parameters of the
 #'  statistical function should be displayed. Default is FALSE.
 #' @param isobase_direction  Logical value indicating whether the direction of
@@ -22,8 +25,29 @@
 #'  plotted individually, or be collapsed into a single plot. The only other
 #'  graphical option with `multiplot` set to TRUE is `highest_density_region`.
 #'  Default is FALSE.
+#' @param date_col Character value specifying the outline colour of the
+#'  probability distribution of the shoreline date.
+#' @param date_fill Character value specifying the fill colour of the
+#'  probability distribution of the shoreline date.
+#' @param displacement_col Character value specifying the outline colour of the
+#'  displacement curve.
+#' @param displacement_fill Character value specifying the fill colour of the
+#'  displacement curve.
+#' @param site_elevation_col Character value specifying the outline colour of
+#'  the distribution describing the likely distance between site and shoreline.
+#' @param site_elevation_fill Character value specifying the fill colour of
+#'  the distribution describing the likely distance between site and shoreline.
+#' @param hdr_col Character value specifying the colour of the line
+#'  segment giving the highest density region of the shoreline date.
+#' @param hdr_label_xadj Numerical value between 0 and 1 specifying the position
+#'  of the HDR label on the x-axis. Increasing the value moves the label further
+#'  from the plot border. Defaults to 0.2.
+#' @param hdr_label_yadj Numerical value between 0 and 1 specifying the position
+#'  of the HDR label on the y-axis. Increasing the value moves the label further
+#'  from the plot border. Defaults to 0.3.
 #' @param greyscale Logical value indicating whether the plot should be in
-#'  greyscale or not. Defaults to FALSE.
+#'  greyscale or not. If TRUE, overrides other colour parameters.
+#'  Defaults to FALSE.
 #'
 #' @details `shoredate_plot()` returns a plot displaying the provided shoreline
 #'  dates. A single plot is created for each date, where a range of settings can
@@ -38,8 +62,7 @@
 #'
 #' @export
 #'
-#' @import ggplot2
-#' @import ggridges
+#' @importFrom ggplot2 .data
 #'
 #' @examples
 #' # Create example point with correct coordinate reference system
@@ -52,6 +75,7 @@
 #'
 #' shoredate_plot(target_date)
 shoredate_plot <- function(shorelinedates,
+                           date_probability = TRUE,
                            elevation_distribution = TRUE,
                            displacement_curve = TRUE,
                            site_name = FALSE,
@@ -60,15 +84,23 @@ shoredate_plot <- function(shorelinedates,
                            highest_density_region = TRUE,
                            hdr_label = TRUE,
                            multiplot = FALSE,
+                           date_col = NA,
+                           date_fill = "darkgrey",
+                           displacement_col = "red",
+                           displacement_fill = "red",
+                           site_elevation_col = "#046c9a",
+                           site_elevation_fill = "#046c9a",
+                           hdr_col = "black",
+                           hdr_label_xadj = 0.2,
+                           hdr_label_yadj = 0.3,
                            greyscale = FALSE){
 
 
   if (greyscale) {
-    dispcol <- sitedistcol <- "black"
-    dispfill <- NA
-  } else {
-    dispcol <- dispfill <- "red"
-    sitedistcol <- "#046c9a"
+    displacement_col <- site_elevation_col <- site_elevation_fill <-
+        hdr_col <-"black"
+    date_fill <- "darkgrey"
+    displacement_fill <- date_col <- NA
   }
 
   # Keep track of number of dates with all NA values (out of bounds)
@@ -93,20 +125,48 @@ shoredate_plot <- function(shorelinedates,
       # Remove zeroes for visualisation
       dategrid <- nshoredate$date[nshoredate$date$probability > 0, ]
 
-      plt <- ggplot2::ggplot(data = dategrid) +
-      ggridges::geom_ridgeline(ggplot2::aes(x = .data$bce, y = 1,
-                       height = .data$probability * 10000/nshoredate$cal_reso),
-                               colour = NA, fill = "darkgrey", alpha = 0.7) +
-      ggplot2::labs(y = "Meters above present sea-level",
+      # If there is a displacement curve (this is not returned from
+      # shoreline_date() with sum_isobase_directions = TRUE), find earliest
+      # start date of displacement curve for adjusting x-axis limit
+      mindisp <- ifelse(!all(is.na(nshoredate$dispcurve)),
+                        min(nshoredate$dispcurve$bce),  min(dategrid$bce)-1251)
+
+      plt <- ggplot2::ggplot() +
+         ggplot2::labs(y = "Meters above present sea-level",
                     x = "Shoreline date (BCE/CE)") +
         ggplot2::theme_bw() +
         ggplot2::scale_x_continuous(expand = c(0,0),
-                                    limits = c(min(dategrid$bce) - 1250,
+                                    limits = c(
+                                      ifelse(mindisp > min(dategrid$bce) - 1250,
+                                             mindisp, min(dategrid$bce) - 1250),
                                       ifelse(
                                         (max(nshoredate$hdr_end) + 1250) < 1950,
                                     max(nshoredate$hdr_end) + 1250, 1950))) +
         ggplot2:: coord_cartesian(ylim = c(0,
                                   as.numeric(nshoredate$site_elev) + 10))
+
+      if(date_probability){
+
+        # Scaling constant for the probability of the date
+        dr <- 10000
+
+        # If there is a displacement curve, scale the probability by the range
+        # of elevation values
+        if(!all(is.na(nshoredate$dispcurve))){
+        dr <- 100 * (max(nshoredate$dispcurve$upperelev,
+                  na.rm = TRUE) - min(nshoredate$dispcurve$upperelev,
+                                      na.rm = TRUE))
+        }
+
+        plt <- plt +
+          ggridges::geom_ridgeline(
+            data = dategrid,
+            ggplot2::aes(x = .data$bce, y = 1,
+            height = .data$probability * dr/nshoredate$cal_reso),
+            colour = date_col,
+            fill = date_fill,
+            alpha = 0.7)
+      }
 
       if (highest_density_region) {
         hdrs <- data.frame(start = nshoredate$hdr_start,
@@ -118,7 +178,7 @@ shoredate_plot <- function(shorelinedates,
                                 ggplot2::aes(x = .data$start,
                                             xend = .data$end,
                                             y = 0, yend = 0),
-                                            col = "black")
+                                            col = hdr_col)
       }
 
       paramval <- as.numeric(nshoredate$model_parameters)
@@ -176,15 +236,15 @@ shoredate_plot <- function(shorelinedates,
                                ggplot2::aes(x = .data$bce,
                                             ymin = .data$lowerelev,
                                             ymax = .data$upperelev),
-                               fill = dispfill, alpha = 0.2) +
+                               fill = displacement_fill, alpha = 0.2) +
           ggplot2::geom_line(data = nshoredate$dispcurve,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$upperelev),
-                             colour = dispcol, na.rm = TRUE) +
+                             colour = displacement_col, na.rm = TRUE) +
           ggplot2::geom_line(data = nshoredate$dispcurve,
                              ggplot2::aes(x = .data$bce,
                                           y = .data$lowerelev),
-                             colour = dispcol, na.rm = TRUE)
+                             colour = displacement_col, na.rm = TRUE)
         }
       }
 
@@ -216,13 +276,16 @@ shoredate_plot <- function(shorelinedates,
 
           plt <- plt + ggplot2::geom_polygon(data = plotdat,
                                               ggplot2::aes(x = .data$x,
-                                          y = .data$y), col = sitedistcol,
-                                   fill = sitedistcol, alpha = 0.6)
+                                          y = .data$y),
+                                          col = site_elevation_col,
+                                          fill = site_elevation_fill,
+                                          alpha = 0.6)
           # If no statistical model was in use, i.e. shoreline_date run with
           # model = "none", plot the elevation as a line
         } else {
           plt <- plt + ggplot2::geom_hline(
-            ggplot2::aes(yintercept = nshoredate$site_elev), col = sitedistcol)
+            ggplot2::aes(yintercept = nshoredate$site_elev),
+                         col = site_elevation_col)
         }
         }
       }
@@ -237,7 +300,15 @@ shoredate_plot <- function(shorelinedates,
 
         label_text <- paste0(hdrs$prob, "% HDR:\n", label_hdrs)
 
-       plt <- plt + annotate_custom(label_text, x = 0.9, y = 0.8, hjust = 0)
+        yrange <- plt$coordinates$limits$y
+        xrange <- ggplot2::layer_scales(plt)$x$range$range
+        yadj <-  yrange[2] - (yrange[2] - yrange[1]) * hdr_label_yadj
+        xadj <- xrange[2] - (xrange[2] - xrange[1]) * hdr_label_xadj
+
+        plt <- plt +
+          ggplot2::annotate("text", x = xadj, y = yadj, label = label_text)
+
+        # plt <- plt + annotate_custom(label_text, x = 0.5, y = 0.5, hjust = 0)
       }
 
       if (!all(is.na(nshoredate$date$probability))) {
@@ -290,7 +361,7 @@ shoredate_plot <- function(shorelinedates,
     }
 
     # Identify if any site have date probability of NA
-    probsums <- aggregate(dates_df$probability, by =
+    probsums <- stats::aggregate(dates_df$probability, by =
                           list(dates_df$site_name),
                           FUN = sum)
 
@@ -312,11 +383,6 @@ shoredate_plot <- function(shorelinedates,
       ggplot2::geom_segment(data = hdrs, ggplot2::aes(x = .data$start,
                                                       xend = .data$end,
                                        yend = .data$site_name), col = NA) +
-      ggridges::geom_ridgeline(data = dates_dfna,
-        ggplot2::aes(x = .data$bce,
-                     y = .data$site_name,
-                      height = .data$probability * 100/cal_reso),
-                     colour = NA, fill = "darkgrey", alpha = 0.7) +
       ggplot2::labs(y = "", x = "Shoreline date (BCE/CE)") +
       ggplot2::theme_bw() +
       ggplot2::scale_x_continuous(expand = c(0,0),
@@ -324,18 +390,27 @@ shoredate_plot <- function(shorelinedates,
                                              ifelse(
                                                (max(hdrs$end) + 1250) < 1950,
                                                max(hdrs$end) + 1250, 1950)))
+    if(date_probability){
+      plt <- plt +
+        ggridges::geom_ridgeline(data = dates_dfna,
+                        ggplot2::aes(x = .data$bce,
+                                     y = .data$site_name,
+                                     height = .data$probability * 100/cal_reso),
+                                 colour = date_col,
+                                 fill = date_fill,
+                                 alpha = 0.7)
+    }
 
 
     if (highest_density_region) {
-
       # Add HDR segments
       plt <- plt +
              ggplot2::geom_linerange(data = hdrs,
                           ggplot2::aes(xmin = .data$start, xmax = .data$end,
                           y = .data$site_name), linewidth = 0.5,
-                          col = "black",
-                          # Parameter preserve = "single" causes warning
-                          # that I can not make sense of or find any info on
+                          col = hdr_col,
+                          # Parameter preserve = "single" causes a warning
+                          # that I can not make sense of.
                        position = ggplot2::position_dodge(width = 0.05,
                                                  preserve = "single"),
                        inherit.aes = FALSE)

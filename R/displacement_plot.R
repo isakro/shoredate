@@ -1,11 +1,11 @@
 #' Plot shoreline displacement curves
 #'
 #' Function for plotting shoreline displacement curves. Calling to plot without
-#'  providing interpolated curves will display the four underlying curves.
+#'  providing a target curve will display the four underlying geologically
+#'  derived displacement curves.
 #'
-#' @param interpolated_curve List holding one or more interpolated shoreline
-#'  displacement curves.
-#'@param displacement_curves Character vector specifying which geologically
+#' @param target_curve List holding one or more shoreline displacement curves.
+#' @param displacement_curves Character vector specifying which geologically
 #'  informed displacement curves that should be plotted. Accepted values are
 #'  `c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")`. All are included by
 #'  default.
@@ -13,16 +13,14 @@
 #'  greyscale or not. Defaults to FALSE.
 #'
 #' @return A plot displaying the underlying shoreline displacement curves and,
-#'  if provided, an interpolated curve.
+#'  if provided, a target curve.
 #' @export
-#'
-#' @import ggplot2
 #'
 #' @examples
 #' # Empty plot for speed
 #' displacement_plot(displacement_curves = "")
 #'
-displacement_plot <- function(interpolated_curve = NA,
+displacement_plot <- function(target_curve = NA,
                               displacement_curves = c("Horten", "Porsgrunn",
                                                      "Tvedestrand", "Arendal"),
                               greyscale = FALSE){
@@ -37,7 +35,7 @@ displacement_plot <- function(interpolated_curve = NA,
   dispdat <- dispdat[dispdat$name %in% displacement_curves,]
 
   if (greyscale) {
-    if (is.na(interpolated_curve)) {
+    if (is.na(target_curve)) {
 
       colour_scheme <- c("Horten" = "black",
                          "Porsgrunn" = "black",
@@ -54,17 +52,17 @@ displacement_plot <- function(interpolated_curve = NA,
                          "Porsgrunn" = "black",
                          "Tvedestrand" = "black",
                          "Arendal" = "black",
-                         "Interpolated curve" = "black")
+                         "Target curve" = "black")
 
       line_scheme <- c("Horten" = "twodash",
                        "Porsgrunn" = "dashed",
                        "Tvedestrand" = "dotted",
                        "Arendal" = "longdash",
-                       "Interpolated curve" = "solid")
+                       "Target curve" = "solid")
     }
   } else {
 
-      if (is.na(interpolated_curve)) {
+      if (is.na(target_curve)) {
 
       colour_scheme <- c("Horten" = "darkorange",
                          "Porsgrunn" = "darkgreen",
@@ -82,13 +80,13 @@ displacement_plot <- function(interpolated_curve = NA,
                            "Porsgrunn" = "darkgreen",
                   "Tvedestrand" = "blue",
                   "Arendal" = "black",
-                  "Interpolated curve" = "red")
+                  "Target curve" = "red")
 
         line_scheme <- c("Horten" = "solid",
                         "Porsgrunn" = "solid",
                          "Tvedestrand" = "solid",
                          "Arendal" = "solid",
-                         "Interpolated curve" = "solid")
+                         "Target curve" = "solid")
     }
   }
 
@@ -101,7 +99,7 @@ displacement_plot <- function(interpolated_curve = NA,
                    legend.position = "bottom",
                    legend.direction = "horizontal")
 
-    if (any(is.na(interpolated_curve))) {
+    if (any(is.na(target_curve))) {
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,
@@ -120,10 +118,10 @@ displacement_plot <- function(interpolated_curve = NA,
         ggplot2::scale_linetype_manual(values = line_scheme)
 
     } else {
-      intcurves <- as.data.frame(do.call(rbind, interpolated_curve))
-      intcurves$name <- "Interpolated curve"
+      intcurves <- as.data.frame(do.call(rbind, target_curve))
+      intcurves$name <- "Target curve"
 
-      limit_scheme <- c(unique(dispdat$name), "Interpolated curve")
+      limit_scheme <- c(unique(dispdat$name), "Target curve")
 
       plt <- plt +
         ggplot2::geom_line(data = dispdat,

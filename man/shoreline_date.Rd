@@ -14,7 +14,8 @@ shoreline_date(
   model = "gamma",
   model_parameters = c(0.286, 20.833),
   elev_fun = "mean",
-  interpolated_curve = NA,
+  upper_temp_limit = -2500,
+  target_curve = NA,
   hdr_prob = 0.95,
   normalise = TRUE,
   sparse = FALSE,
@@ -57,7 +58,11 @@ default gamma function, respectively.}
 \item{elev_fun}{Statistic to define site elevation if this is to be derived
 from an elevation raster. Uses \code{terra::extract()}. Defaults to mean.}
 
-\item{interpolated_curve}{List holding precomputed shoreline displacement
+\item{upper_temp_limit}{Numerical value giving the upper temporal limit.
+Dates with a start date after the limit are returned as NA. Defaults to
+-2500, i.e. 2500 BCE.}
+
+\item{target_curve}{List holding precomputed shoreline displacement
 curve. This has to have the same resolution on the calendar scale as the one
 specified with \code{cal_reso}. \code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not
 provided.}
@@ -107,9 +112,8 @@ subtracting the preceding value from each value of \code{px}.
 \description{
 A function for shoreline dating Stone Age sites based on their present-day
 elevation, their likely elevation above sea-level when in use and the
-trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
-Details and caveats pertaining to the implemented method is given in
-Roalkvam (2023).
+trajectory of past shoreline displacement. Details and caveats pertaining to
+the implemented method is given in Roalkvam (2023).
 }
 \examples{
 # Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)

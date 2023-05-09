@@ -5,14 +5,13 @@
 \title{Plot shoreline displacement curves}
 \usage{
 displacement_plot(
-  interpolated_curve = NA,
+  target_curve = NA,
   displacement_curves = c("Horten", "Porsgrunn", "Tvedestrand", "Arendal"),
   greyscale = FALSE
 )
 }
 \arguments{
-\item{interpolated_curve}{List holding one or more interpolated shoreline
-displacement curves.}
+\item{target_curve}{List holding one or more shoreline displacement curves.}
 
 \item{displacement_curves}{Character vector specifying which geologically
 informed displacement curves that should be plotted. Accepted values are
@@ -24,11 +23,12 @@ greyscale or not. Defaults to FALSE.}
 }
 \value{
 A plot displaying the underlying shoreline displacement curves and,
-if provided, an interpolated curve.
+if provided, a target curve.
 }
 \description{
 Function for plotting shoreline displacement curves. Calling to plot without
-providing interpolated curves will display the four underlying curves.
+providing a target curve will display the four underlying geologically
+derived displacement curves.
 }
 \examples{
 # Empty plot for speed

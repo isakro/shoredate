@@ -4,34 +4,123 @@
 \alias{target_plot}
 \title{Target plot}
 \usage{
-target_plot(targets = NA, isobases = NA, basemap = NA, greyscale = FALSE)
+target_plot(
+  targets = NA,
+  isobases = sf::st_read(system.file("extdata/isobases.gpkg", package = "shoredate",
+    mustWork = TRUE), quiet = TRUE),
+  basemap = sf::st_read(system.file("extdata/naturalearth_basemap.gpkg", package =
+    "shoredate", mustWork = TRUE), quiet = TRUE),
+  crs_epsg = 32632,
+  naturalearth_basemap = FALSE,
+  naturalearth_zoom = 20000,
+  target_labels = TRUE,
+  scalebar = TRUE,
+  scalebar_width = 0.4,
+  scalebar_style = "ticks",
+  scalebar_location = "br",
+  base_fill = "grey",
+  base_col = NA,
+  target_shape = 21,
+  target_col = "black",
+  target_fill = "red",
+  target_size = 2.25,
+  isobase_line = c(Horten = "solid", Porsgrunn = "solid", Tvedestrand = "solid", Arendal
+    = "solid"),
+  isobase_col = c(Arendal = "black", Porsgrunn = "darkgreen", Tvedestrand = "blue",
+    Horten = "darkorange"),
+  greyscale = FALSE
+)
 }
 \arguments{
 \item{targets}{Objects of class \code{sf} representing the sites to be dated. The
 first column beyond geom is taken as site name.}
 
 \item{isobases}{Spatial lines as object of class \code{sf} representing the
-shoreline isobases. Defaults to isobases with a direction of 327, but
-\code{create_isobases()} can be used to create isobases with other directions
-that can then be passed to \code{target_plot()}.}
+shoreline isobases. Defaults to isobases with a direction of 327 within the
+spatial limit in SE Norway, but \code{create_isobases()} can be used to create
+isobases with other directions that can then be passed to \code{target_plot()}.}
 
-\item{basemap}{Object of class \code{sf} representing the study area. Defaults to
-a light-weight basemap from https://www.naturalearthdata.com/}
+\item{basemap}{Object of class \code{sf} representing a background map. Defaults
+to a light-weight basemap for the spatial limit in SE Norway.}
+
+\item{crs_epsg}{Numeric value specifying the EPSG code of the coordinate
+reference system (CRS) to be used. Geometries with a different CRS will be
+re-projected. Defaults to 32632, which is WGS 84 / UTM zone 32N
+(EPSG:32632).}
+
+\item{naturalearth_basemap}{Logical value specifying if a background map
+should be downloaded to be used as a basemap. Downloaded files are stored
+with \code{base::tempdir()} and deleted when the R session is closed. If TRUE,
+overrides the \code{basemap} argument. Defaults to FALSE.}
+
+\item{naturalearth_zoom}{A numerical value specifying the amount of cropping
+that is done around provided \code{targets} when \code{naturalearth_basemap} is set to
+TRUE. Be aware of whether a projected or geographical CRS is specified in
+\code{crs_epsg}. Defaults to 20000.}
+
+\item{target_labels}{Logical value specifying whether the targets should be
+labelled in the plot. Takes the first column beyond the one holding the
+geometries to represent names. If this is not present the targets are
+labelled by row number. Defaults to TRUE.}
+
+\item{scalebar}{Logical specifying whether a scalebar should be added to the
+plot. Defaults to TRUE.}
+
+\item{scalebar_width}{Numerical value specifying the width of the scalebar by
+passing it to the \code{width_hint} argument of \code{ggspatial::annotation:scale()}.
+Defaults to 0.4.}
+
+\item{scalebar_style}{Character value specifying the style of the scalebar by
+passing it to the \code{style} argument of \code{ggspatial::annotation:scale()}.
+Defaults to "ticks".}
+
+\item{scalebar_location}{Character value specifying the location of the
+scalebar on the plot by passing it to the \code{location} argument of
+\code{ggspatial::annotation:scale()}. Defaults to "br".}
+
+\item{base_fill}{Character value specifying the fill colour of the basemap.
+Defaults to "grey".}
+
+\item{base_col}{Character value specifying the outline colour of the
+basemap. Defaults to NA.}
+
+\item{target_shape}{Numerical value specifying the point shape that represent
+the centroids of the targets.}
+
+\item{target_col}{Character value specifying the colour parameter for the
+points that represent the centroids of the targets.}
+
+\item{target_fill}{Character value specifying the fill parameter for the
+points that represent the centroids of the targets.}
+
+\item{target_size}{Numerical value specifying the size of the points that
+represent the centroids of the targets.}
+
+\item{isobase_line}{Vector of character values specifying the linetype that
+is used to represent the isobases of the geologically derived displacement
+curves. Defaults to c("Horten" = "solid", "Porsgrunn" = "solid",
+"Tvedestrand" = "solid", "Arendal" = "solid")}
+
+\item{isobase_col}{Vector of character values specifying the colours used
+for the lines that represent the isobases of the geologically derived
+displacement curves. Defaults to c("Arendal" = "black",
+"Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")}
 
 \item{greyscale}{Logical value indicating whether the plot should include
-colours or not. Defaults to FALSE.}
+colours or not. Overrides other graphical parameters When set to TRUE.
+Defaults to FALSE.}
 }
 \value{
-A map displaying the location of the shoreline isobases, and, if
-provided, the position of target locations represented as centroids.
+A ggplot that displays a background map with the location of the
+shoreline isobases within the spatial coverage in south-eastern Norway,
+unless geometries for other regions are provided. If provided, the function
+also plots the position of target locations represented as centroids.
 }
 \description{
-Function to plot the centroids of one or more sites to be dated, relative to
-the shoreline isobases of the employed displacement curves. The default
-basemap is a simplified representation of the coastline within the study
-area. Calling the function without providing a target displays the map with
-the isobases. This can be combined with \code{create_isobases()} to visualise
-isobases with a different direction than the default of 327.
+Function to plot the centroids of sites to be dated and shoreline isobases of
+employed displacement curves on a basemap. Defaults to displaying a
+light-weight version of the spatial coverage in south-eastern Norway, but
+spatial geometries covering other regions can also be provided.
 }
 \examples{
 # Display the background map and default isobases

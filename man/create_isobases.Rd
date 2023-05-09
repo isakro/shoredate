@@ -14,10 +14,11 @@ the isobases.}
 A simple feature holding the isobases represented as lines.
 }
 \description{
-Function to create isobases for interpolating shoreline displacement curves.
-This is done from the centre points of the supplied displacement curves.
-Isobases can also be created for multiple directions, which is useful for
-testing the sensitivity of dates to the direction of the isobases.
+Function to create isobases for interpolating shoreline displacement curves
+within the spatial coverage in south-eastern Norway. This is done from the
+centre points of the supplied displacement curves. Isobases can also be
+created for multiple directions, which is useful for testing the sensitivity
+of dates to the direction of the isobases.
 }
 \examples{
 # Create isobases in a specified direction

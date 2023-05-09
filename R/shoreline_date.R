@@ -2,9 +2,8 @@
 #'
 #' A function for shoreline dating Stone Age sites based on their present-day
 #'  elevation, their likely elevation above sea-level when in use and the
-#'  trajectory of past shoreline displacement on the Norwegian Skagerrak coast.
-#'  Details and caveats pertaining to the implemented method is given in
-#'  Roalkvam (2023).
+#'  trajectory of past shoreline displacement. Details and caveats pertaining to
+#'  the implemented method is given in Roalkvam (2023).
 #'
 #' @param sites Vector giving one or more site names, or, if displacement curves
 #'   are to be interpolated, objects of class `sf` representing the sites to be
@@ -32,7 +31,10 @@
 #'   default gamma function, respectively.
 #' @param elev_fun Statistic to define site elevation if this is to be derived
 #'  from an elevation raster. Uses `terra::extract()`. Defaults to mean.
-#' @param interpolated_curve List holding precomputed shoreline displacement
+#' @param upper_temp_limit Numerical value giving the upper temporal limit.
+#'  Dates with a start date after the limit are returned as NA. Defaults to
+#'  -2500, i.e. 2500 BCE.
+#' @param target_curve List holding precomputed shoreline displacement
 #'  curve. This has to have the same resolution on the calendar scale as the one
 #'  specified with `cal_reso`. [interpolate_curve()] will be run if this is not
 #'  provided.
@@ -75,10 +77,6 @@
 #'
 #' @export
 #'
-#' @import sf
-#' @import terra
-#' @importFrom utils txtProgressBar
-#'
 #' @references
 #' Roalkvam, I. 2023. A simulation-based assessment of the relation between
 #'  Stone Age sites and relative sea-level change along the Norwegian Skagerrak
@@ -104,7 +102,8 @@ shoreline_date <- function(sites,
                            model = "gamma",
                            model_parameters = c(0.286, 20.833),
                            elev_fun = "mean",
-                           interpolated_curve = NA,
+                           upper_temp_limit = -2500,
+                           target_curve = NA,
                            hdr_prob = 0.95,
                            normalise = TRUE,
                            sparse = FALSE,
@@ -112,7 +111,7 @@ shoreline_date <- function(sites,
 
   # Make sfc geometries be represented as a sf data frame
   if(!inherits(sites, c("sf", "data.frame"))){
-    if (is.na(interpolated_curve) & inherits(sites, "sfc")) {
+    if (all(is.na(target_curve)) & inherits(sites, "sfc")) {
       sites <- sf::st_as_sf(sites, crs = sf::st_crs(sites))
       # Make vector of site names a data frame for nrow() below
     } else {
@@ -130,11 +129,8 @@ shoreline_date <- function(sites,
                "elevation values and", nrow(sites), "sites were provided."))
   }
 
-  bce <- seq(-1950, 10550,  cal_reso) * -1 # Sequence of years to match
-  # displacement data
-
   # If isobase directions other than the default is provided, create these
-  if (all(is.na(interpolated_curve)) & any(isobase_direction != 327)) {
+  if (all(is.na(target_curve)) & any(isobase_direction != 327)) {
     isobases <- create_isobases(isobase_direction)
     # If the default is used, load the precompiled isobases
   } else{
@@ -146,32 +142,67 @@ shoreline_date <- function(sites,
 
   # List to hold dates
   shorelinedates <- list()
-  for(i in 1:nrow(sites)){
+  for (i in 1:nrow(sites)) {
 
     if (verbose) {
       print(paste("Site", i, "of", nrow(sites)))
     }
 
-    # If interpolated curve is not provided and multiple isobase directions have
+    # If a target curve is not provided and multiple isobase directions have
     # been specified, interpolate these
-    if (all(is.na(interpolated_curve)) &
+    if (all(is.na(target_curve)) &
         length(unique(isobases$direction)) > 1) {
       sitecurve <- interpolate_curve(target = sites[i,],
                                      isobases = isobases, cal_reso = cal_reso,
                                      verbose = verbose)
       # If default isobase direction is to be used, but no interpolated curve
       # is provided
-    } else if (all(is.na(interpolated_curve))) {
+    } else if (all(is.na(target_curve))) {
       sitecurve <- interpolate_curve(target = sites[i,],
                                      isobases = isobases, cal_reso = cal_reso,
                                      verbose = verbose)
     } else {
-      # If interpolated curve(s) are provided
-      sitecurve <- interpolated_curve
+      # If pre-compiled/interpolated curve(s) are provided
+      sitecurve <- target_curve
     }
 
     if (inherits(sitecurve, "list")) {
       sitecurve <- do.call(rbind.data.frame, sitecurve)
+    }
+
+    # If there is no direction to the provided target curve, specify that this
+    # is NA.
+    if (!("direction" %in% names(sitecurve))) {
+      sitecurve$direction <- NA
+    }
+
+    # Create sequence of years BCE matching displacement curves
+    # (suppressWarsnings() as different lengths should also return FALSE)
+    if (suppressWarnings(all((seq(-1950, 10550,
+                                  cal_reso) * -1) ==  sitecurve$bce))) {
+
+      bce <- seq(-1950, 10550,  cal_reso) * -1
+    } else {
+    # A provided target_curve could cover a different time-span, in which
+    # case an adjusted bce element is created
+      bce <- seq(min(sitecurve$bce), max(sitecurve$bce), cal_reso)
+    }
+
+    # Make sure the resolution of the provided curve matches cal_reso.
+    # If not, downsample so that it does.
+    if ((sitecurve$bce[1]-sitecurve$bce[2]) != cal_reso) {
+
+      upperelev <- stats::approx(sitecurve[,"bce"],
+                                 sitecurve[,"upperelev"],
+                                 xout = bce)[["y"]]
+      lowerelev <- stats::approx(sitecurve[,"bce"],
+                          sitecurve[,"lowerelev"],
+                          xout = bce)[["y"]]
+
+      sitecurve <- data.frame(bce,
+                              upperelev,
+                              lowerelev,
+                              "direction" = unique(sitecurve$direction))
     }
 
     if (!inherits(elevation, c("raster", "SpatRaster"))) {
@@ -191,23 +222,30 @@ shoreline_date <- function(sites,
     date_isobases <- list()
     for (k in 1:length(unique(sitecurve$direction))) {
 
-      temp_curve <- sitecurve[sitecurve$direction ==
+      if(!(is.na(unique(sitecurve$direction)[k]))){
+        temp_curve <- sitecurve[sitecurve$direction ==
                                 unique(sitecurve$direction)[k],]
+      } else {
+        temp_curve <- sitecurve
+      }
+
+      # Make sure the displacement curve is sorted descending
+      # temp_curve <- temp_curve[order(temp_curve$bce, decreasing = TRUE),]
 
       # Set up data frame to hold results
       dategrid <- data.frame(
         bce = bce,
         probability = 0)
 
-      # Assign site name (to be returned/used in errors below)
-      if (inherits(sites, c("sf", "data.frame")) & ncol(sites) == 1) {
+      # Assign site name
+      if (inherits(sites, "sf") &
+          ncol(as.data.frame(sites)) == 1) {
         site_name <- as.character(i)
-      } else if (inherits(sites, c("sf", "data.frame"))){
-        site_name <- as.character(st_drop_geometry(sites)[i,1])
+      } else if (inherits(sites, "sf")){
+        site_name <- as.character(sf::st_drop_geometry(sites)[i,1])
       } else {
-        site_name <- as.character(sites[i])
+        site_name <- as.character(sites[i, 1])
       }
-
 
       # Find oldest possible date
       mdate <- temp_curve[which(temp_curve[,"lowerelev"] ==
@@ -221,7 +259,13 @@ shoreline_date <- function(sites,
       # If it is msdate will be NA and the date is returned as NA with a
       # warning. Do not print isobase direction if this is
       # the default.
-      if (is.na(msdate) & unique(temp_curve$direction) == 327) {
+      if (is.na(msdate) & is.na(unique(temp_curve$direction))) {
+        warning(paste0("The elevation of site ", site_name,
+                      " implies an earliest possible date older than ", mdate,
+                      " BCE and is out of bounds. The date is returned as NA."))
+        dategrid$probability <- NA
+        modeldat <- NA
+      } else if(is.na(msdate) & unique(temp_curve$direction) == 327) {
         warning(paste0("The elevation of site ", site_name,
                        " implies an earliest possible date older than ", mdate,
                        " BCE and is out of bounds. The date is returned as NA."))
@@ -241,7 +285,8 @@ shoreline_date <- function(sites,
           # Set up data frame and assign probability to the offset increments
           modeldat <- data.frame(
             offset = inc,
-            px = stats::pgamma(inc, shape = model_parameters[1],
+            px = stats::pgamma(inc,
+                               shape = model_parameters[1],
                                scale =  model_parameters[2]))
           modeldat$probs <- c(diff(modeldat$px), 0)
           modeldat <- modeldat[modeldat$px < 0.99999,]
@@ -302,10 +347,10 @@ shoreline_date <- function(sites,
       }
 
       # Make the date NA and return a warning if it's latest possible start is
-      # younger than 2500 BCE. Also return isobase direction if this is not the
-      # default.
+      # younger than upper limit (defaults to 2500 BCE). Also return isobase
+      # direction if this is not the default.
       if (!all(is.na(dategrid$probability))) {
-        if (min(dategrid$bce[dategrid$probability > 0]) > -2500) {
+        if (min(dategrid$bce[dategrid$probability > 0]) > upper_temp_limit) {
           dategrid$probability <- NA
 
           if (unique(temp_curve$direction) == 327) {
@@ -385,7 +430,7 @@ shoreline_date <- function(sites,
         hdr_prob = hdr_prob,
         dispcurve = NA,
         dispcurve_direction = unlist(lapply(date_isobases,
-                                            function(x) unique(x["dispcurve_direction"]))),
+                              function(x) unique(x["dispcurve_direction"]))),
         model_parameters = model_parameters,
         modeldat = modeldat,
         cal_reso = cal_reso
