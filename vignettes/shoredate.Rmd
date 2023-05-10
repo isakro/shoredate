@@ -22,7 +22,7 @@ vignette: >
 # Introduction
 The concept of dating sites based on their present-day elevation with reference to past shoreline displacement has been an important tool for archaeologists in northern Scandinavia since the early 1900s (e.g. Brøgger 1905). This is based on the observation that Stone Age sites in the region tend to have been located close to the contemporaneous shoreline when they were in use. Furthermore, following the retreat of the Fennoscandian Ice Sheet, the isostatic uplift has been so severe that despite corresponding eustatic sea-level rise, the relative sea-level has been falling throughout prehistory in large parts of this region. Within any given area where this is the case, the general pattern is thus that older sites will be located at higher altitudes than younger sites.
 
-This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the functionality of the package was developed for the purposes of dating coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west. However, in the [second vignette](doc/extending-shoredate.html) ways in which the core functionality of the package can be applied in other areas of the world are presented.
+This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the functionality of the package was developed for the purposes of dating coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west. However, in the [second vignette](doc/extending-shoredate.html), ways in which the core functionality of the package can be applied in other areas of the world are presented.
 
 ## Geographical and temporal coverage
 
@@ -32,7 +32,9 @@ As the method is dependent on good geological reconstructions of shoreline displ
 
 <img src="../man/figures/coverage.png" alt="plot of chunk limit" width="90%" style="display: block; margin: auto;" />
 
-Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
+Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
+
+In the Roalkvam (2023) study it was found that sites tend to be situated at more removed and variable distances from the shoreline from around 2500 BCE. By default, this therefore marks the upper limit of the method, where dates with a start date after 2500 BCE are returned as NA.
 
 ## Installing and loading *shoredate*
 
@@ -63,7 +65,7 @@ When installed the package can be loaded.
 
 # Interpolating shoreline displacement to a site location
 
-The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a precompiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement in along the Norwegian Skagerrak coat. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
+The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a precompiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement along the Norwegian Skagerrak coat. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location within the region is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
 
 Note that spatial geometries representing sites to which interpolate_curve() is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](doc/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
 
@@ -87,7 +89,9 @@ target_plot(target_point)
 
 
 ```r
-displacement_plot(target_curve)
+# The opactity of the geological displacement curves is reduced with
+# displacement_alpha
+displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
 <img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve" style="display: block; margin: auto;" />
@@ -134,7 +138,7 @@ target_date
 ## 5730 BCE-5070 BCE
 ```
 
-There is also an option to plot a date in greyscale by setting `greyscale = TRUE`.
+While a range of graphical parameters can be adjusted to change the appearance of the output plot, setting `greyscale = TRUE` offers a short-cut to plot a date in greyscale:
 
 
 ```r
@@ -143,7 +147,7 @@ shoredate_plot(target_date,  greyscale = TRUE)
 
 <img src="shore-greyscale-1.png" alt="plot of chunk greyscale" style="display: block; margin: auto;" />
 
-A more sparse version can also be plotted by specifying what elements are to be excluded.
+A more sparse version can also be plotted by specifying what elements are to be excluded from the plot:
 
 
 ```r
@@ -168,7 +172,6 @@ shoredate_plot(tpq_date, hdr_label_yadj = 0.9)
 
 <img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date" style="display: block; margin: auto;" />
 
-
 ## Dating multiple sites
 
 As exemplified in the code chunks to follow, it is also possible to date multiple sites at once.
@@ -180,7 +183,8 @@ target_points <- sf::st_sfc(sf::st_point(c(576052, 6567955)),
                               sf::st_point(c(554212, 6538835)),
                               sf::st_point(c(516599, 6512142)))
 
-# Specify the correct CRS and make the points a sf data frame to be able to add the column below
+# Specify the correct CRS and make the points a sf data frame to be able to
+# add the column below
 target_points <- sf::st_as_sf(target_points, crs = 32632)
 
 # Adding example site names
@@ -196,8 +200,11 @@ When dating multiple sites it can be useful to track the progress by setting `ve
 
 
 ```r
-# Dating the target points, specifying the elevations in a vector of numeric values
-target_dates <- shoreline_date(target_points, elevation = c(68, 98, 73), verbose = TRUE)
+# Dating the target points, specifying the elevations in a
+# vector of numeric values
+target_dates <- shoreline_date(target_points,
+                               elevation = c(68, 98, 73),
+                               verbose = TRUE)
 ```
 
 
@@ -249,7 +256,8 @@ target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 # Retrieve raster data
 elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
 
-# Make the retrieved raster a SpatRaster and re-project it to the correct coordinate system
+# Make the retrieved raster a SpatRaster and re-project
+# it to the correct coordinate system
 elev_raster <- terra::project(terra::rast(elev_raster), "epsg:32632")
 
 # Plot the raster and target point for inspection
@@ -311,8 +319,8 @@ While the range of the typically employed isobase directions generally result in
 target_point <- sf::st_as_sf(target_point, crs = 32632)
 target_point$name <- "Example site"
 
-# Using the same target point and elevation as above, but specifying two different directions
-# for the isobases when dating
+# Using the same target point and elevation as above, but specifying two
+# different directions for the isobases when dating
 iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
                            isobase_direction = c(325, 338))
 
@@ -352,8 +360,10 @@ As an alternative to keeping the two shoreline dates of the site separate, the p
 
 
 ```r
-sum_iso_date <- shoreline_date(site = target_point, elevation = elev_raster,
-                               isobase_direction = c(325, 338), sum_isobase_directions = TRUE)
+sum_iso_date <- shoreline_date(site = target_point,
+                               elevation = elev_raster,
+                               isobase_direction = c(325, 338),
+                               sum_isobase_directions = TRUE)
 
 sum_iso_date
 ```

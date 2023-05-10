@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# shoredate
+# shoredate: An R package for shoreline dating coastal Stone Age sites
 
 <!-- badges: start -->
 
@@ -22,10 +22,12 @@ on or close to the shoreline when they were in use. The package and
 method as implemented here was originally developed for the Norwegian
 Skagerrak coast in south-eastern Norway, based on an empirically derived
 estimate of the likely elevation of sites above sea-level when they were
-occupied (Roalkvam 2023). However, note that as the method is dependent
-on regularities in human behaviour, and as the Roalkvam (2023) study
-provides an initial formalisation of the method, it is hefted with
-unexplored uncertainties. Consequently, the dates achieved with the
+occupied (Roalkvam 2023). The degree to which the method can be extended
+to other areas is therefore undetermined. Do also note that as the
+method is dependent on regularities in human behaviour, and as the
+Roalkvam (2023) study provides an initial formalisation of the method,
+it is hefted with unexplored uncertainties also within the core area for
+which it was developed. In sum therefore, the dates achieved with the
 package should be treated with care.
 
 ## Installation and loading
@@ -57,46 +59,49 @@ As the method of shoreline dating is determined by relative sea-level
 change, it is dependent on reliable geological reconstructions of this
 development. The method as outlined here was therefore originally
 developed for the Skagerrak region of south-eastern Norway – extending
-from Horten in the north east to Arendal in the south west. This region
-has newly compiled shoreline displacement curves for Horten (Romundset
-2021), Porsgrunn (Sørensen et al. 2014; Sørensen et al. 2023),
-Tvedestrand (Romundset 2018; Romundset et al. 2018) and Arendal
-(Romundset 2018). The region also formed the study area for Roalkvam
-(2023), in which the method and its parameters were derived. The
-remainder of this document and the [main vignette](doc/shoredate.html)
+from Horten in the north east to Arendal in the south west (see figure
+below). This region has newly compiled shoreline displacement curves for
+Horten (Romundset 2021), Porsgrunn (Sørensen et al. 2014; Sørensen et
+al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and
+Arendal (Romundset 2018). The region also formed the study area for
+Roalkvam (2023), in which the method and its parameters were derived.
+The remainder of this document and the [main
+vignette](https://isakro.github.io/shoredate/articles/shoredate.html)
 focuses on this area. It is, however, possible to adapt the procedures
 for application in other regions, which is outlined in the [second
-vignette](doc/extending-shoredate.html).
+vignette](https://isakro.github.io/shoredate/articles/extending-shoredate.html).
 
-The location of the The shoreline isobases in the second figure
-represent contours along which the shoreline displacement has followed
-the same trajectory. These correspond to the displacement curves and
-place names in the third figure, which also indicates the temporal
-coverage of the package.
+The first figure below shows the location of the spatial limit within
+which the method was originally derived. The shoreline isobases in the
+second figure represent contours along which the shoreline displacement
+has followed the same trajectory. These correspond to the displacement
+curves and place names in the third figure, which also indicates the
+temporal coverage of the method within the region.
 
 <img src="man/figures/coverage.png" width="90%" height="90%" style="display: block; margin: auto;" />
 
-As human occupation in the region only occurred some time after the
-retreat of the Fennoscandian Ice Sheet, the currently oldest known sites
-in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest
-possible age to achieve with *shoredate* is 9469 BCE, although no sites
-are yet known to be that old. A warning is given if a site location is
-outside the spatial extent outlined above, as this involves a more
-uncertain extrapolation of the development of shoreline displacement.
-However, the dating procedure is still performed. Conversely, if a site
-has an elevation that a date older than the lower temporal limit of the
-displacement curves it is returned as NA and a warning is given.
+As human occupation only occurred some time after the retreat of the
+Fennoscandian Ice Sheet, the currently oldest known sites in Norway are
+from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to
+achieve with *shoredate* in the Skagerrak region of south-eastern Norway
+is 9469 BCE, although no sites are yet known to be that old. A warning
+is given if a site location is outside the spatial extent outlined
+above, as this involves a more uncertain extrapolation of the
+development of shoreline displacement. However, the dating procedure is
+still performed. Conversely, if a site has an elevation that implies a
+date older than the lower temporal limit of the displacement curves, it
+is returned as NA and a warning is given.
 
-In Roalkvam (2023) it was found that sites tend to be located on or
-close to the shoreline up until around the transition to the Late
-Neolithic, c. 2500 BCE, which thus marks the upper limit for the
-applicability of the method in the region. A date that has a later start
-date than this is therefore returned as NA with a warning. The temporal
-range is indicated by the dashed lines in the plot above that displays
-the shoreline displacement curves. Additionally, if the probability of a
-date extends beyond 1950 CE (0 cal BP), thus indicating a site location
-below the present-day sea-level, this overshooting probability is cut
-off and the date is normalised to sum to unity.
+In Roalkvam (2023) it was found that sites in the study region tend to
+be located on or close to the shoreline up until around the transition
+to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for
+the applicability of the method in the region. A date that has a later
+start date than this is therefore returned as NA with a warning. The
+temporal range is indicated by the dashed lines in the plot above that
+displays the shoreline displacement curves. Additionally, if the
+probability of a date extends beyond 1950 CE (0 cal BP), thus indicating
+a site location below the present-day sea-level, this overshooting
+probability is cut off and the date is normalised to sum to unity.
 
 ## Interpolating shoreline displacement to a site location
 
@@ -111,10 +116,12 @@ interpolation by the square of the inverse distance between site and
 isobases.
 
 ``` r
-# Create example point using the required coordinate system WGS84 / UTM zone 32N (EPSG: 32632)
+# Create example point using the required coordinate 
+# system WGS84 / UTM zone 32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-# Simple map showing the target location relative to the isobases of the displacement curves
+# Simple map showing the target location relative to the isobases
+# of the displacement curves
 target_plot(target_point)
 ```
 
@@ -184,8 +191,9 @@ the sites are simply numbered as they are passed to `shoreline_date()`.
 ## Further documentation
 
 The procedures outlined above have focused on the basic functions and
-default behaviours of the package when dating a single site. For further
-usage and a more detailed walk through, see the main vignette by calling
+default behaviours of the package when dating a single site in the area
+for which the package was originally developed. For further usage and a
+more detailed walk through, see the main vignette by calling
 `vignette("shoredate")`.
 
 Furthermore, a second vignette which can be accessed with

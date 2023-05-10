@@ -62,10 +62,10 @@ from an elevation raster. Uses \code{terra::extract()}. Defaults to mean.}
 Dates with a start date after the limit are returned as NA. Defaults to
 -2500, i.e. 2500 BCE.}
 
-\item{target_curve}{List holding precomputed shoreline displacement
-curve. This has to have the same resolution on the calendar scale as the one
-specified with \code{cal_reso}. \code{\link[=interpolate_curve]{interpolate_curve()}} will be run if this is not
-provided.}
+\item{target_curve}{Data frame holding precomputed shoreline displacement
+curve. This has to have the same or higher resolution on the calendar scale
+as that specified with \code{cal_reso}. \code{\link[=interpolate_curve]{interpolate_curve()}} will be run if
+nothing is is not provided to \code{target_curve}. Defaults to NA.}
 
 \item{hdr_prob}{Numeric value specifying the coverage of the highest density
 region. Defaults to 0.95.}

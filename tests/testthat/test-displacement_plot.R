@@ -12,6 +12,14 @@ test_that("returns expected plot when interpolated curve is passed", {
   vdiffr::expect_doppelganger("plot with interpolated curve", p)
 })
 
+test_that("returns expected plot with renamed interpolated curve", {
+  skip_on_cran()
+  target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
+  target_curve <- interpolate_curve(target_point)
+  p <- displacement_plot(target_curve, target_name = "Example name")
+  vdiffr::expect_doppelganger("plot renamed interpolated curve", p)
+})
+
 test_that("returns expected plot with greyscale = TRUE", {
   skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(522623, 6526182)), crs = 32632)
@@ -25,3 +33,4 @@ test_that("returns expected plot with greyscale = TRUE and no passed curve", {
   p <- displacement_plot(greyscale = TRUE)
   vdiffr::expect_doppelganger("greyscale plot, no curve", p)
 })
+

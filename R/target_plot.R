@@ -106,7 +106,7 @@ target_plot <- function(targets = NA,
                                          "Porsgrunn" = "darkgreen",
                                          "Tvedestrand" = "blue",
                                          "Horten" = "darkorange"),
-                        greyscale = FALSE){
+                        greyscale = FALSE) {
 
   if (greyscale) {
 
@@ -154,16 +154,22 @@ target_plot <- function(targets = NA,
   # Make sure CRS matches the crs_epsg argument
   if (!all(is.na(basemap)) & crs_epsg != sf::st_crs(basemap)$epsg) {
 
+    warning(paste("Reprojecting basemap from CRS with EPSG code",
+                  sf::st_crs(basemap)$epsg, "to EPSG", crs_epsg), ".")
     basemap <- sf::st_transform(basemap, sf::st_crs(crs_epsg))
   }
 
   if (!all(is.na(isobases)) & crs_epsg != sf::st_crs(isobases)$epsg) {
 
+    warning(paste("Reprojecting isobases from CRS with EPSG code",
+            sf::st_crs(isobases)$epsg, "to EPSG", crs_epsg), ".")
     isobases <- sf::st_transform(isobases, sf::st_crs(crs_epsg))
   }
 
   if (!all(is.na(targets)) & crs_epsg != sf::st_crs(targets)$epsg) {
 
+    warning(paste("Reprojecting targets from CRS with EPSG code",
+                  sf::st_crs(targets)$epsg, "to EPSG", crs_epsg), ".")
     targets <- sf::st_transform(targets, sf::st_crs(crs_epsg))
   }
 
@@ -175,31 +181,19 @@ target_plot <- function(targets = NA,
          !all(is.na(isobases)),
          !all(is.na(targets))) > 1) {
 
-    # If all objects are provided
-    if (!all(is.na(basemap)) & !all(is.na(isobases)) & !all(is.na(targets))) {
+    # If basemap and isobases are provided
+    if (!all(is.na(basemap)) & !all(is.na(isobases))) {
 
       if (!any(sf::st_intersects(basemap, isobases, sparse = FALSE))) {
         warning("Basemap and isobases do not intersect.")
       }
+    }
 
+    # If basemap and targets are provided
+    if (!all(is.na(basemap)) & !all(is.na(targets))) {
       if (!any(sf::st_intersects(basemap, targets, sparse = FALSE))) {
         warning("Basemap and targets do not intersect.")
       }
-
-    # If only basemap and isobases are provided
-    } else if(all(is.na(targets))) {
-
-      if (!any(sf::st_intersects(basemap, isobases, sparse = FALSE))) {
-        warning("Basemap and isobases do not intersect.")
-      }
-
-     # If only basemap and targets are provided
-    } else if(all(is.na(isobases))) {
-
-      if (!any(sf::st_intersects(basemap, targets, sparse = FALSE))) {
-        warning("Basemap and targets do not intersect.")
-      }
-
     }
   }
 
@@ -244,8 +238,8 @@ target_plot <- function(targets = NA,
     plt <- plt + ggplot2::geom_sf(data = isobases,
                                   ggplot2::aes(colour = .data$name,
                                                linetype = .data$name)) +
-      ggplot2::scale_colour_manual(values = isobase_col) +
-      ggplot2::scale_linetype_manual(values = isobase_line)
+                 ggplot2::scale_colour_manual(values = isobase_col) +
+                 ggplot2::scale_linetype_manual(values = isobase_line)
 
   }
 

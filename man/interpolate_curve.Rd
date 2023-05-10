@@ -40,7 +40,7 @@ for each year, and \code{direction} which indicates the direction of the isobase
 used when interpolating the curve.
 }
 \description{
-Interpolate the trajectory of past shoreline displacement to a single
+Interpolate the trajectory of past shoreline displacement to a target
 location based on the distance of the location to the shoreline isobases of
 the geologically derived displacement curves. This is done using inverse
 distance weighting.

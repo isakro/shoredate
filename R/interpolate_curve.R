@@ -1,6 +1,6 @@
 #' Interpolate displacement curve using IDW
 #'
-#' Interpolate the trajectory of past shoreline displacement to a single
+#' Interpolate the trajectory of past shoreline displacement to a target
 #'  location based on the distance of the location to the shoreline isobases of
 #'  the geologically derived displacement curves. This is done using inverse
 #'  distance weighting.
@@ -79,7 +79,11 @@ interpolate_curve <- function(target,
                   mustWork = TRUE), quiet = TRUE)
   }
 
-  interpolated_curves <- list()
+  # If multiple displacement curves are to be returned due to multiple
+  # isobase directions, set up a list to be returned
+  if(length(unique(isobases$direction)) > 1){
+    interpolated_curve <- list()
+  }
 
   for(i in 1:length(unique(isobases$direction))){
     isobases_dir <- isobases[isobases$direction ==
@@ -148,9 +152,15 @@ interpolate_curve <- function(target,
     if (verbose) {
       close(pb)
     }
+
     values$direction <- unique(isobases$direction)[i]
-    interpolated_curves[[i]] <- values
+    if (length(unique(isobases$direction)) > 1) {
+      interpolated_curve[[i]] <- values
+    } else {
+      interpolated_curve <- values
+    }
+
   }
 
-  interpolated_curves
+  interpolated_curve
 }

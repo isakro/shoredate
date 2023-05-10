@@ -5,6 +5,15 @@ test_that("returns list of class shoreline_date", {
   expect_equal(class(target_date), c("shoreline_date", "list"))
 })
 
+test_that("first column is returned as site name", {
+  skip_on_cran()
+  target_point <- sf::st_as_sf(sf::st_sfc(sf::st_point(c(538310, 6544255)),
+                                          crs = 32632))
+  target_point$name <- "Example"
+  target_date <- shoreline_date(site = target_point, elevation = 46)
+  expect_equal(target_point$name, target_date[[1]][[1]]$site_name)
+})
+
 test_that("progress is printed with verbose = TRUE", {
   skip_on_cran()
   target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
@@ -110,4 +119,12 @@ test_that("precomputing interpolation and passing site as a site name", {
   precompiled_curve <- interpolate_curve(target_point)
   expect_snapshot(shoreline_date(site = "Example site", elevation = 60,
                                  target_curve = precompiled_curve))
+})
+
+test_that("passing displacement curve with different time interval and no isobase", {
+  skip_on_cran()
+  orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
+                                      package = "shoredate")))
+  expect_snapshot(shoreline_date(site = "Example site", elevation = 17,
+                                 target_curve = orland_disp))
 })

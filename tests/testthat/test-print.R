@@ -37,7 +37,7 @@ Isobase direction:  338
 
 test_that("A date that extends into CE is printed correctly", {
   skip_on_cran()
-  target_date <- shoreline_date(site = target_point, elevation = 25)
+  target_date <- shoreline_date(sites = target_point, elevation = 25)
   expect_equal(print(target_date),
                cat(
                  "===============
@@ -50,7 +50,7 @@ Elevation:  25
 
 test_that("Dates that extend into CE with multiple isobase directions are printed correctly", {
   skip_on_cran()
-  target_dates <- shoreline_date(site = target_points, elevation = c(25, 60),
+  target_dates <- shoreline_date(sites = target_points, elevation = c(25, 60),
                                  isobase_direction = c(325, 338))
   expect_equal(print(target_dates),
                cat(
@@ -129,4 +129,25 @@ Sum of isobase directions:  327 338
 
 95% HDR:
 7600 BCE-4980 BCE"))
+})
+
+test_that("A date based a on a precompiled displacement curve without isobase direction returns expected result", {
+  skip_on_cran()
+  orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
+                                      package = "shoredate")))
+  target_point <-  sf::st_sfc(sf::st_point(c(532719, 7065723)), crs = 32632)
+  target_date <- shoreline_date(site = target_point,
+                                target_curve = orland_disp,
+                                elevation = 17)
+  expect_equal(print(target_date),
+               cat(
+                 "===============
+Site:  c(532719, 7065723)
+Elevation:  17
+
+Isobase direction:  NA
+
+95% HDR:
+2900 BCE-210 CE
+230 CE-230 CE"))
 })

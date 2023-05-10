@@ -28,9 +28,9 @@ file.remove(figs)
 
 # Introduction
 
-While *shoredate* and the method underlying it has been developed for application in a constrained region of south-eastern Norway, it is possible to apply it to other areas. The following presents an example from Ørland in Trøndelag, Central Norway, for which a new displacement curve for the Late Holocene has recently been published (Romundset and Lakeman 2019). Furthermore, all that is needed to use the main functions of the package is a shoreline displacement curve that describes the sea-level change at the location of a site to be dated, and an eleveation value for that site. Consequently, it is in principle possible to extend the main functionality of the package to any region of the world in which the method is applicable, provided reliable data in a suitable format is available.
+While *shoredate* and the method underlying it has been developed for application in a constrained region of south-eastern Norway, it is possible to apply it to other areas. The following presents an example from Ørland in Trøndelag, Central Norway, for which a new displacement curve for a part of the Holocene has recently been published (Romundset and Lakeman 2019). Furthermore, all that is needed to use the main functions of the package is a shoreline displacement curve that describes the sea-level change at the location of a site to be dated, and an eleveation value for that site. Consequently, it is in principle possible to extend the main functionality of the package to any region of the world in which the method is applicable, provided reliable data in a suitable format is available.
 
-Some notes of caution should also be added here. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. Furthermore, the functions `interpolate_curve()` and `create_isobases()` involve an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both functions will fail with different coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
+Some notes of caution should also be added here. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. Furthermore, the function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
 
 Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skaggrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined. However, given an assumption that when a location emerged from the sea determines the earliest possible date for when it could have been occupied, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
 
@@ -38,13 +38,14 @@ Finally, the default method used for shoreline dating in the package is based on
 
 ## Shoreline displacement curve for Ørland
 
-Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a list of one or more displacement curves, where each curve is represented as a data frame with the columns `bce`, `upperelev` and `lowerelev`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE defined by `bce` should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
+Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a data frame with the columns `bce`, `upperelev` and `lowerelev`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE, defined by the column `bce`, should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
 
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
 ```{r}
-# As a lot of function calls from these packages will be done below they are explictly loaded here,
-# instead of using the pacakge::function() syntax with each function call.
+# As a lot of function calls from these packages will be done below they are
+# explictly loaded here, instead of using the package::function() syntax with
+# each function call.
 library(ggplot2)
 library(sf)
 
@@ -126,13 +127,16 @@ overview_map <- overview_map +
                    lwd = 0.5, show.legend = "polygon") +
         # Replotting the point for Ørland to add it to the legend
         geom_sf(data = orland, aes(fill = location),
-                   col = "black", shape = 21, size = 3, show.legend = "point") +
+                   col = "black", shape = 21,
+                   size = 3, show.legend = "point") +
         scale_fill_manual(values = c("Ørland" = "red")) +
         scale_colour_manual(values = c("Skagerrak limit" = "red"),
-                               guide = guide_legend(override.aes = list(shape = NA))) +
+                               guide = guide_legend(
+                                          override.aes = list(shape = NA))) +
         theme(legend.position = "bottom",
               legend.title = element_blank()) +
-        ggtitle("Location of Ørland relative to the spatial limit in south-eastern Norway")
+        ggtitle(paste("Location of Ørland relative to the",
+                       "spatial limit in south-eastern Norway"))
 
 ```
 
@@ -187,8 +191,9 @@ terra::extract(elev_raster, terra::vect(target_points))[, -1]
 This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and manually providing the name of the sites and their elevations:
 
 ```{r orland-dateplot, fig.width = 4.4, fig.height = 3.7}
-target_dates <- shoreline_date(sites = c("Example 1", "Example 2"), target_curve = orland_disp,
-                              elevation = c(17.7, 19.5))
+target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
+                               target_curve = orland_disp,
+                               elevation = c(17.7, 19.5))
 
 # Plot the results
 shoredate_plot(target_dates, multiplot = TRUE)
