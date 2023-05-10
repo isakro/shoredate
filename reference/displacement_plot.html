@@ -69,6 +69,15 @@ derived displacement curves.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">displacement_plot</span><span class="op">(</span></span>
 <span>  target_curve <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  displacement_curves <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Horten"</span>, <span class="st">"Porsgrunn"</span>, <span class="st">"Tvedestrand"</span>, <span class="st">"Arendal"</span><span class="op">)</span>,</span>
+<span>  target_name <span class="op">=</span> <span class="st">"Target curve"</span>,</span>
+<span>  target_line <span class="op">=</span> <span class="st">"solid"</span>,</span>
+<span>  target_col <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>  target_alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  displacement_line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Horten <span class="op">=</span> <span class="st">"solid"</span>, Porsgrunn <span class="op">=</span> <span class="st">"solid"</span>, Tvedestrand <span class="op">=</span> <span class="st">"solid"</span>,</span>
+<span>    Arendal <span class="op">=</span> <span class="st">"solid"</span><span class="op">)</span>,</span>
+<span>  displacement_col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Horten <span class="op">=</span> <span class="st">"darkorange"</span>, Porsgrunn <span class="op">=</span> <span class="st">"darkgreen"</span>, Tvedestrand <span class="op">=</span></span>
+<span>    <span class="st">"blue"</span>, Arendal <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>  displacement_alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  greyscale <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,19 +85,57 @@ derived displacement curves.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>target_curve</dt>
-<dd><p>List holding one or more shoreline displacement curves.</p></dd>
+<dd><p>Data frame holding a shoreline displacement curve.</p></dd>
 
 
 <dt>displacement_curves</dt>
 <dd><p>Character vector specifying which geologically
-informed displacement curves that should be plotted. Accepted values are
+informed displacement curves should be plotted. Accepted values are
 <code>c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")</code>. All are included by
 default.</p></dd>
 
 
+<dt>target_name</dt>
+<dd><p>Character value specifying the name that is given to the
+target curve, if provided. Defaults to <code>"Target curve"</code>.</p></dd>
+
+
+<dt>target_line</dt>
+<dd><p>Character value specifying the linetype that is used for
+the target curve, if this is provided. Defaults to <code>"solid"</code>.</p></dd>
+
+
+<dt>target_col</dt>
+<dd><p>Character value specifying the colour that is used for the
+target curve, if this is provided. Defaults to <code>"red"</code>.</p></dd>
+
+
+<dt>target_alpha</dt>
+<dd><p>Numerical value specifying the alpha value that is used
+for the target curve, if this is provided. Defaults to <code>1</code>.</p></dd>
+
+
+<dt>displacement_line</dt>
+<dd><p>Character vector specifying the linetypes that are
+used for the geological displacement curves to be plotted. Defaults to
+<code>c("Horten" = "solid", "Porsgrunn" = "solid", "Tvedestrand" = "solid", "Arendal" = "solid")</code>.</p></dd>
+
+
+<dt>displacement_col</dt>
+<dd><p>Character vector specifying the colours that are
+used for the geological displacement curves to be plotted. Defaults to
+<code>c("Horten" = "darkorange", "Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Arendal" = "black")</code>.</p></dd>
+
+
+<dt>displacement_alpha</dt>
+<dd><p>Numerical value specifying the alpha value that are
+used for all of the geological displacement curves to be plotted. Defaults
+to 1.</p></dd>
+
+
 <dt>greyscale</dt>
 <dd><p>Logical value indicating whether the plot should be in
-greyscale or not. Defaults to FALSE.</p></dd>
+greyscale or not. Defaults to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
