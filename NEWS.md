@@ -14,7 +14,8 @@
   (@kanishkan91, #2).
 - Cleaned up code to reduce the amount of Import and ImportFrom in NAMESPACE,
  opting instead for the package::function() syntax (@kanishkan91, #4).
-- Reduced the extent of the README.
+- Set up a pkgdown site for the package through GitHub at 
+  isakro.github.io/shoredate/ (@kanishkan91, #3).
 
 ## shoredate 1.0.2 (2023-05-02)
  - `shoredate_hdr()` and `shoreline_date()` now returns the weighted mean date.

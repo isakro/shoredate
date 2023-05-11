@@ -131,8 +131,9 @@ target_plot(target_point)
 # Interpolate shoreline displacement curve for the target location
 target_curve <- interpolate_curve(target_point)
 
-# Plot displaying the interpolated curve 
-displacement_plot(target_curve)
+# Plot displaying the interpolated curve, reducing the opacity of the
+# geological displacement curves.
+displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
 <img src="man/figures/interpolated_curve-1.png" style="display: block; margin: auto;" />
@@ -194,11 +195,13 @@ The procedures outlined above have focused on the basic functions and
 default behaviours of the package when dating a single site in the area
 for which the package was originally developed. For further usage and a
 more detailed walk through, see the main vignette by calling
-`vignette("shoredate")`.
+`vignette("shoredate")` or accessing it on the [web
+page](https://isakro.github.io/shoredate/articles/shoredate.html).
 
-Furthermore, a second vignette which can be accessed with
-`vignette("extending-shoredate")` outlines ways in which the package can
-be applied to other regions.
+Furthermore, a second vignette, which can be accessed with
+`vignette("extending-shoredate")` or viewed on the [web
+page](https://isakro.github.io/shoredate/articles/extending-shoredate.html),
+outlines ways in which the package can be applied to other regions.
 
 # References
 

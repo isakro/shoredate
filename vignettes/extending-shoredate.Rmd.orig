@@ -38,12 +38,12 @@ Finally, the default method used for shoreline dating in the package is based on
 
 ## Shoreline displacement curve for Ørland
 
-Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a data frame with the columns `bce`, `upperelev` and `lowerelev`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE, defined by the column `bce`, should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
+Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a data frame with the columns `bce`, `upperelev`, `lowerelev` and `name`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE, defined by the column `bce`, should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
 
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
 ```{r}
-# As a lot of function calls from these packages will be done below they are
+# As functions from these packages will be used quite a bit below they are
 # explictly loaded here, instead of using the package::function() syntax with
 # each function call.
 library(ggplot2)
@@ -55,18 +55,18 @@ library(sf)
 # Load the displacement curve for Ørland
 orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
                   package = "shoredate")))
+
+# Print the first five rows of the Ørland displacement curve
+head(orland_dip)
 ```
 
-This can then be plotted with displacement_plot():
+This can then be plotted with `displacement_plot()`. The name is adjusted with the argument `target_name` to something more informative, and the geologically derived displacement curves from south-eastern Norway are excluded by specifying the `displacement_curves` argument, as these are not of relevance here.
 
 ```{r orland-disp, fig.width = 5.7, fig.height = 4}
-# As the displacement curves for south-eastern Norway are not of interest here,
-# these are not plotted by specifying the argument displacement_curves.
-# Functions from ggplot2 are then applied to perform some adjustments to the
-# plot returned by displacement_plot().
-displacement_plot(target_curve = orland_disp, displacement_curves = "") +
-            theme(legend.position = "none") +
-            ggtitle("Shoreline displacement curve for Ørland, Central Norway")
+
+displacement_plot(target_curve = orland_disp,
+                  target_name = "Displacement curve for Ørland, Central Norway",
+                  displacement_curves = NA)
 ```
 
 A note should be made here that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
@@ -75,7 +75,7 @@ Furthermore, while variable uplift rates are also relevant for this area, this i
 
 ## Creating maps of Ørland
 
-Having loaded the displacement curve, this can then be used to shoreline date sites in Ørland. The below code creates two fictitious sites, each represented by a point:
+Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendability of some additional functions.
 
 ```{r}
 # Create example sites
@@ -104,13 +104,13 @@ orland <- target_points[1,]
 orland$location = "Ørland"
 ```
 
-Once this has been done we can use `target_plot()` to set up a plot. Setting `naturalearth_basemap` to TRUE downloads a world map from naturalearthdata.com. This is stored in a temporary folder and is deleted once the current R-session is ended. The argument `naturalearth_zoom` specifies the amount of cropping that is done on this world map, with the provided targets as the focal point. The argument `crs_epsg` is here the same as the default, but is explicitly called to highlight that different coordinate reference systems can be used. Setting the argument `isobases` to NA means that the default isobases pertaining to south-eastern Norway are excluded from the plot. Finally, setting `target_labels` to FALSE excludes the labelling of the target points in the plot, the labelleing of which will be handled with a legend in the code to follow below.
+Once this has been done we can use `target_plot()` to set up a plot. Setting `naturalearth_basemap` to TRUE downloads a world map from https://www.naturalearthdata.com/ using the `rnaturalearth` package. This is stored in a temporary folder and is deleted when the current R session is ended. The argument `naturalearth_zoom` specifies the amount of cropping that is done on this world map, with the provided targets as the focal point. The argument `crs_epsg` is here the same as the default, but is explicitly called to highlight that different coordinate reference systems can be used. Setting the argument `isobases` to NA means that the default isobases pertaining to south-eastern Norway are excluded from the plot. Finally, setting `target_labels` to FALSE excludes the labelling of the target points in the plot, the labelleing of which will be handled with a legend in the code to follow below.
 
 
-```{r}
+```{r, warning = FALSE}
 overview_map <- target_plot(targets = orland,
                       naturalearth_basemap = TRUE,
-                      naturalearth_zoom = 1000000,
+                      naturalearth_zoom = c(1000000, 1000000),
                       crs_epsg = 32632,
                       base_col = "black",
                       base_fill = "grey85",
@@ -140,13 +140,13 @@ overview_map <- overview_map +
 
 ```
 
-When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. The map is fairly simple, but can nonetheless be a useful excerise to make sure everything looks reasonable.
+When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. The map is fairly simple, but can nonetheless be a useful excerise to make sure everything looks as it should.
 
-```{r maps, message = FALSE}
+```{r maps, message = FALSE, warning = FALSE}
 # Create basemap
 examples_map <- target_plot(targets = target_points,
                       naturalearth_basemap = TRUE,
-                      naturalearth_zoom = 15000,
+                      naturalearth_zoom = c(15000, 10000),
                       base_col = "black",
                       base_fill = "grey85",
                       isobases = NA)

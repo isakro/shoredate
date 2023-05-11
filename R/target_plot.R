@@ -19,50 +19,52 @@
 #'  (EPSG:32632).
 #' @param naturalearth_basemap Logical value specifying if a background map
 #'  should be downloaded to be used as a basemap. Downloaded files are stored
-#'  with `base::tempdir()` and deleted when the R session is closed. If TRUE,
-#'  overrides the `basemap` argument. Defaults to FALSE.
-#' @param naturalearth_zoom A numerical value specifying the amount of cropping
-#'  that is done around provided `targets` when `naturalearth_basemap` is set to
-#'  TRUE. Be aware of whether a projected or geographical CRS is specified in
-#'  `crs_epsg`. Defaults to 20000.
+#'  with `base::tempdir()` and deleted when the R session is closed. If `TRUE`,
+#'  overrides the `basemap` argument. Defaults to `FALSE`.
+#' @param naturalearth_zoom A vector of two numerical values specifying the
+#'  amount of cropping that is done around provided `targets` when
+#'  `naturalearth_basemap` is set to
+#'  `TRUE`. Be aware of whether a projected or geographical CRS is specified in
+#'  `crs_epsg`. Defaults to `c(20000, 20000)`.
 #' @param target_labels Logical value specifying whether the targets should be
 #'  labelled in the plot. Takes the first column beyond the one holding the
 #'  geometries to represent names. If this is not present the targets are
-#'  labelled by row number. Defaults to TRUE.
+#'  labelled by row number. Defaults to `TRUE`.
 #' @param scalebar Logical specifying whether a scalebar should be added to the
-#'  plot. Defaults to TRUE.
+#'  plot. Defaults to `TRUE`.
 #' @param scalebar_width Numerical value specifying the width of the scalebar by
 #'  passing it to the `width_hint` argument of `ggspatial::annotation:scale()`.
-#'  Defaults to 0.4.
+#'  Defaults to `0.4`.
 #' @param scalebar_style Character value specifying the style of the scalebar by
 #'  passing it to the `style` argument of `ggspatial::annotation:scale()`.
-#'  Defaults to "ticks".
+#'  Defaults to `"ticks"`.
 #' @param scalebar_location Character value specifying the location of the
 #'  scalebar on the plot by passing it to the `location` argument of
-#'  `ggspatial::annotation:scale()`. Defaults to "br".
+#'  `ggspatial::annotation:scale()`. Defaults to `"br"`.
 #' @param base_fill Character value specifying the fill colour of the basemap.
-#'  Defaults to "grey".
+#'  Defaults to `"grey"`.
 #' @param base_col Character value specifying the outline colour of the
-#'  basemap. Defaults to NA.
+#'  basemap. Defaults to `NA`.
 #' @param target_shape Numerical value specifying the point shape that represent
-#'  the centroids of the targets.
+#'  the centroids of the targets. Defaults to `21`.
 #' @param target_col Character value specifying the colour parameter for the
-#'  points that represent the centroids of the targets.
+#'  points that represent the centroids of the targets. Defaults to `"black"`.
 #' @param target_fill Character value specifying the fill parameter for the
-#'  points that represent the centroids of the targets.
+#'  points that represent the centroids of the targets. Defaults to `"red"`.
 #' @param target_size Numerical value specifying the size of the points that
-#'  represent the centroids of the targets.
+#'  represent the centroids of the targets. Defaults to `2.25`.
 #' @param isobase_line Vector of character values specifying the linetype that
 #'  is used to represent the isobases of the geologically derived displacement
-#'  curves. Defaults to c("Horten" = "solid", "Porsgrunn" = "solid",
-#'  "Tvedestrand" = "solid", "Arendal" = "solid")
+#'  curves. Defaults to `c("Horten" = "solid", "Porsgrunn" = "solid",
+#'  "Tvedestrand" = "solid", "Arendal" = "solid")`.`
 #' @param isobase_col  Vector of character values specifying the colours used
 #'  for the lines that represent the isobases of the geologically derived
-#'  displacement curves. Defaults to c("Arendal" = "black",
-#'  "Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")
+#'  displacement curves. Defaults to `c("Arendal" = "black",
+#'  "Porsgrunn" = "darkgreen", "Tvedestrand" = "blue",
+#'  "Horten" = "darkorange")`.`
 #' @param greyscale Logical value indicating whether the plot should include
-#'  colours or not. Overrides other graphical parameters When set to TRUE.
-#'  Defaults to FALSE.
+#'  colours or not. Overrides other graphical parameters When set to `TRUE`.
+#'  Defaults to `FALSE`.
 #'
 #' @return A ggplot that displays a background map with the location of the
 #'  shoreline isobases within the spatial coverage in south-eastern Norway,
@@ -86,7 +88,7 @@ target_plot <- function(targets = NA,
                                       mustWork = TRUE), quiet = TRUE),
                         crs_epsg = 32632,
                         naturalearth_basemap = FALSE,
-                        naturalearth_zoom = 20000,
+                        naturalearth_zoom = c(20000, 20000),
                         target_labels = TRUE,
                         scalebar = TRUE,
                         scalebar_width = 0.4,
@@ -209,11 +211,11 @@ target_plot <- function(targets = NA,
       panel.grid.major = ggplot2::element_blank(),
       legend.position = "none")
 
-  if(naturalearth_basemap & !is.na(naturalearth_zoom)){
+  if(naturalearth_basemap & !any(is.na(naturalearth_zoom))){
 
     targetsbbox <- sf::st_bbox(targets)
-    targetsbbox[1:2] <- targetsbbox[1:2] - naturalearth_zoom
-    targetsbbox[3:4] <- targetsbbox[3:4] + naturalearth_zoom
+    targetsbbox[1:2] <- targetsbbox[1:2] - naturalearth_zoom[1]
+    targetsbbox[3:4] <- targetsbbox[3:4] + naturalearth_zoom[2]
     croppoly <- sf::st_as_sf(sf::st_as_sfc(targetsbbox))
 
     # Suppress warning on attributes from sf
