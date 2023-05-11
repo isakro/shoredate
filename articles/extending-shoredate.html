@@ -133,21 +133,22 @@ possible elevation of the sea-level over time. This is also the case for
 the displacement curve published for Ørland. At present, the required
 format for displacement curves to be used with <em>shoredate</em> is
 therefore a data frame with the columns <code>bce</code>,
-<code>upperelev</code> and <code>lowerelev</code>. Here,
-<code>upperelev</code> and <code>lowerelev</code> denote the highest and
-lowest possible elevation for the sea-level for each year BCE. Years
-BCE, defined by the column <code>bce</code>, should be given at an
-interval with equal or higher resolution than that which is desired for
-the resulting shoreline date. The probability between the upper and
-lower elevation limits are here assumed to be uniformly distributed.
-While displacement curves with a non-uniform probability distribution
-have also been reported for Norway (e.g. Creel et al. 2022), and are
-frequently developed for other regions of the world, functionality to
-use these with <em>shoredate</em> remains to be developed.</p>
+<code>upperelev</code>, <code>lowerelev</code> and <code>name</code>.
+Here, <code>upperelev</code> and <code>lowerelev</code> denote the
+highest and lowest possible elevation for the sea-level for each year
+BCE. Years BCE, defined by the column <code>bce</code>, should be given
+at an interval with equal or higher resolution than that which is
+desired for the resulting shoreline date. The probability between the
+upper and lower elevation limits are here assumed to be uniformly
+distributed. While displacement curves with a non-uniform probability
+distribution have also been reported for Norway (e.g. Creel et
+al. 2022), and are frequently developed for other regions of the world,
+functionality to use these with <em>shoredate</em> remains to be
+developed.</p>
 <p>The displacement curve for Ørland is provided with <em>shoredate</em>
 and can be loaded with the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># As a lot of function calls from these packages will be done below they are</span></span>
+<code class="sourceCode R"><span><span class="co"># As functions from these packages will be used quite a bit below they are</span></span>
 <span><span class="co"># explictly loaded here, instead of using the package::function() syntax with</span></span>
 <span><span class="co"># each function call.</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -158,16 +159,21 @@ and can be loaded with the following code:</p>
 <span></span>
 <span><span class="co"># Load the displacement curve for Ørland</span></span>
 <span><span class="va">orland_disp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/orland_displacement_curve.rda"</span>,</span>
-<span>                  package <span class="op">=</span> <span class="st">"shoredate"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This can then be plotted with displacement_plot():</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># As the displacement curves for south-eastern Norway are not of interest here,</span></span>
-<span><span class="co"># these are not plotted by specifying the argument displacement_curves.</span></span>
-<span><span class="co"># Functions from ggplot2 are then applied to perform some adjustments to the</span></span>
-<span><span class="co"># plot returned by displacement_plot().</span></span>
-<span><span class="fu"><a href="../reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span>target_curve <span class="op">=</span> <span class="va">orland_disp</span>, displacement_curves <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Shoreline displacement curve for Ørland, Central Norway"</span><span class="op">)</span></span></code></pre></div>
+<span>                  package <span class="op">=</span> <span class="st">"shoredate"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Print the first five rows of the Ørland displacement curve</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">orland_dip</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in head(orland_dip): object 'orland_dip' not found</span></span></code></pre>
+<p>This can then be plotted with <code><a href="../reference/displacement_plot.html">displacement_plot()</a></code>. The
+name is adjusted with the argument <code>target_name</code> to something
+more informative, and the geologically derived displacement curves from
+south-eastern Norway are excluded by specifying the
+<code>displacement_curves</code> argument, as these are not of relevance
+here.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span>target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
+<span>                  target_name <span class="op">=</span> <span class="st">"Displacement curve for Ørland, Central Norway"</span>,</span>
+<span>                  displacement_curves <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
 <p><img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp" style="display: block; margin: auto;"></p>
 <p>A note should be made here that the Ørland curve was originally
 published with reference to the highest astronomical tide in the region
@@ -189,10 +195,13 @@ then be passed.</p>
 <div class="section level3">
 <h3 id="creating-maps-of-ørland">Creating maps of Ørland<a class="anchor" aria-label="anchor" href="#creating-maps-of-%C3%B8rland"></a>
 </h3>
-<p>Having loaded the displacement curve, this can then be used to
-shoreline date sites in Ørland. The below code creates two fictitious
-sites, each represented by a point:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>Having loaded the displacement curve, this can then be directly used
+to shoreline date sites in locations where it applies, provided the
+elevation of the sites above present sea-level is known. First we will
+create a couple of fictitious site examples, each represented by a
+point, and maps of their location to demonstrate the extendability of
+some additional functions.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create example sites</span></span>
 <span><span class="va">target_points</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">532719</span>, <span class="fl">7065723</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                         <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">532896</span>, <span class="fl">7066260</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -205,7 +214,7 @@ sites, each represented by a point:</p>
 <p>To create a map of where Ørland and these target points are located,
 one can adapt the <code><a href="../reference/target_plot.html">target_plot()</a></code> function. First, set up the
 geometries to be plotted:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load in the limit of the spatial coverage in south-eastern Norway,</span></span>
 <span><span class="co"># which is provided with the package</span></span>
 <span><span class="va">senorway</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/spatial_limit.gpkg"</span>,</span>
@@ -219,8 +228,9 @@ geometries to be plotted:</p>
 <span><span class="va">orland</span><span class="op">$</span><span class="va">location</span> <span class="op">=</span> <span class="st">"Ørland"</span></span></code></pre></div>
 <p>Once this has been done we can use <code><a href="../reference/target_plot.html">target_plot()</a></code> to set
 up a plot. Setting <code>naturalearth_basemap</code> to TRUE downloads a
-world map from naturalearthdata.com. This is stored in a temporary
-folder and is deleted once the current R-session is ended. The argument
+world map from <a href="https://www.naturalearthdata.com/" class="external-link uri">https://www.naturalearthdata.com/</a> using the
+<code>rnaturalearth</code> package. This is stored in a temporary folder
+and is deleted when the current R session is ended. The argument
 <code>naturalearth_zoom</code> specifies the amount of cropping that is
 done on this world map, with the provided targets as the focal point.
 The argument <code>crs_epsg</code> is here the same as the default, but
@@ -231,17 +241,15 @@ excluded from the plot. Finally, setting <code>target_labels</code> to
 FALSE excludes the labelling of the target points in the plot, the
 labelleing of which will be handled with a legend in the code to follow
 below.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">overview_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="va">orland</span>,</span>
 <span>                      naturalearth_basemap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                      naturalearth_zoom <span class="op">=</span> <span class="fl">1000000</span>,</span>
+<span>                      naturalearth_zoom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000000</span>, <span class="fl">1000000</span><span class="op">)</span>,</span>
 <span>                      crs_epsg <span class="op">=</span> <span class="fl">32632</span>,</span>
 <span>                      base_col <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>                      base_fill <span class="op">=</span> <span class="st">"grey85"</span>,</span>
 <span>                      isobases <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>                      target_labels <span class="op">=</span>  <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in target_plot(targets = orland, naturalearth_basemap = TRUE, naturalearth_zoom = 1e+06, : Reprojecting basemap from CRS with EPSG code 4326 to EPSG</span></span>
-<span><span class="co">## 32632.</span></span></code></pre>
 <p>Having created a base plot, this can now be manipulated using other
 functions from the package <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -263,19 +271,18 @@ functions from the package <code>ggplot2</code>.</p>
 <p>When the map displaying the location of Ørland is created, we can
 create a second map that shows the location of the example points,
 zoomed in at the Ørland peninsula. The map is fairly simple, but can
-nonetheless be a useful excerise to make sure everything looks
-reasonable.</p>
+nonetheless be a useful excerise to make sure everything looks as it
+should.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create basemap</span></span>
 <span><span class="va">examples_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="va">target_points</span>,</span>
 <span>                      naturalearth_basemap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                      naturalearth_zoom <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>                      naturalearth_zoom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15000</span>, <span class="fl">10000</span><span class="op">)</span>,</span>
 <span>                      base_col <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>                      base_fill <span class="op">=</span> <span class="st">"grey85"</span>,</span>
-<span>                      isobases <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in target_plot(targets = target_points, naturalearth_basemap = TRUE, : Reprojecting basemap from CRS with EPSG code 4326 to EPSG 32632.</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Add axis labels and ticks, which are not returned with target_plot()</span></span>
+<span>                      isobases <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add axis labels and ticks, which are not returned with target_plot()</span></span>
 <span><span class="va">examples_map</span> <span class="op">&lt;-</span> <span class="va">examples_map</span> <span class="op">+</span></span>
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -287,7 +294,7 @@ reasonable.</p>
 <span><span class="co"># Call overview map</span></span>
 <span><span class="va">overview_map</span></span></code></pre></div>
 <p><img src="extend-maps-1.png" alt="plot of chunk maps" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Call map displaying the location of the example points</span></span>
 <span><span class="va">examples_map</span></span></code></pre></div>
 <p><img src="extend-maps-2.png" alt="plot of chunk maps" style="display: block; margin: auto;"></p>
@@ -298,7 +305,7 @@ reasonable.</p>
 <p>For this example, a raster retrieved from Amazon Web Service Terrain
 Tiles is used for finding the elevation of the example sites. This
 follows the procedure outlined in the main vignette.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_points</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,</span>
 <span>                                        verbose <span class="op">=</span> <span class="cn">FALSE</span>, src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span>
@@ -311,7 +318,7 @@ follows the procedure outlined in the main vignette.</p>
 <p><img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot" style="display: block; margin: auto;"></p>
 <p>After the raster has been loaded we can check the elevation of the
 sites:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">elev_raster</span>, <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 17.74339 19.53946</span></span></code></pre>
 <p>This elevation is retrieved by <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> if the
@@ -321,7 +328,7 @@ illustrate the point that all that is needed to use
 these elevations, the function is here called by only providing the
 displacement curve and manually providing the name of the sites and
 their elevations:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span>sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Example 1"</span>, <span class="st">"Example 2"</span><span class="op">)</span>,</span>
 <span>                               target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                               elevation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17.7</span>, <span class="fl">19.5</span><span class="op">)</span><span class="op">)</span></span>
@@ -357,7 +364,7 @@ it could also be possible to reverse this logic in regions that have
 instead been subject to sea-level rise, where the date for when a
 location was inundated can provide a <em>terminus ante quem</em> – the
 latest possible date for the use of a site.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Finding the earliest possible date for the first example point</span></span>
 <span><span class="va">earliest_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                              elevation <span class="op">=</span> <span class="va">elev_raster</span>, model <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>

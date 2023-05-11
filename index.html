@@ -139,8 +139,9 @@
 <code class="sourceCode R"><span><span class="co"># Interpolate shoreline displacement curve for the target location</span></span>
 <span><span class="va">target_curve</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/interpolate_curve.html">interpolate_curve</a></span><span class="op">(</span><span class="va">target_point</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plot displaying the interpolated curve </span></span>
-<span><span class="fu"><a href="reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span><span class="va">target_curve</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Plot displaying the interpolated curve, reducing the opacity of the</span></span>
+<span><span class="co"># geological displacement curves.</span></span>
+<span><span class="fu"><a href="reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span><span class="va">target_curve</span>, displacement_alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/interpolated_curve-1.png" style="display: block; margin: auto;"></p>
 <p>This interpolation is performed under the hood for each site when calling <code><a href="reference/shoreline_date.html">shoreline_date()</a></code>, which performs the shoreline dating procedure.</p>
 </div>
@@ -171,8 +172,8 @@
 <div class="section level2">
 <h2 id="further-documentation">Further documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a>
 </h2>
-<p>The procedures outlined above have focused on the basic functions and default behaviours of the package when dating a single site in the area for which the package was originally developed. For further usage and a more detailed walk through, see the main vignette by calling <code><a href="articles/shoredate.html">vignette("shoredate")</a></code>.</p>
-<p>Furthermore, a second vignette which can be accessed with <code><a href="articles/extending-shoredate.html">vignette("extending-shoredate")</a></code> outlines ways in which the package can be applied to other regions.</p>
+<p>The procedures outlined above have focused on the basic functions and default behaviours of the package when dating a single site in the area for which the package was originally developed. For further usage and a more detailed walk through, see the main vignette by calling <code><a href="articles/shoredate.html">vignette("shoredate")</a></code> or accessing it on the <a href="https://isakro.github.io/shoredate/articles/shoredate.html">web page</a>.</p>
+<p>Furthermore, a second vignette, which can be accessed with <code><a href="articles/extending-shoredate.html">vignette("extending-shoredate")</a></code> or viewed on the <a href="https://isakro.github.io/shoredate/articles/extending-shoredate.html">web page</a>, outlines ways in which the package can be applied to other regions.</p>
 </div>
 </div>
 <div class="section level1">
