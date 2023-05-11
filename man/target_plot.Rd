@@ -12,7 +12,7 @@ target_plot(
     "shoredate", mustWork = TRUE), quiet = TRUE),
   crs_epsg = 32632,
   naturalearth_basemap = FALSE,
-  naturalearth_zoom = 20000,
+  naturalearth_zoom = c(20000, 20000),
   target_labels = TRUE,
   scalebar = TRUE,
   scalebar_width = 0.4,
@@ -50,65 +50,64 @@ re-projected. Defaults to 32632, which is WGS 84 / UTM zone 32N
 
 \item{naturalearth_basemap}{Logical value specifying if a background map
 should be downloaded to be used as a basemap. Downloaded files are stored
-with \code{base::tempdir()} and deleted when the R session is closed. If TRUE,
-overrides the \code{basemap} argument. Defaults to FALSE.}
+with \code{base::tempdir()} and deleted when the R session is closed. If \code{TRUE},
+overrides the \code{basemap} argument. Defaults to \code{FALSE}.}
 
-\item{naturalearth_zoom}{A numerical value specifying the amount of cropping
-that is done around provided \code{targets} when \code{naturalearth_basemap} is set to
-TRUE. Be aware of whether a projected or geographical CRS is specified in
-\code{crs_epsg}. Defaults to 20000.}
+\item{naturalearth_zoom}{A vector of two numerical values specifying the
+amount of cropping that is done around provided \code{targets} when
+\code{naturalearth_basemap} is set to
+\code{TRUE}. Be aware of whether a projected or geographical CRS is specified in
+\code{crs_epsg}. Defaults to \code{c(20000, 20000)}.}
 
 \item{target_labels}{Logical value specifying whether the targets should be
 labelled in the plot. Takes the first column beyond the one holding the
 geometries to represent names. If this is not present the targets are
-labelled by row number. Defaults to TRUE.}
+labelled by row number. Defaults to \code{TRUE}.}
 
 \item{scalebar}{Logical specifying whether a scalebar should be added to the
-plot. Defaults to TRUE.}
+plot. Defaults to \code{TRUE}.}
 
 \item{scalebar_width}{Numerical value specifying the width of the scalebar by
 passing it to the \code{width_hint} argument of \code{ggspatial::annotation:scale()}.
-Defaults to 0.4.}
+Defaults to \code{0.4}.}
 
 \item{scalebar_style}{Character value specifying the style of the scalebar by
 passing it to the \code{style} argument of \code{ggspatial::annotation:scale()}.
-Defaults to "ticks".}
+Defaults to \code{"ticks"}.}
 
 \item{scalebar_location}{Character value specifying the location of the
 scalebar on the plot by passing it to the \code{location} argument of
-\code{ggspatial::annotation:scale()}. Defaults to "br".}
+\code{ggspatial::annotation:scale()}. Defaults to \code{"br"}.}
 
 \item{base_fill}{Character value specifying the fill colour of the basemap.
-Defaults to "grey".}
+Defaults to \code{"grey"}.}
 
 \item{base_col}{Character value specifying the outline colour of the
-basemap. Defaults to NA.}
+basemap. Defaults to \code{NA}.}
 
 \item{target_shape}{Numerical value specifying the point shape that represent
-the centroids of the targets.}
+the centroids of the targets. Defaults to \code{21}.}
 
 \item{target_col}{Character value specifying the colour parameter for the
-points that represent the centroids of the targets.}
+points that represent the centroids of the targets. Defaults to \code{"black"}.}
 
 \item{target_fill}{Character value specifying the fill parameter for the
-points that represent the centroids of the targets.}
+points that represent the centroids of the targets. Defaults to \code{"red"}.}
 
 \item{target_size}{Numerical value specifying the size of the points that
-represent the centroids of the targets.}
+represent the centroids of the targets. Defaults to \code{2.25}.}
 
 \item{isobase_line}{Vector of character values specifying the linetype that
 is used to represent the isobases of the geologically derived displacement
-curves. Defaults to c("Horten" = "solid", "Porsgrunn" = "solid",
-"Tvedestrand" = "solid", "Arendal" = "solid")}
+curves. Defaults to \code{c("Horten" = "solid", "Porsgrunn" = "solid", "Tvedestrand" = "solid", "Arendal" = "solid")}.`}
 
 \item{isobase_col}{Vector of character values specifying the colours used
 for the lines that represent the isobases of the geologically derived
-displacement curves. Defaults to c("Arendal" = "black",
-"Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")}
+displacement curves. Defaults to \code{c("Arendal" = "black", "Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")}.`}
 
 \item{greyscale}{Logical value indicating whether the plot should include
-colours or not. Overrides other graphical parameters When set to TRUE.
-Defaults to FALSE.}
+colours or not. Overrides other graphical parameters When set to \code{TRUE}.
+Defaults to \code{FALSE}.}
 }
 \value{
 A ggplot that displays a background map with the location of the

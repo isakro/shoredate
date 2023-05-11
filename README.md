@@ -195,12 +195,12 @@ The procedures outlined above have focused on the basic functions and
 default behaviours of the package when dating a single site in the area
 for which the package was originally developed. For further usage and a
 more detailed walk through, see the main vignette by calling
-`vignette("shoredate")` or accessing it on the [web
-page](https://isakro.github.io/shoredate/articles/shoredate.html).
+`vignette("shoredate")` or accessing it on the
+[website](https://isakro.github.io/shoredate/articles/shoredate.html).
 
 Furthermore, a second vignette, which can be accessed with
-`vignette("extending-shoredate")` or viewed on the [web
-page](https://isakro.github.io/shoredate/articles/extending-shoredate.html),
+`vignette("extending-shoredate")` or viewed on the
+[website](https://isakro.github.io/shoredate/articles/extending-shoredate.html),
 outlines ways in which the package can be applied to other regions.
 
 # References
