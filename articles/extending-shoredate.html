@@ -115,11 +115,14 @@ is based on an empirically derived estimation of the relationship
 between coastal Stone Age sites and the contemporaneous shoreline in the
 Skagerrak region of south-eastern Norway. Consequently, the extent to
 which the same relationship characterises the site-sea relationship in
-other areas of Norway, and beyond, is therefore undetermined. However,
-given an assumption that when a location emerged from the sea determines
-the earliest possible date for when it could have been occupied, another
-option is to use the method to find a <em>terminus post quem</em> date,
-as outlined in the main vignette, and further demonstrated below.</p>
+other areas of Norway, and beyond, is therefore undetermined (a possible
+approach for assessing this in other areas can be found in Roalkvam
+2023). However, in regions characterised by continous relative sea-level
+regression, when a location emerged from the sea determines the earliest
+possible date for when it could have been occupied. Consequently,
+another option is to use the method to find a <em>terminus post
+quem</em> date, as outlined in the main vignette, and further
+demonstrated below.</p>
 </div>
 <div class="section level2">
 <h2 id="applying-shoredate-in-ørland">Applying <em>shoredate</em> in Ørland<a class="anchor" aria-label="anchor" href="#applying-shoredate-in-%C3%B8rland"></a>
@@ -162,8 +165,14 @@ and can be loaded with the following code:</p>
 <span>                  package <span class="op">=</span> <span class="st">"shoredate"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Print the first five rows of the Ørland displacement curve</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">orland_dip</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in head(orland_dip): object 'orland_dip' not found</span></span></code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">orland_disp</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    bce upperelev    lowerelev   name</span></span>
+<span><span class="co">## 1 1950 0.3372681 0.0000000000 Ørland</span></span>
+<span><span class="co">## 2 1949 0.3376883 0.0003724002 Ørland</span></span>
+<span><span class="co">## 3 1948 0.3381084 0.0007448004 Ørland</span></span>
+<span><span class="co">## 4 1947 0.3385286 0.0011172007 Ørland</span></span>
+<span><span class="co">## 5 1946 0.3389487 0.0014896009 Ørland</span></span>
+<span><span class="co">## 6 1945 0.3393688 0.0018620011 Ørland</span></span></code></pre>
 <p>This can then be plotted with <code><a href="../reference/displacement_plot.html">displacement_plot()</a></code>. The
 name is adjusted with the argument <code>target_name</code> to something
 more informative, and the geologically derived displacement curves from
@@ -200,7 +209,7 @@ to shoreline date sites in locations where it applies, provided the
 elevation of the sites above present sea-level is known. First we will
 create a couple of fictitious site examples, each represented by a
 point, and maps of their location to demonstrate the extendability of
-some additional functions.</p>
+the <code><a href="../reference/target_plot.html">target_plot()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create example sites</span></span>
 <span><span class="va">target_points</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">532719</span>, <span class="fl">7065723</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -270,8 +279,8 @@ functions from the package <code>ggplot2</code>.</p>
 <span>                       <span class="st">"spatial limit in south-eastern Norway"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>When the map displaying the location of Ørland is created, we can
 create a second map that shows the location of the example points,
-zoomed in at the Ørland peninsula. The map is fairly simple, but can
-nonetheless be a useful exercise to make sure everything looks as it
+zoomed in at the Ørland peninsula. While the map is fairly simple, it
+can nonetheless be useful to do this to make sure everything looks as it
 should.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create basemap</span></span>
@@ -361,8 +370,8 @@ and the shoreline is unknown. This can potentially also be extended to
 the dating of other phenomena such as rock art, or other cases where
 this relationship is less certain (see e.g. Sognnes 2003). Furthermore,
 it could also be possible to reverse this logic in regions that have
-instead been subject to sea-level rise, where the date for when a
-location was inundated can provide a <em>terminus ante quem</em> – the
+instead been subject to relative sea-level rise, where the date for when
+a location was inundated can provide a <em>terminus ante quem</em> – the
 latest possible date for the use of a site.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Finding the earliest possible date for the first example point</span></span>
@@ -378,15 +387,15 @@ latest possible date for the use of a site.</p>
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Creel, R.C., Austermann, J., Khan, N.S., D’Andrea, W.J., Balascio,
-N., Dyer, B., Ashe, E., Menke, W. 2022 Postglacial relative sea level
+N., Dyer, B., Ashe, E., Menke, W. 2022. Postglacial relative sea level
 change in Norway. <em>Quaternary Science Reviews</em> 282:107422. DOI:
 <a href="https://doi.org/10.1016/j.quascirev.2022.107422" class="external-link">10.1016/j.quascirev.2022.107422</a></p>
 <p>Romundset, A. and Lakeman, T.R. 2019. Shoreline displacement at
 Ørland since 6000 cal. yr BP. In <em>Environment and Settlement: Ørland
 600 BC – AD 1250: Archaeological Excavations at Vik, Ørland Main Air
-Base</em>, edited by I. Ystgaard. Cappelen Damm Akademisk, Oslo,
+Base</em>, edited by Ystgaard, I. Cappelen Damm Akademisk, Oslo,
 pp. 51–67. DOI: <a href="https://doi.org/10.23865/noasp.89" class="external-link">10.23865/noasp.89</a></p>
-<p>Sognnes, K. 2003 On Shoreline Dating of Rock Art. <em>Acta
+<p>Sognnes, K. 2003. On Shoreline Dating of Rock Art. <em>Acta
 Archaeologica</em> 74:189–209. DOI: <a href="https://doi.org/10.1111/j.0065-001X.2003.aar740104.x" class="external-link">10.1111/j.0065-001X.2003.aar740104.x</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
