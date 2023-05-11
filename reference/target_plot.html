@@ -77,7 +77,7 @@ spatial geometries covering other regions can also be provided.</p>
 <span>    <span class="st">"shoredate"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  crs_epsg <span class="op">=</span> <span class="fl">32632</span>,</span>
 <span>  naturalearth_basemap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  naturalearth_zoom <span class="op">=</span> <span class="fl">20000</span>,</span>
+<span>  naturalearth_zoom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20000</span>, <span class="fl">20000</span><span class="op">)</span>,</span>
 <span>  target_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scalebar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scalebar_width <span class="op">=</span> <span class="fl">0.4</span>,</span>
@@ -126,95 +126,94 @@ re-projected. Defaults to 32632, which is WGS 84 / UTM zone 32N
 <dt>naturalearth_basemap</dt>
 <dd><p>Logical value specifying if a background map
 should be downloaded to be used as a basemap. Downloaded files are stored
-with <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">base::tempdir()</a></code> and deleted when the R session is closed. If TRUE,
-overrides the <code>basemap</code> argument. Defaults to FALSE.</p></dd>
+with <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">base::tempdir()</a></code> and deleted when the R session is closed. If <code>TRUE</code>,
+overrides the <code>basemap</code> argument. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>naturalearth_zoom</dt>
-<dd><p>A numerical value specifying the amount of cropping
-that is done around provided <code>targets</code> when <code>naturalearth_basemap</code> is set to
-TRUE. Be aware of whether a projected or geographical CRS is specified in
-<code>crs_epsg</code>. Defaults to 20000.</p></dd>
+<dd><p>A vector of two numerical values specifying the
+amount of cropping that is done around provided <code>targets</code> when
+<code>naturalearth_basemap</code> is set to
+<code>TRUE</code>. Be aware of whether a projected or geographical CRS is specified in
+<code>crs_epsg</code>. Defaults to <code>c(20000, 20000)</code>.</p></dd>
 
 
 <dt>target_labels</dt>
 <dd><p>Logical value specifying whether the targets should be
 labelled in the plot. Takes the first column beyond the one holding the
 geometries to represent names. If this is not present the targets are
-labelled by row number. Defaults to TRUE.</p></dd>
+labelled by row number. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt>scalebar</dt>
 <dd><p>Logical specifying whether a scalebar should be added to the
-plot. Defaults to TRUE.</p></dd>
+plot. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt>scalebar_width</dt>
 <dd><p>Numerical value specifying the width of the scalebar by
 passing it to the <code>width_hint</code> argument of <code>ggspatial::annotation:scale()</code>.
-Defaults to 0.4.</p></dd>
+Defaults to <code>0.4</code>.</p></dd>
 
 
 <dt>scalebar_style</dt>
 <dd><p>Character value specifying the style of the scalebar by
 passing it to the <code>style</code> argument of <code>ggspatial::annotation:scale()</code>.
-Defaults to "ticks".</p></dd>
+Defaults to <code>"ticks"</code>.</p></dd>
 
 
 <dt>scalebar_location</dt>
 <dd><p>Character value specifying the location of the
 scalebar on the plot by passing it to the <code>location</code> argument of
-<code>ggspatial::annotation:scale()</code>. Defaults to "br".</p></dd>
+<code>ggspatial::annotation:scale()</code>. Defaults to <code>"br"</code>.</p></dd>
 
 
 <dt>base_fill</dt>
 <dd><p>Character value specifying the fill colour of the basemap.
-Defaults to "grey".</p></dd>
+Defaults to <code>"grey"</code>.</p></dd>
 
 
 <dt>base_col</dt>
 <dd><p>Character value specifying the outline colour of the
-basemap. Defaults to NA.</p></dd>
+basemap. Defaults to <code>NA</code>.</p></dd>
 
 
 <dt>target_shape</dt>
 <dd><p>Numerical value specifying the point shape that represent
-the centroids of the targets.</p></dd>
+the centroids of the targets. Defaults to <code>21</code>.</p></dd>
 
 
 <dt>target_col</dt>
 <dd><p>Character value specifying the colour parameter for the
-points that represent the centroids of the targets.</p></dd>
+points that represent the centroids of the targets. Defaults to <code>"black"</code>.</p></dd>
 
 
 <dt>target_fill</dt>
 <dd><p>Character value specifying the fill parameter for the
-points that represent the centroids of the targets.</p></dd>
+points that represent the centroids of the targets. Defaults to <code>"red"</code>.</p></dd>
 
 
 <dt>target_size</dt>
 <dd><p>Numerical value specifying the size of the points that
-represent the centroids of the targets.</p></dd>
+represent the centroids of the targets. Defaults to <code>2.25</code>.</p></dd>
 
 
 <dt>isobase_line</dt>
 <dd><p>Vector of character values specifying the linetype that
 is used to represent the isobases of the geologically derived displacement
-curves. Defaults to c("Horten" = "solid", "Porsgrunn" = "solid",
-"Tvedestrand" = "solid", "Arendal" = "solid")</p></dd>
+curves. Defaults to <code>c("Horten" = "solid", "Porsgrunn" = "solid", "Tvedestrand" = "solid", "Arendal" = "solid")</code>.`</p></dd>
 
 
 <dt>isobase_col</dt>
 <dd><p>Vector of character values specifying the colours used
 for the lines that represent the isobases of the geologically derived
-displacement curves. Defaults to c("Arendal" = "black",
-"Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")</p></dd>
+displacement curves. Defaults to <code>c("Arendal" = "black", "Porsgrunn" = "darkgreen", "Tvedestrand" = "blue", "Horten" = "darkorange")</code>.`</p></dd>
 
 
 <dt>greyscale</dt>
 <dd><p>Logical value indicating whether the plot should include
-colours or not. Overrides other graphical parameters When set to TRUE.
-Defaults to FALSE.</p></dd>
+colours or not. Overrides other graphical parameters When set to <code>TRUE</code>.
+Defaults to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

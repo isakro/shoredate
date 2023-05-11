@@ -96,7 +96,7 @@ a new displacement curve for a part of the Holocene has recently been
 published (Romundset and Lakeman 2019). Furthermore, all that is needed
 to use the main functions of the package is a shoreline displacement
 curve that describes the sea-level change at the location of a site to
-be dated, and an eleveation value for that site. Consequently, it is in
+be dated, and an elevation value for that site. Consequently, it is in
 principle possible to extend the main functionality of the package to
 any region of the world in which the method is applicable, provided
 reliable data in a suitable format is available.</p>
@@ -113,7 +113,7 @@ fail with other coordinate reference systems than WGS 82 / UTM zone 32N
 <p>Finally, the default method used for shoreline dating in the package
 is based on an empirically derived estimation of the relationship
 between coastal Stone Age sites and the contemporaneous shoreline in the
-Skaggrak region of south-eastern Norway. Consequently, the extent to
+Skagerrak region of south-eastern Norway. Consequently, the extent to
 which the same relationship characterises the site-sea relationship in
 other areas of Norway, and beyond, is therefore undetermined. However,
 given an assumption that when a location emerged from the sea determines
@@ -239,7 +239,7 @@ systems can be used. Setting the argument <code>isobases</code> to NA
 means that the default isobases pertaining to south-eastern Norway are
 excluded from the plot. Finally, setting <code>target_labels</code> to
 FALSE excludes the labelling of the target points in the plot, the
-labelleing of which will be handled with a legend in the code to follow
+labelling of which will be handled with a legend in the code to follow
 below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">overview_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="va">orland</span>,</span>
@@ -271,7 +271,7 @@ functions from the package <code>ggplot2</code>.</p>
 <p>When the map displaying the location of Ørland is created, we can
 create a second map that shows the location of the example points,
 zoomed in at the Ørland peninsula. The map is fairly simple, but can
-nonetheless be a useful excerise to make sure everything looks as it
+nonetheless be a useful exercise to make sure everything looks as it
 should.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create basemap</span></span>
@@ -348,8 +348,8 @@ relationship is changing the parameters for the gamma function when
 calling <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>, using the argument
 <code>model_parameters</code>. However, as an alternative it is also
 possible to perform the dating procedure without accounting for any
-distance between the site and the contemporenous shoreline. This is done
-by setting the parameter <code>model</code> to “none” when calling
+distance between the site and the contemporaneous shoreline. This is
+done by setting the parameter <code>model</code> to “none” when calling
 <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>. This thus effectively provides a
 <em>termnius post quem</em> date, under the assumption that the earliest
 possible date for when the site was in use is when the location of the
