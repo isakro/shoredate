@@ -1,23 +1,24 @@
 Package: shoredate
 Type: Package
-Title: Shoreline Dating Stone Age Sites on the Norwegian Skagerrak Coast
+Title: Shoreline Dating Coastal Stone Age Sites
 Version: 1.0.2.9000
 Authors@R: 
     person("Isak", "Roalkvam", , "isakroa@protonmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6974-1374"))
-Description: Provides tools for shoreline dating Stone Age sites located on the 
-  Norwegian Skagerrak coast using methods presented in Roalkvam (2023) 
-  <doi:10.1016/j.quascirev.2022.107880>. Shoreline dating is based on 
-  the present-day elevation of a site, a reconstruction of past relative 
-  sea-level change, and empirically derived estimates of the likely elevation of
-  the sites above the contemporaneous sea-level when they were in use. The 
-  geographical and temporal coverage of the method thus follows from local 
-  geological reconstructions of shoreline displacement and the degree to which
-  settlements in the region have been found to have been located on or close to
-  the shoreline when they were in use. Methods for numerical treatment and 
-  visualisation of the dates are provided, along with basic tools for evaluating
-  the location of sites within the region and corresponding variation in local
-  shoreline displacement.
+Description: Provides tools for shoreline dating coastal Stone Age sites. The 
+  implemented method was developed in Roalkvam (2023) 
+  <doi:10.1016/j.quascirev.2022.107880> for the Norwegian Skagerrak coast. 
+  Although it can be extended to other areas, this also forms the core area for 
+  application of the package. Shoreline dating is based on the present-day 
+  elevation of a site, a reconstruction of past relative sea-level change, and
+  empirically derived estimates of the likely elevation of the sites above the 
+  contemporaneous sea-level when they were in use. The geographical and temporal 
+  coverage of the method thus follows from the availability of local geological 
+  reconstructions of shoreline displacement and the degree to which the 
+  settlements to be dated have been located on or close to the shoreline when 
+  they were in use. Methods for numerical treatment and visualisation of the 
+  dates are provided, along with basic tools for visualising and evaluating the 
+  location of sites. 
 Language: en-US
 License: GPL (>= 3)
 URL: https://github.com/isakro/shoredate,

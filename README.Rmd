@@ -28,7 +28,9 @@ spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
 [![Codecov test coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
 <!-- badges: end -->
 
-The package *shoredate* offers methods to shoreline date coastal Stone Age sites based on their present-day elevation and the trajectory of past relative sea-level change. Shoreline dating is based on the premise that coastal Stone Age sites in large parts of Fennoscandia were located on or close to the shoreline when they were in use. The package and method as implemented here was originally developed for the Norwegian Skagerrak coast in south-eastern Norway, based on an empirically derived estimate of the likely elevation of sites above sea-level when they were occupied (Roalkvam 2023). The degree to which the method can be extended to other areas is therefore undetermined. Do also note that as the method is dependent on regularities in human behaviour, and as the Roalkvam (2023) study provides an initial formalisation of the method, it is hefted with unexplored uncertainties also within the core area for which it was developed. In sum therefore, the dates achieved with the package should be treated with care.  
+The package *shoredate* offers methods to shoreline date coastal Stone Age sites based on their present-day elevation and the trajectory of past relative sea-level change. Shoreline dating is based on the premise that coastal Stone Age sites in large parts of Fennoscandia were located on or close to the shoreline when they were in use. The package and method as implemented here was originally developed for the Norwegian Skagerrak coast in south-eastern Norway, based on an empirically derived estimate of the likely elevation of sites above sea-level when they were occupied (Roalkvam 2023). Therefore, while the package offers way to extend the method to other areas, the degree to which it is applicable elsewhere is undetermined. 
+
+Do also note that as the method is dependent on regularities in human behaviour, and as the Roalkvam (2023) study provides an initial formalisation of the method, it is hefted with unexplored uncertainties, also within the core area for which it was developed. In sum therefore, the dates achieved with the package should be treated with care.  
 
 ## Installation and loading
 
@@ -121,19 +123,19 @@ Furthermore, a second vignette, which can be accessed with `vignette("extending-
 
 # References
 
-Glørstad, H. 2016 Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
+Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
 
-Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Gaute Reitan and Lars Sundström. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
+Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Reitan, G. and Sundström, L. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
-Romundset, A. 2021 *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
+Romundset, A. 2021. *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
 
 Romundset, A., Lakeman, T.R. and Høgaas, F. 2018. Quantifying variable rates of postglacial relative sea level fall from a cluster of 24 isolation basins in southern Norway. *Quaternary Science Reviews* 197:175e192. DOI: [10.1016/ j.quascirev.2018.07.041](https://www.sciencedirect.com/science/article/pii/S0277379118302890)
 
-Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
+Roalkvam, I. 2023. A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
 
-Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Per Persson and Steinar Solheim, in press.  
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Persson, P. and Solheim, S., in press.  
 
-Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014 Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Stine Melvold and Per Persson. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014. Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Melvold, S. and Persson, P. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
 # Contributing
 

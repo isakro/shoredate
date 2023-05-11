@@ -290,27 +290,27 @@ shoredate_plot(sum_iso_date, site_name = TRUE, isobase_direction = TRUE)
 
 # References
 
-Bronk Ramsey, C. Methods for Summarizing Radiocarbon Datasets. *Radiocarbon* 59(6):1809--1833. DOI: [10.1017/RDC.2017.108](https://doi.org/10.1017/RDC.2017.108)
+Bronk Ramsey, C. 2017. Methods for Summarizing Radiocarbon Datasets. *Radiocarbon* 59(6):1809--1833. DOI: [10.1017/RDC.2017.108](https://doi.org/10.1017/RDC.2017.108)
 
 Brøgger, W.C. 1905 *Strandliniens beliggenhed under stenalderen i det sydøstlige Norge*. Geological Survey of Norway, Kristiania. URI: https://hdl.handle.net/11250/2675184
 
-Crema, E. and Bevan, A. 2021 Inference from Large Sets of Radiocarbon Dates: Software and Methods. *Radiocarbon* 61(1):23--39. DOI: [10.1017/RDC.2020.95](https://doi.org/10.1017/RDC.2020.95)
+Crema, E. and Bevan, A. 2021. Inference from Large Sets of Radiocarbon Dates: Software and Methods. *Radiocarbon* 61(1):23--39. DOI: [10.1017/RDC.2020.95](https://doi.org/10.1017/RDC.2020.95)
 
-Crema, E. 2022 Statistical Inference of Prehistoric Demography from Frequency Distributions of Radiocarbon Dates: A Review and a Guide for the Perplexed. *Journal of Archaeological Method and Theory* 29:1387-1418. DOI: [10.1007/s10816-022-09559-5](https://doi.org/10.1007/s10816-022-09559-5)
+Crema, E. 2022. Statistical Inference of Prehistoric Demography from Frequency Distributions of Radiocarbon Dates: A Review and a Guide for the Perplexed. *Journal of Archaeological Method and Theory* 29:1387-1418. DOI: [10.1007/s10816-022-09559-5](https://doi.org/10.1007/s10816-022-09559-5)
 
-Glørstad, H. 2016 Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
+Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
 
-Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Gaute Reitan and Lars Sundström. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
+Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Reitan, G. and Sundström, L.. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
-Romundset, A. 2021 *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
+Romundset, A. 2021. *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
 
 Romundset, A., Lakeman, T.R. and Høgaas, F. 2018. Quantifying variable rates of postglacial relative sea level fall from a cluster of 24 isolation basins in southern Norway. *Quaternary Science Reviews* 197:175e192. DOI: [10.1016/ j.quascirev.2018.07.041](https://doi.org/10.1016/j.quascirev.2018.07.041)
 
 Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
 
-Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Per Persson and Steinar Solheim, in press.
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Persson, P. and Solheim, S., in press.
 
-Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014 Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Stine Melvold and Per Persson. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
+Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2014. Holocene landhevningsstudier i søndre Vestfold og sørøstre Telemark -- Revidert kurve. In *Vestfoldbaneprosjektet. Arkeologiske undersøkelser i forbindelse med ny jernbane mellom Larvik og Porsgrunn. Bind 1*, edited by Melvold, S. and Persson, P. Portal forlag, Kristiansand, pp. 36--47. DOI: [10.23865/noasp.61](https://doi.org/10.23865/noasp.61)
 
 ```{r, include = FALSE}
 # Move new figures into the vignettes/ directory

@@ -32,7 +32,7 @@ While *shoredate* and the method underlying it has been developed for applicatio
 
 Some notes of caution should also be added here. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. Furthermore, the function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
 
-Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined. However, given an assumption that when a location emerged from the sea determines the earliest possible date for when it could have been occupied, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
+Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined (a possible approach for assessing this in other areas can be found in Roalkvam 2023). However, in regions characterised by continous relative sea-level regression, when a location emerged from the sea determines the earliest possible date for when it could have been occupied. Consequently, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
 
 # Applying *shoredate* in Ørland
 
@@ -57,7 +57,7 @@ orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
                   package = "shoredate")))
 
 # Print the first five rows of the Ørland displacement curve
-head(orland_dip)
+head(orland_disp)
 ```
 
 This can then be plotted with `displacement_plot()`. The name is adjusted with the argument `target_name` to something more informative, and the geologically derived displacement curves from south-eastern Norway are excluded by specifying the `displacement_curves` argument, as these are not of relevance here.
@@ -75,7 +75,7 @@ Furthermore, while variable uplift rates are also relevant for this area, this i
 
 ## Creating maps of Ørland
 
-Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendability of some additional functions.
+Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendability of the `target_plot()` function.
 
 ```{r}
 # Create example sites
@@ -140,7 +140,7 @@ overview_map <- overview_map +
 
 ```
 
-When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. The map is fairly simple, but can nonetheless be a useful exercise to make sure everything looks as it should.
+When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at the Ørland peninsula. While the map is fairly simple, it can nonetheless be useful to do this to make sure everything looks as it should.
 
 ```{r maps, message = FALSE, warning = FALSE}
 # Create basemap
@@ -203,7 +203,7 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 As mentioned, the above implementation assumes that the relationship between the sites and the shoreline is characterised by the same gamma function as that identified for sites in south-eastern Norway. At present, the only adjustment that is possible to do to this assumed relationship is changing the parameters for the gamma function when calling `shoreline_date()`, using the argument `model_parameters`. However, as an alternative it is also possible to perform the dating procedure without accounting for any distance between the site and the contemporaneous shoreline. This is done by setting the parameter `model` to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, under the assumption that the earliest possible date for when the site was in use is when the location of the site emerged from the sea.
 
-While a *terminus post quem* limits the further inferential steps that can be taken, it might be more appropriate to apply shoreline dating in this manner in regions where the relationship between sites and the shoreline is unknown. This can potentially also be extended to the dating of other phenomena such as rock art, or other cases where this relationship is less certain (see e.g. Sognnes 2003). Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* -- the latest possible date for the use of a site.
+While a *terminus post quem* limits the further inferential steps that can be taken, it might be more appropriate to apply shoreline dating in this manner in regions where the relationship between sites and the shoreline is unknown. This can potentially also be extended to the dating of other phenomena such as rock art, or other cases where this relationship is less certain (see e.g. Sognnes 2003). Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* -- the latest possible date for the use of a site.
 
 ```{r earliest, fig.width = 4.4, fig.height = 3.7}
 # Finding the earliest possible date for the first example point
@@ -214,14 +214,13 @@ earliest_date <- shoreline_date(target_points[1,], target_curve = orland_disp,
 shoredate_plot(earliest_date, site_name = TRUE)
 ```
 
-
 # References
 
-Creel, R.C., Austermann, J., Khan, N.S., D'Andrea, W.J., Balascio, N., Dyer, B., Ashe, E., Menke, W. 2022 Postglacial relative sea level change in Norway. *Quaternary Science Reviews* 282:107422. DOI: [10.1016/j.quascirev.2022.107422](https://doi.org/10.1016/j.quascirev.2022.107422)
+Creel, R.C., Austermann, J., Khan, N.S., D'Andrea, W.J., Balascio, N., Dyer, B., Ashe, E., Menke, W. 2022. Postglacial relative sea level change in Norway. *Quaternary Science Reviews* 282:107422. DOI: [10.1016/j.quascirev.2022.107422](https://doi.org/10.1016/j.quascirev.2022.107422)
 
-Romundset, A. and Lakeman, T.R. 2019. Shoreline displacement at Ørland since 6000 cal. yr BP. In *Environment and Settlement: Ørland 600 BC – AD 1250: Archaeological Excavations at Vik, Ørland Main Air Base*, edited by I. Ystgaard. Cappelen Damm Akademisk, Oslo, pp. 51--67. DOI: [10.23865/noasp.89](https://doi.org/10.23865/noasp.89)
+Romundset, A. and Lakeman, T.R. 2019. Shoreline displacement at Ørland since 6000 cal. yr BP. In *Environment and Settlement: Ørland 600 BC – AD 1250: Archaeological Excavations at Vik, Ørland Main Air Base*, edited by Ystgaard, I. Cappelen Damm Akademisk, Oslo, pp. 51--67. DOI: [10.23865/noasp.89](https://doi.org/10.23865/noasp.89)
 
-Sognnes, K. 2003 On Shoreline Dating of Rock Art. *Acta Archaeologica* 74:189--209. DOI: [10.1111/j.0065-001X.2003.aar740104.x](https://doi.org/10.1111/j.0065-001X.2003.aar740104.x)
+Sognnes, K. 2003. On Shoreline Dating of Rock Art. *Acta Archaeologica* 74:189--209. DOI: [10.1111/j.0065-001X.2003.aar740104.x](https://doi.org/10.1111/j.0065-001X.2003.aar740104.x)
 
 ```{r, include = FALSE}
 # Move new figures into the vignettes/ directory
