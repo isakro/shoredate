@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_plot.R
 \name{target_plot}
 \alias{target_plot}
-\title{Target plot}
+\title{Plot a map with target locations}
 \usage{
 target_plot(
   targets = NA,
@@ -118,8 +118,9 @@ also plots the position of target locations represented as centroids.
 \description{
 Function to plot the centroids of sites to be dated and shoreline isobases of
 employed displacement curves on a basemap. Defaults to displaying a
-light-weight version of the spatial coverage in south-eastern Norway, but
-spatial geometries covering other regions can also be provided.
+light-weight version of the spatial coverage in south-eastern Norway.
+However, spatial geometries covering other regions can also be provided or
+temporarily downloaded with the function.
 }
 \examples{
 # Display the background map and default isobases

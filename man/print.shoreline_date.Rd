@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.shoreline_date}
 \alias{print.shoreline_date}
-\title{print.shoreline_date}
+\title{Print shoreline dates to console}
 \usage{
 \method{print}{shoreline_date}(x, ...)
 }
@@ -16,7 +16,7 @@ Print the site names, elevations, non-default isobase directions and
 HDRs contained in a \code{shoreline_date} object to console.
 }
 \description{
-Print the dates in a \code{shoreline_date} object. Each date is printed
+Print the dates held in a \code{shoreline_date} object. Each date is printed
 with site name, elevation and highest density region. If the isobase
 direction is different or more are provided than the default, the
 directions and dates associated with these are printed separately.

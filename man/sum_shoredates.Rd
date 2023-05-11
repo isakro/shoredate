@@ -2,7 +2,7 @@
 % Please edit documentation in R/sum_shoredates.R
 \name{sum_shoredates}
 \alias{sum_shoredates}
-\title{Sum shoreline dates}
+\title{Sum the probability of multiple shoreline dates}
 \usage{
 sum_shoredates(
   shoreline_dates,

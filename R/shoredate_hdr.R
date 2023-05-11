@@ -1,4 +1,4 @@
-#' Highest density region of shoreline dates
+#' Find the highest density region of shoreline dates
 #'
 #' Function to find 95% highest density region (HDR) for a provided shoreline
 #'  date. Negative values denote years BCE while positive values denote CE.

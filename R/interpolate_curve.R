@@ -1,8 +1,10 @@
-#' Interpolate displacement curve using IDW
+#' Interpolate displacement curve to a target location within the spatial
+#'  coverage in south-eastern Norway
 #'
 #' Interpolate the trajectory of past shoreline displacement to a target
-#'  location based on the distance of the location to the shoreline isobases of
-#'  the geologically derived displacement curves. This is done using inverse
+#'  location within the spatial coverage on the Skagerrak coast of south-eastern
+#'  Norway. This based on the distance of the location to the shoreline isobases
+#'  of the geologically derived displacement curves and is done using inverse
 #'  distance weighting.
 #'
 #' @param target A spatial target location to where the new displacement curve

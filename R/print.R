@@ -1,6 +1,6 @@
-#' print.shoreline_date
+#' Print shoreline dates to console
 #'
-#' Print the dates in a `shoreline_date` object. Each date is printed
+#' Print the dates held in a `shoreline_date` object. Each date is printed
 #'  with site name, elevation and highest density region. If the isobase
 #'  direction is different or more are provided than the default, the
 #'  directions and dates associated with these are printed separately.

@@ -1,4 +1,5 @@
-#' Create isobases
+#' Create isobases with different directions within the spatial coverage in
+#'  south-eastern Norway
 #'
 #' Function to create isobases for interpolating shoreline displacement curves
 #'  within the spatial coverage in south-eastern Norway. This is done from the

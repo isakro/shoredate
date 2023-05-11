@@ -2,7 +2,7 @@
 % Please edit documentation in R/shoredate_hdr.R
 \name{shoredate_hdr}
 \alias{shoredate_hdr}
-\title{Highest density region of shoreline dates}
+\title{Find the highest density region of shoreline dates}
 \usage{
 shoredate_hdr(bce, probability, site_name, cal_reso, prob = 0.95)
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/create_isobases.R
 \name{create_isobases}
 \alias{create_isobases}
-\title{Create isobases}
+\title{Create isobases with different directions within the spatial coverage in
+south-eastern Norway}
 \usage{
 create_isobases(isobase_direction)
 }

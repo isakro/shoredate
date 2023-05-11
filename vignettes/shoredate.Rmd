@@ -22,7 +22,7 @@ vignette: >
 # Introduction
 The concept of dating sites based on their present-day elevation with reference to past shoreline displacement has been an important tool for archaeologists in northern Scandinavia since the early 1900s (e.g. Brøgger 1905). This is based on the observation that Stone Age sites in the region tend to have been located close to the contemporaneous shoreline when they were in use. Furthermore, following the retreat of the Fennoscandian Ice Sheet, the isostatic uplift has been so severe that despite corresponding eustatic sea-level rise, the relative sea-level has been falling throughout prehistory in large parts of this region. Within any given area where this is the case, the general pattern is thus that older sites will be located at higher altitudes than younger sites.
 
-This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the functionality of the package was developed for the purposes of dating coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west. However, in the [second vignette](https://isakro.github.io/shoredate/articles/extending-shoredate.html), ways in which the core functionality of the package can be applied in other areas of the world are presented.
+This vignette describes the R package *shoredate* which provides tools for shoreline dating Stone Age sites located on the Norwegian Skagerrak coast using the approach presented in Roalkvam (2023). This is based on an empirical evaluation of the likely elevation of the sites above sea-level when they were in use, and the local trajectory of past relative sea-level change. Due to the geographical contingency of the method, and the dependency on geological reconstructions of shoreline displacement, the functionality of the package was developed for the purposes of dating coastal sites located in the region stretching from Horten county in the north east, to Arendal county in the south west. However, in the [second vignette](https://isakro.github.io/shoredate/articles/extending-shoredate.html), ways in which the core functionality of the package could be applied in other areas of the world are presented.
 
 ## Geographical and temporal coverage
 
@@ -32,7 +32,7 @@ As the method is dependent on good geological reconstructions of shoreline displ
 
 <img src="../man/figures/coverage.png" alt="plot of chunk limit" width="90%" style="display: block; margin: auto;" />
 
-Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than 9469 BCE, the date is returned as NA and a warning is given.
+Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than the latest start date of the displacement curves, the date is returned as NA and a warning is given.
 
 In the Roalkvam (2023) study it was found that sites tend to be situated at more removed and variable distances from the shoreline from around 2500 BCE. By default, this therefore marks the upper limit of the method, where dates with a start date after 2500 BCE are returned as NA.
 
@@ -59,7 +59,7 @@ devtools::install_github("isakro/shoredate")
 When installed the package can be loaded.
 
 ```r
-# library(shoredate)
+library(shoredate)
 ```
 
 
@@ -98,11 +98,11 @@ displacement_plot(target_curve, displacement_alpha = 0.4)
 
 # Shoreline dating
 
-The following section outlines how to perform shoreline dating and ways in which to visualise the results. Various variables and helper-functions underlying the dating procedure are also presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible in a given setting.
+The following section outlines how to perform shoreline dating and ways in which to visualise the results. Various parameters and helper-functions underlying the dating procedure are also presented, along with ways to manipulate these if one wishes to explore the sensitivity of the dates or believe other parameters than the defaults are more sensible in a given setting.
 
 ## Dating a single site
 
-To perform a basic shoreline date, a site has to be provided as a spatial `sf` object. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster (see below), in which case the elevation of the site will be derived from the raster. In Roalkvam (2023) it was found that the vertical distance from the sites to the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implementation of shoreline dating in the package.
+To perform a basic shoreline date, a site has to be provided as a spatial `sf` object if the shoreline displacement is to be interpolated to its location. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster (see below), in which case the elevation of the site will be derived from the raster, provided the site is given as a spatial object. In Roalkvam (2023) it was found that the vertical distance from the sites to the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implementation of shoreline dating in the package.
 
 
 ```r
@@ -119,9 +119,11 @@ shoredate_plot(target_date)
 
 <img src="shore-plot_example-1.png" alt="plot of chunk plot_example" style="display: block; margin: auto;" />
 
-The blue gamma distribution on the y-axis indicates the likely elevation of the site above sea-level when it was in use, which is described by an empirically derived gamma distribution with the parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 20.833. These parameters can be adjusted by specifying the values passed to `model_parameters` when calling `shoreline_date()`. The red envelope is the shoreline displacement curve as interpolated to the site location with `interpolate_curve()`, which is run under the hood if a curve is not provided to `shoreline_date()`. Transferring the probability from the gamma distribution to the calendar scale using the displacement curve gives the resulting shoreline date in grey, which is underlined with the 95% highest density region (HDR) in black. The coverage of the HDR can be adjusted with the `hdr_prob` parameter. The dating procedure involves stepping through the cumulative version of the gamma distribution, and at each step subtracting the probability at the previous step from the current one. The probability at each step is divided uniformly across the calendar years in the range between the lower and upper limit of the displacement curve. The default resolution on the calendar scale is 10 years, but this can be adjusted by specifying the `cal_reso` argument. The gamma distribution is stepped through using increments of 0.01m, which can be adjusted by using the argument `elev_reso`. By default, the resulting shoreline date is normalised to sum to unity.
+The blue gamma distribution on the y-axis indicates the likely elevation of the site above sea-level when it was in use, which is described by an empirically derived gamma distribution with the parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 20.833. These parameters can be adjusted by specifying the values passed to `model_parameters` when calling `shoreline_date()`. The red envelope is the shoreline displacement curve as interpolated to the site location with `interpolate_curve()`, which is run under the hood if a curve is not provided to the `target_curve` argument of `shoreline_date()`.
 
-The function `shoreline_date()` returns an object of class `shoreline_date`. By calling the object the dates are printed to console, displaying site name, site elevation and the HDR of the date. The first column of a data frame beyond the `geom` column holding the `sf` geometry will be used as site names. If no such column is present, the sites will simply be numbered as they are passed to `shoreline_date()`.
+Transferring the probability from the gamma distribution to the calendar scale using the displacement curve gives the resulting shoreline date in grey, which is underlined with the 95% highest density region (HDR) in black. The coverage of the HDR can be adjusted with the `hdr_prob` parameter. The dating procedure involves stepping through the cumulative version of the gamma distribution, and at each step subtracting the probability at the previous step from the current one. The probability at each step is divided uniformly across the calendar years in the range between the lower and upper limit of the displacement curve. The default resolution on the calendar scale is 10 years, but this can be adjusted by specifying the `cal_reso` argument. The gamma distribution is stepped through using increments of 0.01m, which can be adjusted by using the argument `elev_reso`. By default, the resulting shoreline date is normalised to sum to unity.
+
+The function `shoreline_date()` returns an object of class `shoreline_date`. By calling the object the dates are printed to console, displaying site name, site elevation and the HDR of the date. Furthermore, the first column of a data frame beyond the `geom` column holding the `sf` geometry will be used as site names. If no such column is present, the sites will simply be numbered as they are passed to `shoreline_date()`.
 
 
 ```r
@@ -164,7 +166,9 @@ It is also possible to not account for the likely distance between the site and 
 
 ```r
 # Date the example point, manually specifying it's elevation
-tpq_date <- shoreline_date(target_point, elevation = 58.5, model = "none")
+tpq_date <- shoreline_date(target_point,
+                           elevation = 58.5,
+                           model = "none")
 
 # Plot and adjust the position of the HDR label on the y-axis
 shoredate_plot(tpq_date, hdr_label_yadj = 0.9)
@@ -401,13 +405,13 @@ Crema, E. 2022. Statistical Inference of Prehistoric Demography from Frequency D
 
 Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
 
+Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
+
 Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Reitan, G. and Sundström, L.. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
 Romundset, A. 2021. *Resultater fra NGUs undersøkelse av etteristidas strandforskyvning nord i Vestfold*. Geological Survey of Norway, Trondheim.
 
 Romundset, A., Lakeman, T.R. and Høgaas, F. 2018. Quantifying variable rates of postglacial relative sea level fall from a cluster of 24 isolation basins in southern Norway. *Quaternary Science Reviews* 197:175e192. DOI: [10.1016/ j.quascirev.2018.07.041](https://doi.org/10.1016/j.quascirev.2018.07.041)
-
-Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
 
 Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023. Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre Telemark. In *The Stone Age in Telemark. Archaeological Results and Scientific Analysis from Vestfoldbaneprosjektet and E18 Rugtvedt--Dørdal*, edited by Persson, P. and Solheim, S., in press.
 

@@ -1,4 +1,4 @@
-#' Plot shoreline date
+#' Plot shoreline dates
 #'
 #' Function for plotting shoreline dates along with associated metadata.
 #'

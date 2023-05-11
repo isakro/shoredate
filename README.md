@@ -22,10 +22,12 @@ on or close to the shoreline when they were in use. The package and
 method as implemented here was originally developed for the Norwegian
 Skagerrak coast in south-eastern Norway, based on an empirically derived
 estimate of the likely elevation of sites above sea-level when they were
-occupied (Roalkvam 2023). Therefore, while the package offers way to
-extend the method to other areas, the degree to which it is applicable
-elsewhere is undetermined.
+occupied (Roalkvam 2023).
 
+While the package offers ways to extend and adjust the method for
+application in other areas, provided suitable data is available, the
+ways and degree to which the procedures are directly applicable
+elsewhere is largely undetermined and likely to vary between contexts.
 Do also note that as the method is dependent on regularities in human
 behaviour, and as the Roalkvam (2023) study provides an initial
 formalisation of the method, it is hefted with unexplored uncertainties,
@@ -98,12 +100,13 @@ In Roalkvam (2023) it was found that sites in the study region tend to
 be located on or close to the shoreline up until around the transition
 to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for
 the applicability of the method in the region. A date that has a later
-start date than this is therefore returned as NA with a warning. The
-temporal range is indicated by the dashed lines in the plot above that
-displays the shoreline displacement curves. Additionally, if the
-probability of a date extends beyond 1950 CE (0 cal BP), thus indicating
-a site location below the present-day sea-level, this overshooting
-probability is cut off and the date is normalised to sum to unity.
+start date than this is therefore, with the default settings, returned
+as NA with a warning. The temporal range is indicated by the dashed
+lines in the plot above that displays the shoreline displacement curves.
+Additionally, if the probability of a date extends beyond 1950 CE (0 cal
+BP), thus indicating a site location below the present-day sea-level,
+this overshooting probability is cut off and the date is normalised to
+sum to unity.
 
 ## Interpolating shoreline displacement to a site location
 
@@ -203,7 +206,8 @@ more detailed walk through, see the main vignette by calling
 Furthermore, a second vignette, which can be accessed with
 `vignette("extending-shoredate")` or viewed on the
 [website](https://isakro.github.io/shoredate/articles/extending-shoredate.html),
-outlines ways in which the package can be applied to other regions.
+builds on the main vignette and outlines ways in which the package can
+be applied to other regions.
 
 # References
 

@@ -1,9 +1,10 @@
-#' Target plot
+#' Plot a map with target locations
 #'
 #' Function to plot the centroids of sites to be dated and shoreline isobases of
 #'  employed displacement curves on a basemap. Defaults to displaying a
-#'  light-weight version of the spatial coverage in south-eastern Norway, but
-#'  spatial geometries covering other regions can also be provided.
+#'  light-weight version of the spatial coverage in south-eastern Norway.
+#'  However, spatial geometries covering other regions can also be provided or
+#'  temporarily downloaded with the function.
 #'
 #' @param targets Objects of class `sf` representing the sites to be dated. The
 #'  first column beyond geom is taken as site name.

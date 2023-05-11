@@ -2,7 +2,7 @@
 % Please edit documentation in R/shoredate_plot.R
 \name{shoredate_plot}
 \alias{shoredate_plot}
-\title{Plot shoreline date}
+\title{Plot shoreline dates}
 \usage{
 shoredate_plot(
   shorelinedates,

@@ -1,4 +1,4 @@
-#' Sum shoreline dates
+#' Sum the probability of multiple shoreline dates
 #'
 #' Function for finding the summed probability distribution of multiple
 #'  shoreline dates.
