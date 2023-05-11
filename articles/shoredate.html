@@ -111,8 +111,8 @@ reconstructions of shoreline displacement, the functionality of the
 package was developed for the purposes of dating coastal sites located
 in the region stretching from Horten county in the north east, to
 Arendal county in the south west. However, in the <a href="https://isakro.github.io/shoredate/articles/extending-shoredate.html">second
-vignette</a>, ways in which the core functionality of the package can be
-applied in other areas of the world are presented.</p>
+vignette</a>, ways in which the core functionality of the package could
+be applied in other areas of the world are presented.</p>
 <div class="section level3">
 <h3 id="geographical-and-temporal-coverage">Geographical and temporal coverage<a class="anchor" aria-label="anchor" href="#geographical-and-temporal-coverage"></a>
 </h3>
@@ -143,8 +143,9 @@ sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the
 latest start date among the geologically derived displacement curves in
 the region, and thus marks the oldest possible age to achieve with
 <em>shoredate</em> here, although no sites are yet known to be that old.
-If a site has an elevation that implies a date older than 9469 BCE, the
-date is returned as NA and a warning is given.</p>
+If a site has an elevation that implies a date older than the latest
+start date of the displacement curves, the date is returned as NA and a
+warning is given.</p>
 <p>In the Roalkvam (2023) study it was found that sites tend to be
 situated at more removed and variable distances from the shoreline from
 around 2500 BCE. By default, this therefore marks the upper limit of the
@@ -168,7 +169,7 @@ version can be unstable.</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"isakro/shoredate"</span><span class="op">)</span></span></code></pre></div>
 <p>When installed the package can be loaded.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># library(shoredate)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/isakro/shoredate" class="external-link">shoredate</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -225,7 +226,7 @@ to the isobases can also be displayed by using the command
 <h2 id="shoreline-dating">Shoreline dating<a class="anchor" aria-label="anchor" href="#shoreline-dating"></a>
 </h2>
 <p>The following section outlines how to perform shoreline dating and
-ways in which to visualise the results. Various variables and
+ways in which to visualise the results. Various parameters and
 helper-functions underlying the dating procedure are also presented,
 along with ways to manipulate these if one wishes to explore the
 sensitivity of the dates or believe other parameters than the defaults
@@ -234,15 +235,17 @@ are more sensible in a given setting.</p>
 <h3 id="dating-a-single-site">Dating a single site<a class="anchor" aria-label="anchor" href="#dating-a-single-site"></a>
 </h3>
 <p>To perform a basic shoreline date, a site has to be provided as a
-spatial <code>sf</code> object. In a addition to this, the elevation of
+spatial <code>sf</code> object if the shoreline displacement is to be
+interpolated to its location. In a addition to this, the elevation of
 the site above the present sea-level has to be provided. This can either
 be done by manually specifying the elevation, or by providing an
 elevation raster (see below), in which case the elevation of the site
-will be derived from the raster. In Roalkvam (2023) it was found that
-the vertical distance from the sites to the contemporaneous shoreline
-within the study region could be reasonably approximated by a gamma
-distribution. This forms the foundation for the implementation of
-shoreline dating in the package.</p>
+will be derived from the raster, provided the site is given as a spatial
+object. In Roalkvam (2023) it was found that the vertical distance from
+the sites to the contemporaneous shoreline within the study region could
+be reasonably approximated by a gamma distribution. This forms the
+foundation for the implementation of shoreline dating in the
+package.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation</span></span>
 <span><span class="va">target_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>, elevation <span class="op">=</span> <span class="fl">58.5</span><span class="op">)</span></span></code></pre></div>
@@ -261,28 +264,30 @@ parameters can be adjusted by specifying the values passed to
 <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>. The red envelope is the shoreline
 displacement curve as interpolated to the site location with
 <code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code>, which is run under the hood if a curve
-is not provided to <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>. Transferring the
-probability from the gamma distribution to the calendar scale using the
-displacement curve gives the resulting shoreline date in grey, which is
-underlined with the 95% highest density region (HDR) in black. The
-coverage of the HDR can be adjusted with the <code>hdr_prob</code>
-parameter. The dating procedure involves stepping through the cumulative
-version of the gamma distribution, and at each step subtracting the
-probability at the previous step from the current one. The probability
-at each step is divided uniformly across the calendar years in the range
-between the lower and upper limit of the displacement curve. The default
-resolution on the calendar scale is 10 years, but this can be adjusted
-by specifying the <code>cal_reso</code> argument. The gamma distribution
-is stepped through using increments of 0.01m, which can be adjusted by
-using the argument <code>elev_reso</code>. By default, the resulting
-shoreline date is normalised to sum to unity.</p>
+is not provided to the <code>target_curve</code> argument of
+<code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>.</p>
+<p>Transferring the probability from the gamma distribution to the
+calendar scale using the displacement curve gives the resulting
+shoreline date in grey, which is underlined with the 95% highest density
+region (HDR) in black. The coverage of the HDR can be adjusted with the
+<code>hdr_prob</code> parameter. The dating procedure involves stepping
+through the cumulative version of the gamma distribution, and at each
+step subtracting the probability at the previous step from the current
+one. The probability at each step is divided uniformly across the
+calendar years in the range between the lower and upper limit of the
+displacement curve. The default resolution on the calendar scale is 10
+years, but this can be adjusted by specifying the <code>cal_reso</code>
+argument. The gamma distribution is stepped through using increments of
+0.01m, which can be adjusted by using the argument
+<code>elev_reso</code>. By default, the resulting shoreline date is
+normalised to sum to unity.</p>
 <p>The function <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> returns an object of class
 <code>shoreline_date</code>. By calling the object the dates are printed
 to console, displaying site name, site elevation and the HDR of the
-date. The first column of a data frame beyond the <code>geom</code>
-column holding the <code>sf</code> geometry will be used as site names.
-If no such column is present, the sites will simply be numbered as they
-are passed to <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>.</p>
+date. Furthermore, the first column of a data frame beyond the
+<code>geom</code> column holding the <code>sf</code> geometry will be
+used as site names. If no such column is present, the sites will simply
+be numbered as they are passed to <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_date</span></span></code></pre></div>
 <pre><code><span><span class="co">## ===============</span></span>
@@ -318,7 +323,9 @@ receded from the site location marks the earliest possible point in time
 for the occupation of the site.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation</span></span>
-<span><span class="va">tpq_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>, elevation <span class="op">=</span> <span class="fl">58.5</span>, model <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span><span class="va">tpq_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>,</span>
+<span>                           elevation <span class="op">=</span> <span class="fl">58.5</span>,</span>
+<span>                           model <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot and adjust the position of the HDR label on the y-axis</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">tpq_date</span>, hdr_label_yadj <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
@@ -569,6 +576,10 @@ the Perplexed. <em>Journal of Archaeological Method and Theory</em>
 <p>Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene
 colonization of Norway. <em>Geological Society, London, Special
 Publications</em> 411(1):9–25. DOI: <a href="https://doi.org/10.1144/SP411.7" class="external-link">10.1144/SP411.7</a></p>
+<p>Roalkvam, I. 2023 A simulation-based assessment of the relation
+between Stone Age sites and relative sea-level change along the
+Norwegian Skagerrak coast. <em>Quaternary Science Reviews</em>
+299:107880. DOI: <a href="https://doi.org/10.1016/j.quascirev.2022.107880" class="external-link">10.1016/j.quascirev.2022.107880</a></p>
 <p>Romundset, A. 2018. Postglacial shoreline displacement in the
 Tvedestrand–Arendal area. In <em>The Stone Age Coastal Settlement in
 Aust-Agder, Southeast Norway</em>, edited by Reitan, G. and Sundström,
@@ -581,10 +592,6 @@ variable rates of postglacial relative sea level fall from a cluster of
 24 isolation basins in southern Norway. <em>Quaternary Science
 Reviews</em> 197:175e192. DOI: <a href="https://doi.org/10.1016/j.quascirev.2018.07.041" class="external-link">10.1016/
 j.quascirev.2018.07.041</a></p>
-<p>Roalkvam, I. 2023 A simulation-based assessment of the relation
-between Stone Age sites and relative sea-level change along the
-Norwegian Skagerrak coast. <em>Quaternary Science Reviews</em>
-299:107880. DOI: <a href="https://doi.org/10.1016/j.quascirev.2022.107880" class="external-link">10.1016/j.quascirev.2022.107880</a></p>
 <p>Sørensen, R, Henningsmoen, K.E. Høeg, H.I. and Gälman V. 2023.
 Holocen vegetasjonshistorie og landhevning i søndre Vestfold og sørøstre
 Telemark. In <em>The Stone Age in Telemark. Archaeological Results and
