@@ -101,13 +101,16 @@ Consequently, it is in principle possible to extend the main
 functionality of the package to any region of the world in which the
 method is applicable, provided reliable data in a suitable format is
 available.</p>
-<p>Some notes of caution should also be added here. As the package was
-originally developed to be applied along the Skaggerrak coast of
-south-eastern Norway, the code associated with this kind of extension is
-not fully developed and is liable to be unstable. Furthermore, the
-function <code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code> involves an increasing degree
-of uncertain extrapolation the further away from the spatial limit in
-south-eastern Norway one moves, and both
+<p>Some caveats and notes of caution should be added here. First of all
+the method will at present only work in regions which have experienced a
+monotonic non-increasing relative sea-level change. That is, regions
+with a continous development of regressing or stable sea-levels. As the
+package was originally developed to be applied along the Skaggerrak
+coast of south-eastern Norway, the code associated with this kind of
+extension is not fully developed and is liable to be unstable. Finally,
+the function <code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code> involves an increasing
+degree of uncertain extrapolation the further away from the spatial
+limit in south-eastern Norway one moves, and both
 <code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code> and <code><a href="../reference/create_isobases.html">create_isobases()</a></code> will
 fail with other coordinate reference systems than WGS 82 / UTM zone 32N
 (EPSG:32632).</p>
@@ -118,12 +121,12 @@ Skagerrak region of south-eastern Norway. Consequently, the extent to
 which the same relationship characterises the site-sea relationship in
 other areas of Norway, and beyond, is therefore undetermined (a possible
 approach for assessing this in other areas can be found in Roalkvam
-2023). However, as it can reasonably be assumed that in regions
-characterised by continous relative sea-level regression, the point in
-time when a location emerged from the sea defines the earliest possible
-date for when it could have been occupied. Consequently, another option
-is to use the method to find a <em>terminus post quem</em> date, as
-outlined in the main vignette, and further demonstrated below.</p>
+2023). However, in regions with non-increasing sea-level it can
+reasonably be assumed that the point in time when a location emerged
+from the sea defines the earliest possible date for when it could have
+been occupied. Consequently, another option is to use the method to find
+a <em>terminus post quem</em> date, as outlined in the main vignette,
+and further demonstrated below.</p>
 </div>
 <div class="section level2">
 <h2 id="applying-shoredate-in-ørland">Applying <em>shoredate</em> in Ørland<a class="anchor" aria-label="anchor" href="#applying-shoredate-in-%C3%B8rland"></a>
@@ -144,11 +147,7 @@ BCE. Years BCE, defined by the column <code>bce</code>, should be given
 at an interval with equal or higher resolution than that which is
 desired for the resulting shoreline date. The probability between the
 upper and lower elevation limits are here assumed to be uniformly
-distributed. While displacement curves with a non-uniform probability
-distribution have also been reported for Norway (e.g. Creel et
-al. 2022), and are frequently developed for other regions of the world,
-functionality to use these with <em>shoredate</em> remains to be
-developed.</p>
+distributed.</p>
 <p>The displacement curve for Ørland is provided with <em>shoredate</em>
 and can be loaded with the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -248,9 +247,8 @@ is explicitly called to highlight that different coordinate reference
 systems can be used. Setting the argument <code>isobases</code> to NA
 means that the default isobases pertaining to south-eastern Norway are
 excluded from the plot. Finally, setting <code>target_labels</code> to
-FALSE excludes the labelling of the target points in the plot, the
-labelling of which will be handled with a legend in the code to follow
-below.</p>
+FALSE excludes the labelling of the target points in the plot, which
+will instead be handled with a legend in the code to follow below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">overview_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="va">orland</span>,</span>
 <span>                      naturalearth_basemap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -280,9 +278,9 @@ functions from the package <code>ggplot2</code>.</p>
 <span>                       <span class="st">"spatial limit in south-eastern Norway"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>When the map displaying the location of Ørland is created, we can
 create a second map that shows the location of the example points,
-zoomed in at Ørland, located at the tip of the Fosen peninsula. While
-the map is fairly simple, it can nonetheless be useful to perform this
-exercise to make sure everything looks as it should.</p>
+zoomed in at Ørland, which is located at the tip of the Fosen peninsula.
+While the map is fairly simple, it can nonetheless be useful to perform
+this exercise to make sure everything looks as it should.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create basemap</span></span>
 <span><span class="va">examples_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="va">target_points</span>,</span>
@@ -314,9 +312,10 @@ exercise to make sure everything looks as it should.</p>
 </h3>
 <p>For this example, a raster retrieved from Amazon Web Service Terrain
 Tiles is used for finding the elevation of the example sites. This
-follows the procedure outlined in the main vignette.</p>
+follows the procedure that is outlined in the main vignette.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_points</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Retrieve raster</span></span>
+<span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_points</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,</span>
 <span>                                        verbose <span class="op">=</span> <span class="cn">FALSE</span>, src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/project.html" class="external-link">project</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span>, <span class="st">"epsg:32632"</span><span class="op">)</span></span>
@@ -326,7 +325,7 @@ follows the procedure outlined in the main vignette.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">target_points</span>, col <span class="op">=</span> <span class="st">"black"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span> <span class="op">-</span> <span class="fl">50</span>, labels <span class="op">=</span> <span class="va">target_points</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></code></pre></div>
 <p><img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot" style="display: block; margin: auto;"></p>
-<p>After the raster has been loaded we can check the elevation of the
+<p>After the raster has been loaded we can find the elevation of the
 sites:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">elev_raster</span>, <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
@@ -336,9 +335,9 @@ raster is passed to its <code>elevation</code> argument and the sites to
 be dated are provided as spatial geometries. However, to illustrate the
 point that all that is needed to use <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> is a
 displacement curve and knowledge of these elevations, the function is
-here called by only providing the displacement curve and manually
-specifying the a character vector with the name of the sites and their
-elevations as a numerical vector:</p>
+here called by only providing the displacement curve and providing a
+character vector with the name of the sites and a numerical vector with
+their elevations:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span>sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Example 1"</span>, <span class="st">"Example 2"</span><span class="op">)</span>,</span>
 <span>                               target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
@@ -357,24 +356,27 @@ function as that identified for sites in south-eastern Norway. At
 present, the only adjustment that is possible to do to this assumed
 relationship is changing the parameters for the gamma function when
 calling <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>, using the argument
-<code>model_parameters</code>. However, as an alternative it is also
-possible to perform the dating procedure without accounting for any
-distance between the site and the contemporaneous shoreline. This is
-done by setting the parameter <code>model</code> to “none” when calling
-<code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>. This thus effectively provides a
-<em>termnius post quem</em> date, under the assumption that the earliest
-possible date for when the site was in use is when the location of the
-site emerged from the sea.</p>
-<p>While a <em>terminus post quem</em> limits the further inferential
-steps that can be taken, it might be more appropriate to apply shoreline
-dating in this manner in regions where the relationship between sites
-and the shoreline is unknown. This can potentially also be extended to
-the dating of other phenomena such as rock art, or other cases where
-this relationship is less certain (see e.g. Sognnes 2003). Furthermore,
-it could also be possible to reverse this logic in regions that have
-instead been subject to relative sea-level rise, where the date for when
-a location was inundated can provide a <em>terminus ante quem</em> date
-– the latest possible date for the use of a site.</p>
+<code>model_parameters</code>.</p>
+<p>However, as an alternative it is also possible to perform the dating
+procedure without accounting for any distance between the site and the
+contemporaneous shoreline. This is done by setting the parameter
+<code>model</code> to “none” when calling <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>.
+This thus effectively provides a <em>termnius post quem</em> date, under
+the assumption that the earliest possible date for when the site was in
+use is when the location of the site emerged from the sea.</p>
+<p>While a <em>terminus post quem</em> date limits the further
+inferential steps that can be taken, it might be more appropriate to
+apply shoreline dating in this manner in regions where the relationship
+between sites and the shoreline is unknown. This can potentially also be
+extended to the dating of other phenomena such as rock art, or other
+cases where this relationship is less certain (see e.g. Sognnes
+2003).</p>
+<p>Furthermore, it could also be possible to reverse this logic in
+regions that have instead been subject to relative sea-level rise, where
+the date for when a location was inundated can provide a <em>terminus
+ante quem</em> date – the latest possible date for the use of a site.
+However, implenention for regions which have experienced continous or
+disjoint phases of sea-level transgression remains to be developed.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Finding the earliest possible date for the first example point</span></span>
 <span><span class="va">earliest_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,</span>
@@ -390,10 +392,6 @@ a location was inundated can provide a <em>terminus ante quem</em> date
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Creel, R.C., Austermann, J., Khan, N.S., D’Andrea, W.J., Balascio,
-N., Dyer, B., Ashe, E., Menke, W. 2022. Postglacial relative sea level
-change in Norway. <em>Quaternary Science Reviews</em> 282:107422. DOI:
-<a href="https://doi.org/10.1016/j.quascirev.2022.107422" class="external-link">10.1016/j.quascirev.2022.107422</a></p>
 <p>Roalkvam, I. 2023 A simulation-based assessment of the relation
 between Stone Age sites and relative sea-level change along the
 Norwegian Skagerrak coast. <em>Quaternary Science Reviews</em>
