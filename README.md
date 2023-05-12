@@ -25,14 +25,15 @@ estimate of the likely elevation of sites above sea-level when they were
 occupied (Roalkvam 2023).
 
 While the package offers ways to extend and adjust the method for
-application in other areas, provided suitable data is available, the
-ways and degree to which the procedures are directly applicable
-elsewhere is largely undetermined and likely to vary between contexts.
-Do also note that as the method is dependent on regularities in human
-behaviour, and as the Roalkvam (2023) study provides an initial
-formalisation of the method, it is hefted with unexplored uncertainties,
-also within the core area for which it was developed. In sum therefore,
-the dates achieved with the package should be treated with care.
+application in other areas which have been characterised by a monotonic
+trajectory of relative sea-level regression, the ways and degree to
+which the procedures are directly applicable elsewhere is largely
+undetermined and likely to vary between contexts. Do also note that as
+the method is dependent on regularities in human behaviour, and as the
+Roalkvam (2023) study provides an initial formalisation of the method,
+it is hefted with unexplored uncertainties, also within the core area
+for which it was developed. In sum therefore, the dates achieved with
+the package should be treated with care.
 
 ## Installation and loading
 

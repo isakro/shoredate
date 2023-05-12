@@ -158,7 +158,7 @@ tpq_date <- shoreline_date(target_point,
                            model = "none")
 
 # Plot and adjust the position of the HDR label on the y-axis
-shoredate_plot(tpq_date, hdr_label_yadj = 0.9)
+shoredate_plot(tpq_date, hdr_label_yadj = 0.5)
 ```
 
 ## Dating multiple sites
@@ -270,7 +270,10 @@ iso_date
 In the call to plot it can then be specified that the direction of the isobases is printed with each date. Note that it is not possible use `multiplot` when having used multiple isobase directions when dating the sites. The following thus also shows the default behaviour when plotting multiple dates at once and not setting `multiplot = TRUE`.
 
 ```{r plot_example_isobases, fig.width = 4, fig.height = 3.5}
-shoredate_plot(iso_date, site_name = TRUE, isobase_direction = TRUE)
+shoredate_plot(iso_date,
+               site_name = TRUE,
+               isobase_direction = TRUE,
+               hdr_label_yadj = 0.35)
 ```
 
 ## Sum the probability of dates across isobase directions

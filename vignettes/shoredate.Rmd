@@ -171,7 +171,7 @@ tpq_date <- shoreline_date(target_point,
                            model = "none")
 
 # Plot and adjust the position of the HDR label on the y-axis
-shoredate_plot(tpq_date, hdr_label_yadj = 0.9)
+shoredate_plot(tpq_date, hdr_label_yadj = 0.5)
 ```
 
 <img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date" style="display: block; margin: auto;" />
@@ -353,7 +353,10 @@ In the call to plot it can then be specified that the direction of the isobases 
 
 
 ```r
-shoredate_plot(iso_date, site_name = TRUE, isobase_direction = TRUE)
+shoredate_plot(iso_date,
+               site_name = TRUE,
+               isobase_direction = TRUE,
+               hdr_label_yadj = 0.35)
 ```
 
 <img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;" />

@@ -30,15 +30,15 @@ file.remove(figs)
 
 While *shoredate* and the method underlying it has been developed for application in a constrained region of south-eastern Norway, it is possible to apply it to other areas. The following presents an example from Ørland in Trøndelag, Central Norway, for which a new displacement curve for the later parts of the Holocene has recently been published (Romundset and Lakeman 2019). Furthermore, all that is needed to use the main functions of the package is a shoreline displacement curve that describes the sea-level change at the location of a site to be dated, and an elevation value for that site. Consequently, it is in principle possible to extend the main functionality of the package to any region of the world in which the method is applicable, provided reliable data in a suitable format is available.
 
-Some notes of caution should also be added here. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. Furthermore, the function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
+Some caveats and notes of caution should be added here. First of all the method will at present only work in regions which have experienced a monotonic non-increasing relative sea-level change. That is, regions with a continous development of regressing or stable sea-levels. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. Finally, the function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
 
-Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined (a possible approach for assessing this in other areas can be found in Roalkvam 2023). However, as it can reasonably be assumed that in regions characterised by continous relative sea-level regression, the point in time when a location emerged from the sea defines the earliest possible date for when it could have been occupied. Consequently, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
+Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined (a possible approach for assessing this in other areas can be found in Roalkvam 2023). However, in regions with non-increasing sea-level it can reasonably be assumed that the point in time when a location emerged from the sea defines the earliest possible date for when it could have been occupied. Consequently, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
 
 # Applying *shoredate* in Ørland
 
 ## Shoreline displacement curve for Ørland
 
-Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a data frame with the columns `bce`, `upperelev`, `lowerelev` and `name`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE, defined by the column `bce`, should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed. While displacement curves with a non-uniform probability distribution have also been reported for Norway (e.g. Creel et al. 2022), and are frequently developed for other regions of the world, functionality to use these with *shoredate* remains to be developed.
+Geologically derived displacement curves are in Norway often reported with a uniform probability between the lower and upper limit of the possible elevation of the sea-level over time. This is also the case for the displacement curve published for Ørland. At present, the required format for displacement curves to be used with *shoredate* is therefore a data frame with the columns `bce`, `upperelev`, `lowerelev` and `name`. Here, `upperelev` and `lowerelev` denote the highest and lowest possible elevation for the sea-level for each year BCE. Years BCE, defined by the column `bce`, should be given at an interval with equal or higher resolution than that which is desired for the resulting shoreline date. The probability between the upper and lower elevation limits are here assumed to be uniformly distributed.
 
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
@@ -104,7 +104,7 @@ orland <- target_points[1,]
 orland$location = "Ørland"
 ```
 
-Once this has been done we can use `target_plot()` to set up a plot. Setting `naturalearth_basemap` to TRUE downloads a world map from https://www.naturalearthdata.com/ using the `rnaturalearth` package. This is stored in a temporary folder and is deleted when the current R session is ended. The argument `naturalearth_zoom` specifies the amount of cropping that is done on this world map, with the provided targets as the focal point. The argument `crs_epsg` is here the same as the default, but is explicitly called to highlight that different coordinate reference systems can be used. Setting the argument `isobases` to NA means that the default isobases pertaining to south-eastern Norway are excluded from the plot. Finally, setting `target_labels` to FALSE excludes the labelling of the target points in the plot, the labelling of which will be handled with a legend in the code to follow below.
+Once this has been done we can use `target_plot()` to set up a plot. Setting `naturalearth_basemap` to TRUE downloads a world map from https://www.naturalearthdata.com/ using the `rnaturalearth` package. This is stored in a temporary folder and is deleted when the current R session is ended. The argument `naturalearth_zoom` specifies the amount of cropping that is done on this world map, with the provided targets as the focal point. The argument `crs_epsg` is here the same as the default, but is explicitly called to highlight that different coordinate reference systems can be used. Setting the argument `isobases` to NA means that the default isobases pertaining to south-eastern Norway are excluded from the plot. Finally, setting `target_labels` to FALSE excludes the labelling of the target points in the plot, which will instead be handled with a legend in the code to follow below.
 
 
 ```{r, warning = FALSE}
@@ -140,7 +140,7 @@ overview_map <- overview_map +
 
 ```
 
-When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at Ørland, located at the tip of the Fosen peninsula. While the map is fairly simple, it can nonetheless be useful to perform this exercise to make sure everything looks as it should.
+When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at Ørland, which is located at the tip of the Fosen peninsula. While the map is fairly simple, it can nonetheless be useful to perform this exercise to make sure everything looks as it should.
 
 ```{r maps, message = FALSE, warning = FALSE}
 # Create basemap
@@ -169,9 +169,10 @@ examples_map
 
 ## Dating example sites in Ørland
 
-For this example, a raster retrieved from Amazon Web Service Terrain Tiles is used for finding the elevation of the example sites. This follows the procedure outlined in the main vignette.
+For this example, a raster retrieved from Amazon Web Service Terrain Tiles is used for finding the elevation of the example sites. This follows the procedure that is outlined in the main vignette.
 
 ```{r examples-plot, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
+# Retrieve raster
 target_wgs84 <- st_transform(target_points, crs = 4326)
 elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,
                                         verbose = FALSE, src = "aws")
@@ -183,12 +184,12 @@ plot(target_points, col = "black", add = TRUE)
 text(st_coordinates(target_points) - 50, labels = target_points$name)
 ```
 
-After the raster has been loaded we can check the elevation of the sites:
+After the raster has been loaded we can find the elevation of the sites:
 ```{r}
 terra::extract(elev_raster, terra::vect(target_points))[, -1]
 ```
 
-This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument and the sites to be dated are provided as spatial geometries. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and manually specifying the a character vector with the name of the sites and their elevations as a numerical vector:
+This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument and the sites to be dated are provided as spatial geometries. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and providing a character vector with the name of the sites and a numerical vector with their elevations:
 
 ```{r orland-dateplot, fig.width = 4.4, fig.height = 3.7}
 target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
@@ -201,9 +202,13 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 ## Finding the earliest possible date
 
-As mentioned, the above implementation assumes that the relationship between the sites and the shoreline is characterised by the same gamma function as that identified for sites in south-eastern Norway. At present, the only adjustment that is possible to do to this assumed relationship is changing the parameters for the gamma function when calling `shoreline_date()`, using the argument `model_parameters`. However, as an alternative it is also possible to perform the dating procedure without accounting for any distance between the site and the contemporaneous shoreline. This is done by setting the parameter `model` to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, under the assumption that the earliest possible date for when the site was in use is when the location of the site emerged from the sea.
+As mentioned, the above implementation assumes that the relationship between the sites and the shoreline is characterised by the same gamma function as that identified for sites in south-eastern Norway. At present, the only adjustment that is possible to do to this assumed relationship is changing the parameters for the gamma function when calling `shoreline_date()`, using the argument `model_parameters`.
 
-While a *terminus post quem* limits the further inferential steps that can be taken, it might be more appropriate to apply shoreline dating in this manner in regions where the relationship between sites and the shoreline is unknown. This can potentially also be extended to the dating of other phenomena such as rock art, or other cases where this relationship is less certain (see e.g. Sognnes 2003). Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* date -- the latest possible date for the use of a site.
+However, as an alternative it is also possible to perform the dating procedure without accounting for any distance between the site and the contemporaneous shoreline. This is done by setting the parameter `model` to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, under the assumption that the earliest possible date for when the site was in use is when the location of the site emerged from the sea.
+
+While a *terminus post quem* date limits the further inferential steps that can be taken, it might be more appropriate to apply shoreline dating in this manner in regions where the relationship between sites and the shoreline is unknown. This can potentially also be extended to the dating of other phenomena such as rock art, or other cases where this relationship is less certain (see e.g. Sognnes 2003).
+
+Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* date -- the latest possible date for the use of a site. However, implenention for regions which have experienced continous or disjoint phases of sea-level transgression remains to be developed.
 
 ```{r earliest, fig.width = 4.4, fig.height = 3.7}
 # Finding the earliest possible date for the first example point
@@ -217,8 +222,6 @@ shoredate_plot(earliest_date, site_name = TRUE)
 ```
 
 # References
-
-Creel, R.C., Austermann, J., Khan, N.S., D'Andrea, W.J., Balascio, N., Dyer, B., Ashe, E., Menke, W. 2022. Postglacial relative sea level change in Norway. *Quaternary Science Reviews* 282:107422. DOI: [10.1016/j.quascirev.2022.107422](https://doi.org/10.1016/j.quascirev.2022.107422)
 
 Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
 
