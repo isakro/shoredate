@@ -193,13 +193,13 @@ location within the region is interpolated using the
 weighting, where the distance to the four isobases is weighted by the
 square of the inverse distances.</p>
 <p>Note that spatial geometries representing sites to which
-interpolate_curve() is to be applied must be set to the coordinate
-reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore,
-a warning is given if one attempts to interpolate the trajectory for
-shoreline displacement at a site located outside the spatial extent
-outlined above. However, as there might still be use-cases where it
-could be useful to extrapolate the method outside this limit, the
-procedure is still performed (see the second vignette <a href="doc/extending-shoredate.html">Applying shoredate to other
+<code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code> is to be applied must be set to the
+coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632).
+Furthermore, a warning is given if one attempts to interpolate the
+trajectory for shoreline displacement at a site located outside the
+spatial extent outlined above. However, as there might still be
+use-cases where it could be useful to extrapolate the method outside
+this limit, the procedure is still performed (see the second vignette <a href="doc/extending-shoredate.html">Applying shoredate to other
 regions</a> for suggestions on how to apply the package to entirely
 different regions).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
