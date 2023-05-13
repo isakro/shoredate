@@ -34,10 +34,10 @@
 #' @param upper_temp_limit Numerical value giving the upper temporal limit.
 #'  Dates with a start date after the limit are returned as NA. Defaults to
 #'  -2500, i.e. 2500 BCE.
-#' @param target_curve Data frame holding precomputed shoreline displacement
+#' @param target_curve Data frame holding pre-computed shoreline displacement
 #'  curve. This has to have the same or higher resolution on the calendar scale
 #'  as that specified with `cal_reso`. [interpolate_curve()] will be run if
-#'  nothing is is not provided to `target_curve`. Defaults to NA.
+#'  nothing is provided to `target_curve`. Defaults to NA.
 #' @param hdr_prob Numeric value specifying the coverage of the highest density
 #'  region. Defaults to 0.95.
 #' @param normalise Logical value specifying whether the shoreline date should

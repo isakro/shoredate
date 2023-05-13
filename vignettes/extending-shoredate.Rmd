@@ -18,7 +18,7 @@ vignette: >
 
 While *shoredate* and the method underlying it has been developed for application in a constrained region of south-eastern Norway, it is possible to apply it to other areas. The following presents an example from Ørland in Trøndelag, Central Norway, for which a new displacement curve for the later parts of the Holocene has recently been published (Romundset and Lakeman 2019). Furthermore, all that is needed to use the main functions of the package is a shoreline displacement curve that describes the sea-level change at the location of a site to be dated, and an elevation value for that site. Consequently, it is in principle possible to extend the main functionality of the package to any region of the world in which the method is applicable, provided reliable data in a suitable format is available.
 
-Some caveats and notes of caution should be added here. First of all the method will at present only work in regions which have experienced a monotonic non-increasing relative sea-level change. That is, regions with a continous development of regressing or stable sea-levels. As the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, the code associated with this kind of extension is not fully developed and is liable to be unstable. The function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
+Some caveats and notes of caution should be added here. First of all the method will at present only work in regions which have experienced a monotonic non-increasing relative sea-level change. That is, regions with a continuous development of regressing or stable sea-levels. Furthermore, as the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, not all of its functionality is applicable elsewhere. The function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
 
 Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined (a possible approach for assessing this relationship in other areas can be found in Roalkvam 2023). However, in regions characterised by a monotonically decreasing relative sea-level it can reasonably be assumed that the point in time when a location emerged from the sea defines the earliest possible date for when it could have been occupied. Consequently, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
 
@@ -32,7 +32,6 @@ The displacement curve for Ørland is provided with *shoredate* and can be loade
 
 
 ```r
-# As functions from these packages will be used quite a bit below they are
 # explictly loaded here, instead of using the package::function() syntax with
 # each function call.
 library(ggplot2)
@@ -45,7 +44,7 @@ library(shoredate)
 orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
                   package = "shoredate")))
 
-# Print the last five rows of the Ørland displacement curve
+# Print the last few rows of the Ørland displacement curve
 tail(orland_disp)
 ```
 
@@ -72,11 +71,11 @@ displacement_plot(target_curve = orland_disp,
 
 A note should be made that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
 
-Furthermore, while variable uplift rates are also relevant for this area, this is not corrected for in this example. The example therefore focuses on the small area for which the curve was developed, where it can be assumed to be directly applicable. Functionality to adjust for variable displacement rates with  *shoredate* is only accommodated for the Skagerrak area through the function `interpolate_curve()`. Thus, if similar adjustments are to made in other areas, this will at present therefore have to be done independetly of *shoredate*, to which the adjusted curves can then be passed.
+Furthermore, while variable uplift rates are also relevant for this area, this is not corrected for in this example. The example therefore focuses on the small area for which the curve was developed, where it can be assumed to be directly applicable. Functionality to adjust for variable displacement rates with  *shoredate* is only accommodated for the Skagerrak area through the function `interpolate_curve()`. Thus, if similar adjustments are to made in other areas, this will at present therefore have to be done independently of *shoredate*, to which the adjusted curves can then be passed.
 
 ## Creating maps of Ørland
 
-Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendability of the `target_plot()` function.
+Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendibility of the `target_plot()` function.
 
 
 ```r
@@ -229,7 +228,7 @@ However, as an alternative it is also possible to perform the dating procedure w
 
 While a *terminus post quem* date limits the further inferential steps that can be taken, it might be more appropriate to apply shoreline dating in this manner in regions where the relationship between sites and the shoreline is unknown. This can potentially also be extended to the dating of other phenomena such as rock art, or other cases where this relationship is less certain (see e.g. Sognnes 2003).
 
-Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* date -- the latest possible date for the use of a site. However, implenention of *shoredate* to regions which have experienced continous or disjoint phases of sea-level transgression remains to be developed.
+Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* date -- the latest possible date for the use of a site. However, implementation of *shoredate* to regions which have experienced continuous or disjoint phases of relative sea-level rise remains to be developed.
 
 
 ```r

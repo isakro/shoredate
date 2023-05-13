@@ -141,7 +141,7 @@ displacement_plot(target_curve, displacement_alpha = 0.4)
 
 <img src="man/figures/interpolated_curve-1.png" style="display: block; margin: auto;" />
 
-Unless a precompiled curve is provided, this interpolation is performed
+Unless a pre-compiled curve is provided, this interpolation is performed
 under the hood for each site when calling `shoreline_date()`, which is
 the function that performs the shoreline dating procedure.
 
