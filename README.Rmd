@@ -30,7 +30,7 @@ spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
 
 The package *shoredate* offers methods to shoreline date coastal Stone Age sites based on their present-day elevation and the trajectory of past relative sea-level change. Shoreline dating is based on the premise that coastal Stone Age sites in large parts of Fennoscandia were located on or close to the shoreline when they were in use. The package and method as implemented here was originally developed for the Norwegian Skagerrak coast in south-eastern Norway, based on an empirically derived estimate of the likely elevation of sites above sea-level when they were occupied (Roalkvam 2023). 
 
-While the package offers ways to extend and adjust the method for application in other areas which have been characterised by a monotonic trajectory of relative sea-level regression, the ways and degree to which the procedures are directly applicable elsewhere is largely undetermined and likely to vary between contexts. Do also note that as the method is dependent on regularities in human behaviour, and as the Roalkvam (2023) study provides an initial formalisation of the method, it is hefted with unexplored uncertainties, also within the core area for which it was developed. In sum therefore, the dates achieved with the package should be treated with care.  
+While the package offers ways to extend and adjust the method for application in other areas, the ways and degree to which the procedures are directly applicable elsewhere is largely undetermined, and likely to vary between contexts. Such extensions are currently limited to regions that have been characterised by a monotonic trajectory of relative sea-level regression. Do also note that as the method is dependent on regularities in human behaviour, and as the Roalkvam (2023) study provides an initial formalisation of the method, it is hefted with unexplored uncertainties, also within the core area for which it was developed. In sum therefore, the dates achieved with the package should be treated with care.  
 
 ## Installation and loading
 
@@ -65,7 +65,7 @@ knitr::include_graphics(
 )
 ```
 
-As human occupation only occurred some time after the retreat of the Fennoscandian Ice Sheet, the currently oldest known sites in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* in the Skagerrak region of south-eastern Norway is 9469 BCE, although no sites are yet known to be that old. A warning is given if a site location is outside the spatial extent outlined above, as this involves a more uncertain extrapolation of the development of shoreline displacement. However, the dating procedure is still performed. Conversely, if a site has an elevation that implies a date older than the lower temporal limit of the displacement curves, it is returned as NA and a warning is given. 
+As human occupation only occurred some time after the retreat of the Fennoscandian Ice Sheet, the currently oldest known sites in Norway are from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to achieve with *shoredate* in the Skagerrak region of south-eastern Norway is 9469 BCE, although no sites are yet known to be that old. If a site has an elevation that implies a date older than the lower temporal limit of the displacement curves, it is returned as NA and a warning is given. 
 
 In Roalkvam (2023) it was found that sites in the study region tend to be located on or close to the shoreline up until around the transition to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for the applicability of the method in the region. A date that has a later start date than this is therefore, with the default settings, returned as NA with a warning. The temporal range is indicated by the dashed lines in the plot above that displays the shoreline displacement curves. Additionally, if the probability of a date extends beyond 1950 CE (0 cal BP), thus indicating a site location below the present-day sea-level, this overshooting probability is cut off and the date is normalised to sum to unity.
 
@@ -92,7 +92,7 @@ target_curve <- interpolate_curve(target_point)
 displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
-This interpolation is performed under the hood for each site when calling `shoreline_date()`, which performs the shoreline dating procedure.
+Unless a precompiled curve is provided, this interpolation is performed under the hood for each site when calling `shoreline_date()`, which is the function that performs the shoreline dating procedure.
 
 ## Shoreline dating a site
 

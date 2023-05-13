@@ -39,12 +39,12 @@ of past relative sea-level change. Drawing on an empirically derived
 estimate of the likely elevation of the sites above sea-level when they
 were in use, the method for shoreline dating implemented in the package was 
 recently published in @roalkvam2023. No open-source software with which to
-perform shoreline dating exists. The only
+perform shoreline dating currently exists. The only
 closed-source software available is `sealev` from the University of
 Tromsø, Tromsø Geophysical Observatory
-[<https://www.tgo.uit.no/sealev/>, see @moller2003], which provides
-non-probabilistic point estimates of shoreline dates based on data last
-updated in 2002.
+[<https://www.tgo.uit.no/sealev/>, see @moller2003], which can provide
+non-probabilistic point estimates of shoreline dates based on data 
+last updated in 2002.
 
 `shoredate` is aimed at providing researchers and students dealing with
 the coastal Stone Age of the region with tools for
@@ -73,7 +73,7 @@ south west (\autoref{fig:coverage}). Geologically derived displacement curves
 from this region have recently been published for Skoppum in Horten 
 [@romundset2021], Gunnarsrød in Porsgrunn [@sorensen2023], Hanto in Tvedestrand
 [@romundset2018] and Bjørnebu in Arendal [@romundset2018b]. The spatial coverage
-of `shoredate`  will be extended to surrounding area as forthcoming data on 
+of `shoredate`  will be extended to surrounding areas as forthcoming data on 
 shoreline displacement becomes available. Furthermore, although the direct 
 applicability of the method in other regions remains undetermined,
 suggestions and examples of how such extensions can be achieved is included in

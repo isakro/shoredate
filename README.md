@@ -25,15 +25,16 @@ estimate of the likely elevation of sites above sea-level when they were
 occupied (Roalkvam 2023).
 
 While the package offers ways to extend and adjust the method for
-application in other areas which have been characterised by a monotonic
-trajectory of relative sea-level regression, the ways and degree to
-which the procedures are directly applicable elsewhere is largely
-undetermined and likely to vary between contexts. Do also note that as
-the method is dependent on regularities in human behaviour, and as the
-Roalkvam (2023) study provides an initial formalisation of the method,
-it is hefted with unexplored uncertainties, also within the core area
-for which it was developed. In sum therefore, the dates achieved with
-the package should be treated with care.
+application in other areas, the ways and degree to which the procedures
+are directly applicable elsewhere is largely undetermined, and likely to
+vary between contexts. Such extensions are currently limited to regions
+that have been characterised by a monotonic trajectory of relative
+sea-level regression. Do also note that as the method is dependent on
+regularities in human behaviour, and as the Roalkvam (2023) study
+provides an initial formalisation of the method, it is hefted with
+unexplored uncertainties, also within the core area for which it was
+developed. In sum therefore, the dates achieved with the package should
+be treated with care.
 
 ## Installation and loading
 
@@ -89,13 +90,9 @@ As human occupation only occurred some time after the retreat of the
 Fennoscandian Ice Sheet, the currently oldest known sites in Norway are
 from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to
 achieve with *shoredate* in the Skagerrak region of south-eastern Norway
-is 9469 BCE, although no sites are yet known to be that old. A warning
-is given if a site location is outside the spatial extent outlined
-above, as this involves a more uncertain extrapolation of the
-development of shoreline displacement. However, the dating procedure is
-still performed. Conversely, if a site has an elevation that implies a
-date older than the lower temporal limit of the displacement curves, it
-is returned as NA and a warning is given.
+is 9469 BCE, although no sites are yet known to be that old. If a site
+has an elevation that implies a date older than the lower temporal limit
+of the displacement curves, it is returned as NA and a warning is given.
 
 In Roalkvam (2023) it was found that sites in the study region tend to
 be located on or close to the shoreline up until around the transition
@@ -144,9 +141,9 @@ displacement_plot(target_curve, displacement_alpha = 0.4)
 
 <img src="man/figures/interpolated_curve-1.png" style="display: block; margin: auto;" />
 
-This interpolation is performed under the hood for each site when
-calling `shoreline_date()`, which performs the shoreline dating
-procedure.
+Unless a precompiled curve is provided, this interpolation is performed
+under the hood for each site when calling `shoreline_date()`, which is
+the function that performs the shoreline dating procedure.
 
 ## Shoreline dating a site
 
