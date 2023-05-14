@@ -2,6 +2,24 @@ target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
                             sf::st_point(c(538300, 6544250)))
 target_points <- sf::st_as_sf(target_points, crs = 32632)
 
+
+test_that("cut-off level outside range between 0 and 1 throws error", {
+  skip_on_cran()
+  target_dates <- shoreline_date(target_points,
+                                 elevation = c(70, 62))
+  err <- expect_error(sum_shoredates(target_dates, cut_off_level = 2))
+  expect_equal(err$message,
+            "Probability level for cut-off should be a value between 0 and 1.")
+})
+
+test_that("setting normalised = FALSE returns expected result", {
+  skip_on_cran()
+  target_dates <- shoreline_date(target_points,
+                                 elevation = c(70, 62))
+  expect_snapshot(sum_shoredates(target_dates,
+                                 normalise = FALSE))
+})
+
 test_that("summing sparse dates", {
   skip_on_cran()
   target_dates <- shoreline_date(target_points,

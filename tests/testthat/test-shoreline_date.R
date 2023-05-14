@@ -128,3 +128,12 @@ test_that("passing displacement curve with different time interval and no isobas
   expect_snapshot(shoreline_date(site = "Example site", elevation = 17,
                                  target_curve = orland_disp))
 })
+
+test_that("NA date with no isobase direction above elevation limit", {
+  skip_on_cran()
+  orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
+                                      package = "shoredate")))
+  warn <- expect_warning(shoreline_date(site = "Example site", elevation = 40,
+                                 target_curve = orland_disp))
+  expect_equal(warn$message, "The elevation of site Example site implies an earliest possible date older than -4050 BCE and is out of bounds. The date is returned as NA.")
+})

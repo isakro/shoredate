@@ -66,10 +66,35 @@ test_that("returns expected plot when a single date is passed", {
   vdiffr::expect_doppelganger("plot with a single date", p)
 })
 
+test_that("returns expected plot when multiple directions are summed", {
+  skip_on_cran()
+  target_date <- shoreline_date(site = target_point,
+                                elevation = 70,
+                                isobase_direction = c(327, 333),
+                                sum_isobase_directions = TRUE)
+  p <- shoredate_plot(target_date, isobase_direction = TRUE)
+  vdiffr::expect_doppelganger("plot with a summed directions", p)
+})
+
+test_that("returns expected plot when model = 'none'", {
+  skip_on_cran()
+  target_date <- shoreline_date(site = target_point,
+                                elevation = 70,
+                                model = "none")
+  p <- shoredate_plot(target_date)
+  vdiffr::expect_doppelganger("plot with no distance model", p)
+})
+
 test_that("returns expected plot without probability distribution of date", {
   skip_on_cran()
   p <- shoredate_plot(target_date, date_probability = FALSE)
   vdiffr::expect_doppelganger("plot without probability", p)
+})
+
+test_that("returns expected plot without HDR", {
+  skip_on_cran()
+  p <- shoredate_plot(target_date, highest_density_region = FALSE)
+  vdiffr::expect_doppelganger("plot without HDR", p)
 })
 
 test_that("returns expected plot in greyscale", {

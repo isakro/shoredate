@@ -23,8 +23,12 @@ test_that("if a site is located outside the limit of the study area, a warning i
 
 test_that("the IDW works for a point on an isobase", {
   skip_on_cran()
-  target_point <- sf::st_sfc(sf::st_point(c(579569.4, 6582981)), crs = 32632)
-  expect_type(interpolate_curve(target_point), "list")
+  centrepoints <- sf::st_read(
+    system.file("extdata/isobase_centrepts.gpkg",
+                package = "shoredate",
+                mustWork = TRUE), quiet = TRUE)
+  porsgrunn <- centrepoints[2,]
+  expect_snapshot(interpolate_curve(porsgrunn))
 })
 
 test_that("progress is printed with verbose = TRUE", {
