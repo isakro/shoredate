@@ -59,7 +59,7 @@ devtools::install_github("isakro/shoredate")
 When installed the package can be loaded.
 
 ```r
-library(shoredate)
+#library(shoredate)
 ```
 
 

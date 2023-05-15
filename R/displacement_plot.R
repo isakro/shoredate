@@ -64,6 +64,15 @@ displacement_plot <- function(target_curve = NA,
                   package = "shoredate",
                   mustWork = TRUE)))
 
+  geocurves <- c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")
+
+  # To be used for making sure that the curves are always given in the same order
+  if(all(is.na(target_curve))){
+    plotorder <- c("Horten", "Porsgrunn", "Tvedestrand", "Arendal")
+  } else{
+    plotorder <- c("Horten", "Porsgrunn", "Tvedestrand", "Arendal", target_name)
+  }
+
   dispdat <- dispdat[dispdat$name %in% displacement_curves,]
 
   if (greyscale) {
@@ -79,9 +88,8 @@ displacement_plot <- function(target_curve = NA,
                        "Tvedestrand" = "dotted",
                        "Arendal" = "longdash")
 
-      alpha_scheme <- stats::setNames(rep(displacement_alpha,
-                                   length(unique(dispdat$name))),
-                               unique(dispdat$name))
+      alpha_scheme <- stats::setNames(rep(displacement_alpha, 4),
+                                      geocurves)
 
     } else {
 
@@ -97,9 +105,8 @@ displacement_plot <- function(target_curve = NA,
                        "Arendal" = "longdash",
                        stats::setNames("solid", target_name))
 
-      alpha_scheme <- c(stats::setNames(rep(displacement_alpha,
-                                     length(unique(dispdat$name))),
-                                 unique(dispdat$name)),
+      alpha_scheme <- c(stats::setNames(rep(displacement_alpha, 4),
+                                        geocurves),
                         stats::setNames(target_alpha, target_name))
     }
   } else {
@@ -110,9 +117,8 @@ displacement_plot <- function(target_curve = NA,
 
         line_scheme <- displacement_line
 
-        alpha_scheme <- stats::setNames(rep(displacement_alpha,
-                                     length(unique(dispdat$name))),
-                                 unique(dispdat$name))
+        alpha_scheme <- stats::setNames(rep(displacement_alpha, 4),
+                                        geocurves)
 
       } else {
 
@@ -122,9 +128,8 @@ displacement_plot <- function(target_curve = NA,
         line_scheme <- c(displacement_line,
                          stats::setNames(target_line, target_name))
 
-        alpha_scheme <- c(stats::setNames(rep(displacement_alpha,
-                                       length(unique(dispdat$name))),
-                                   unique(dispdat$name)),
+        alpha_scheme <- c(stats::setNames(rep(displacement_alpha, 4),
+                                          geocurves),
                           stats::setNames(target_alpha, target_name))
     }
   }
@@ -155,9 +160,12 @@ displacement_plot <- function(target_curve = NA,
                                         linetype = .data$name,
                                         alpha = .data$name),
                                         na.rm = TRUE) +
-        ggplot2::scale_colour_manual(values = colour_scheme) +
-        ggplot2::scale_alpha_manual(values = alpha_scheme) +
-        ggplot2::scale_linetype_manual(values = line_scheme)
+        ggplot2::scale_colour_manual(values = colour_scheme,
+                                     breaks = plotorder) +
+        ggplot2::scale_alpha_manual(values = alpha_scheme,
+                                    breaks = plotorder) +
+        ggplot2::scale_linetype_manual(values = line_scheme,
+                                       breaks = plotorder)
 
     } else {
       # Unpack if displacement curve is a list of data frames
@@ -199,11 +207,14 @@ displacement_plot <- function(target_curve = NA,
                                         alpha = .data$name),
                                         na.rm = TRUE) +
         ggplot2::scale_colour_manual(values = colour_scheme,
-                                     limits = limit_scheme) +
+                                     limits = limit_scheme,
+                                     breaks = plotorder) +
         ggplot2::scale_linetype_manual(values = line_scheme,
-                                       limits = limit_scheme) +
+                                       limits = limit_scheme,
+                                       breaks = plotorder) +
         ggplot2::scale_alpha_manual(values = alpha_scheme,
-                                       limits = limit_scheme)
+                                    limits = limit_scheme,
+                                    breaks = plotorder)
     }
   plt
 }
