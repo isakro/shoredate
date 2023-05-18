@@ -53,7 +53,7 @@ The development version of the package can be installed from the [GitHub reposit
 # install.packages("devtools")
 
 # Installation requires devtools
-devtools::install_github("isakro/shoredate")
+devtools::install_github("isakro/shoredate", build_vignettes = TRUE)
 ```
 
 When installed the package can be loaded.

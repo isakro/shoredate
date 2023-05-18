@@ -26,15 +26,15 @@ occupied (Roalkvam 2023).
 
 While the package offers ways to extend and adjust the method for
 application in other areas, the ways and degree to which the procedures
-are directly applicable elsewhere is largely undetermined, and likely to
-vary between contexts. Such extensions are currently limited to regions
-that have been characterised by a monotonic trajectory of relative
-sea-level regression. Do also note that as the method is dependent on
-regularities in human behaviour, and as the Roalkvam (2023) study
-provides an initial formalisation of the method, it is hefted with
-unexplored uncertainties, also within the core area for which it was
-developed. In sum therefore, the dates achieved with the package should
-be treated with care.
+are directly applicable elsewhere is largely undetermined and likely to
+vary between contexts. Furthermore, such extensions are currently
+limited to regions that have been characterised by a monotonic
+trajectory of relative sea-level regression. Do also note that as the
+method is dependent on regularities in human behaviour, and as the
+Roalkvam (2023) study provides an initial formalisation of the method,
+it is hefted with unexplored uncertainties, also within the core area
+for which it was developed. In sum therefore, the dates achieved with
+the package should be treated with care.
 
 ## Installation and loading
 
@@ -50,7 +50,7 @@ The latest development version can be installed from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("isakro/shoredate")
+devtools::install_github("isakro/shoredate", build_vignettes = TRUE)
 ```
 
 When it has been installed the package can be loaded:
@@ -63,11 +63,11 @@ library(shoredate)
 
 As the method of shoreline dating is determined by relative sea-level
 change, it is dependent on reliable geological reconstructions of this
-development. The method as outlined here was therefore originally
-developed for the Skagerrak region of south-eastern Norway – extending
-from Horten in the north east to Arendal in the south west (see figure
-below). This region has newly compiled shoreline displacement curves for
-Horten (Romundset 2021), Porsgrunn (Sørensen et al. 2014; Sørensen et
+development. The method as outlined here was originally developed for
+the Skagerrak region of south-eastern Norway – extending from Horten in
+the north east to Arendal in the south west (see figure below). This
+region has newly compiled shoreline displacement curves for Horten
+(Romundset 2021), Porsgrunn (Sørensen et al. 2014; Sørensen et
 al. 2023), Tvedestrand (Romundset 2018; Romundset et al. 2018) and
 Arendal (Romundset 2018). The region also formed the study area for
 Roalkvam (2023), in which the method and its parameters were derived.
@@ -88,18 +88,19 @@ temporal coverage of the method within the region.
 
 As human occupation only occurred some time after the retreat of the
 Fennoscandian Ice Sheet, the currently oldest known sites in Norway are
-from around 9300 BCE (e.g. Glørstad 2016). The oldest possible age to
-achieve with *shoredate* in the Skagerrak region of south-eastern Norway
-is 9469 BCE, although no sites are yet known to be that old. If a site
-has an elevation that implies a date older than the lower temporal limit
-of the displacement curves, it is returned as NA and a warning is given.
+from around 9300 BCE (e.g. Glørstad 2016). Although no sites are yet
+known to be that old, the earliest possible age to achieve with
+*shoredate* in the Skagerrak region of south-eastern Norway is 9469 BCE,
+which marks the latest start date among the employed displacement
+curves. If a site has an elevation that implies a date older than this,
+it is returned as NA and a warning is given.
 
 In Roalkvam (2023) it was found that sites in the study region tend to
 be located on or close to the shoreline up until around the transition
 to the Late Neolithic, c. 2500 BCE, which thus marks the upper limit for
 the applicability of the method in the region. A date that has a later
-start date than this is therefore, with the default settings, returned
-as NA with a warning. The temporal range is indicated by the dashed
+start date than this is therefore returned as NA with a warning, with
+the default settings. The temporal range is indicated by the dashed
 lines in the plot above that displays the shoreline displacement curves.
 Additionally, if the probability of a date extends beyond 1950 CE (0 cal
 BP), thus indicating a site location below the present-day sea-level,
@@ -119,11 +120,11 @@ interpolation by the square of the inverse distance between site and
 isobases.
 
 ``` r
-# Create example point using the required coordinate 
-# system WGS84 / UTM zone 32N (EPSG: 32632)
+# Create example point using the coordinate system required for the 
+# interpolation procedure: WGS84 / UTM zone 32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
-# Simple map showing the target location relative to the isobases
+# Create a simple map showing the target location relative to the isobases
 # of the displacement curves
 target_plot(target_point)
 ```
@@ -163,9 +164,9 @@ shoredate_plot(target_date)
 
 The blue gamma distribution on the y-axis represents the likely
 elevation of the site above sea-level when it was in use, which is
-described by an empirically derived gamma distribution with the
-parameters $\alpha$ (shape) = 0.286 and $\sigma$ (scale) = 20.833. This
-starts from the elevation of the site. The red envelope is the shoreline
+described by an empirically derived gamma function with the parameters
+$\alpha$ (shape) = 0.286 and $\sigma$ (scale) = 20.833. This starts from
+the elevation of the site. The red envelope is the shoreline
 displacement curve as interpolated to the site location. The probability
 from the gamma distribution is transferred to the calendar scale using
 the displacement curve. This gives the resulting shoreline date in grey,
@@ -198,10 +199,10 @@ The procedures outlined above have focused on the basic functions and
 default behaviours of the package when dating a single site in the area
 for which the package was originally developed. For further usage and a
 more detailed walk through, see the main vignette by calling
-`vignette("shoredate")` or accessing it on the
+`vignette("shoredate")` or by accessing it on the
 [website](https://isakro.github.io/shoredate/articles/shoredate.html).
 
-Furthermore, a second vignette, which can be accessed with
+Furthermore, a second vignette which can be accessed with
 `vignette("extending-shoredate")` or viewed on the
 [website](https://isakro.github.io/shoredate/articles/extending-shoredate.html),
 builds on the main vignette and outlines ways in which the package can
