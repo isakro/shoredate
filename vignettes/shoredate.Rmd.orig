@@ -158,7 +158,7 @@ tpq_date <- shoreline_date(target_point,
                            model = "none")
 
 # Plot and adjust the position of the HDR label on the y-axis
-shoredate_plot(tpq_date, hdr_label_yadj = 0.5)
+shoredate_plot(tpq_date, hdr_label_yadj = 0.6)
 ```
 
 ## Dating multiple sites
