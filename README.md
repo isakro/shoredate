@@ -198,7 +198,7 @@ the sites are simply numbered as they are passed to `shoreline_date()`.
 The procedures outlined above have focused on the basic functions and
 default behaviours of the package when dating a single site in the area
 for which the package was originally developed. For further usage and a
-more detailed walk through, see the main vignette by calling
+more detailed walk-through, see the main vignette by calling
 `vignette("shoredate")` or by accessing it on the
 [website](https://isakro.github.io/shoredate/articles/shoredate.html).
 

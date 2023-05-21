@@ -51,7 +51,7 @@ As the method is dependent on good geological reconstructions of shoreline displ
 knitr::include_graphics("../man/figures/coverage.png")
 ```
 
-Furthermore, as human occupation in the region only occurred some time after the retreat of the Fennoscandian Ice Sheet, the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than the latest start date of the displacement curves, the date is returned as NA and a warning is given.
+Furthermore, human occupation in Norway only occurred some time after the retreat of the Fennoscandian Ice Sheet, and the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than the latest start date of the displacement curves, the date is returned as NA and a warning is given.
 
 In the Roalkvam (2023) study it was found that sites tend to be situated at more removed and variable distances from the shoreline from around 2500 BCE. By default, this therefore marks the upper limit of the method, where dates with a start date after 2500 BCE are returned as NA.
 
