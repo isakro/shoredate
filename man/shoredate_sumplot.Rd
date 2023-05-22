@@ -10,7 +10,7 @@ shoredate_sumplot(shoredates_sum, sample_size = TRUE)
 \item{shoredates_sum}{Object of class \code{shoredates_sum}.}
 
 \item{sample_size}{Logical indicating whether or not to display the number of
-summed dates on the plot. Defaults to TRUE.}
+summed dates on the plot. Defaults to \code{TRUE}.}
 }
 \value{
 A line plot showing the provided summed probability distribution.

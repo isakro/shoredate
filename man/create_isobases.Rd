@@ -8,8 +8,8 @@ south-eastern Norway}
 create_isobases(isobase_direction)
 }
 \arguments{
-\item{isobase_direction}{A vector holding a single or multiple directions for
-the isobases.}
+\item{isobase_direction}{A numerical vector holding a single or multiple
+directions for the isobases.}
 }
 \value{
 A simple feature holding the isobases represented as lines.

@@ -7,7 +7,7 @@
 shoredate_hdr(bce, probability, site_name, cal_reso, prob = 0.95)
 }
 \arguments{
-\item{bce}{A vector holding calendar years associated with a date}
+\item{bce}{A vector holding calendar years associated with a date.}
 
 \item{probability}{A vector holding the probability mass corresponding to
 each calendar year.}
@@ -16,8 +16,8 @@ each calendar year.}
 
 \item{cal_reso}{Resolution on the calendar scale used when dating the site.}
 
-\item{prob}{A numerical value indicating the probability coverage of the HDR.
-Defaults to 0.95.}
+\item{prob}{A numerical value between 0 and 1 indicating the probability
+coverage of the HDR. Defaults to \code{0.95}.}
 }
 \value{
 A list holding start and end points for segments of the highest

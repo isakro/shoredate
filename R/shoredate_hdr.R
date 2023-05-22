@@ -3,13 +3,13 @@
 #' Function to find 95% highest density region (HDR) for a provided shoreline
 #'  date. Negative values denote years BCE while positive values denote CE.
 #'
-#' @param bce A vector holding calendar years associated with a date
+#' @param bce A vector holding calendar years associated with a date.
 #' @param probability A vector holding the probability mass corresponding to
 #'  each calendar year.
 #' @param site_name A vector holding the name of the site that has been dated.
 #' @param cal_reso Resolution on the calendar scale used when dating the site.
-#' @param prob A numerical value indicating the probability coverage of the HDR.
-#'  Defaults to 0.95.
+#' @param prob A numerical value between 0 and 1 indicating the probability
+#'  coverage of the HDR. Defaults to `0.95`.
 #'
 #' @return A list holding start and end points for segments of the highest
 #'  density region of a shoreline date, the weighted mean date,

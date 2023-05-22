@@ -12,21 +12,21 @@
 #' @param isobases 4 spatial lines representing the shoreline isobases of the
 #'  existing displacement curves. Multiple sets of 4 isobases with different
 #'  isobase directions can be provided (see [create_isobases()]). Defaults to
-#'  isobases with a direction of 327.
+#'  isobases with a direction of `327`.
 #' @param power A numerical value indicating the inverse distance power for IDW.
-#'  Defaults to 2.
-#' @param cal_reso Numeric value specifying the resolution to use on the
-#'  calendar scale. Defaults to 10.
+#'  Defaults to `2`.
+#' @param cal_reso A numericaø value specifying the resolution to use on the
+#'  calendar scale. Defaults to `10`.
 #' @param verbose Logical value indicating whether progress should be printed to
-#'  console. Defaults to FALSE.
+#'  console. Defaults to `FALSE`.
 #'
-#' @return A list holding an interpolated displacement curve for each isobase
-#'  direction. Each displacement curve is represented by a data frame with
-#'  the columns `bce` where negative values indicate years BCE and positive CE,
-#'  `lowerelev`, representing the lower limit for the elevation of the shoreline
-#'  for each year. `upperelev`, the upper limit for elevation of the shoreline
-#'  for each year, and `direction` which indicates the direction of the isobases
-#'  used when interpolating the curve.
+#' @return Returns a list holding an interpolated displacement curve for each
+#'  isobase direction. Each displacement curve is represented by a data frame
+#'  with the columns `bce` where negative values indicate years BCE and positive
+#'  CE, `lowerelev`, representing the lower limit for the elevation of the
+#'  shoreline for each year. `upperelev`, the upper limit for elevation of the
+#'  shoreline for each year, and `direction` which indicates the direction of
+#'  the isobases used when interpolating the curve.
 #'
 #' @export
 #'

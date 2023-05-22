@@ -7,8 +7,8 @@
 #'  created for multiple directions, which is useful for testing the sensitivity
 #'  of dates to the direction of the isobases.
 #'
-#' @param isobase_direction A vector holding a single or multiple directions for
-#'  the isobases.
+#' @param isobase_direction A numerical vector holding a single or multiple
+#'  directions for the isobases.
 #'
 #' @return A simple feature holding the isobases represented as lines.
 #' @export

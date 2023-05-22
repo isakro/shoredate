@@ -32,67 +32,70 @@ shoredate_plot(
 
 \item{date_probability}{Logical value indicating whether the
 probability distribution of the shoreline date should be plotted.
-Defaults to TRUE.}
+Defaults to \code{TRUE}.}
 
 \item{elevation_distribution}{Logical value indicating whether the
 distribution describing the distance between site and shoreline should be
-displayed. Default is TRUE.}
+displayed. Default is \code{TRUE}.}
 
 \item{displacement_curve}{Logical value indicating whether the displacement
-curve should be displayed. Default is TRUE.}
+curve should be displayed. Default is \code{TRUE}.}
 
 \item{site_name}{Logical value indicating whether the name of the site should
-be printed in the header of the plot. Defaults to FALSE.}
+be printed in the header of the plot. Defaults to \code{FALSE}.}
 
 \item{parameters}{Logical value indicating whether the parameters of the
-statistical function should be displayed. Default is FALSE.}
+statistical function should be displayed. Default is \code{FALSE}.}
 
 \item{isobase_direction}{Logical value indicating whether the direction of
-the isobases should be printed. Default is FALSE.}
+the isobases should be printed. Default is \code{FALSE}.}
 
 \item{highest_density_region}{Logical value indicating whether the 95\%
-highest density region should be displayed. Defaults to TRUE.}
+highest density region should be displayed. Defaults to \code{TRUE}.}
 
 \item{hdr_label}{Logical value indicating whether the numeric values for the
-highest density regions should be displayed. Default is TRUE.}
+highest density regions should be displayed. Default is \code{TRUE}.}
 
 \item{multiplot}{Logical value indicating whether multiple dates should be
 plotted individually, or be collapsed into a single plot. The only other
-graphical option with \code{multiplot} set to TRUE is \code{highest_density_region}.
-Default is FALSE.}
+graphical option with \code{multiplot} set to \code{TRUE} is \code{highest_density_region}.
+Default is \code{FALSE}.}
 
 \item{date_col}{Character value specifying the outline colour of the
-probability distribution of the shoreline date.}
+probability distribution of the shoreline date. Defaults to \code{NA}.}
 
 \item{date_fill}{Character value specifying the fill colour of the
-probability distribution of the shoreline date.}
+probability distribution of the shoreline date. Defaults to \code{"darkgrey"}.}
 
 \item{displacement_col}{Character value specifying the outline colour of the
-displacement curve.}
+displacement curve. Defaults to \code{"red"}.}
 
 \item{displacement_fill}{Character value specifying the fill colour of the
-displacement curve.}
+displacement curve. Defaults to \code{"red"}.}
 
 \item{site_elevation_col}{Character value specifying the outline colour of
-the distribution describing the likely distance between site and shoreline.}
+the distribution describing the likely distance between site and shoreline.
+Defaults to \code{"#046c9a"}.}
 
 \item{site_elevation_fill}{Character value specifying the fill colour of
-the distribution describing the likely distance between site and shoreline.}
+the distribution describing the likely distance between site and shoreline.
+Defaults to \code{"#046c9a"}.}
 
 \item{hdr_col}{Character value specifying the colour of the line
-segment giving the highest density region of the shoreline date.}
+segment giving the highest density region of the shoreline date. Defaults to
+\code{"black"}.}
 
 \item{hdr_label_xadj}{Numerical value between 0 and 1 specifying the position
 of the HDR label on the x-axis. Increasing the value moves the label further
-from the plot border. Defaults to 0.2.}
+from the plot border. Defaults to \code{0.2}.}
 
 \item{hdr_label_yadj}{Numerical value between 0 and 1 specifying the position
 of the HDR label on the y-axis. Increasing the value moves the label further
-from the plot border. Defaults to 0.3.}
+from the plot border. Defaults to \code{0.3}.}
 
 \item{greyscale}{Logical value indicating whether the plot should be in
-greyscale or not. If TRUE, overrides other colour parameters.
-Defaults to FALSE.}
+greyscale or not. If \code{TRUE}, overrides other colour parameters.
+Defaults to \code{FALSE}.}
 }
 \value{
 Plot(s) displaying shoreline dates and associated metadata.
