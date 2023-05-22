@@ -1,6 +1,6 @@
-# shoredate (development version)
+# shoredate 1.1.0.9000
 
-## shoredate 1.0.2.9000
+## shoredate 1.1.0
 - Added a vignette that demonstrates how the package can be applied to other
  regions outside south-eastern Norway (@benmarwick, #6).
 - Removed the function `check_target_location()` and set up more specific and
