@@ -42,9 +42,9 @@ Geologically derived displacement curves are in Norway often reported with a uni
 
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
-```{r}
-# explictly loaded here, instead of using the package::function() syntax with
-# each function call.
+```{r, message = FALSE}
+# The packages ggplot2 and sf are explictly loaded here, instead of using the
+# package::function() syntax with each function call below.
 library(ggplot2)
 library(sf)
 

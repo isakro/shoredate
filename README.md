@@ -12,6 +12,7 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 [![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05337/status.svg)](https://doi.org/10.21105/joss.05337)
 <!-- badges: end -->
 
 The package *shoredate* offers methods to shoreline date coastal Stone

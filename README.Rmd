@@ -26,6 +26,7 @@ spatial_limit <- sf::st_read(system.file("extdata/spatial_limit.gpkg",
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05337/status.svg)](https://doi.org/10.21105/joss.05337)
 <!-- badges: end -->
 
 The package *shoredate* offers methods to shoreline date coastal Stone Age sites based on their present-day elevation and the trajectory of past relative sea-level change. Shoreline dating is based on the premise that coastal Stone Age sites in large parts of Fennoscandia were located on or close to the shoreline when they were in use. The package and method as implemented here was originally developed for the Norwegian Skagerrak coast in south-eastern Norway, based on an empirically derived estimate of the likely elevation of sites above sea-level when they were occupied (Roalkvam 2023). 

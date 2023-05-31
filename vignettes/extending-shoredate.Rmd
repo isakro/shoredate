@@ -32,17 +32,11 @@ The displacement curve for Ørland is provided with *shoredate* and can be loade
 
 
 ```r
-# explictly loaded here, instead of using the package::function() syntax with
-# each function call.
+# The packages ggplot2 and sf are explictly loaded here, instead of using the
+# package::function() syntax with each function call below.
 library(ggplot2)
 library(sf)
-```
 
-```
-## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0; sf_use_s2() is TRUE
-```
-
-```r
 # Load shoredate
 library(shoredate)
 
