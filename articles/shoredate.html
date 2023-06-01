@@ -199,9 +199,9 @@ Furthermore, a warning is given if one attempts to interpolate the
 trajectory for shoreline displacement at a site located outside the
 spatial extent outlined above. However, as there might still be
 use-cases where it could be useful to extrapolate the method outside
-this limit, the procedure is still performed (see the second vignette <a href="doc/extending-shoredate.html">Applying shoredate to other
-regions</a> for suggestions on how to apply the package to entirely
-different regions).</p>
+this limit, the procedure is still performed (see the second vignette <a href="https://isakro.github.io/shoredate/articles/extending-shoredate.html">Applying
+shoredate to other regions</a> for suggestions on how to apply the
+package to entirely different regions).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create example point using the required coordinate system</span></span>
 <span><span class="va">target_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">517250</span>, <span class="fl">6527250</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32632</span><span class="op">)</span></span>
