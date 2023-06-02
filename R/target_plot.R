@@ -31,16 +31,16 @@
 #'  labelled in the plot. Takes the first column beyond the one holding the
 #'  geometries to represent names. If this is not present the targets are
 #'  labelled by row number. Defaults to `TRUE`.
-#' @param scalebar Logical specifying whether a scalebar should be added to the
+#' @param scalebar Logical specifying whether a scale bar should be added to the
 #'  plot. Defaults to `TRUE`.
-#' @param scalebar_width Numerical value specifying the width of the scalebar by
-#'  passing it to the `width_hint` argument of `ggspatial::annotation:scale()`.
-#'  Defaults to `0.4`.
-#' @param scalebar_style Character value specifying the style of the scalebar by
-#'  passing it to the `style` argument of `ggspatial::annotation:scale()`.
+#' @param scalebar_width Numerical value specifying the width of the scale bar
+#'  by passing it to the `width_hint` argument of
+#'  `ggspatial::annotation:scale()`. Defaults to `0.4`.
+#' @param scalebar_style Character value specifying the style of the scale bar
+#'  by passing it to the `style` argument of `ggspatial::annotation:scale()`.
 #'  Defaults to `"ticks"`.
 #' @param scalebar_location Character value specifying the location of the
-#'  scalebar on the plot by passing it to the `location` argument of
+#'  scale bar on the plot by passing it to the `location` argument of
 #'  `ggspatial::annotation:scale()`. Defaults to `"br"`.
 #' @param base_fill Character value specifying the fill colour of the basemap.
 #'  Defaults to `"grey"`.
@@ -308,7 +308,7 @@ target_plot <- function(targets = NA,
   }
 
 
-  # Add scalebar
+  # Add scale bar
   if(scalebar) {
     plt <- plt + ggspatial::annotation_scale(
                                 location = scalebar_location,

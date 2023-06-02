@@ -30,7 +30,7 @@ default.}
 \item{target_name}{Character value specifying the name that is given to the
 target curve, if provided. Defaults to \code{"Target curve"}.}
 
-\item{target_line}{Character value specifying the linetype that is used for
+\item{target_line}{Character value specifying the line type that is used for
 the target curve, if this is provided. Defaults to \code{"solid"}.}
 
 \item{target_col}{Character value specifying the colour that is used for the
@@ -39,7 +39,7 @@ target curve, if this is provided. Defaults to \code{"red"}.}
 \item{target_alpha}{Numerical value specifying the alpha value that is used
 for the target curve, if this is provided. Defaults to \code{1}.}
 
-\item{displacement_line}{Character vector specifying the linetypes that are
+\item{displacement_line}{Character vector specifying the line types that are
 used for the geological displacement curves to be plotted. Defaults to
 \code{c("Horten" = "solid", "Porsgrunn" = "solid", "Tvedestrand" = "solid", "Arendal" = "solid")}.}
 

@@ -15,7 +15,7 @@
 #'  isobases with a direction of `327`.
 #' @param power A numerical value indicating the inverse distance power for IDW.
 #'  Defaults to `2`.
-#' @param cal_reso A numericaø value specifying the resolution to use on the
+#' @param cal_reso A numerical value specifying the resolution to use on the
 #'  calendar scale. Defaults to `10`.
 #' @param verbose Logical value indicating whether progress should be printed to
 #'  console. Defaults to `FALSE`.

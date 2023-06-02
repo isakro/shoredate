@@ -25,7 +25,7 @@ isobases with a direction of \code{327}.}
 \item{power}{A numerical value indicating the inverse distance power for IDW.
 Defaults to \code{2}.}
 
-\item{cal_reso}{A numericaø value specifying the resolution to use on the
+\item{cal_reso}{A numerical value specifying the resolution to use on the
 calendar scale. Defaults to \code{10}.}
 
 \item{verbose}{Logical value indicating whether progress should be printed to

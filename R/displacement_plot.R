@@ -11,13 +11,13 @@
 #'  default.
 #' @param target_name Character value specifying the name that is given to the
 #'  target curve, if provided. Defaults to `"Target curve"`.
-#' @param target_line Character value specifying the linetype that is used for
+#' @param target_line Character value specifying the line type that is used for
 #' the target curve, if this is provided. Defaults to `"solid"`.
 #' @param target_col Character value specifying the colour that is used for the
 #'  target curve, if this is provided. Defaults to `"red"`.
 #' @param target_alpha Numerical value specifying the alpha value that is used
 #' for the target curve, if this is provided. Defaults to `1`.
-#' @param displacement_line Character vector specifying the linetypes that are
+#' @param displacement_line Character vector specifying the line types that are
 #'  used for the geological displacement curves to be plotted. Defaults to
 #'  `c("Horten" = "solid", "Porsgrunn" = "solid", "Tvedestrand" = "solid",
 #'  "Arendal" = "solid")`.

@@ -64,19 +64,19 @@ labelled in the plot. Takes the first column beyond the one holding the
 geometries to represent names. If this is not present the targets are
 labelled by row number. Defaults to \code{TRUE}.}
 
-\item{scalebar}{Logical specifying whether a scalebar should be added to the
+\item{scalebar}{Logical specifying whether a scale bar should be added to the
 plot. Defaults to \code{TRUE}.}
 
-\item{scalebar_width}{Numerical value specifying the width of the scalebar by
-passing it to the \code{width_hint} argument of \code{ggspatial::annotation:scale()}.
-Defaults to \code{0.4}.}
+\item{scalebar_width}{Numerical value specifying the width of the scale bar
+by passing it to the \code{width_hint} argument of
+\code{ggspatial::annotation:scale()}. Defaults to \code{0.4}.}
 
-\item{scalebar_style}{Character value specifying the style of the scalebar by
-passing it to the \code{style} argument of \code{ggspatial::annotation:scale()}.
+\item{scalebar_style}{Character value specifying the style of the scale bar
+by passing it to the \code{style} argument of \code{ggspatial::annotation:scale()}.
 Defaults to \code{"ticks"}.}
 
 \item{scalebar_location}{Character value specifying the location of the
-scalebar on the plot by passing it to the \code{location} argument of
+scale bar on the plot by passing it to the \code{location} argument of
 \code{ggspatial::annotation:scale()}. Defaults to \code{"br"}.}
 
 \item{base_fill}{Character value specifying the fill colour of the basemap.
