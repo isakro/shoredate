@@ -6,7 +6,7 @@ output:
     number_sections: true
     toc: true
 vignette: >
-  %\VignetteIndexEntry{extending-shoredate}
+  %\VignetteIndexEntry{Applying shoredate to other regions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,7 +30,7 @@ file.remove(figs)
 
 While *shoredate* and the method underlying it has been developed for application in a constrained region of south-eastern Norway, it is possible to apply it to other areas. The following presents an example from Ørland in Trøndelag, Central Norway, for which a new displacement curve for the later parts of the Holocene has recently been published (Romundset and Lakeman 2019). Furthermore, all that is needed to use the main functions of the package is a shoreline displacement curve that describes the sea-level change at the location of a site to be dated, and an elevation value for that site. Consequently, it is in principle possible to extend the main functionality of the package to any region of the world in which the method is applicable, provided reliable data in a suitable format is available.
 
-Some caveats and notes of caution should be added here. First of all the method will at present only work in regions which have experienced a monotonic non-increasing relative sea-level change. That is, regions with a continuous development of regressing or stable sea-levels. Furthermore, as the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, not all of its functionality is applicable elsewhere. The function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 82 / UTM zone 32N (EPSG:32632).
+Some caveats and notes of caution should be added here. First of all the method will at present only work in regions which have experienced a monotonic non-increasing relative sea-level change. That is, regions with a continuous development of regressing or stable sea-levels. Furthermore, as the package was originally developed to be applied along the Skaggerrak coast of south-eastern Norway, not all of its functionality is applicable elsewhere. The function `interpolate_curve()` involves an increasing degree of uncertain extrapolation the further away from the spatial limit in south-eastern Norway one moves, and both `interpolate_curve()` and `create_isobases()` will fail with other coordinate reference systems than WGS 84 / UTM zone 32N (EPSG:32632).
 
 Finally, the default method used for shoreline dating in the package is based on an empirically derived estimation of the relationship between coastal Stone Age sites and the contemporaneous shoreline in the Skagerrak region of south-eastern Norway. Consequently, the extent to which the same relationship characterises the site-sea relationship in other areas of Norway, and beyond, is therefore undetermined (a possible approach for assessing this relationship in other areas can be found in Roalkvam 2023). However, in regions characterised by a monotonically decreasing relative sea-level it can reasonably be assumed that the point in time when a location emerged from the sea defines the earliest possible date for when it could have been occupied. Consequently, another option is to use the method to find a *terminus post quem* date, as outlined in the main vignette, and further demonstrated below.
 
