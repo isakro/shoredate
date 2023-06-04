@@ -7,6 +7,7 @@
 shoredate_plot(
   shorelinedates,
   date_probability = TRUE,
+  date_probability_scale = 10000,
   elevation_distribution = TRUE,
   displacement_curve = TRUE,
   site_name = FALSE,
@@ -33,6 +34,10 @@ shoredate_plot(
 \item{date_probability}{Logical value indicating whether the
 probability distribution of the shoreline date should be plotted.
 Defaults to \code{TRUE}.}
+
+\item{date_probability_scale}{Numerical constant with which to scale the
+probability distribution of the date to make it fit the plot. Defaults to
+10000.}
 
 \item{elevation_distribution}{Logical value indicating whether the
 distribution describing the distance between site and shoreline should be

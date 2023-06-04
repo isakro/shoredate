@@ -1,6 +1,7 @@
-# shoredate (development version)
-
 # shoredate 1.1.0.9000
+- Added the parameter `date_probability_scale` to `shoredate_plot()` to make
+ it possible to adjust the scaling of the probability distribution of the 
+ shoreline date to better fit the plot.
 
 ## shoredate 1.1.0
 - Added a vignette that demonstrates how the package can be applied to other
