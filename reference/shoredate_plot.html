@@ -63,6 +63,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">shoredate_plot</span><span class="op">(</span></span>
 <span>  <span class="va">shorelinedates</span>,</span>
 <span>  date_probability <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  date_probability_scale <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>  elevation_distribution <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  displacement_curve <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  site_name <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -94,6 +95,12 @@
 <dd><p>Logical value indicating whether the
 probability distribution of the shoreline date should be plotted.
 Defaults to <code>TRUE</code>.</p></dd>
+
+
+<dt>date_probability_scale</dt>
+<dd><p>Numerical constant with which to scale the
+probability distribution of the date to make it fit the plot. Defaults to
+10000.</p></dd>
 
 
 <dt>elevation_distribution</dt>
