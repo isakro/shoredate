@@ -6,6 +6,9 @@
 #' @param date_probability Logical value indicating whether the
 #'  probability distribution of the shoreline date should be plotted.
 #'  Defaults to `TRUE`.
+#' @param date_probability_scale Numerical constant with which to scale the
+#'  probability distribution of the date to make it fit the plot. Defaults to
+#'  10000.
 #' @param elevation_distribution Logical value indicating whether the
 #'  distribution describing the distance between site and shoreline should be
 #'  displayed. Default is `TRUE`.
@@ -79,6 +82,7 @@
 #' shoredate_plot(target_date)
 shoredate_plot <- function(shorelinedates,
                            date_probability = TRUE,
+                           date_probability_scale = 10000,
                            elevation_distribution = TRUE,
                            displacement_curve = TRUE,
                            site_name = FALSE,
@@ -151,12 +155,13 @@ shoredate_plot <- function(shorelinedates,
       if(date_probability){
 
         # Scaling constant for the probability of the date
-        dr <- 10000
+        dr <- date_probability_scale
 
         # If there is a displacement curve, scale the probability by the range
         # of elevation values
         if(!all(is.na(nshoredate$dispcurve))){
-        dr <- 100 * (max(nshoredate$dispcurve$upperelev,
+        dr <- (date_probability_scale/100) *
+               (max(nshoredate$dispcurve$upperelev,
                   na.rm = TRUE) - min(nshoredate$dispcurve$upperelev,
                                       na.rm = TRUE))
         }
