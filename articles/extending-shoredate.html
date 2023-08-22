@@ -183,7 +183,11 @@ here.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span>target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                  target_name <span class="op">=</span> <span class="st">"Displacement curve for Ørland, Central Norway"</span>,</span>
 <span>                  displacement_curves <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp"><p class="caption">
+plot of chunk orland-disp
+</p>
+</div>
 <p>A note should be made that the Ørland curve was originally published
 with reference to the highest astronomical tide in the region (see
 Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the
@@ -300,11 +304,19 @@ this exercise to make sure everything looks as it should.</p>
 <span></span>
 <span><span class="co"># Call overview map</span></span>
 <span><span class="va">overview_map</span></span></code></pre></div>
-<p><img src="extend-maps-1.png" alt="plot of chunk maps" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-maps-1.png" alt="plot of chunk maps"><p class="caption">
+plot of chunk maps
+</p>
+</div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Call map displaying the location of the example points</span></span>
 <span><span class="va">examples_map</span></span></code></pre></div>
-<p><img src="extend-maps-2.png" alt="plot of chunk maps" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-maps-2.png" alt="plot of chunk maps"><p class="caption">
+plot of chunk maps
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="dating-example-sites-in-ørland">Dating example sites in Ørland<a class="anchor" aria-label="anchor" href="#dating-example-sites-in-%C3%B8rland"></a>
@@ -323,12 +335,16 @@ follows the procedure that is outlined in the main vignette.</p>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">target_points</span>, col <span class="op">=</span> <span class="st">"black"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span> <span class="op">-</span> <span class="fl">50</span>, labels <span class="op">=</span> <span class="va">target_points</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot"><p class="caption">
+plot of chunk examples-plot
+</p>
+</div>
 <p>After the raster has been loaded we can find the elevation of the
 sites:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">elev_raster</span>, <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 17.74339 19.53946</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 17.74340 19.53946</span></span></code></pre>
 <p>This elevation is retrieved by <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> if the
 raster is passed to its <code>elevation</code> argument and the sites to
 be dated are provided as spatial geometries. However, to illustrate the
@@ -344,7 +360,11 @@ their elevations:</p>
 <span></span>
 <span><span class="co"># Plot the results</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_dates</span>, multiplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot"><p class="caption">
+plot of chunk orland-dateplot
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="finding-the-earliest-possible-date">Finding the earliest possible date<a class="anchor" aria-label="anchor" href="#finding-the-earliest-possible-date"></a>
@@ -382,11 +402,16 @@ remains to be developed.</p>
 <span><span class="va">earliest_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,</span>
 <span>                                target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                                elevation <span class="op">=</span> <span class="va">elev_raster</span>,</span>
-<span>                                model <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span>                                model <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>                                hdr_prob <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Call to plot</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">earliest_date</span>, site_name <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="extend-earliest-1.png" alt="plot of chunk earliest" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="extend-earliest-1.png" alt="plot of chunk earliest"><p class="caption">
+plot of chunk earliest
+</p>
+</div>
 </div>
 </div>
 <div class="section level2">

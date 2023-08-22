@@ -136,7 +136,11 @@ al. 2014a; Sørensen et al. <em>in prep</em>), Hanto in Tvedestrand
 (2023), in which the specification of the method and the parameters used
 here were derived. The core spatial coverage of <em>shoredate</em> is
 indicated in the maps below.</p>
-<p><img src="../reference/figures/coverage.png" alt="plot of chunk limit" width="90%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="../reference/figures/coverage.png" alt="plot of chunk limit" width="90%"><p class="caption">
+plot of chunk limit
+</p>
+</div>
 <p>Furthermore, human occupation in Norway only occurred some time after
 the retreat of the Fennoscandian Ice Sheet, and the oldest known sites
 are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the
@@ -199,9 +203,9 @@ Furthermore, a warning is given if one attempts to interpolate the
 trajectory for shoreline displacement at a site located outside the
 spatial extent outlined above. However, as there might still be
 use-cases where it could be useful to extrapolate the method outside
-this limit, the procedure is still performed (see the second vignette <a href="https://isakro.github.io/shoredate/articles/extending-shoredate.html">Applying
-shoredate to other regions</a> for suggestions on how to apply the
-package to entirely different regions).</p>
+this limit, the procedure is still performed (see the second vignette <a href="doc/extending-shoredate.html">Applying shoredate to other
+regions</a> for suggestions on how to apply the package to entirely
+different regions).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create example point using the required coordinate system</span></span>
 <span><span class="va">target_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">517250</span>, <span class="fl">6527250</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32632</span><span class="op">)</span></span>
@@ -215,12 +219,20 @@ to the isobases can also be displayed by using the command
 <code><a href="../reference/target_plot.html">target_plot()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span><span class="va">target_point</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-plot_location-1.png" alt="plot of chunk plot_location" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_location-1.png" alt="plot of chunk plot_location"><p class="caption">
+plot of chunk plot_location
+</p>
+</div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The opactity of the geological displacement curves is reduced with</span></span>
 <span><span class="co"># displacement_alpha</span></span>
 <span><span class="fu"><a href="../reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span><span class="va">target_curve</span>, displacement_alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve"><p class="caption">
+plot of chunk plot_intcurve
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="shoreline-dating">Shoreline dating<a class="anchor" aria-label="anchor" href="#shoreline-dating"></a>
@@ -253,7 +265,11 @@ package.</p>
 <code><a href="../reference/shoredate_plot.html">shoredate_plot()</a></code> command:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_date</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-plot_example-1.png" alt="plot of chunk plot_example" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_example-1.png" alt="plot of chunk plot_example"><p class="caption">
+plot of chunk plot_example
+</p>
+</div>
 <p>The blue gamma distribution on the y-axis indicates the likely
 elevation of the site above sea-level when it was in use, which is
 described by an empirically derived gamma distribution with the
@@ -302,13 +318,21 @@ appearance of the output plot, setting <code>greyscale = TRUE</code>
 offers a short-cut to plot a date in greyscale:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_date</span>,  greyscale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-greyscale-1.png" alt="plot of chunk greyscale" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-greyscale-1.png" alt="plot of chunk greyscale"><p class="caption">
+plot of chunk greyscale
+</p>
+</div>
 <p>A more sparse version can also be plotted by specifying what elements
 are to be excluded from the plot:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_date</span>, elevation_distribution <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>               displacement_curve <span class="op">=</span> <span class="cn">FALSE</span>, highest_density_region <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-sparse-1.png" alt="plot of chunk sparse" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-sparse-1.png" alt="plot of chunk sparse"><p class="caption">
+plot of chunk sparse
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="finding-the-terminus-post-quem-date">Finding the <em>terminus post quem</em> date<a class="anchor" aria-label="anchor" href="#finding-the-terminus-post-quem-date"></a>
@@ -322,14 +346,20 @@ the site could have been in use, under the assumption that when the sea
 receded from the site location marks the earliest possible point in time
 for the occupation of the site.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation</span></span>
+<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation and setting the</span></span>
+<span><span class="co"># HDR coverage to 1.</span></span>
 <span><span class="va">tpq_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>,</span>
 <span>                           elevation <span class="op">=</span> <span class="fl">58.5</span>,</span>
-<span>                           model <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span>                           model <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>                           hdr_prob <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot and adjust the position of the HDR label on the y-axis</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">tpq_date</span>, hdr_label_yadj <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date"><p class="caption">
+plot of chunk tpq_date
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="dating-multiple-sites">Dating multiple sites<a class="anchor" aria-label="anchor" href="#dating-multiple-sites"></a>
@@ -351,7 +381,11 @@ date multiple sites at once.</p>
 <span></span>
 <span><span class="co"># Create a plot showing the location of the points within the spatial limit</span></span>
 <span><span class="fu"><a href="../reference/target_plot.html">target_plot</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-multipoint-1.png" alt="plot of chunk multipoint" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-multipoint-1.png" alt="plot of chunk multipoint"><p class="caption">
+plot of chunk multipoint
+</p>
+</div>
 <p>When dating multiple sites it can be useful to track the progress by
 setting <code>verbose = TRUE</code> to print the progress to console
 (this output is not reproduced here).</p>
@@ -390,7 +424,11 @@ single, more sparse plot. The sites are ordered from from earliest to
 latest possible start date for the occupation of the sites.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_dates</span>, multiplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-multiplot-1.png" alt="plot of chunk multiplot" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-multiplot-1.png" alt="plot of chunk multiplot"><p class="caption">
+plot of chunk multiplot
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="using-an-elevation-raster-to-find-site-elevations">Using an elevation raster to find site elevations<a class="anchor" aria-label="anchor" href="#using-an-elevation-raster-to-find-site-elevations"></a>
@@ -411,16 +449,21 @@ the sites to be dated and read this in to R with
 <span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_point</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Retrieve raster data</span></span>
-<span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,  src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Make the retrieved raster a SpatRaster and re-project</span></span>
+<span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,  src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of rows [2]</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Make the retrieved raster a SpatRaster and re-project</span></span>
 <span><span class="co"># it to the correct coordinate system</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/project.html" class="external-link">project</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span>, <span class="st">"epsg:32632"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot the raster and target point for inspection</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">target_point</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-retrieve_raster-1.png" alt="plot of chunk retrieve_raster" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-retrieve_raster-1.png" alt="plot of chunk retrieve_raster"><p class="caption">
+plot of chunk retrieve_raster
+</p>
+</div>
 <p>When a <code>SpatRaster</code> has been loaded into the R session
 this can be passed to <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> by specifying it in
 the <code>elevation</code> argument. This is then used to find the site
@@ -431,17 +474,17 @@ elevation on the raster. This can be changed with the
 <code>elev_fun</code> argument which accepts any function that can be
 passed to the <code>fun</code> argument in <code><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">terra::extract()</a></code>
 (see <code><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">?terra::extract</a></code>).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raster_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>, elevation <span class="op">=</span> <span class="va">elev_raster</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Print to console</span></span>
 <span><span class="va">raster_date</span></span></code></pre></div>
 <pre><code><span><span class="co">## ===============</span></span>
 <span><span class="co">## Site:  1</span></span>
-<span><span class="co">## Elevation:  58.51383 </span></span>
+<span><span class="co">## Elevation:  58.47393 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## 95% HDR:</span></span>
-<span><span class="co">## 8600 BCE-6900 BCE</span></span>
+<span><span class="co">## 8600 BCE-6890 BCE</span></span>
 <span><span class="co">## 5730 BCE-5070 BCE</span></span></code></pre>
 </div>
 </div>
@@ -458,14 +501,18 @@ straightforward, as it’s shape is determined not only by the number of
 sites but also the trajectory of shoreline displacement (see e.g. Bronk
 Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue
 in the context of radiocarbon dates).</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sum the three dates from above</span></span>
 <span><span class="va">summed_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sum_shoredates.html">sum_shoredates</a></span><span class="op">(</span><span class="va">target_dates</span><span class="op">)</span></span></code></pre></div>
 <p>A simple line plot displaying the resulting summed probability can
 then be produced with <code><a href="../reference/shoredate_sumplot.html">shoredate_sumplot()</a></code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_sumplot.html">shoredate_sumplot</a></span><span class="op">(</span><span class="va">summed_dates</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-sum_plot-1.png" alt="plot of chunk sum_plot" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-sum_plot-1.png" alt="plot of chunk sum_plot"><p class="caption">
+plot of chunk sum_plot
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="direction-of-shoreline-gradient">Direction of shoreline gradient<a class="anchor" aria-label="anchor" href="#direction-of-shoreline-gradient"></a>
@@ -489,7 +536,7 @@ perform the shoreline dating using each individual direction. This can
 be useful either for evaluating the sensitivity of a date or if one
 believes there is reason suspect a different direction than the default
 in a particular case.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a name to the example site</span></span>
 <span><span class="va">target_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">target_point</span>, crs <span class="op">=</span> <span class="fl">32632</span><span class="op">)</span></span>
 <span><span class="va">target_point</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Example site"</span></span>
@@ -502,7 +549,7 @@ in a particular case.</p>
 <span><span class="va">iso_date</span></span></code></pre></div>
 <pre><code><span><span class="co">## ===============</span></span>
 <span><span class="co">## Site:  Example site</span></span>
-<span><span class="co">## Elevation:  58.51383 </span></span>
+<span><span class="co">## Elevation:  58.47393 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Isobase direction:  325 </span></span>
 <span><span class="co">## </span></span>
@@ -521,12 +568,21 @@ the isobases is printed with each date. Note that it is not possible use
 dating the sites. The following thus also shows the default behaviour
 when plotting multiple dates at once and not setting
 <code>multiplot = TRUE</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">iso_date</span>,</span>
 <span>               site_name <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>               isobase_direction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>               hdr_label_yadj <span class="op">=</span> <span class="fl">0.35</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;"><img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases"><p class="caption">
+plot of chunk plot_example_isobases
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases"><p class="caption">
+plot of chunk plot_example_isobases
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="sum-the-probability-of-dates-across-isobase-directions">Sum the probability of dates across isobase directions<a class="anchor" aria-label="anchor" href="#sum-the-probability-of-dates-across-isobase-directions"></a>
@@ -536,7 +592,7 @@ separate, the parameter <code>sum_isobase_directions</code> can be set
 to <code>TRUE</code> when calling <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> to sum
 the probability of the dates. Again, by default this is normalised to
 sum to unity.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sum_iso_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span>site <span class="op">=</span> <span class="va">target_point</span>,</span>
 <span>                               elevation <span class="op">=</span> <span class="va">elev_raster</span>,</span>
 <span>                               isobase_direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">325</span>, <span class="fl">338</span><span class="op">)</span>,</span>
@@ -545,20 +601,24 @@ sum to unity.</p>
 <span><span class="va">sum_iso_date</span></span></code></pre></div>
 <pre><code><span><span class="co">## ===============</span></span>
 <span><span class="co">## Site:  Example site</span></span>
-<span><span class="co">## Elevation:  58.51383 </span></span>
+<span><span class="co">## Elevation:  58.47393 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Sum of isobase directions:  325 338 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## 95% HDR:</span></span>
 <span><span class="co">## 8610 BCE-6880 BCE</span></span>
-<span><span class="co">## 5760 BCE-5060 BCE</span></span></code></pre>
+<span><span class="co">## 5770 BCE-5060 BCE</span></span></code></pre>
 <p>This can then be passed to <code><a href="../reference/shoredate_plot.html">shoredate_plot()</a></code>. Note that
 the interpolated displacement curves and the gamma distribution for the
 elevation of the site above sea-level is not included in the plot when
 summing the probability of dates across isobase directions.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">sum_iso_date</span>, site_name <span class="op">=</span> <span class="cn">TRUE</span>, isobase_direction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="shore-plot_sum_isobases-1.png" alt="plot of chunk plot_sum_isobases" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="shore-plot_sum_isobases-1.png" alt="plot of chunk plot_sum_isobases"><p class="caption">
+plot of chunk plot_sum_isobases
+</p>
+</div>
 </div>
 </div>
 <div class="section level2">
