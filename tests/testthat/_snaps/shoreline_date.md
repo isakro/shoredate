@@ -49,7 +49,7 @@
     Output
       ===============
       Site:  1
-      Elevation:  59.96235 
+      Elevation:  59.96506 
       
       95% HDR:
       7010 BCE-4880 BCE

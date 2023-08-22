@@ -67,7 +67,10 @@ displacement_plot(target_curve = orland_disp,
                   displacement_curves = NA)
 ```
 
-<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp"  />
+<p class="caption">plot of chunk orland-disp</p>
+</div>
 
 A note should be made that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
 
@@ -167,14 +170,20 @@ examples_map <- examples_map +
 overview_map
 ```
 
-<img src="extend-maps-1.png" alt="plot of chunk maps" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-maps-1.png" alt="plot of chunk maps"  />
+<p class="caption">plot of chunk maps</p>
+</div>
 
 ```r
 # Call map displaying the location of the example points
 examples_map
 ```
 
-<img src="extend-maps-2.png" alt="plot of chunk maps" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-maps-2.png" alt="plot of chunk maps"  />
+<p class="caption">plot of chunk maps</p>
+</div>
 
 ## Dating example sites in Ørland
 
@@ -194,7 +203,10 @@ plot(target_points, col = "black", add = TRUE)
 text(st_coordinates(target_points) - 50, labels = target_points$name)
 ```
 
-<img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot"  />
+<p class="caption">plot of chunk examples-plot</p>
+</div>
 
 After the raster has been loaded we can find the elevation of the sites:
 
@@ -203,7 +215,7 @@ terra::extract(elev_raster, terra::vect(target_points))[, -1]
 ```
 
 ```
-## [1] 17.74339 19.53946
+## [1] 17.74340 19.53946
 ```
 
 This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument and the sites to be dated are provided as spatial geometries. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and providing a character vector with the name of the sites and a numerical vector with their elevations:
@@ -218,7 +230,10 @@ target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
-<img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot"  />
+<p class="caption">plot of chunk orland-dateplot</p>
+</div>
 
 ## Finding the earliest possible date
 
@@ -236,13 +251,17 @@ Furthermore, it could also be possible to reverse this logic in regions that hav
 earliest_date <- shoreline_date(target_points[1,],
                                 target_curve = orland_disp,
                                 elevation = elev_raster,
-                                model = "none")
+                                model = "none",
+                                hdr_prob = 1)
 
 # Call to plot
 shoredate_plot(earliest_date, site_name = TRUE)
 ```
 
-<img src="extend-earliest-1.png" alt="plot of chunk earliest" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="extend-earliest-1.png" alt="plot of chunk earliest"  />
+<p class="caption">plot of chunk earliest</p>
+</div>
 
 # References
 

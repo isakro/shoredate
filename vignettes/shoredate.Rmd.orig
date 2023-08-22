@@ -152,10 +152,12 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 It is also possible to not account for the likely distance between the site and the shoreline. This is done by setting the `model` parameter to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, the earliest possible date for when the site could have been in use, under the assumption that when the sea receded from the site location marks the earliest possible point in time for the occupation of the site.
 
 ```{r tpq_date, message = FALSE,fig.width = 4.4, fig.height = 3.7}
-# Date the example point, manually specifying it's elevation
+# Date the example point, manually specifying it's elevation and setting the
+# HDR coverage to 1.
 tpq_date <- shoreline_date(target_point,
                            elevation = 58.5,
-                           model = "none")
+                           model = "none",
+                           hdr_prob = 1)
 
 # Plot and adjust the position of the HDR label on the y-axis
 shoredate_plot(tpq_date, hdr_label_yadj = 0.6)

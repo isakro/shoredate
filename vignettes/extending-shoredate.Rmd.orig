@@ -214,7 +214,8 @@ Furthermore, it could also be possible to reverse this logic in regions that hav
 earliest_date <- shoreline_date(target_points[1,],
                                 target_curve = orland_disp,
                                 elevation = elev_raster,
-                                model = "none")
+                                model = "none",
+                                hdr_prob = 1)
 
 # Call to plot
 shoredate_plot(earliest_date, site_name = TRUE)
