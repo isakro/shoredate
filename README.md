@@ -4,11 +4,15 @@
 # shoredate: An R package for shoreline dating coastal Stone Age sites
 
 <!-- badges: start -->
-<!-- [![CRAN Version](http://www.r-pkg.org/badges/version/shoredate)](https://cran.r-project.org/package=shoredate) -->
-<!-- [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) -->
-<!-- [![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml) -->
-<!-- [![Codecov test coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master) -->
-<!-- [![DOI](https://joss.theoj.org/papers/10.21105/joss.05337/status.svg)](https://doi.org/10.21105/joss.05337) -->
+
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/shoredate)](https://cran.r-project.org/package=shoredate)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![R-CMD-check](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/isakro/shoredate/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/isakro/shoredate/branch/master/graph/badge.svg)](https://app.codecov.io/gh/isakro/shoredate?branch=master)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05337/status.svg)](https://doi.org/10.21105/joss.05337)
 <!-- badges: end -->
 
 The package *shoredate* offers methods to shoreline date coastal Stone
