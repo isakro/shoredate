@@ -40,10 +40,9 @@ Suggests:
     elevatr,
     knitr,
     rmarkdown,
+    elevatr,
     testthat (>= 3.0.0),
     vdiffr,
     rnaturalearth
-Remotes:
-    r-lib/elevatr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
