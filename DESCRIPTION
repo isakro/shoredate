@@ -38,11 +38,12 @@ Imports:
 Suggests: 
     covr,
     elevatr,
-    rgdal,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
     vdiffr,
     rnaturalearth
+Remotes:
+    r-lib/elevatr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
