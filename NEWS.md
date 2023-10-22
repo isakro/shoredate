@@ -1,7 +1,8 @@
-# shoredate 1.1.0.9000
+# shoredate 1.1.1 (2023-10-23)
 - Added the parameter `date_probability_scale` to `shoredate_plot()` to make
  it possible to adjust the scaling of the probability distribution of the 
  shoreline date to better fit the plot.
+ - Removed dependency on `rgeos` (@rsbivand, #9)
 
 ## shoredate 1.1.0
 - Added a vignette that demonstrates how the package can be applied to other
