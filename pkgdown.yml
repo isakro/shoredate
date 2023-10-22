@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   extending-shoredate: extending-shoredate.html
   shoredate: shoredate.html
-last_built: 2023-10-21T16:09Z
+last_built: 2023-10-22T22:56Z
 urls:
   reference: https://isakro.github.io/shoredate/reference
   article: https://isakro.github.io/shoredate/articles
