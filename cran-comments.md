@@ -1,6 +1,6 @@
 ## Release summary
 
-Minor patch update removing dependency on retiring r-spatial packages
+Resubmission of minor patch update. Fixed invalid URI
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs

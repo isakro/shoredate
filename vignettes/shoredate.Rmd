@@ -70,7 +70,7 @@ library(shoredate)
 
 The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a pre-compiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement along the Norwegian Skagerrak coat. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location within the region is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
 
-Note that spatial geometries representing sites to which `interpolate_curve()` is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](doc/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
+Note that spatial geometries representing sites to which `interpolate_curve()` is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](https://isakro.github.io/shoredate/articles/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
 
 
 ```r
@@ -100,10 +100,9 @@ target_plot(target_point)
 displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve"  />
-<p class="caption">plot of chunk plot_intcurve</p>
-</div>
+```
+## Error in displacement_plot(target_curve, displacement_alpha = 0.4): unused argument (displacement_alpha = 0.4)
+```
 
 # Shoreline dating
 
@@ -194,10 +193,9 @@ tpq_date <- shoreline_date(target_point,
 shoredate_plot(tpq_date, hdr_label_yadj = 0.6)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date"  />
-<p class="caption">plot of chunk tpq_date</p>
-</div>
+```
+## Error in shoredate_plot(tpq_date, hdr_label_yadj = 0.6): unused argument (hdr_label_yadj = 0.6)
+```
 
 ## Dating multiple sites
 
@@ -400,13 +398,9 @@ shoredate_plot(iso_date,
                hdr_label_yadj = 0.35)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases"  />
-<p class="caption">plot of chunk plot_example_isobases</p>
-</div><div class="figure" style="text-align: center">
-<img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases"  />
-<p class="caption">plot of chunk plot_example_isobases</p>
-</div>
+```
+## Error in shoredate_plot(iso_date, site_name = TRUE, isobase_direction = TRUE, : unused argument (hdr_label_yadj = 0.35)
+```
 
 ## Sum the probability of dates across isobase directions
 
