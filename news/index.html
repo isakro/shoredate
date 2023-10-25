@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">shoredate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,11 +54,14 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="shoredate-development-version">shoredate (development version)<a class="anchor" aria-label="anchor" href="#shoredate-development-version"></a></h2>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.1" id="shoredate-111-2023-10-23">shoredate 1.1.1 (2023-10-23)<a class="anchor" aria-label="anchor" href="#shoredate-111-2023-10-23"></a></h2><p class="text-muted">CRAN release: 2023-10-24</p>
 <ul><li>Added the parameter <code>date_probability_scale</code> to <code><a href="../reference/shoredate_plot.html">shoredate_plot()</a></code> to make it possible to adjust the scaling of the probability distribution of the shoreline date to better fit the plot.</li>
 <li>Removed dependency on <code>rgeos</code> (<a href="https://github.com/rsbivand" class="external-link">@rsbivand</a>, <a href="https://github.com/isakro/shoredate/issues/9" class="external-link">#9</a>)</li>
 </ul><div class="section level3">
-<h3 id="shoredate-1-1-1">shoredate 1.1.0<a class="anchor" aria-label="anchor" href="#shoredate-1-1-1"></a></h3>
+<h3 id="shoredate-1-1-1">shoredate 1.1.0 (2023-05-22)<a class="anchor" aria-label="anchor" href="#shoredate-1-1-1"></a></h3>
 <ul><li>Added a vignette that demonstrates how the package can be applied to other regions outside south-eastern Norway (<a href="https://github.com/benmarwick" class="external-link">@benmarwick</a>, <a href="https://github.com/isakro/shoredate/issues/6" class="external-link">#6</a>).</li>
 <li>Removed the function <code>check_target_location()</code> and set up more specific and appropriate checks within <code><a href="../reference/interpolate_curve.html">interpolate_curve()</a></code> and <code><a href="../reference/target_plot.html">target_plot()</a></code>.</li>
 <li>Added the package <code>rnaturalearth</code> to suggests in DESCRIPTION. This can be used with <code><a href="../reference/target_plot.html">target_plot()</a></code> to create a map for any area of the world, extending the transferability of the package (<a href="https://github.com/benmarwick" class="external-link">@benmarwick</a>, <a href="https://github.com/isakro/shoredate/issues/6" class="external-link">#6</a>).</li>
