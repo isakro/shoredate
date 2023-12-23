@@ -84,7 +84,7 @@
 # site precisely on an isobase can be dated
 
     Code
-      shoreline_date(site = target_poly, elevation = 15.4895)
+      shoreline_date(sites = target_poly, elevation = 15.4895)
     Output
       ===============
       Site:  1
