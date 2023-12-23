@@ -100,9 +100,10 @@ target_plot(target_point)
 displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
-```
-## Error in displacement_plot(target_curve, displacement_alpha = 0.4): unused argument (displacement_alpha = 0.4)
-```
+<div class="figure" style="text-align: center">
+<img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve"  />
+<p class="caption">plot of chunk plot_intcurve</p>
+</div>
 
 # Shoreline dating
 
@@ -193,9 +194,10 @@ tpq_date <- shoreline_date(target_point,
 shoredate_plot(tpq_date, hdr_label_yadj = 0.6)
 ```
 
-```
-## Error in shoredate_plot(tpq_date, hdr_label_yadj = 0.6): unused argument (hdr_label_yadj = 0.6)
-```
+<div class="figure" style="text-align: center">
+<img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date"  />
+<p class="caption">plot of chunk tpq_date</p>
+</div>
 
 ## Dating multiple sites
 
@@ -289,7 +291,8 @@ elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
 ```
 
 ```
-## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of rows [2]
+## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of
+## rows [2]
 ```
 
 ```r
@@ -398,9 +401,13 @@ shoredate_plot(iso_date,
                hdr_label_yadj = 0.35)
 ```
 
-```
-## Error in shoredate_plot(iso_date, site_name = TRUE, isobase_direction = TRUE, : unused argument (hdr_label_yadj = 0.35)
-```
+<div class="figure" style="text-align: center">
+<img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases"  />
+<p class="caption">plot of chunk plot_example_isobases</p>
+</div><div class="figure" style="text-align: center">
+<img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases"  />
+<p class="caption">plot of chunk plot_example_isobases</p>
+</div>
 
 ## Sum the probability of dates across isobase directions
 

@@ -81,3 +81,45 @@
       2900 BCE-210 CE
       230 CE-230 CE
 
+# site precisely on an isobase can be dated
+
+    Code
+      shoreline_date(site = target_poly, elevation = 15.4895)
+    Output
+      ===============
+      Site:  1
+      Elevation:  15.4895 
+      
+      95% HDR:
+      3740 BCE-1310 BCE
+      1290 BCE-1290 BCE
+      1260 BCE-1260 BCE
+      1230 BCE-1230 BCE
+      1200 BCE-1200 BCE
+      1180 BCE-1180 BCE
+      1150 BCE-1150 BCE
+      1130 BCE-1130 BCE
+      1100 BCE-1100 BCE
+      1070 BCE-1070 BCE
+      1050 BCE-1050 BCE
+      1020 BCE-1020 BCE
+      750 BCE-750 BCE
+      730 BCE-710 BCE
+      690 BCE-670 BCE
+      650 BCE-640 BCE
+      620 BCE-600 BCE
+      580 BCE-560 BCE
+      540 BCE-530 BCE
+      500 BCE-500 BCE
+      470 BCE-470 BCE
+      440 BCE-440 BCE
+      420 BCE-420 BCE
+      390 BCE-390 BCE
+      360 BCE-360 BCE
+      340 BCE-310 BCE
+      290 BCE-260 BCE
+      240 BCE-210 BCE
+      190 BCE-160 BCE
+      140 BCE-140 BCE
+      90 BCE-480 CE
+

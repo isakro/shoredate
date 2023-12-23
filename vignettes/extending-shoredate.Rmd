@@ -43,23 +43,19 @@ library(shoredate)
 # Load the displacement curve for Ørland
 orland_disp <- get(load(system.file("extdata/orland_displacement_curve.rda",
                   package = "shoredate")))
-```
 
-```
-## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file '', probable reason 'No such file or directory'
-```
-
-```
-## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection
-```
-
-```r
 # Print the last few rows of the Ørland displacement curve
 tail(orland_disp)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'orland_disp' not found
+##        bce upperelev lowerelev   name
+## 5996 -4045  21.02450  20.55970 Ørland
+## 5997 -4046  21.02702  20.56243 Ørland
+## 5998 -4047  21.02954  20.56516 Ørland
+## 5999 -4048  21.03206  20.56789 Ørland
+## 6000 -4049  21.03458  20.57062 Ørland
+## 6001 -4050  21.03710  20.57336 Ørland
 ```
 
 This can then be plotted with `displacement_plot()`. The name is here adjusted with the argument `target_name` to something more informative, and the geologically derived displacement curves from south-eastern Norway are excluded by specifying the `displacement_curves` argument, as these are not of relevance here.
@@ -71,9 +67,10 @@ displacement_plot(target_curve = orland_disp,
                   displacement_curves = NA)
 ```
 
-```
-## Error in displacement_plot(target_curve = orland_disp, target_name = "Displacement curve for Ørland, Central Norway", : unused arguments (target_curve = orland_disp, target_name = "Displacement curve for Ørland, Central Norway")
-```
+<div class="figure" style="text-align: center">
+<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp"  />
+<p class="caption">plot of chunk orland-disp</p>
+</div>
 
 A note should be made that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
 
@@ -128,7 +125,11 @@ overview_map <- target_plot(targets = orland,
 ```
 
 ```
-## Error in target_plot(targets = orland, naturalearth_basemap = TRUE, naturalearth_zoom = c(1e+06, : unused arguments (naturalearth_basemap = TRUE, naturalearth_zoom = c(1e+06, 1e+06), crs_epsg = 32632, base_col = "black", base_fill = "grey85", target_labels = FALSE)
+## download failed
+```
+
+```
+## Error in UseMethod("st_crop"): no applicable method for 'st_crop' applied to an object of class "NULL"
 ```
 
 Having created a base plot, this can now be manipulated using other functions from the package `ggplot2`.
@@ -170,7 +171,7 @@ examples_map <- target_plot(targets = target_points,
 ```
 
 ```
-## Error in target_plot(targets = target_points, naturalearth_basemap = TRUE, : unused arguments (naturalearth_basemap = TRUE, naturalearth_zoom = c(15000, 10000), base_col = "black", base_fill = "grey85")
+## Error in UseMethod("st_crop"): no applicable method for 'st_crop' applied to an object of class "NULL"
 ```
 
 ```r
@@ -246,13 +247,7 @@ This elevation is retrieved by `shoreline_date()` if the raster is passed to its
 target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
                                target_curve = orland_disp,
                                elevation = c(17.7, 19.5))
-```
 
-```
-## Error in shoreline_date(sites = c("Example 1", "Example 2"), target_curve = orland_disp, : unused argument (target_curve = orland_disp)
-```
-
-```r
 # Plot the results
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
@@ -280,20 +275,15 @@ earliest_date <- shoreline_date(target_points[1,],
                                 elevation = elev_raster,
                                 model = "none",
                                 hdr_prob = 1)
-```
 
-```
-## Error in shoreline_date(target_points[1, ], target_curve = orland_disp, : unused argument (target_curve = orland_disp)
-```
-
-```r
 # Call to plot
 shoredate_plot(earliest_date, site_name = TRUE)
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'earliest_date' not found
-```
+<div class="figure" style="text-align: center">
+<img src="extend-earliest-1.png" alt="plot of chunk earliest"  />
+<p class="caption">plot of chunk earliest</p>
+</div>
 
 # References
 

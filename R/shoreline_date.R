@@ -84,7 +84,7 @@
 #'  https://doi.org/10.1016/j.quascirev.2022.107880
 #'
 #' @examples
-#' # Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
+#' # Create example point using the CRS WGS84 UTM32N (EPSG: 32632)
 #' target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 #'
 #' # Date target point, manually specifying the elevation instead of providing
@@ -229,9 +229,6 @@ shoreline_date <- function(sites,
       } else {
         temp_curve <- sitecurve
       }
-
-      # Make sure the displacement curve is sorted descending
-      # temp_curve <- temp_curve[order(temp_curve$bce, decreasing = TRUE),]
 
       # Set up data frame to hold results
       dategrid <- data.frame(
