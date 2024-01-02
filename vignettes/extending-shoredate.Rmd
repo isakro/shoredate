@@ -125,11 +125,12 @@ overview_map <- target_plot(targets = orland,
 ```
 
 ```
-## download failed
-```
-
-```
-## Error in UseMethod("st_crop"): no applicable method for 'st_crop' applied to an object of class "NULL"
+## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 258 features and 168 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
+## Geodetic CRS:  WGS 84
 ```
 
 Having created a base plot, this can now be manipulated using other functions from the package `ggplot2`.
@@ -153,10 +154,6 @@ overview_map <- overview_map +
                        "spatial limit in south-eastern Norway"))
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'overview_map' not found
-```
-
 When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at Ørland, which is located at the tip of the Fosen peninsula. While the map is fairly simple, it can nonetheless be useful to perform this exercise to make sure everything looks as it should.
 
 
@@ -171,7 +168,12 @@ examples_map <- target_plot(targets = target_points,
 ```
 
 ```
-## Error in UseMethod("st_crop"): no applicable method for 'st_crop' applied to an object of class "NULL"
+## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 258 features and 168 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
+## Geodetic CRS:  WGS 84
 ```
 
 ```r
@@ -183,29 +185,25 @@ examples_map <- examples_map +
         axis.ticks = element_line()) +
       coord_sf(datum = st_crs(target_points), expand = FALSE) +
       ggtitle("Location of example points in Ørland")
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'examples_map' not found
-```
-
-```r
 # Call overview map
 overview_map
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'overview_map' not found
-```
+<div class="figure" style="text-align: center">
+<img src="extend-maps-1.png" alt="plot of chunk maps"  />
+<p class="caption">plot of chunk maps</p>
+</div>
 
 ```r
 # Call map displaying the location of the example points
 examples_map
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'examples_map' not found
-```
+<div class="figure" style="text-align: center">
+<img src="extend-maps-2.png" alt="plot of chunk maps"  />
+<p class="caption">plot of chunk maps</p>
+</div>
 
 ## Dating example sites in Ørland
 
