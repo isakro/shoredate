@@ -11,6 +11,3 @@ navbar:
         href: articles/shoredate.html
       - text: Applying shoredate to other regions
         href: articles/extending-shoredate.html
-template:
-  bootstrap: 5
-  bootswatch: flatly
