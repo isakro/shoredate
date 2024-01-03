@@ -1,4 +1,8 @@
 url: https://isakro.github.io/shoredate/
+navbar:
+ components:
+   intro:
+    text: Introduction
 template:
   bootstrap: 5
-  bootswatch: solar
+  bootswatch: sandstone
