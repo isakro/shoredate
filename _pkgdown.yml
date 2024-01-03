@@ -1,8 +1,16 @@
 url: https://isakro.github.io/shoredate/
 navbar:
- components:
-   intro:
-    text: Introduction
+  structure:
+    left:  [intro, reference, articles, tutorials, news]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Introduction
+        href: articles/shoredate.html
+      - text: Applying shoredate to other regions
+        href: articles/extending-shoredate.html
 template:
   bootstrap: 5
-  bootswatch: sandstone
+  bootswatch: litera
