@@ -178,7 +178,7 @@ shoreline_date <- function(sites,
     }
 
     # Create sequence of years BCE matching displacement curves
-    # (suppressWarsnings() as different lengths should also return FALSE)
+    # (suppressWarnings() as different lengths return FALSE)
     if (suppressWarnings(all((seq(-1950, 10550,
                                   cal_reso) * -1) ==  sitecurve$bce))) {
 
