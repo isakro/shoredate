@@ -1,66 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://isakro.github.io/shoredate/404.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/articles/extending-shoredate.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/articles/shoredate.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/index.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/create_isobases.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/displacement_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/interpolate_curve.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/print.shoreline_date.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/shoredate_hdr.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/shoredate_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/shoredate_sumplot.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/shoreline_date.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/sum_shoredates.html</loc>
-  </url>
-  <url>
-    <loc>https://isakro.github.io/shoredate/reference/target_plot.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://isakro.github.io/shoredate/404.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/CONTRIBUTING.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/LICENSE.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/articles/extending-shoredate.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/articles/index.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/articles/shoredate.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/authors.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/index.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/news/index.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/create_isobases.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/displacement_plot.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/index.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/interpolate_curve.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/print.shoreline_date.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/shoredate_hdr.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/shoredate_plot.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/shoredate_sumplot.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/shoreline_date.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/sum_shoredates.html</loc></url>
+<url><loc>https://isakro.github.io/shoredate/reference/target_plot.html</loc></url>
 </urlset>
+
