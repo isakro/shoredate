@@ -189,8 +189,8 @@ pre-compiled displacement curve is provided when calling
 <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code>, the trajectory of shoreline displacement
 at the location of the sites to be dated is interpolated under the hood.
 This is based on the four different geological reconstructions of
-shoreline displacement along the Norwegian Skagerrak coat. Each of these
-displacement curves are associated with a shoreline isobase which
+shoreline displacement along the Norwegian Skagerrak coast. Each of
+these displacement curves are associated with a shoreline isobase which
 indicates contours along which the relative sea-level change has
 followed the same trajectory. The variation in the rate of sea-level
 change is mainly determined by the degree of isostatic uplift, which is
@@ -255,7 +255,7 @@ be reasonably approximated by a gamma distribution. This forms the
 foundation for the implementation of shoreline dating in the
 package.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation</span></span>
+<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying its elevation</span></span>
 <span><span class="va">target_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>, elevation <span class="op">=</span> <span class="fl">58.5</span><span class="op">)</span></span></code></pre></div>
 <p>The results can then be plotted using the
 <code><a href="../reference/shoredate_plot.html">shoredate_plot()</a></code> command:</p>
@@ -332,7 +332,7 @@ the site could have been in use, under the assumption that when the sea
 receded from the site location marks the earliest possible point in time
 for the occupation of the site.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying it's elevation and setting the</span></span>
+<code class="sourceCode R"><span><span class="co"># Date the example point, manually specifying its elevation and setting the</span></span>
 <span><span class="co"># HDR coverage to 1.</span></span>
 <span><span class="va">tpq_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>,</span>
 <span>                           elevation <span class="op">=</span> <span class="fl">58.5</span>,</span>
@@ -423,10 +423,9 @@ the sites to be dated and read this in to R with
 <span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_point</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Retrieve raster data</span></span>
-<span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,  src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of rows [2]</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Make the retrieved raster a SpatRaster and re-project</span></span>
+<span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,  src <span class="op">=</span> <span class="st">"aws"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Make the retrieved raster a SpatRaster and re-project</span></span>
 <span><span class="co"># it to the correct coordinate system</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/project.html" class="external-link">project</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span>, <span class="st">"epsg:32632"</span><span class="op">)</span></span>
 <span></span>
@@ -444,7 +443,7 @@ elevation on the raster. This can be changed with the
 <code>elev_fun</code> argument which accepts any function that can be
 passed to the <code>fun</code> argument in <code><a href="https://rspatial.github.io/terra/reference/extract.html" class="external-link">terra::extract()</a></code>
 (see <code><a href="https://rspatial.github.io/terra/reference/extract.html" class="external-link">?terra::extract</a></code>).</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raster_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_point</span>, elevation <span class="op">=</span> <span class="va">elev_raster</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Print to console</span></span>
@@ -467,16 +466,14 @@ intensity of the dates, as is frequently done with calibrated
 radiocarbon dates (e.g. Crema and Bevan 2021). Do note that as this
 procedure involves collapsing the frequency of dates and their
 uncertainty, the interpretation of the resulting sum is not
-straightforward, as it’s shape is determined not only by the number of
-sites but also the trajectory of shoreline displacement (see e.g. Bronk
-Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue
-in the context of radiocarbon dates).</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+straightforward (see Roalkvam and Solheim 2025 for a study that explores
+this issue in the context of shoreline dates).</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sum the three dates from above</span></span>
 <span><span class="va">summed_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sum_shoredates.html">sum_shoredates</a></span><span class="op">(</span><span class="va">target_dates</span><span class="op">)</span></span></code></pre></div>
 <p>A simple line plot displaying the resulting summed probability can
 then be produced with <code><a href="../reference/shoredate_sumplot.html">shoredate_sumplot()</a></code>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_sumplot.html">shoredate_sumplot</a></span><span class="op">(</span><span class="va">summed_dates</span><span class="op">)</span></span></code></pre></div>
 <p><img src="shore-sum_plot-1.png" style="display: block; margin: auto;"></p>
 </div>
@@ -504,7 +501,7 @@ perform the shoreline dating using each individual direction. This can
 be useful either for evaluating the sensitivity of a date or if one
 believes there is reason suspect a different direction than the default
 in a particular case.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a name to the example site</span></span>
 <span><span class="va">target_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">target_point</span>, crs <span class="op">=</span> <span class="fl">32632</span><span class="op">)</span></span>
 <span><span class="va">target_point</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Example site"</span></span>
@@ -536,7 +533,7 @@ the isobases is printed with each date. Note that it is not possible use
 dating the sites. The following thus also shows the default behaviour
 when plotting multiple dates at once and not setting
 <code>multiplot = TRUE</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">iso_date</span>,</span>
 <span>               site_name <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>               isobase_direction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -551,7 +548,7 @@ separate, the parameter <code>sum_isobase_directions</code> can be set
 to <code>TRUE</code> when calling <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> to sum
 the probability of the dates. Again, by default this is normalised to
 sum to unity.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sum_iso_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span>site <span class="op">=</span> <span class="va">target_point</span>,</span>
 <span>                               elevation <span class="op">=</span> <span class="va">elev_raster</span>,</span>
 <span>                               isobase_direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">325</span>, <span class="fl">338</span><span class="op">)</span>,</span>
@@ -571,7 +568,7 @@ sum to unity.</p>
 the interpolated displacement curves and the gamma distribution for the
 elevation of the site above sea-level is not included in the plot when
 summing the probability of dates across isobase directions.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">sum_iso_date</span>, site_name <span class="op">=</span> <span class="cn">TRUE</span>, isobase_direction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="shore-plot_sum_isobases-1.png" style="display: block; margin: auto;"></p>
 </div>
@@ -579,18 +576,12 @@ summing the probability of dates across isobase directions.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Bronk Ramsey, C. 2017. Methods for Summarizing Radiocarbon Datasets.
-<em>Radiocarbon</em> 59(6):1809–1833. DOI: <a href="https://doi.org/10.1017/RDC.2017.108" class="external-link">10.1017/RDC.2017.108</a></p>
 <p>Brøgger, W.C. 1905 <em>Strandliniens beliggenhed under stenalderen i
 det sydøstlige Norge</em>. Geological Survey of Norway, Kristiania. URI:
 <a href="https://hdl.handle.net/11250/2675184" class="external-link uri">https://hdl.handle.net/11250/2675184</a></p>
 <p>Crema, E. and Bevan, A. 2021. Inference from Large Sets of
 Radiocarbon Dates: Software and Methods. <em>Radiocarbon</em>
 61(1):23–39. DOI: <a href="https://doi.org/10.1017/RDC.2020.95" class="external-link">10.1017/RDC.2020.95</a></p>
-<p>Crema, E. 2022. Statistical Inference of Prehistoric Demography from
-Frequency Distributions of Radiocarbon Dates: A Review and a Guide for
-the Perplexed. <em>Journal of Archaeological Method and Theory</em>
-29:1387-1418. DOI: <a href="https://doi.org/10.1007/s10816-022-09559-5" class="external-link">10.1007/s10816-022-09559-5</a></p>
 <p>Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene
 colonization of Norway. <em>Geological Society, London, Special
 Publications</em> 411(1):9–25. DOI: <a href="https://doi.org/10.1144/SP411.7" class="external-link">10.1144/SP411.7</a></p>
@@ -598,6 +589,10 @@ Publications</em> 411(1):9–25. DOI: <a href="https://doi.org/10.1144/SP411.7" 
 between Stone Age sites and relative sea-level change along the
 Norwegian Skagerrak coast. <em>Quaternary Science Reviews</em>
 299:107880. DOI: <a href="https://doi.org/10.1016/j.quascirev.2022.107880" class="external-link">10.1016/j.quascirev.2022.107880</a></p>
+<p>Roalkvam, I. and Solheim, S. 2025 Comparing Summed Probability
+Distributions of Shoreline and Radiocarbon Dates from the Mesolithic
+Skagerrak Coast of Norway. <em>Journal of Archaeological Method and
+Theory</em> 32(1):26. DOI: <a href="https://doi.org/10.1007/s10816-025-09696-7" class="external-link">10.1007/s10816-025-09696-7</a></p>
 <p>Romundset, A. 2018. Postglacial shoreline displacement in the
 Tvedestrand–Arendal area. In <em>The Stone Age Coastal Settlement in
 Aust-Agder, Southeast Norway</em>, edited by Reitan, G. and Sundström,
