@@ -190,11 +190,7 @@ here.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/displacement_plot.html">displacement_plot</a></span><span class="op">(</span>target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                  target_name <span class="op">=</span> <span class="st">"Displacement curve for Ørland, Central Norway"</span>,</span>
 <span>                  displacement_curves <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp"><p class="caption">
-plot of chunk orland-disp
-</p>
-</div>
+<p><img src="extend-orlanddisp-1.png" style="display: block; margin: auto;"></p>
 <p>A note should be made that the Ørland curve was originally published
 with reference to the highest astronomical tide in the region (see
 Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the
@@ -268,7 +264,7 @@ will instead be handled with a legend in the code to follow below.</p>
 <span>                      base_fill <span class="op">=</span> <span class="st">"grey85"</span>,</span>
 <span>                      isobases <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>                      target_labels <span class="op">=</span>  <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'</span></span>
+<pre><code><span><span class="co">## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpzBrT1V/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'</span></span>
 <span><span class="co">## Simple feature collection with 258 features and 168 fields</span></span>
 <span><span class="co">## Geometry type: MULTIPOLYGON</span></span>
 <span><span class="co">## Dimension:     XY</span></span>
@@ -304,15 +300,9 @@ this exercise to make sure everything looks as it should.</p>
 <span>                      naturalearth_zoom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15000</span>, <span class="fl">10000</span><span class="op">)</span>,</span>
 <span>                      base_col <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>                      base_fill <span class="op">=</span> <span class="st">"grey85"</span>,</span>
-<span>                      isobases <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'</span></span>
-<span><span class="co">## Simple feature collection with 258 features and 168 fields</span></span>
-<span><span class="co">## Geometry type: MULTIPOLYGON</span></span>
-<span><span class="co">## Dimension:     XY</span></span>
-<span><span class="co">## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341</span></span>
-<span><span class="co">## Geodetic CRS:  WGS 84</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Add axis labels and ticks, which are not returned with target_plot()</span></span>
+<span>                      isobases <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add axis labels and ticks, which are not returned with target_plot()</span></span>
 <span><span class="va">examples_map</span> <span class="op">&lt;-</span> <span class="va">examples_map</span> <span class="op">+</span></span>
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -323,19 +313,11 @@ this exercise to make sure everything looks as it should.</p>
 <span></span>
 <span><span class="co"># Call overview map</span></span>
 <span><span class="va">overview_map</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-maps-1.png" alt="plot of chunk maps"><p class="caption">
-plot of chunk maps
-</p>
-</div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="extend-maps-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Call map displaying the location of the example points</span></span>
 <span><span class="va">examples_map</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-maps-2.png" alt="plot of chunk maps"><p class="caption">
-plot of chunk maps
-</p>
-</div>
+<p><img src="extend-maps-2.png" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="dating-example-sites-in-ørland">Dating example sites in Ørland<a class="anchor" aria-label="anchor" href="#dating-example-sites-in-%C3%B8rland"></a>
@@ -343,7 +325,7 @@ plot of chunk maps
 <p>For this example, a raster retrieved from Amazon Web Service Terrain
 Tiles is used for finding the elevation of the example sites. This
 follows the procedure that is outlined in the main vignette.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Retrieve raster</span></span>
 <span><span class="va">target_wgs84</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">target_points</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span><span class="va">elev_raster</span> <span class="op">&lt;-</span> <span class="fu">elevatr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/elevatr/man/get_elev_raster.html" class="external-link">get_elev_raster</a></span><span class="op">(</span><span class="va">target_wgs84</span>, z <span class="op">=</span> <span class="fl">14</span>,</span>
@@ -354,14 +336,10 @@ follows the procedure that is outlined in the main vignette.</p>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">elev_raster</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">target_points</span>, col <span class="op">=</span> <span class="st">"black"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span> <span class="op">-</span> <span class="fl">50</span>, labels <span class="op">=</span> <span class="va">target_points</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot"><p class="caption">
-plot of chunk examples-plot
-</p>
-</div>
+<p><img src="extend-examplesplot-1.png" style="display: block; margin: auto;"></p>
 <p>After the raster has been loaded we can find the elevation of the
 sites:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">elev_raster</span>, <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 17.74340 19.53946</span></span></code></pre>
 <p>This elevation is retrieved by <code><a href="../reference/shoreline_date.html">shoreline_date()</a></code> if the
@@ -372,18 +350,14 @@ displacement curve and knowledge of these elevations, the function is
 here called by only providing the displacement curve and providing a
 character vector with the name of the sites and a numerical vector with
 their elevations:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">target_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span>sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Example 1"</span>, <span class="st">"Example 2"</span><span class="op">)</span>,</span>
 <span>                               target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
 <span>                               elevation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17.7</span>, <span class="fl">19.5</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot the results</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">target_dates</span>, multiplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot"><p class="caption">
-plot of chunk orland-dateplot
-</p>
-</div>
+<p><img src="extend-orlanddateplot-1.png" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="finding-the-earliest-possible-date">Finding the earliest possible date<a class="anchor" aria-label="anchor" href="#finding-the-earliest-possible-date"></a>
@@ -416,7 +390,7 @@ ante quem</em> date – the latest possible date for the use of a site.
 However, implementation of <em>shoredate</em> to regions which have
 experienced continuous or disjoint phases of relative sea-level rise
 remains to be developed.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Finding the earliest possible date for the first example point</span></span>
 <span><span class="va">earliest_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shoreline_date.html">shoreline_date</a></span><span class="op">(</span><span class="va">target_points</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,</span>
 <span>                                target_curve <span class="op">=</span> <span class="va">orland_disp</span>,</span>
@@ -426,11 +400,7 @@ remains to be developed.</p>
 <span></span>
 <span><span class="co"># Call to plot</span></span>
 <span><span class="fu"><a href="../reference/shoredate_plot.html">shoredate_plot</a></span><span class="op">(</span><span class="va">earliest_date</span>, site_name <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="extend-earliest-1.png" alt="plot of chunk earliest"><p class="caption">
-plot of chunk earliest
-</p>
-</div>
+<p><img src="extend-earliest-1.png" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
