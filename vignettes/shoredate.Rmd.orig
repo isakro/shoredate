@@ -81,7 +81,7 @@ library(shoredate)
 
 # Interpolating shoreline displacement to a site location
 
-The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a pre-compiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement along the Norwegian Skagerrak coat. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location within the region is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
+The function `shoreline_date()` forms the basis for *shoredate*, and is presented in more detail below. Unless a pre-compiled displacement curve is provided when calling `shoreline_date()`, the trajectory of shoreline displacement at the location of the sites to be dated is interpolated under the hood. This is based on the four different geological reconstructions of shoreline displacement along the Norwegian Skagerrak coast. Each of these displacement curves are associated with a shoreline isobase which indicates contours along which the relative sea-level change has followed the same trajectory. The variation in the rate of sea-level change is mainly determined by the degree of isostatic uplift, which is higher along a gradient than runs from the south west to the north east within the region. The shoreline displacement curve for any given location within the region is interpolated using the `interpolate_curve()` command, using inverse distance weighting, where the distance to the four isobases is weighted by the square of the inverse distances.
 
 Note that spatial geometries representing sites to which `interpolate_curve()` is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](https://isakro.github.io/shoredate/articles/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
 
@@ -114,7 +114,7 @@ The following section outlines how to perform shoreline dating and ways in which
 To perform a basic shoreline date, a site has to be provided as a spatial `sf` object if the shoreline displacement is to be interpolated to its location. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster (see below), in which case the elevation of the site will be derived from the raster, provided the site is given as a spatial object. In Roalkvam (2023) it was found that the vertical distance from the sites to the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implementation of shoreline dating in the package.
 
 ```{r example_site, message = FALSE}
-# Date the example point, manually specifying it's elevation
+# Date the example point, manually specifying its elevation
 target_date <- shoreline_date(target_point, elevation = 58.5)
 ```
 
@@ -152,7 +152,7 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 It is also possible to not account for the likely distance between the site and the shoreline. This is done by setting the `model` parameter to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, the earliest possible date for when the site could have been in use, under the assumption that when the sea receded from the site location marks the earliest possible point in time for the occupation of the site.
 
 ```{r tpq_date, fig.cap = "", message = FALSE,fig.width = 4.4, fig.height = 3.7}
-# Date the example point, manually specifying it's elevation and setting the
+# Date the example point, manually specifying its elevation and setting the
 # HDR coverage to 1.
 tpq_date <- shoreline_date(target_point,
                            elevation = 58.5,
@@ -209,7 +209,7 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 The below code demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example here uses data from Amazon Web Service Terrain Tiles, retrieved with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
-```{r retrieve_raster, fig.cap = "", fig.width = 6, fig.height = 4, results='hide', message = FALSE}
+```{r retrieve_raster, fig.cap = "", fig.width = 6, fig.height = 4, results='hide', warning = FALSE, message = FALSE}
 # Reproject target_point for retrieving raster data with elevatr
 target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
@@ -236,7 +236,7 @@ raster_date
 
 # Summed probability distribution of shoreline dates
 
-Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Do note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straightforward, as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
+Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Do note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straightforward (see Roalkvam and Solheim 2025 for a study that explores this issue in the context of shoreline dates).
 
 ```{r sum_dates}
 # Sum the three dates from above
@@ -299,17 +299,15 @@ shoredate_plot(sum_iso_date, site_name = TRUE, isobase_direction = TRUE)
 
 # References
 
-Bronk Ramsey, C. 2017. Methods for Summarizing Radiocarbon Datasets. *Radiocarbon* 59(6):1809--1833. DOI: [10.1017/RDC.2017.108](https://doi.org/10.1017/RDC.2017.108)
-
 Brøgger, W.C. 1905 *Strandliniens beliggenhed under stenalderen i det sydøstlige Norge*. Geological Survey of Norway, Kristiania. URI: https://hdl.handle.net/11250/2675184
 
 Crema, E. and Bevan, A. 2021. Inference from Large Sets of Radiocarbon Dates: Software and Methods. *Radiocarbon* 61(1):23--39. DOI: [10.1017/RDC.2020.95](https://doi.org/10.1017/RDC.2020.95)
 
-Crema, E. 2022. Statistical Inference of Prehistoric Demography from Frequency Distributions of Radiocarbon Dates: A Review and a Guide for the Perplexed. *Journal of Archaeological Method and Theory* 29:1387-1418. DOI: [10.1007/s10816-022-09559-5](https://doi.org/10.1007/s10816-022-09559-5)
-
 Glørstad, H. 2016. Deglaciation, sea-level change and the Holocene colonization of Norway. *Geological Society, London, Special Publications* 411(1):9--25. DOI: [10.1144/SP411.7](https://doi.org/10.1144/SP411.7)
 
 Roalkvam, I. 2023 A simulation-based assessment of the relation between Stone Age sites and relative sea-level change along the Norwegian Skagerrak coast. *Quaternary Science Reviews* 299:107880. DOI: [10.1016/j.quascirev.2022.107880](https://doi.org/10.1016/j.quascirev.2022.107880)
+
+Roalkvam, I. and Solheim, S. 2025 Comparing Summed Probability Distributions of Shoreline and Radiocarbon Dates from the Mesolithic Skagerrak Coast of Norway. *Journal of Archaeological Method and Theory* 32(1):26. DOI: [10.1007/s10816-025-09696-7](https://doi.org/10.1007/s10816-025-09696-7)
 
 Romundset, A. 2018. Postglacial shoreline displacement in the Tvedestrand--Arendal area. In *The Stone Age Coastal Settlement in Aust-Agder, Southeast Norway*, edited by Reitan, G. and Sundström, L.. Cappelen Damm Akademisk, Oslo, pp. 463--478. DOI: [10.23865/noasp.50](https://doi.org/10.23865/noasp.50)
 
