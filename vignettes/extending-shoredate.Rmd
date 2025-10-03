@@ -31,7 +31,7 @@ Geologically derived displacement curves are in Norway often reported with a uni
 The displacement curve for Ørland is provided with *shoredate* and can be loaded with the following code:
 
 
-```r
+``` r
 # The packages ggplot2 and sf are explictly loaded here, instead of using the
 # package::function() syntax with each function call below.
 library(ggplot2)
@@ -61,16 +61,13 @@ tail(orland_disp)
 This can then be plotted with `displacement_plot()`. The name is here adjusted with the argument `target_name` to something more informative, and the geologically derived displacement curves from south-eastern Norway are excluded by specifying the `displacement_curves` argument, as these are not of relevance here.
 
 
-```r
+``` r
 displacement_plot(target_curve = orland_disp,
                   target_name = "Displacement curve for Ørland, Central Norway",
                   displacement_curves = NA)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-orland-disp-1.png" alt="plot of chunk orland-disp"  />
-<p class="caption">plot of chunk orland-disp</p>
-</div>
+<img src="extend-orlanddisp-1.png" style="display: block; margin: auto;" />
 
 A note should be made that the Ørland curve was originally published with reference to the highest astronomical tide in the region (see Romundset and Lakeman 2019:66). To adjust this to mean sea-level, the difference in elevation between the highest astronomical tide and the mean sea-level has been been subtracted from the elevation values.
 
@@ -81,7 +78,7 @@ Furthermore, while variable uplift rates are also relevant for this area, this i
 Having loaded the displacement curve, this can then be directly used to shoreline date sites in locations where it applies, provided the elevation of the sites above present sea-level is known. First we will create a couple of fictitious site examples, each represented by a point, and maps of their location to demonstrate the extendibility of the `target_plot()` function.
 
 
-```r
+``` r
 # Create example sites
 target_points <-  st_sfc(st_point(c(532719, 7065723)),
                          st_point(c(532896, 7066260)))
@@ -95,7 +92,7 @@ target_points$name <- c("Example 1", "Example 2")
 To create a map of where Ørland and these target points are located, one can adapt the `target_plot()` function. First, set up the geometries to be plotted:
 
 
-```r
+``` r
 # Load in the limit of the spatial coverage in south-eastern Norway,
 # which is provided with the package
 senorway <- st_read(system.file("extdata/spatial_limit.gpkg",
@@ -113,7 +110,7 @@ Once this has been done we can use `target_plot()` to set up a plot. Setting `na
 
 
 
-```r
+``` r
 overview_map <- target_plot(targets = orland,
                       naturalearth_basemap = TRUE,
                       naturalearth_zoom = c(1000000, 1000000),
@@ -125,7 +122,7 @@ overview_map <- target_plot(targets = orland,
 ```
 
 ```
-## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'
+## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpzBrT1V/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 258 features and 168 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -136,7 +133,7 @@ overview_map <- target_plot(targets = orland,
 Having created a base plot, this can now be manipulated using other functions from the package `ggplot2`.
 
 
-```r
+``` r
 overview_map <- overview_map +
         geom_sf(data = senorway, aes(col = name), fill = NA,
                    lwd = 0.5, show.legend = "polygon") +
@@ -157,7 +154,7 @@ overview_map <- overview_map +
 When the map displaying the location of Ørland is created, we can create a second map that shows the location of the example points, zoomed in at Ørland, which is located at the tip of the Fosen peninsula. While the map is fairly simple, it can nonetheless be useful to perform this exercise to make sure everything looks as it should.
 
 
-```r
+``` r
 # Create basemap
 examples_map <- target_plot(targets = target_points,
                       naturalearth_basemap = TRUE,
@@ -165,18 +162,7 @@ examples_map <- target_plot(targets = target_points,
                       base_col = "black",
                       base_fill = "grey85",
                       isobases = NA)
-```
 
-```
-## Reading layer `ne_10m_admin_0_countries' from data source `/tmp/RtmpV7qmjP/ne_10m_admin_0_countries.shp' using driver `ESRI Shapefile'
-## Simple feature collection with 258 features and 168 fields
-## Geometry type: MULTIPOLYGON
-## Dimension:     XY
-## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
-## Geodetic CRS:  WGS 84
-```
-
-```r
 # Add axis labels and ticks, which are not returned with target_plot()
 examples_map <- examples_map +
       theme(
@@ -190,27 +176,21 @@ examples_map <- examples_map +
 overview_map
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-maps-1.png" alt="plot of chunk maps"  />
-<p class="caption">plot of chunk maps</p>
-</div>
+<img src="extend-maps-1.png" style="display: block; margin: auto;" />
 
-```r
+``` r
 # Call map displaying the location of the example points
 examples_map
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-maps-2.png" alt="plot of chunk maps"  />
-<p class="caption">plot of chunk maps</p>
-</div>
+<img src="extend-maps-2.png" style="display: block; margin: auto;" />
 
 ## Dating example sites in Ørland
 
 For this example, a raster retrieved from Amazon Web Service Terrain Tiles is used for finding the elevation of the example sites. This follows the procedure that is outlined in the main vignette.
 
 
-```r
+``` r
 # Retrieve raster
 target_wgs84 <- st_transform(target_points, crs = 4326)
 elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,
@@ -223,14 +203,12 @@ plot(target_points, col = "black", add = TRUE)
 text(st_coordinates(target_points) - 50, labels = target_points$name)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-examples-plot-1.png" alt="plot of chunk examples-plot"  />
-<p class="caption">plot of chunk examples-plot</p>
-</div>
+<img src="extend-examplesplot-1.png" style="display: block; margin: auto;" />
 
 After the raster has been loaded we can find the elevation of the sites:
 
-```r
+
+``` r
 terra::extract(elev_raster, terra::vect(target_points))[, -1]
 ```
 
@@ -241,7 +219,7 @@ terra::extract(elev_raster, terra::vect(target_points))[, -1]
 This elevation is retrieved by `shoreline_date()` if the raster is passed to its `elevation` argument and the sites to be dated are provided as spatial geometries. However, to illustrate the point that all that is needed to use `shoreline_date()` is a displacement curve and knowledge of these elevations, the function is here called by only providing the displacement curve and providing a character vector with the name of the sites and a numerical vector with their elevations:
 
 
-```r
+``` r
 target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
                                target_curve = orland_disp,
                                elevation = c(17.7, 19.5))
@@ -250,10 +228,7 @@ target_dates <- shoreline_date(sites = c("Example 1", "Example 2"),
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-orland-dateplot-1.png" alt="plot of chunk orland-dateplot"  />
-<p class="caption">plot of chunk orland-dateplot</p>
-</div>
+<img src="extend-orlanddateplot-1.png" style="display: block; margin: auto;" />
 
 ## Finding the earliest possible date
 
@@ -266,7 +241,7 @@ While a *terminus post quem* date limits the further inferential steps that can 
 Furthermore, it could also be possible to reverse this logic in regions that have instead been subject to relative sea-level rise, where the date for when a location was inundated can provide a *terminus ante quem* date -- the latest possible date for the use of a site. However, implementation of *shoredate* to regions which have experienced continuous or disjoint phases of relative sea-level rise remains to be developed.
 
 
-```r
+``` r
 # Finding the earliest possible date for the first example point
 earliest_date <- shoreline_date(target_points[1,],
                                 target_curve = orland_disp,
@@ -278,10 +253,7 @@ earliest_date <- shoreline_date(target_points[1,],
 shoredate_plot(earliest_date, site_name = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="extend-earliest-1.png" alt="plot of chunk earliest"  />
-<p class="caption">plot of chunk earliest</p>
-</div>
+<img src="extend-earliest-1.png" style="display: block; margin: auto;" />
 
 # References
 

@@ -30,10 +30,7 @@ Shoreline dating of Stone Age sites in northern Scandinavia is based on the prem
 
 As the method is dependent on good geological reconstructions of shoreline displacement, the full functionality of *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The core spatial coverage of *shoredate* is indicated in the maps below.
 
-<div class="figure" style="text-align: center">
-<img src="../man/figures/coverage.png" alt="plot of chunk limit" width="90%" />
-<p class="caption">plot of chunk limit</p>
-</div>
+<img src="../man/figures/coverage.png" width="90%" style="display: block; margin: auto;" />
 
 Furthermore, human occupation in Norway only occurred some time after the retreat of the Fennoscandian Ice Sheet, and the oldest known sites are dated to around 9300 BCE (e.g. Glørstad 2016). 9469 BCE is the latest start date among the geologically derived displacement curves in the region, and thus marks the oldest possible age to achieve with *shoredate* here, although no sites are yet known to be that old. If a site has an elevation that implies a date older than the latest start date of the displacement curves, the date is returned as NA and a warning is given.
 
@@ -44,14 +41,14 @@ In the Roalkvam (2023) study it was found that sites tend to be situated at more
 The package can be installed from [CRAN](https://cran.r-project.org/package=shoredate):
 
 
-```r
+``` r
 install.packages("shoredate")
 ```
 
 The development version of the package can be installed from the [GitHub repository](https://github.com/isakro/shoredate). This requires the `devtools` package. Note that the development version can be unstable.
 
 
-```r
+``` r
 # Uncomment and run to install devtools
 # install.packages("devtools")
 
@@ -61,7 +58,7 @@ devtools::install_github("isakro/shoredate", build_vignettes = TRUE)
 
 When installed the package can be loaded.
 
-```r
+``` r
 library(shoredate)
 ```
 
@@ -73,7 +70,7 @@ The function `shoreline_date()` forms the basis for *shoredate*, and is presente
 Note that spatial geometries representing sites to which `interpolate_curve()` is to be applied must be set to the coordinate reference system (CRS) WGS 84 / UTM zone 32N (EPSG:32632). Furthermore, a warning is given if one attempts to interpolate the trajectory for shoreline displacement at a site located outside the spatial extent outlined above. However, as there might still be use-cases where it could be useful to extrapolate the method outside this limit, the procedure is still performed (see the second vignette [Applying shoredate to other regions](https://isakro.github.io/shoredate/articles/extending-shoredate.html) for suggestions on how to apply the package to entirely different regions).
 
 
-```r
+``` r
 # Create example point using the required coordinate system
 target_point <- sf::st_sfc(sf::st_point(c(517250, 6527250)), crs = 32632)
 
@@ -84,26 +81,20 @@ target_curve <- interpolate_curve(target_point)
 To visualise the interpolated curve alongside the geological reconstructions, this can be passed to `displacement_plot()`. A simple map showing the location of one or more target sites relative to the isobases can also be displayed by using the command `target_plot()`.
 
 
-```r
+``` r
 target_plot(target_point)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_location-1.png" alt="plot of chunk plot_location"  />
-<p class="caption">plot of chunk plot_location</p>
-</div>
+<img src="shore-plot_location-1.png" style="display: block; margin: auto;" />
 
 
-```r
+``` r
 # The opactity of the geological displacement curves is reduced with
 # displacement_alpha
 displacement_plot(target_curve, displacement_alpha = 0.4)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_intcurve-1.png" alt="plot of chunk plot_intcurve"  />
-<p class="caption">plot of chunk plot_intcurve</p>
-</div>
+<img src="shore-plot_intcurve-1.png" style="display: block; margin: auto;" />
 
 # Shoreline dating
 
@@ -114,7 +105,7 @@ The following section outlines how to perform shoreline dating and ways in which
 To perform a basic shoreline date, a site has to be provided as a spatial `sf` object if the shoreline displacement is to be interpolated to its location. In a addition to this, the elevation of the site above the present sea-level has to be provided. This can either be done by manually specifying the elevation, or by providing an elevation raster (see below), in which case the elevation of the site will be derived from the raster, provided the site is given as a spatial object. In Roalkvam (2023) it was found that the vertical distance from the sites to the contemporaneous shoreline within the study region could be reasonably approximated by a gamma distribution. This forms the foundation for the implementation of shoreline dating in the package.
 
 
-```r
+``` r
 # Date the example point, manually specifying it's elevation
 target_date <- shoreline_date(target_point, elevation = 58.5)
 ```
@@ -122,14 +113,11 @@ target_date <- shoreline_date(target_point, elevation = 58.5)
 The results can then be plotted using the `shoredate_plot()` command:
 
 
-```r
+``` r
 shoredate_plot(target_date)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_example-1.png" alt="plot of chunk plot_example"  />
-<p class="caption">plot of chunk plot_example</p>
-</div>
+<img src="shore-plot_example-1.png" style="display: block; margin: auto;" />
 
 The blue gamma distribution on the y-axis indicates the likely elevation of the site above sea-level when it was in use, which is described by an empirically derived gamma distribution with the parameters shape ($\alpha$) = 0.286 and scale ($\sigma$) = 20.833. These parameters can be adjusted by specifying the values passed to `model_parameters` when calling `shoreline_date()`. The red envelope is the shoreline displacement curve as interpolated to the site location with `interpolate_curve()`, which is run under the hood if a curve is not provided to the `target_curve` argument of `shoreline_date()`.
 
@@ -138,7 +126,7 @@ Transferring the probability from the gamma distribution to the calendar scale u
 The function `shoreline_date()` returns an object of class `shoreline_date`. By calling the object the dates are printed to console, displaying site name, site elevation and the HDR of the date. Furthermore, the first column of a data frame beyond the `geom` column holding the `sf` geometry will be used as site names. If no such column is present, the sites will simply be numbered as they are passed to `shoreline_date()`.
 
 
-```r
+``` r
 target_date
 ```
 
@@ -155,34 +143,28 @@ target_date
 While a range of graphical parameters can be adjusted to change the appearance of the output plot, setting `greyscale = TRUE` offers a short-cut to plot a date in greyscale:
 
 
-```r
+``` r
 shoredate_plot(target_date,  greyscale = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-greyscale-1.png" alt="plot of chunk greyscale"  />
-<p class="caption">plot of chunk greyscale</p>
-</div>
+<img src="shore-greyscale-1.png" style="display: block; margin: auto;" />
 
 A more sparse version can also be plotted by specifying what elements are to be excluded from the plot:
 
 
-```r
+``` r
 shoredate_plot(target_date, elevation_distribution = FALSE,
                displacement_curve = FALSE, highest_density_region = FALSE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-sparse-1.png" alt="plot of chunk sparse"  />
-<p class="caption">plot of chunk sparse</p>
-</div>
+<img src="shore-sparse-1.png" style="display: block; margin: auto;" />
 
 ## Finding the *terminus post quem* date
 
 It is also possible to not account for the likely distance between the site and the shoreline. This is done by setting the `model` parameter to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, the earliest possible date for when the site could have been in use, under the assumption that when the sea receded from the site location marks the earliest possible point in time for the occupation of the site.
 
 
-```r
+``` r
 # Date the example point, manually specifying it's elevation and setting the
 # HDR coverage to 1.
 tpq_date <- shoreline_date(target_point,
@@ -194,17 +176,14 @@ tpq_date <- shoreline_date(target_point,
 shoredate_plot(tpq_date, hdr_label_yadj = 0.6)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-tpq_date-1.png" alt="plot of chunk tpq_date"  />
-<p class="caption">plot of chunk tpq_date</p>
-</div>
+<img src="shore-tpq_date-1.png" style="display: block; margin: auto;" />
 
 ## Dating multiple sites
 
 As exemplified in the code chunks to follow, it is also possible to date multiple sites at once.
 
 
-```r
+``` r
 # Create multiple example points to be dated
 target_points <- sf::st_sfc(sf::st_point(c(576052, 6567955)),
                               sf::st_point(c(554212, 6538835)),
@@ -221,15 +200,12 @@ target_points$names <- c("Site 1", "Site 2", "Site 3")
 target_plot(target_points)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-multipoint-1.png" alt="plot of chunk multipoint"  />
-<p class="caption">plot of chunk multipoint</p>
-</div>
+<img src="shore-multipoint-1.png" style="display: block; margin: auto;" />
 
 When dating multiple sites it can be useful to track the progress by setting `verbose = TRUE` to print the progress to console (this output is not reproduced here).
 
 
-```r
+``` r
 # Dating the target points, specifying the elevations in a
 # vector of numeric values
 target_dates <- shoreline_date(target_points,
@@ -238,7 +214,7 @@ target_dates <- shoreline_date(target_points,
 ```
 
 
-```r
+``` r
 # Print results
 target_dates
 ```
@@ -268,21 +244,18 @@ target_dates
 The default behaviour when passing multiple dates to `shoredate_plot()` is to plot a series of individual plots. However, setting `multiplot = TRUE` collapses the dates on a single, more sparse plot. The sites are ordered from from earliest to latest possible start date for the occupation of the sites.
 
 
-```r
+``` r
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-multiplot-1.png" alt="plot of chunk multiplot"  />
-<p class="caption">plot of chunk multiplot</p>
-</div>
+<img src="shore-multiplot-1.png" style="display: block; margin: auto;" />
 
 ## Using an elevation raster to find site elevations
 
 The below code demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example here uses data from Amazon Web Service Terrain Tiles, retrieved with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
 
-```r
+``` r
 # Reproject target_point for retrieving raster data with elevatr
 target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
@@ -291,11 +264,10 @@ elev_raster <- elevatr::get_elev_raster(target_wgs84, z = 14,  src = "aws")
 ```
 
 ```
-## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of
-## rows [2]
+## Warning in matrix(unlist(x, use.names = FALSE), nrow = length(x), byrow = TRUE, : data length [3] is not a sub-multiple or multiple of the number of rows [2]
 ```
 
-```r
+``` r
 # Make the retrieved raster a SpatRaster and re-project
 # it to the correct coordinate system
 elev_raster <- terra::project(terra::rast(elev_raster), "epsg:32632")
@@ -305,15 +277,12 @@ terra::plot(elev_raster)
 plot(target_point, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-retrieve_raster-1.png" alt="plot of chunk retrieve_raster"  />
-<p class="caption">plot of chunk retrieve_raster</p>
-</div>
+<img src="shore-retrieve_raster-1.png" style="display: block; margin: auto;" />
 
 When a `SpatRaster` has been loaded into the R session this can be passed to `shoreline_date()` by specifying it in the `elevation` argument. This is then used to find the site elevations without having to provide these manually, as was done above. Note that if a site is represented by an object with a spatial extent (i.e. not a point feature) the default is to use the mean of the elevation on the raster. This can be changed with the `elev_fun` argument which accepts any function that can be passed to the `fun` argument in `terra::extract()` (see `?terra::extract`).
 
 
-```r
+``` r
 raster_date <- shoreline_date(target_point, elevation = elev_raster)
 
 # Print to console
@@ -335,7 +304,7 @@ raster_date
 Using `sum_shoredates()` it is also possible to sum the probability of multiple shoreline dates to evaluate the temporal intensity of the dates, as is frequently done with calibrated radiocarbon dates (e.g. Crema and Bevan 2021). Do note that as this procedure involves collapsing the frequency of dates and their uncertainty, the interpretation of the resulting sum is not straightforward, as it's shape is determined not only by the number of sites but also the trajectory of shoreline displacement (see e.g. Bronk Ramsey 2017; Crema 2022 for perspectives and ways to approach this issue in the context of radiocarbon dates).
 
 
-```r
+``` r
 # Sum the three dates from above
 summed_dates <- sum_shoredates(target_dates)
 ```
@@ -343,14 +312,11 @@ summed_dates <- sum_shoredates(target_dates)
 A simple line plot displaying the resulting summed probability can then be produced with `shoredate_sumplot()`.
 
 
-```r
+``` r
 shoredate_sumplot(summed_dates)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-sum_plot-1.png" alt="plot of chunk sum_plot"  />
-<p class="caption">plot of chunk sum_plot</p>
-</div>
+<img src="shore-sum_plot-1.png" style="display: block; margin: auto;" />
 
 # Direction of shoreline gradient
 The direction of the shoreline gradient is specified by the isobases that run perpendicular to this gradient. When interpolating the displacement curve used for dating a site, the direction of these isobases defaults to 327$^\circ$, following Romundset et al. (2018:180, fig.1). However, some authors operate with different isobase directions, with Sørensen et al. (2014:fig.2.2.3) using 338$^\circ$. Furthermore, the direction of the uplift gradient might have varied throughout the Holocene (Sørensen et al. 2014:42--44).
@@ -360,7 +326,7 @@ The direction of the shoreline gradient is specified by the isobases that run pe
 While the range of the typically employed isobase directions generally result in minor differences in the resulting shoreline dates, it is possible to specify other and multiple directions for these, and perform the shoreline dating using each individual direction. This can be useful either for evaluating the sensitivity of a date or if one believes there is reason suspect a different direction than the default in a particular case.
 
 
-```r
+``` r
 # Add a name to the example site
 target_point <- sf::st_as_sf(target_point, crs = 32632)
 target_point$name <- "Example site"
@@ -394,27 +360,21 @@ iso_date
 In the call to plot it can then be specified that the direction of the isobases is printed with each date. Note that it is not possible use `multiplot` when having used multiple isobase directions when dating the sites. The following thus also shows the default behaviour when plotting multiple dates at once and not setting `multiplot = TRUE`.
 
 
-```r
+``` r
 shoredate_plot(iso_date,
                site_name = TRUE,
                isobase_direction = TRUE,
                hdr_label_yadj = 0.35)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_example_isobases-1.png" alt="plot of chunk plot_example_isobases"  />
-<p class="caption">plot of chunk plot_example_isobases</p>
-</div><div class="figure" style="text-align: center">
-<img src="shore-plot_example_isobases-2.png" alt="plot of chunk plot_example_isobases"  />
-<p class="caption">plot of chunk plot_example_isobases</p>
-</div>
+<img src="shore-plot_example_isobases-1.png" style="display: block; margin: auto;" /><img src="shore-plot_example_isobases-2.png" style="display: block; margin: auto;" />
 
 ## Sum the probability of dates across isobase directions
 
 As an alternative to keeping the two shoreline dates of the site separate, the parameter `sum_isobase_directions` can be set to `TRUE` when calling `shoreline_date()` to sum the probability of the dates. Again, by default this is normalised to sum to unity.
 
 
-```r
+``` r
 sum_iso_date <- shoreline_date(site = target_point,
                                elevation = elev_raster,
                                isobase_direction = c(325, 338),
@@ -438,14 +398,11 @@ sum_iso_date
 This can then be passed to `shoredate_plot()`. Note that the interpolated displacement curves and the gamma distribution for the elevation of the site above sea-level is not included in the plot when summing the probability of dates across isobase directions.
 
 
-```r
+``` r
 shoredate_plot(sum_iso_date, site_name = TRUE, isobase_direction = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="shore-plot_sum_isobases-1.png" alt="plot of chunk plot_sum_isobases"  />
-<p class="caption">plot of chunk plot_sum_isobases</p>
-</div>
+<img src="shore-plot_sum_isobases-1.png" style="display: block; margin: auto;" />
 
 # References
 

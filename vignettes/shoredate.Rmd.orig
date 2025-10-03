@@ -46,7 +46,7 @@ Shoreline dating of Stone Age sites in northern Scandinavia is based on the prem
 
 As the method is dependent on good geological reconstructions of shoreline displacement, the full functionality of *shoredate* is at present limited to being applicable in the region of south-eastern Norway between Horten in the north east to Arendal in the south west. This region has recently compiled shoreline displacement curves for Skoppum in Horten (Romundset 2021), Gunnarsrød in Porsgrunn (Sørensen et al. 2014a; Sørensen et al. *in prep*), Hanto in Tvedestrand (Romundset 2018; Romundset et al. 2018) and Bjørnebu in Arendal (Romundset 2018). This region also formed the study area for Roalkvam (2023), in which the specification of the method and the parameters used here were derived. The core spatial coverage of *shoredate* is indicated in the maps below.
 
-```{r limit, echo = FALSE, out.width = '90%'}
+```{r limit, fig.cap = "", echo = FALSE, out.width = '90%'}
 # Include pre-compiled figure (uses more spatial data than what is included in the package)
 knitr::include_graphics("../man/figures/coverage.png")
 ```
@@ -95,11 +95,11 @@ target_curve <- interpolate_curve(target_point)
 
 To visualise the interpolated curve alongside the geological reconstructions, this can be passed to `displacement_plot()`. A simple map showing the location of one or more target sites relative to the isobases can also be displayed by using the command `target_plot()`.
 
-```{r plot_location, fig.width = 4.3, fig.height = 3.5}
+```{r plot_location, fig.cap = "", fig.width = 4.3, fig.height = 3.5}
 target_plot(target_point)
 ```
 
-```{r plot_intcurve, fig.width = 5.7, fig.height = 4}
+```{r plot_intcurve, fig.cap = "", fig.width = 5.7, fig.height = 4}
 # The opactity of the geological displacement curves is reduced with
 # displacement_alpha
 displacement_plot(target_curve, displacement_alpha = 0.4)
@@ -120,7 +120,7 @@ target_date <- shoreline_date(target_point, elevation = 58.5)
 
 The results can then be plotted using the `shoredate_plot()` command:
 
-```{r plot_example, fig.width = 4.4, fig.height = 3.7}
+```{r plot_example, fig.cap = "", fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_date)
 ```
 
@@ -136,13 +136,13 @@ target_date
 
 While a range of graphical parameters can be adjusted to change the appearance of the output plot, setting `greyscale = TRUE` offers a short-cut to plot a date in greyscale:
 
-```{r greyscale, fig.width = 4, fig.height = 3.7}
+```{r greyscale, fig.cap = "", fig.width = 4, fig.height = 3.7}
 shoredate_plot(target_date,  greyscale = TRUE)
 ```
 
 A more sparse version can also be plotted by specifying what elements are to be excluded from the plot:
 
-```{r sparse, fig.width = 4.4, fig.height = 3.7}
+```{r sparse, fig.cap = "", fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_date, elevation_distribution = FALSE,
                displacement_curve = FALSE, highest_density_region = FALSE)
 ```
@@ -151,7 +151,7 @@ shoredate_plot(target_date, elevation_distribution = FALSE,
 
 It is also possible to not account for the likely distance between the site and the shoreline. This is done by setting the `model` parameter to "none" when calling `shoreline_date()`. This thus effectively provides a *termnius post quem* date, the earliest possible date for when the site could have been in use, under the assumption that when the sea receded from the site location marks the earliest possible point in time for the occupation of the site.
 
-```{r tpq_date, message = FALSE,fig.width = 4.4, fig.height = 3.7}
+```{r tpq_date, fig.cap = "", message = FALSE,fig.width = 4.4, fig.height = 3.7}
 # Date the example point, manually specifying it's elevation and setting the
 # HDR coverage to 1.
 tpq_date <- shoreline_date(target_point,
@@ -167,7 +167,7 @@ shoredate_plot(tpq_date, hdr_label_yadj = 0.6)
 
 As exemplified in the code chunks to follow, it is also possible to date multiple sites at once.
 
-```{r multipoint, fig.width = 4.3, fig.height = 3.5}
+```{r multipoint, fig.cap = "", fig.width = 4.3, fig.height = 3.5}
 # Create multiple example points to be dated
 target_points <- sf::st_sfc(sf::st_point(c(576052, 6567955)),
                               sf::st_point(c(554212, 6538835)),
@@ -201,7 +201,7 @@ target_dates
 
 The default behaviour when passing multiple dates to `shoredate_plot()` is to plot a series of individual plots. However, setting `multiplot = TRUE` collapses the dates on a single, more sparse plot. The sites are ordered from from earliest to latest possible start date for the occupation of the sites.
 
-```{r multiplot, fig.width = 4.4, fig.height = 3.7}
+```{r multiplot, fig.cap = "", fig.width = 4.4, fig.height = 3.7}
 shoredate_plot(target_dates, multiplot = TRUE)
 ```
 
@@ -209,7 +209,7 @@ shoredate_plot(target_dates, multiplot = TRUE)
 
 The below code demonstrates how to find the elevation of one or more sites by passing a digital elevation model (DEM) to `shoreline_date()`. The example here uses data from Amazon Web Service Terrain Tiles, retrieved with the package `elevatr`. However, the best elevation data available for the study area can be retrieved freely from the Norwegian Mapping Authority at https://hoydedata.no/LaserInnsyn2/. To use this with *shoredate*, manually download a raster covering the location of the sites to be dated and read this in to R with `terra::rast()` before passing it to `shoreline_date()`.
 
-```{r retrieve_raster, fig.width = 6, fig.height = 4, results='hide', message = FALSE}
+```{r retrieve_raster, fig.cap = "", fig.width = 6, fig.height = 4, results='hide', message = FALSE}
 # Reproject target_point for retrieving raster data with elevatr
 target_wgs84 <- sf::st_transform(target_point, crs = 4326)
 
@@ -245,7 +245,7 @@ summed_dates <- sum_shoredates(target_dates)
 
 A simple line plot displaying the resulting summed probability can then be produced with `shoredate_sumplot()`.
 
-```{r sum_plot, fig.width = 4.3, fig.height = 3.5}
+```{r sum_plot, fig.cap = "", fig.width = 4.3, fig.height = 3.5}
 shoredate_sumplot(summed_dates)
 ```
 
@@ -271,7 +271,7 @@ iso_date
 
 In the call to plot it can then be specified that the direction of the isobases is printed with each date. Note that it is not possible use `multiplot` when having used multiple isobase directions when dating the sites. The following thus also shows the default behaviour when plotting multiple dates at once and not setting `multiplot = TRUE`.
 
-```{r plot_example_isobases, fig.width = 4, fig.height = 3.5}
+```{r plot_example_isobases, fig.cap = "", fig.width = 4, fig.height = 3.5}
 shoredate_plot(iso_date,
                site_name = TRUE,
                isobase_direction = TRUE,
@@ -293,7 +293,7 @@ sum_iso_date
 
 This can then be passed to `shoredate_plot()`. Note that the interpolated displacement curves and the gamma distribution for the elevation of the site above sea-level is not included in the plot when summing the probability of dates across isobase directions.
 
-```{r plot_sum_isobases, fig.width = 4, fig.height = 3.5}
+```{r plot_sum_isobases, fig.cap = "", fig.width = 4, fig.height = 3.5}
 shoredate_plot(sum_iso_date, site_name = TRUE, isobase_direction = TRUE)
 ```
 
