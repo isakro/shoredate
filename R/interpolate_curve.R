@@ -103,9 +103,9 @@ interpolate_curve <- function(target,
                                   names(dists)[which(as.numeric(dists) == 0)], ]
 
     } else {
+      # If a site is not on a isobase, the displacement curve needs to be
+      # interpolated, in which case printing progress might be of interest
       if (verbose) {
-        # If a site is not on a isobase, the displacement curve needs to be
-        # interpolated, in which case printing progress might be of interest
         print("Interpolating displacement curve")
         pb <- utils::txtProgressBar(min = 0,
                                     max = length(bce),
