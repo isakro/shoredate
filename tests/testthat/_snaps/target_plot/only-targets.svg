@@ -30,23 +30,23 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <defs>
-  <clipPath id='cpODguODd8NjMzLjg3fDIyLjc4fDU2Ny43OA=='>
-    <rect x='88.87' y='22.78' width='545.00' height='545.00' />
+  <clipPath id='cpODYuMTN8NjMzLjg3fDIyLjc4fDU3MC41Mg=='>
+    <rect x='86.13' y='22.78' width='547.74' height='547.74' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpODguODd8NjMzLjg3fDIyLjc4fDU2Ny43OA==)'>
-<rect x='88.87' y='22.78' width='545.00' height='545.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='361.37' cy='295.28' r='2.76' style='stroke-width: 0.71; stroke-linecap: butt; fill: #FF0000;' />
-<text x='353.67' y='306.78' text-anchor='middle' style='font-size: 11.04px; font-family: sans;' textLength='6.14px' lengthAdjust='spacingAndGlyphs'>1</text>
-<line x1='462.75' y1='560.69' x2='462.75' y2='553.61' style='stroke-width: 0.75;' />
-<line x1='517.42' y1='560.69' x2='517.42' y2='556.44' style='stroke-width: 0.75;' />
-<line x1='572.10' y1='560.69' x2='572.10' y2='556.44' style='stroke-width: 0.75;' />
-<line x1='626.78' y1='560.69' x2='626.78' y2='553.61' style='stroke-width: 0.75;' />
-<line x1='462.75' y1='560.69' x2='626.78' y2='560.69' style='stroke-width: 0.75;' />
-<text x='458.49' y='560.04' text-anchor='end' style='font-size: 8.40px; font-family: sans;' textLength='18.21px' lengthAdjust='spacingAndGlyphs'>3 cm</text>
-<rect x='88.87' y='22.78' width='545.00' height='545.00' style='stroke-width: 1.07; stroke: #333333;' />
+<g clip-path='url(#cpODYuMTN8NjMzLjg3fDIyLjc4fDU3MC41Mg==)'>
+<rect x='86.13' y='22.78' width='547.74' height='547.74' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<circle cx='360.00' cy='296.65' r='2.76' style='stroke-width: 0.71; stroke-linecap: butt; fill: #FF0000;' />
+<text x='352.12' y='308.33' text-anchor='middle' style='font-size: 11.04px; font-family: sans;' textLength='6.14px' lengthAdjust='spacingAndGlyphs'>1</text>
+<line x1='461.92' y1='563.43' x2='461.92' y2='556.35' style='stroke-width: 0.75;' />
+<line x1='516.87' y1='563.43' x2='516.87' y2='559.18' style='stroke-width: 0.75;' />
+<line x1='571.83' y1='563.43' x2='571.83' y2='559.18' style='stroke-width: 0.75;' />
+<line x1='626.78' y1='563.43' x2='626.78' y2='556.35' style='stroke-width: 0.75;' />
+<line x1='461.92' y1='563.43' x2='626.78' y2='563.43' style='stroke-width: 0.75;' />
+<text x='457.67' y='562.78' text-anchor='end' style='font-size: 8.40px; font-family: sans;' textLength='18.21px' lengthAdjust='spacingAndGlyphs'>3 cm</text>
+<rect x='86.13' y='22.78' width='547.74' height='547.74' style='stroke-width: 1.07; stroke: #333333;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<text x='88.87' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='68.25px' lengthAdjust='spacingAndGlyphs'>only targets</text>
+<text x='86.13' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='68.25px' lengthAdjust='spacingAndGlyphs'>only targets</text>
 </g>
 </svg>

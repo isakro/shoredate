@@ -1,12 +1,11 @@
+withr::local_seed(1)
+
 test_that("returns expected plot when no targets are passed", {
   skip_on_cran()
   # skip("Skipped due to R CMD check failure on GitHub")
   p <- target_plot()
   vdiffr::expect_doppelganger("no targets", p)
 })
-
-# For label placement
-set.seed(123)
 
 # To be reused
 target_point <- sf::st_sfc(sf::st_point(c(579570, 6582982)), crs = 32632)

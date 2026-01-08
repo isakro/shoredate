@@ -1,3 +1,5 @@
+withr::local_seed(1)
+
 test_that("skips the plotting of dates that are out of bounds and warns how many have been skipped", {
   skip_on_cran()
   target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
@@ -9,8 +11,8 @@ test_that("skips the plotting of dates that are out of bounds and warns how many
   # test-shoreline_date.R. This is therefore suppressed.
   target_dates <- suppressWarnings(shoreline_date(sites = target_points,
                                  elevation = c(46, 100, 200)))
-  warn <- expect_warning(shoredate_plot(target_dates))
-  expect_equal(warn$message, "Skipped one date that was out of bounds.")
+  warn <- capture_warnings(shoredate_plot(target_dates))
+  expect_equal(warn[3], "Skipped one date that was out of bounds.")
 })
 
 test_that("skips the plotting of dates that are out of bounds and warns how many have been skipped when multiplot = TRUE", {
