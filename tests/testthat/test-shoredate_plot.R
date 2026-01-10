@@ -64,7 +64,9 @@ target_date <- shoreline_date(site = target_point, elevation = 70)
 
 test_that("returns expected plot when a single date is passed", {
   skip_on_cran()
-  p <- shoredate_plot(target_date)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date))
   vdiffr::expect_doppelganger("plot with a single date", p)
 })
 
@@ -83,68 +85,97 @@ test_that("returns expected plot when model = 'none'", {
   target_date <- shoreline_date(site = target_point,
                                 elevation = 70,
                                 model = "none")
-  p <- shoredate_plot(target_date)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date))
   vdiffr::expect_doppelganger("plot with no distance model", p)
 })
 
 test_that("returns expected plot without probability distribution of date", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, date_probability = FALSE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, date_probability = FALSE))
   vdiffr::expect_doppelganger("plot without probability", p)
 })
 
 test_that("returns expected plot without HDR", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, highest_density_region = FALSE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date,
+                                       highest_density_region = FALSE))
   vdiffr::expect_doppelganger("plot without HDR", p)
 })
 
 test_that("returns expected plot in greyscale", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, greyscale = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, greyscale = TRUE))
   vdiffr::expect_doppelganger("plot in greyscale", p)
 })
 
 test_that("returns only site name, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, site_name = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, site_name = TRUE))
   vdiffr::expect_doppelganger("plot with name", p)
 })
 
 test_that("returns site name and model parameters, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, site_name = TRUE, parameters = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date,
+                                       site_name = TRUE,
+                                       parameters = TRUE))
   vdiffr::expect_doppelganger("plot with name & model parameters", p)
 })
 
 test_that("returns site name and isobase directions, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, site_name = TRUE, isobase_direction = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date,
+                                       site_name = TRUE,
+                                       isobase_direction = TRUE))
   vdiffr::expect_doppelganger("plot with name & isobase directions", p)
 })
 
 test_that("returns model parameters and isobase directions, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, parameters = TRUE, isobase_direction = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date,
+                                       parameters = TRUE,
+                                       isobase_direction = TRUE))
   vdiffr::expect_doppelganger("plot with model parameters & isobase directions", p)
 })
 
 test_that("returns only model parameters, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, parameters = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, parameters = TRUE))
   vdiffr::expect_doppelganger("plot with model parameters", p)
 })
 
 test_that("returns only isobase directions, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, isobase_direction = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, isobase_direction = TRUE))
   vdiffr::expect_doppelganger("plot with isobase directions", p)
 })
 
 test_that("returns site name, model parameteres and isobase directions, when specified", {
   skip_on_cran()
-  p <- shoredate_plot(target_date, site_name = TRUE,
-                      parameters = TRUE, isobase_direction = TRUE)
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date, site_name = TRUE,
+                      parameters = TRUE, isobase_direction = TRUE))
   vdiffr::expect_doppelganger("plot with all elements of title", p)
 })
 
@@ -160,7 +191,9 @@ test_that("returns expected multiplot when multiple dates are passed", {
 
 test_that("changing graphical parameters works", {
   skip_on_cran()
-  p <- shoredate_plot(target_date,
+  # Suppress warning about geom_ribbon() removing
+  # values outside the scale range
+  p <- suppressWarnings(shoredate_plot(target_date,
                       date_col = NA,
                       date_fill = "gold",
                       displacement_col = "blue",
@@ -169,6 +202,6 @@ test_that("changing graphical parameters works", {
                       site_elevation_fill = "darkgreen",
                       hdr_col = "hotpink",
                       hdr_label_xadj = 0.5,
-                      hdr_label_yadj = 0.5)
+                      hdr_label_yadj = 0.5))
   vdiffr::expect_doppelganger("graphical parameters", p)
 })
