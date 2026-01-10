@@ -110,7 +110,9 @@ test_that("finding site elevation from a raster works", {
   target_wgs84 <- sf::st_transform(target_point, crs = 4326)
   elev_raster <- suppressWarnings(elevatr::get_elev_raster(target_wgs84,
                                                          z = 14,  src = "aws"))
-  elev_raster <- terra::project(terra::rast(elev_raster), "epsg:32632")
+  elev_raster <- terra::project(terra::rast(elev_raster),
+                                "epsg:32632",
+                                use_gdal = FALSE)
   expect_snapshot(shoreline_date(target_point, elevation = elev_raster))
 })
 
