@@ -34,7 +34,8 @@ Imports:
     ggspatial,
     sf,
     terra,
-    utils
+    utils,
+    withr
 Suggests: 
     covr,
     elevatr,
