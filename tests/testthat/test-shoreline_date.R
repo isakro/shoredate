@@ -106,7 +106,7 @@ test_that("finding site elevation from a raster works", {
   skip_on_cran()
   # Getting error for macos:
   # "[project] cannot get output boundaries for the target crs"
-  # Does not help yo set use_gdal = FALSE
+  # Does not seem to help to set use_gdal = FALSE
   # as suggested here https://github.com/rspatial/terra/issues/653
   skip_on_os("mac")
   # Having issues with R CMD check on GitHub with progress
@@ -116,7 +116,7 @@ test_that("finding site elevation from a raster works", {
   elev_raster <- suppressWarnings(elevatr::get_elev_raster(target_wgs84,
                                                          z = 14,  src = "aws"))
   elev_raster <- terra::project(terra::rast(elev_raster),
-                                "epsg:32632")
+                                "epsg:32632", use_gdal = FALSE)
   expect_snapshot(shoreline_date(target_point, elevation = elev_raster))
 })
 
