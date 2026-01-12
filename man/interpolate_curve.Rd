@@ -43,9 +43,9 @@ the isobases used when interpolating the curve.
 \description{
 Interpolate the trajectory of past shoreline displacement to a target
 location within the spatial coverage on the Skagerrak coast of south-eastern
-Norway. This based on the distance of the location to the shoreline isobases
-of the geologically derived displacement curves and is done using inverse
-distance weighting.
+Norway. This is based on the distance of the location to the shoreline
+isobases of the geologically derived displacement curves and is done using
+inverse distance weighting.
 }
 \examples{
 # Create example point using the required coordinate system

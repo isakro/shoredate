@@ -116,7 +116,7 @@ trajectory of past shoreline displacement. Details and caveats pertaining to
 the implemented method is given in Roalkvam (2023).
 }
 \examples{
-# Create example point using the required CRS WGS84 UTM32N (EPSG: 32632)
+# Create example point using the CRS WGS84 UTM32N (EPSG: 32632)
 target_point <- sf::st_sfc(sf::st_point(c(538310, 6544255)), crs = 32632)
 
 # Date target point, manually specifying the elevation instead of providing

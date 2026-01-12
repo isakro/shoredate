@@ -1,7 +1,9 @@
 #' Sum the probability of multiple shoreline dates
 #'
 #' Function for finding the summed probability distribution of multiple
-#'  shoreline dates.
+#'  shoreline dates. See Roalkvam & Solheim (2025) for an applied case and some
+#'  of the challenges associated with interpreting a sum of multiple shoreline
+#'  dates.
 #'
 #' @param shoreline_dates Object of class `shoreline_date`.
 #' @param cut_off Calendar year specifying where dates should be cut off.
@@ -13,20 +15,25 @@
 #'  dates should be normalised to sum to unity. Defaults to TRUE.
 #'
 #' @return List of class `shoredate_sum` holding the elements:
-#'  * `sum` data frame with the columns `bce` where negative values
+#'  * `sum` data frame with the columns `bce`, where negative values
 #'  indicate years BCE and positive CE, as well as `probability`, which gives
 #'  the probability mass for each year.
 #'  * `dates_n` number of dates that make up the sum after applying any
 #'  specified cut-off. One date per site per isobase direction.
 #'
 #' @export
+#' @references
+#' Roalkvam, I. & Solheim, S. 2025. Comparing Summed Probability Distributions
+#'  of Shoreline and Radiocarbon Dates from the Mesolithic Skagerrak Coast of
+#'  Norway. \emph{Journal of Archaeological Method and Theory} 32(1):26. DOI:
+#'  https://doi.org/10.1007/s10816-025-09696-7
 #'
 #' @examples
 #' target_points <- sf::st_sfc(sf::st_point(c(538310, 6544255)),
 #'                             sf::st_point(c(538300, 6544250)))
 #' target_points <- sf::st_as_sf(target_points, crs = 32632)
 #'
-#' # Shoreline date, reducing resoltuion on elevation and calendar scales for
+#' # Shoreline date, reducing resolution on elevation and calendar scales for
 #' # speed.
 #' target_dates <- shoreline_date(target_points,
 #'                                elevation = c(65, 70),
